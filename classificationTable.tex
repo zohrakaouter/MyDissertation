@@ -1,0 +1,52 @@
+
+\begin{table*}[t]
+	
+	\caption{Classification of the different patterns of the generated code element from the metamodel elements.} 
+	\label{table:locationofMMelemen}
+	\resizebox{18cm}{!} {
+		{\small
+			\begin{tabular}{llll}
+				\toprule
+				
+				\begin{tabular}[c]{@{}l@{}} \textbf{Metamodel}\\ \textbf{element type} 
+				\end{tabular} & \textbf{Generated code elements}& \textbf{Pattern of the generated code elements}& \textbf{Illustrative examples}\\ \midrule
+				
+				
+				\multirow{6}{*}{Metaclass} & Interface & "MetaClassName" & \textit{Constraint} \\ \cline{2-4} 
+				& \begin{tabular}[c]{@{}l@{}}createClass() \\ (in metamodelFactory class)\end{tabular} & "create"+"MetaClassName"() &\textit{createConstraint()} \\ \cmidrule{2-4} 
+				& \begin{tabular}[c]{@{}l@{}}Literals of the class \end{tabular} &
+				\begin{tabular}[c]{@{}l@{}}
+					"META\_CLASS\_NAME"\\
+					"META\_CLASS\_NAME"+"\_"+ "FEATURE\_COUNT"\\
+					"META\_CLASS\_NAME"+ "\_"+"OPERATION\_COUNT"
+				\end{tabular} 
+				& \begin{tabular}[c]{@{}l@{}}\textit{CONSTRAINT}, \\ \textit{CONSTRAINT\_FEATURE\_COUNT}, \\  \textit{CONSTRAINT\_OPERATION\_COUNT}\end{tabular} \\ \cmidrule{2-4} 
+				& \begin{tabular}[c]{@{}l@{}}Accessor of Meta objects \\ (in metamodelPackage class)\end{tabular} & "get"+"MetaClassName"()& \textit{getConstraint() }\\ \cmidrule{2-4} 
+				& Class implementation & "MetaClassNameImpl" &\textit{ConstraintImpl }\\ \cmidrule{2-4} 
+				& Adapter & "create"+"MetaClassName"+"Adapter" & \textit{createConstraintAdapter()} \\ \midrule
+				
+				
+				\multirow{1}{*}{Attribute} & Signature of getters and setters & "get"+"AttributeName"(), "set"+"AttributeName"()& \textit{getStereotype()}, \textit{setStereotype() }\\ \cmidrule{2-4} 
+				\multirow{3}{*}{(same for a reference)} & Accessor of Meta objects &"get"+"MetaClassName"+"\_"+"AttributeName"() &\textit{ getConstraint\_Stereotype()} \\ \cmidrule{2-4} 
+				& Literal & "META\_CLASS\_NAME"+"\_\_"+"ATTRIBUTE\_NAME"& \textit{CONSTRAINT\_\_STEREOTYPE} \\ \cmidrule{2-4} 
+				& \begin{tabular}[c]{@{}l@{}}Implementation \\ of getters and setters\end{tabular} &"get"+"AttributeName"(), "set"+"AttributeName"()& getStereotype(), setStereotype() \\ \midrule
+				
+				
+				\multirow{4}{*}{Method} & Declaration of the method& "methodName"()& \textit{UniqueName() }\\ \cmidrule{2-4} 
+				& Accessor of meta objects &"get"+"MetaClass"+"\_\_"+"MethodName"()& \textit{getCONSTRAINT\_\_UniqueName() }\\ \cmidrule{2-4} 
+				& Literal &"META\_CLASS\_NAME"+"\_\_"+"METHOD\_NAME"& \textit{CONSTRAINT\_\_\_UNIQUE\_NAME }\\ \cmidrule{2-4} 
+				& Implementation of the method &"methodName"()& \textit{UniqueName()} \\ %\midrule
+				
+				
+				%\multirow{4}{*}{Reference} & Accessor of meta objects &"get"+"MetaClassName"+"\_"+"ReferenceName"()& \textit{getConstraint\_ConstraintElement()} \\ \cmidrule{2-4} 
+				% & Signature of getters and setter & "get"+"ReferenceName"(),"set"+"ReferenceName"()&\textit{ getConstraintElement()}, \textit{setConstraintElement() }\\ \cmidrule{2-4} 
+				% & Literal &"META\_CLASS\_NAME"+"\_\_"+"REFERENCE\_NAME"& \textit{CONSTRAINT\_\_CONSTRAINT\_ELEMENT} \\ \cmidrule{2-4} 
+				% & \begin{tabular}[c]{@{}l@{}}Implementation of \\ getters and setters\end{tabular} &"get"+"ReferenceName"(), "set"+"RegerenceName"()& \textit{getConstraintElement()}, \textit{setConstrainElement() }\\ 
+				\bottomrule
+				
+				%cline hline replaced with cmidrule and midrule
+				
+			\end{tabular}
+		}
+	}
+\end{table*}

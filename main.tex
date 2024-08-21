@@ -1,7 +1,6 @@
 % Ce fichier main.tex est le fichier principal \`{a} partir duquel tout est g\'{e}n\'{e}r\'{e}
 % This file is the main file where the final document is generated
 \documentclass{these-dbl}
-
 % Remplir les metadonnees du pdf
 % Fill the pdf metadata
 \hypersetup{
@@ -16,8 +15,27 @@
 % Spécifier vos fichiers de bibliographie
 % Specify you bibliography files here
 \addbibresource{./biblio/biblio.bib}
+%\bibliography{./biblio/biblio.bib}
+\usepackage[ruled,vlined,linesnumbered,algo2e]{algorithm2e} 
+\usepackage{amsmath,amssymb,amsfonts}
+
+\newcommand{\ie}{\emph{i.e.,}\xspace}
+\newcommand{\eg}{\emph{e.g.,}\xspace}
+\newcommand{\cf}{\emph{cf.}\xspace}
+\newcommand{\etal}{\emph{et al.}\xspace}
+\newcommand{\etc}{\emph{etc.}\xspace}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{xurl}
+
+
+\newcommand{\blue}[1]{{#1}}
+\newcommand{\green}[1]{{\color{teal}{#1}}}
+\newcommand{\red}[1]{{#1}}
 
 \begin{document}
+	
+%\newcommand{\red}[1]{{\color{red}{#1}}}
 
 % Page de garde avec commande \maketitle
 % Front cover calling \maketitle
@@ -25,7 +43,7 @@
 
 % Sélectionner la langue du contenu suivant cette ligne
 % Select the content language following this line
-\selectlanguage{french}
+\selectlanguage{english}
 
 % Inclusion du chapitre remerciement
 % Input acknowledgement chapter
@@ -45,22 +63,24 @@
 
 \clearemptydoublepage
 \mainmatter
+\input{./State of The Art}
 \input{./Chapitre1/chapitre1}
 
 
-\clearemptydoublepage
-\ifenvsetTF{COMPILE_ALL}{
+
+%\clearemptydoublepage
+%\ifenvsetTF{COMPILE_ALL}{
 	% Compile the chapter when the COMPILE_ALL environment variable is set
-	\input{./Chapitre2/chapitre2}
-}{
+%	\input{./Chapitre2/chapitre2}
+%}{
 	% Uncomment this line to compile this chapter locally (when the COMPILE_ALL variable is not set)
 	%\input{./Chapitre2/chapitre2}
-}
+%}
 
 
 \clearemptydoublepage
 \backmatter
-\input{./Conclusion/conclusion}
+%\input{./Conclusion/conclusion}
 
 % Chapitre pour la bibliographie
 % Bibliography chapter
@@ -70,12 +90,11 @@
 
 % nocite: Pour citer la totalit\'{e} des r\'{e}f\'{e}rences contenues dans le fichier biblio
 % nocite: In order to cite all the references included biblio
-\nocite{*}
-\printbibliography[heading=primary,keyword=primary]
-\newpage
-\nocite{*}
-\printbibliography[heading=secondary,keyword=secondary]
-
+%\nocite{*}
+\printbibliography
+%\newpage
+%\nocite{*}
+%\printbibliography[heading=secondary,keyword=secondary]
 \clearemptydoublepage
 % Pour avoir la quatrième de couverture sur une page paire
 % To have the back cover on an even page

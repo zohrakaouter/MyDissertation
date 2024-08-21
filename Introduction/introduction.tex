@@ -3,38 +3,57 @@
 \chaptermark{Introduction}
 
 
-Lorem ipsum dolor sit amet, «~consectetuer~» adipiscing elit. Maecenas fermentum, elit non lobortis cursus, orci velit suscipit est, id mollis turpis mi eget orci. Ut aliquam sollicitudin metus. Mauris at sapien sed sapien congue iaculis. Nulla lorem urna, bibendum id, laoreet iaculis, nonummy eget, massa. Phasellus ullamcorper commodo velit. Class aptent taciti sociosqu ad litora torquent per «~conubia nostra~», per inceptos hymenaeos. Phasellus est. Maecenas felis augue, gravida quis, porta adipiscing, iaculis vitae, felis. Nullam ipsum. Nulla a sem ac leo fringilla mattis. Phasellus egestas augue in sem. Etiam ac enim non mauris ullamcorper scelerisque. In wisi leo, malesuada vulputate, tempor sit amet, facilisis vel, velit. Mauris massa est, sodales placerat, luctus id, hendrerit a, urna. Nullam eleifend pede eget odio. Duis non erat. Nullam pellentesque.
 
-\begin{verse}
-Maître Corbeau, sur un arbre perché, \\
-Tenait en son bec un fromage. \\
-Maître Renard, par l'odeur alléché, \\
-Lui tint à peu près ce langage : \\
-«~Hé ! bonjour, Monsieur du Corbeau. \\
-Que vous êtes joli ! que vous me semblez beau ! \\
-Sans mentir, si votre ramage \\
-Se rapporte à votre plumage, \\
-Vous êtes le Phénix des hôtes de ces bois.~» \\
-\end{verse}
+\section*{Context and Motivation}
+\addcontentsline{toc}{section}{Context and Motivation}
+%Context: Model-driven engineering, software evolution, metamodel evolution
+%ToDo Add cost, benifits of using MDE
+Software systems are increasingly growing in complexity, which leads to a substantial burden in terms of maintenance, often resulting in a high cost that may surpass the cost of software development itself \cite{https://doi.org/10.1049/sfw2.12075}.
+Since Object Management Group (OMG) has introduced Model driven Engineering in 2001 \cite{brambilla2017model}, MDE has been prominent in developing and maintaining large-scale and embedded systems while increasing the developers' productivity. By adopting MDE, industry can reduce time (development time, time-to-market), costs (development, integration, reconfiguration), and improve sustainability and international competitiveness %\cite{10.1145/1985793.1985858,10.1007/s10270-019-00757-6}. MDE raises the abstraction level to the "metamodel" artifact in order to separate the implementation from the business logic.
+Metamodel is a central artifact for building software languages \cite{cabot2012object}. It specifies the domain concepts, their properties, and the relationship between them.
+A metamodel is the cornerstone to generate model instances, constraints, transformations, and code when building the necessary language tooling, e.g. editor, checker, compiler, data access layers, etc. 
+In particular, metamodels are used as inputs for complex code generators that leverage on the abstract concepts defined in metamodels. The generated code API for creating, loading and manipulating the model instances, adapters, serialization facilities, and an editor, all from the metamodel elements.
+This generated code is further enriched by developers to offer additional functionalities and tooling, such as validation, transformation, simulation, or debugging.
+For instance, UML\footnote{\url{https://www.eclipse.org/modeling/mdt/downloads/?project=uml2}}  and BPMN\footnote{\url{https://www.eclipse.org/bpmn2-modeler/}} Eclipse implementations rely on the UML and BPMN metamodels to generate their corresponding code API before building around it all their tooling and services in the additional code.
+%Problem definition/challenges: The impact of metamodel evolution on the software artifacts, particularly, the code, the co-evolution of code.
+\section*{Challenges}
+\addcontentsline{toc}{section}{Challenges}
+\subsection*{C1: Resolve the impact of the metamodel evolution on the code automatically}
+One of the foremost challenges to deal with in MDE is the impact of the evolution of metamodels on its dependent artifacts. We focus on the impact of metamodels' evolution on the code. 
+Indeed, when a metamodel evolves and the core API is regenerated again, the additional code implemented by developers can be impacted.
+	As a consequence, this additional code must be co-evolved accordingly by executing a resolution for each impacted part of the code.
 
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas fermentum, elit non lobortis cursus, orci velit suscipit est, id mollis turpis mi eget orci. Ut aliquam sollicitudin metus. Mauris at sapien sed sapien congue iaculis. Nulla lorem urna, bibendum id, laoreet iaculis, nonummy eget, massa\footcite[32]{Pierre1901}. Phasellus ullamcorper commodo velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Phasellus est. Maecenas felis augue, gravida quis, porta adipiscing, iaculis vitae, felis. Nullam ipsum. Nulla a sem ac leo fringilla mattis. Phasellus egestas augue in sem. Etiam ac enim non mauris ullamcorper scelerisque. In wisi leo, malesuada vulputate, tempor sit amet, facilisis vel, velit. Mauris massa est, sodales placerat, luctus id, hendrerit a, urna. Nullam eleifend pede eget odio. Duis non erat. Nullam pellentesque. 
+However, manual co-evolution can be tedious, error-prone, and time-consuming. 
+%TODO : add statistics
+Therefore, it is essential to support an automatic co-evolution of code when metamodels evolve.
+The co-evolution challenge has been extensively addressed in \emph{MDE}. 
+%TODO CO-Evolution metamodel-other artifacts
+% - the challenge of metamodels and code co-evolution.
+In particular, \cite{riedl2014towards,kanakis2019empirical,pham2017bidirectional,jongeling2020towards,jongeling2022Structural,zaheri2021towards} focused on consistency checking between models and code, but not its co-evolution.
+Other works \cite{yu2012maintaining,Khelladi2020} proposed to co-evolve the code. However, the former handles only the generated code API, it does not handle additional code and aims to maintain bidirectional traceability between the model and the code API. The latter supports a semi-automatic co-evolution requiring developers' intervention. Moreover, it does not use any validation process to check the correctness of the co-evolution and with no comparison to a baseline. 
 
-\section*{Première section de l'intro}
-\addcontentsline{toc}{section}{Première section de l'intro}
+ Considering that metamodel and co-evolution is one of many other MDE tasks like for example Model generation, code generation. Since their appearance, LLMs have been applied in different domains of scientific research, such as Software Engineering and Model-Driven Engineering (MDE), however, the challenge of exploring LLMs in the task of metamodel and code co-evolution is never addressed.
 
-Lorem ipsum dolor sit amet, «~consectetuer~» adipiscing elit. Maecenas fermentum, elit non lobortis cursus, orci velit suscipit est, id mollis turpis mi eget orci. Ut aliquam sollicitudin metus. Mauris at sapien sed sapien congue iaculis. Nulla lorem urna, bibendum id, laoreet iaculis, nonummy eget, massa. Phasellus ullamcorper commodo velit. Class aptent taciti sociosqu ad litora torquent per «~conubia nostra~», per inceptos hymenaeos. Phasellus est. Maecenas felis augue, gravida quis, porta adipiscing, iaculis vitae, felis. Nullam ipsum. Nulla a sem ac leo fringilla mattis. Phasellus egestas augue in sem. Etiam ac enim non mauris ullamcorper scelerisque. In wisi leo, malesuada vulputate, tempor sit amet, facilisis vel, velit. Mauris massa est, sodales placerat, luctus id, hendrerit a, urna. Nullam eleifend pede eget odio. Duis non erat. Nullam pellentesque.
+\subsection*{C2: Behavioral correctness of the metamodel and code co-evolution}
 
-\textbf{Une boite magique : }
+In literature, when the problem of metamodel and code co-evolution is addressed, the challenge of checking that the co-evolution impacted or not the behavioral correctness of the code is not handled. In any Model-driven Engineered system, the elements of the metamodel are used in the code. The evolution of the metamodel will be propagated in the code that is co-evolved and its behavior may be altered. Hence, the importance of checking the correctness of the co-evolution.
+%Purpose of the study: 
+%Research questions
+%Summary of contributions
+\section*{Contributions}
+\addcontentsline{toc}{section}{Contributions}
+To tackle these challenges, we propose three contributions:
+\begin{itemize}
+	\item First, we propose a fully automatic code co-evolution approach du to  metamodel evolution based on pattern matching. Our approach handles both atomic and complex changes (ref) of the metamodel.
+	\item Second, we investigate the ability of LLMs in giving correct co-evolutions in the context of metamodel and code co-evolution
+	
+	\item Third, w propose an approach that assist developers to check the behavioral correctness of the co-evolution. This approach leverages unit tests before and after the co-evolution and gives visual report about passing, failing, and erroneous tests before and after the co-evolution.
 
-\boitemagique{Titre de la boite}{
-Praesent placerat, ante at venenatis pretium, diam turpis faucibus arcu, nec vehicula quam lorem ut leo. Sed facilisis, augue in pharetra dapibus, ligula justo accumsan massa, eu suscipit felis ipsum eget enim.
-}
+\end{itemize}
 
-Laoreet iaculis, nonummy eget, massa. Phasellus ullamcorper commodo velit. Class aptent taciti sociosqu ad litora torquent per «~conubia nostra~», per inceptos hymenaeos. Phasellus est. Maecenas felis augue, gravida quis, porta adipiscing, iaculis vitae, felis. Nullam ipsum. Nulla a sem ac leo fringilla mattis. Phasellus egestas augue in sem. Etiam ac enim non mauris ullamcorper scelerisque. In wisi leo, malesuada vulputate, tempor sit amet, facilisis vel, velit. Mauris massa est, sodales placerat, luctus id, hendrerit a, urna. Nullam eleifend pede eget odio. Duis non erat. Nullam pellentesque.
+%TODO Overall results.
 
-\textbf{Une boite simple : }
-\boitesimple{Mauris lorem quam, tristique sollicitudin egestas sed, sodales vel leo. In hac habitasse platea dictumst. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed lorem lacus, at venenatis elit. Pellentesque nisl arcu, blandit ac eleifend non, sodales a quam.}
+%TODO Thesis organisation
 
-Laoreet iaculis, nonummy eget, massa. Phasellus ullamcorper commodo velit. Class aptent taciti sociosqu ad litora torquent per «~conubia nostra~», per inceptos hymenaeos. Phasellus est. Maecenas felis augue, gravida quis, porta adipiscing, iaculis vitae, felis. Nullam ipsum. Nulla a sem ac leo fringilla mattis. Phasellus egestas augue in sem. Etiam ac enim non mauris ullamcorper scelerisque. In wisi leo, malesuada vulputate, tempor sit amet, facilisis vel, velit. Mauris massa est, sodales placerat, luctus id, hendrerit a, urna. Nullam eleifend pede eget odio. Duis non erat. Nullam pellentesque.
 
 

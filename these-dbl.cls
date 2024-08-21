@@ -76,8 +76,8 @@
 %\renewcommand{\rmdefault}{qpl}
 %\renewcommand{\sfdefault}{qpl} 
 
-
-
+%\usepackage{underscore}
+\usepackage[english]{babel}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%% CONDITIONAL COMPILATION %%%%%%%%%%%%%%%
 \RequirePackage{xparse}
@@ -159,7 +159,7 @@
 \RequirePackage[hyperref,backend=biber,
   % Exemples de styles: alphabetic, ieee, nature, numeric, verbose-trad1 (en utilisant \footcite{}).
   % https://www.overleaf.com/learn/latex/Biblatex_bibliography_styles
-  style=verbose-trad1
+  style=ieee %verbose-trad1
   ]{biblatex}
 
 % Style biblatex avec gestion des mots cl\'{e}s des entr\'{e}es bibliographiques
@@ -178,7 +178,7 @@
 %\DeclareFieldFormat{pages}{page(s): #1} % page(s) en toutes lettres, si on veut...
 
 % Locutions latines en italique (comme ibid, loc.cit. , etc.) Merci \`{a} Josquin Debaz
-\renewcommand{\mkibid}[1]{\emph{#1}}
+%\renewcommand{\mkibid}[1]{\emph{#1}}
 
 % Et pour mettre le in en italique dans la ref\'{e}rence biblio (merci encore \`{a} Josquin Debaz)
 \DefineBibliographyStrings{english}{%
