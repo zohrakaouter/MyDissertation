@@ -20,26 +20,38 @@ For instance, UML\footnote{\url{https://www.eclipse.org/modeling/mdt/downloads/?
 \addcontentsline{toc}{section}{Challenges}
 \subsection*{C1: Resolve the impact of the metamodel evolution on the code automatically}
 One of the foremost challenges to deal with in MDE is the impact of the evolution of metamodels on its dependent artifacts. We focus on the impact of metamodels' evolution on the code. 
-Indeed, when a metamodel evolves and the core API is regenerated again, the additional code implemented by developers can be impacted.
-	As a consequence, this additional code must be co-evolved accordingly by executing a resolution for each impacted part of the code.
+Indeed, when a metamodel evolves and the code API is regenerated again, the additional code implemented by developers can be impacted.
+	As a consequence, this additional code must be co-evolved accordingly.% by executing a resolution for each impacted part of the code.
 
 However, manual co-evolution can be tedious, error-prone, and time-consuming. 
 %TODO : add statistics
-Therefore, it is essential to support an automatic co-evolution of code when metamodels evolve.
+%Therefore, it is essential to support an automatic co-evolution of code when metamodels evolve.
+Therefore, experts tried through last decades to find more sophistic solutions to tackle the problem of co-evolution when metamodels evolve. This interest covered almost all the artifacts in MDE ecosystem not only the code, and many solutions were proposed, inter alia, raising the automation degree of the co-evolution. Other aspects treated in co-evolution problem like optimization and evolution resilience.
 The co-evolution challenge has been extensively addressed in \emph{MDE}. 
 %TODO CO-Evolution metamodel-other artifacts
 % - the challenge of metamodels and code co-evolution.
 In particular, \cite{riedl2014towards,kanakis2019empirical,pham2017bidirectional,jongeling2020towards,jongeling2022Structural,zaheri2021towards} focused on consistency checking between models and code, but not its co-evolution.
 Other works \cite{yu2012maintaining,Khelladi2020} proposed to co-evolve the code. However, the former handles only the generated code API, it does not handle additional code and aims to maintain bidirectional traceability between the model and the code API. The latter supports a semi-automatic co-evolution requiring developers' intervention. Moreover, it does not use any validation process to check the correctness of the co-evolution and with no comparison to a baseline. 
 
- Considering that metamodel and co-evolution is one of many other MDE tasks like for example Model generation, code generation. Since their appearance, LLMs have been applied in different domains of scientific research, such as Software Engineering and Model-Driven Engineering (MDE), however, the challenge of exploring LLMs in the task of metamodel and code co-evolution is never addressed.
+ 
 
 \subsection*{C2: Behavioral correctness of the metamodel and code co-evolution}
 
-In literature, when the problem of metamodel and code co-evolution is addressed, the challenge of checking that the co-evolution impacted or not the behavioral correctness of the code is not handled. In any Model-driven Engineered system, the elements of the metamodel are used in the code. The evolution of the metamodel will be propagated in the code that is co-evolved and its behavior may be altered. Hence, the importance of checking the correctness of the co-evolution.
+In literature, when the problem of metamodel and code co-evolution is addressed, the challenge of checking that the co-evolution impacted or not the behavioral correctness of the code is not handled. In any Model-driven Engineered system, the elements of the metamodel are used in the code. The evolution of the metamodel will be propagated in the code that is co-evolved and its behavior may be altered. Hence, the importance of checking the correctness of the co-evolution. In a larger scope, only few works were dedicated to check the correctness of a code evolution in general. %wether it is refactoring or co-evolution
+%our approach can be categorized along the incremental test selection approaches, such as 
+ Ge et al. \cite{ge2014Manual} propose to verify the correctness of refactoring.
+Out of the scope of testing code evolution, we find the incremental test selection approaches Infinitest\footnote{\url{https://infinitest.github.io/doc/eclipse}}, EKSTAZI~\cite{7203050}, and Moose~\cite{ducasse2000moose}.All of Infinitest, EKSTAZI and Moose aim to analyze code changes incrementally to select impacted tests in the evolved version of the code only
+
 %Purpose of the study: 
 %Research questions
 %Summary of contributions
+\subsection*{C3: How to draw benefit from LLMs for the metamodel and code co-evolution}
+In the MDE ecosystem, we can consider that metamodel and co-evolution is one of many other MDE tasks like for example Model generation, code generation. Since their appearance, LLMs have been applied in different domains of scientific research, such as Software Engineering and Model-Driven Engineering (MDE), however, to the best of our knowledge, the challenge of exploring LLMs in the task of metamodel and code co-evolution is never addressed. Fu et al. \cite{fu2023chatgpt} also evaluated ChatGPT and its ability to detect, classify, and repair vulnerable code. Kabir et al. \cite{kabir2023empirical} evaluated ChatGPT ability to generate code and to maintain it by improving it based on a new feature description to add in the code. Zhang et al. \cite{zhang2023multilingual} proposed Codeditor, an LLM based tool for code co-evolution between different programming languages. It learns code evolutions as edit sequences and then uses LLMs for multilingual translation.
+Moreover, other studies focused on evaluating LLMs in MDE activities. 
+Chen et al. \cite{10344012} and Camara et al. \cite{camara2023assessment} used Chatgpt to generate models.
+Chaaben et al. \cite{chaaben2023towards} showed how using few-shot learning with GTP3 model can be effective in model completion and in other modeling activities. 
+%
+%TODO WHY it is a good idea to use llm in co-evolution
 \section*{Contributions}
 \addcontentsline{toc}{section}{Contributions}
 To tackle these challenges, we propose three contributions:
