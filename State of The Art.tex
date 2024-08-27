@@ -95,7 +95,7 @@ For example, Eclipse Modeling Framework built-in code generator allows to genera
 In Eclipse Modeling Framework, two model resources (files) are manipulated: the .ecore file that contains  xmli serialization of the E
 core model and the .genmodel for the serialized generator model.
 
-\subsection{Evolution in the MDE context}
+\section{Evolution in the MDE context}
 
 During the software development process, software artifacts are meant to be changed, due to many reasons: client requirements and domain specification, software maintenance or bug correction. Like any other software system, modeling languages are the subject of an inevitable evolution, during their process of building, multiple versions are developed, tested, and adapted until a stable version is reached. 
 
@@ -201,13 +201,13 @@ we present an overview of what has been done in the field of code co-evolution i
  The comparison, advantages, and drawbacks of the presented approaches is out of the scope of this dissertation.
  
 \subsection{Metamodel and model co-evolution}
-Due to metamodel evolution, the model become "no conform"
+Due to metamodel evolution, the model becomes "no conform".
 %Once the metamodel changes are detected, using one of the previously presented approaches in Section ?, 
  %a set of resolutions are applied to co-evolve the model to gain again the conformity to the metamodel.
  %change order, resolution order
- Co-evolution  approaches use automatic or manyal diffing metamodel approaches in their solution. Model co-evolution apporaches that we found can be categorized into four categories. The first category is resolution strategy languages that specifies in a transformation laguage how to update the model given the list of metamodel changes. The category REsolution strategy generation groups approaches that generate full or partial resolution for each metamodel change.
- The co-evolution between metamodel and models can be processed manually \cite{bibid} but it require a huge expertise. We find three categories of metamodel and model co-evolution approaches.  Approaches based on resolution strategy languages that propse transformation languages created given the metamodel changes. The second categorie groups Resolution strategy generation approaches that allow to generate full or partial resolutions for each metamodel change. Some of these approaches  rzquires the user intervention to make decision on the selected operation to adapt the model. The gategory of  Resoltion strategy leaning that adopt machine learning algorithm to sekect the resolution stratefy for metamodel changes.
-. Other approaches consider the model co-evolution problem as an opitimization one that does not need the list of changes of the metamodel \cite{}.
+ Co-evolution  approaches use automatic or manual diffing metamodel approaches in their solutions. Model co-evolution approaches that we found can be categorized into four categories. The first category is Resolution Strategy Languages that specifies in a transformation language how to update the model given the list of metamodel changes. The category Resolution Strategy Generation groups approaches that generate full or partial resolution for each metamodel change.
+ The co-evolution between metamodel and models can be processed manually but it requires a huge expertise. We find three categories of metamodel and model co-evolution approaches. Approaches based on resolution strategy languages that propose transformation languages created given the metamodel changes. The second category groups Resolution strategy generation approaches that allow to generate full or partial resolutions for each metamodel change. Some of these approaches  requires the user intervention to make decision on the selected operation to adapt the model. The category of  Resolution strategy leaning that adopt machine learning algorithm to select the resolution strategy for metamodel changes.
+. Other approaches consider the model co-evolution problem as an optimization one that does not need the list of changes of the metamodel \cite{}.
 %Demuth el al. [6] who used it for models co-evolution.
 % There are also approaches for semi-automatic co-evolution of models that rzquires the user intervention to make decision on the selected operation to adapt the model.
 
@@ -220,10 +220,12 @@ Another artifact that depends on the metamodel and needs to be adapted to the ev
  
 \subsection{Metamodel and transformations co-evolution}
 
-Almost all the exixsting transformation approaches that we find in literratue starts by analysing the impact of the metamodel on the model transformations.
-Mendez et al. [30] and Ruscio et al. [8,Garces et al. [10],Kusel, et al. [29] and khelladi proposed to co-evolve impacted transformation with a set of resolutions, khelladi covers the larget set of possible resolutions where Ruscio et al. [8, estilate the cost of the co-evoltuion to decide about the co-evolution,they further explored the variability of the co-evolution due to the possible alternative resolution . Garcia et al. [11] propsed a atl tranformation-base approach wich means that their resolutions are ATL transformations. All the approaches propse unique resolution to co-evolve the transformation
-Ruscio et al. [8 allow developers to manually replace or refine a resolution. Khelladi et al allows to compose existing resolutions into a new one. Kessentini et all used a different approach that do not use the changes of the metamodel as inout and do not process by an impact ananlysis, but it uses a search-based approahc that relied on multi objective heuristic algorithm NSGA-II.
+Almost all the existing transformation approaches that we find in literratue starts by analysing the impact of the metamodel on the model transformations.
+Mendez et al. [30] and Ruscio et al. [8,Garces et al. [10],Kusel, et al. [29] and khelladi proposed to co-evolve impacted transformation with a set of resolutions, khelladi covers the larget set of possible resolutions where Ruscio et al. [8, estimate the cost of the co-evoltuion to decide about the co-evolution,they further explored the variability of the co-evolution due to the possible alternative resolution . Garcia et al. [11] proposed a ATL tranformation-base approach which means that their resolutions are ATL transformations. All the approaches propose unique resolution to co-evolve the transformation
+Ruscio et al. [8 allow developers to manually replace or refine a resolution. Khelladi et al allows to compose existing resolutions into a new one. Kessentini et all used a different approach that do not use the changes of the metamodel as input and do not process by an impact analysis, but it uses a search-based approach that relied on multi objective heuristic algorithm NSGA-II.
  \section{Metamodel and code co-evolution}
+ 
+  \section{API and Client co-evolution}
  %TODO What has been done so far: 
 %TODO Change detection
 %TODO Metamodel-Transformation co-evolution
