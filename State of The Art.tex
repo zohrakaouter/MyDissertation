@@ -201,31 +201,124 @@ we present an overview of what has been done in the field of code co-evolution i
  The comparison, advantages, and drawbacks of the presented approaches is out of the scope of this dissertation.
  
 \subsection{Metamodel and model co-evolution}
-Due to metamodel evolution, the model becomes "no conform".
+Due to metamodel evolution, the model becomes "no conform". A set of resolutions are applied to co-evolve the model to gain again its conformity to the metamodel.
+%change order, resolution order
 %Once the metamodel changes are detected, using one of the previously presented approaches in Section ?, 
  %a set of resolutions are applied to co-evolve the model to gain again the conformity to the metamodel.
  %change order, resolution order
- Co-evolution  approaches use automatic or manual diffing metamodel approaches in their solutions. Model co-evolution approaches that we found can be categorized into four categories. The first category is Resolution Strategy Languages that specifies in a transformation language how to update the model given the list of metamodel changes. The category Resolution Strategy Generation groups approaches that generate full or partial resolution for each metamodel change.
- The co-evolution between metamodel and models can be processed manually but it requires a huge expertise. We find three categories of metamodel and model co-evolution approaches. Approaches based on resolution strategy languages that propose transformation languages created given the metamodel changes. The second category groups Resolution strategy generation approaches that allow to generate full or partial resolutions for each metamodel change. Some of these approaches  requires the user intervention to make decision on the selected operation to adapt the model. The category of  Resolution strategy leaning that adopt machine learning algorithm to select the resolution strategy for metamodel changes.
-. Other approaches consider the model co-evolution problem as an optimization one that does not need the list of changes of the metamodel \cite{}.
+ The co-evolution between metamodel and models can be processed manually but it requires a huge expertise. 
+ Most of automatic and semi-automatic Co-evolution  approaches use automatic or manual diffing metamodel approaches in their solutions. Model co-evolution approaches that we found can be categorized into five categories \cite{Hebig2017}. The first category is Resolution Strategy Languages that specifies in a transformation language how to update the model given the list of metamodel changes \cite{10.1007/978-3-540-87875-9_44,sprinkle2004domain,wimmer2010using,10.1007/978-3-642-30476-7_13,10.1007/978-3-642-38883-5_10,10.1007/s10270-012-0313-5,10.1007/s10270-012-0296-2}. The category Resolution Strategy Generation groups approaches that generate full or partial resolution for each metamodel change \cite{del2007semi,de2008generating,garces2009managing,meyers2011generic,anguel2014using}.
+ 
+ 
+ The third group of "Predefined Resolution Strategies" contains approaches that provide automation, when it is possible, by applying predefined resolution strategies \cite{hossler2005coevolution,florez2012coevolution,fernandez2013adapting,wachsmuth2007metamodel,cicchetti2009managing,van2011generic,becker2007process,herrmannsdoerfer2009operation,wittern2013determining}. 
+ 
+ %We find three categories of metamodel and model co-evolution approaches.% Approaches based on resolution strategy languages that propose transformation languages created given the metamodel changes. The second category groups Resolution strategy generation approaches that allow to generate full or partial resolutions for each metamodel change.
+ 
+  Some of these approaches requires the user intervention to make decision on the selected operation to adapt the model.
+  The fourth category of Resolution strategy leaning that adopt machine learning algorithm to select the resolution strategy for metamodel changes.\cite{anguel2013towards}.%TODO Look for full paper
+ 
+The fifth and last category is called Constrained Model Search. It groups approaches that do not use the metamodel change, but uses the original model and the new metamodel to apply a constrained-based search of valid model variants \cite{demuth2016co,gomez2014approach,schonbock2014care}. Other approaches consider the model co-evolution problem as an optimization one that does not need the list of changes of the metamodel \cite{kessentini2016automated,kessentini2019automated,kessentini2020interactive}.
 %Demuth el al. [6] who used it for models co-evolution.
 % There are also approaches for semi-automatic co-evolution of models that rzquires the user intervention to make decision on the selected operation to adapt the model.
 
 %\cite{kessentini2018integrating,kessentini2019automated,cicchetti2008automating,herrmannsdoerfer2009cope,garces2009managing,wachsmuth2007metamodel},
 \subsection{Metamodel and constraints co-evolution}
 Another artifact that depends on the metamodel and needs to be adapted to the evolution of its metamodel is Constraints.
- Constraints co-evolutions that we can find in literature may be  online or offline. Every approach has its own co-evolution mechanism that treats specific types of metamodel changes and has its automation degree. Demuth et al propsed a template-based, hat cannot cover all changes types, of the predefined structure of the updated constraint.  Markovich et al proposed refactoring rules that depends on the impact of UML class diageam evolution on the constraints. Hassam et allpropose METAEVOL, based on a tranformation language.Kusek et al propose a solution for the co-evolution of the constrain body and do not incluse its context that may need co-evolution also.
- Cabot et al ocl contraints co-evolution due to metamodel deletion change. Khelladi et al propsed an approach that record the metamodel atomic and complex changes in a chronolical otder then apply one or many resolutions to co-evoolve the constraints. Batot et al takles the constraint co-evolution problem as an mulri-ovjective optimisation problem and apply heuristic-based recommendation approach that does not require /use a predefined set of transformation rules / resolution to coec-lve the constraints. Demuth, markovitch, cabot their approaches ar fully automatic while Hassam kusel and Khelladi  and Batot propose semi-automatic approches since the user must select from the recommendec output constraints. 
+ Constraints co-evolutions that we can find in literature may be online \footnote{Online approaches perform instant co-evolution for each change during the metamodel evolution} or offline \footnote{Offline approaches perform co-evolution after the metamodel has been evolved.}. Every approach has its own co-evolution mechanism that treats specific types of metamodel changes and has its automation degree. Demuth et al. \cite{10.1007/978-3-642-41533-3_18} proposed a template-based, hat cannot cover all changes types, of the predefined structure of the updated constraint. Markovich et al. \cite{markovic2008refactoring} proposed refactoring rules that depends on the impact of UML class diagram evolution on the constraints. Hassam et al. \cite{hassam2011assistance} propose METAEVOL, based on a transformation language.Kusel et al \cite{kusel2014systematic} propose a solution for the co-evolution of the constrain body and do not include its context that may need co-evolution also.
+ Cabot et al \cite{cabot2004automatic} treats OCL constraints co-evolution due to metamodel deletion change. Khelladi et al \cite{khelladi2017semi} proposed an approach that record the metamodel atomic and complex changes in a chronological order then apply one or many resolutions to co-evolve the constraints. Batot et al. \cite{8101267} tackles the constraint co-evolution problem as  an multi-objective optimization problem and apply heuristic-based recommendation approach that does not require/use a predefined set of transformation rules/resolutions to co-evolve the constraints. Demuth, markovitch, cabot \cite{10.1007/978-3-642-41533-3_18,markovic2008refactoring,cabot2004automatic} their approaches ar fully automatic while Hassam, kusel and Khelladi, and Batot \cite{hassam2011assistance,kusel2014systematic,khelladi2017semi,8101267} propose semi-automatic approaches since the user must select from the recommended output constraints. 
  
  
 \subsection{Metamodel and transformations co-evolution}
 
-Almost all the existing transformation approaches that we find in literratue starts by analysing the impact of the metamodel on the model transformations.
-Mendez et al. [30] and Ruscio et al. [8,Garces et al. [10],Kusel, et al. [29] and khelladi proposed to co-evolve impacted transformation with a set of resolutions, khelladi covers the larget set of possible resolutions where Ruscio et al. [8, estimate the cost of the co-evoltuion to decide about the co-evolution,they further explored the variability of the co-evolution due to the possible alternative resolution . Garcia et al. [11] proposed a ATL tranformation-base approach which means that their resolutions are ATL transformations. All the approaches propose unique resolution to co-evolve the transformation
-Ruscio et al. [8 allow developers to manually replace or refine a resolution. Khelladi et al allows to compose existing resolutions into a new one. Kessentini et all used a different approach that do not use the changes of the metamodel as input and do not process by an impact analysis, but it uses a search-based approach that relied on multi objective heuristic algorithm NSGA-II.
+Almost all the existing transformation approaches that we find in literature start by analyzing the impact of the metamodel on the model transformations.
+Mendez et al. \cite{mendez2010towards}, Ruscio et al. \cite{di2011needed}, Garces et al.\cite{garces2014adapting}, Kusel, et al.\cite{kusel2015consistent}, and khelladi et al. \cite{khelladi2018change} proposed to co-evolve impacted transformations with a set of resolutions. The approach of khelladi et al. \cite{khelladi2018change} covers the largest set of possible resolutions where Ruscio et al. \cite{di2011needed}, estimate the cost of the co-evolution to decide about the co-evolution,they further explored the variability of the co-evolution due to the possible alternative resolution. Garcia et al.\cite{garcia2012model} proposed a ATL transformation-based approach which means that their resolutions are ATL transformations. All the approaches propose unique resolution to co-evolve each transformation.
+Ruscio et al. \cite{di2011needed} approach allows developers to manually replace or refine a resolution. Khelladi et al. \cite{khelladi2018change}  allow to compose existing resolutions into a new one. Kessentini et al. \cite{kessentini2018automated} used a different approach that do not use the changes of the metamodel as input and do not process by an impact analysis, but it uses a search-based approach that relied on multi objective heuristic algorithm NSGA-II.
  \section{Metamodel and code co-evolution}
+ \textbf{code}~\cite{pham2017bidirectional,jongeling2020towards,jongeling2022Structural,zaheri2021towards,yu2012maintaining,Khelladi2020}. 
+ Co-evolution of code is distinguished from the co-evolution of other artifacts by the fact that $one$ change in a metamodel element will affect $n$ different code elements (see Table~\ref{table:locationofMMelemen}), in contrast to a $one$ to $one$ impact relationship between metamodel elements and models, constraints and transformation elements~\cite{kessentini2018integrating,kessentini2019automated,cicchetti2008automating,herrmannsdoerfer2009cope,garces2009managing,wachsmuth2007metamodel,batot2017heuristic,khelladi2017semi,correa2007refactoring,kessentini2018automated,khelladi2018change,garces2014adapting,10.1007/978-3-642-36089-3_9,kusel2015consistent,kusel2015systematic}.
  
-  \section{API and Client co-evolution}
+ Yu et al.~\cite{yu2012maintaining} proposed to co-evolve the metamodels and the generated API in both directions. However, they do not co-evolve the code on top of it, which our approach does. 
+ %
+ Khelladi et al.~\cite{Khelladi2020} proposed an approach that propagates metamodel changes in the code as a co-evolution mechanism. However, it is based on static analysis to detect the impacts and not on the actual errors that appear from the compilation of the code after the metamodel evolution. It further applies a semi-automatic co-evolution requiring developers' intervention, and without checking behavioral correctness with tests with no comparison to a baseline. 
+ 
+ 
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \subsection{API and client code co-evolution}
+ \label{API_evolution}
+ 
+ %In this paper, we focus so far the co-evolution on the direction metamodel to code, which is not trivial. 
+ 
+ Existing approaches for code migration are related to our work. We focus on the main existing approaches to compare them with our approach. Henkel et al.~\cite{henkel2005catchup} proposed an approach that captures refactoring actions and replays them on the code to migrate. However, they support only the changes renames, moves, and type changes. 
+ 
+ Nguyen et al. \cite{nguyen2010graph} also proposed an approach that guides developers in adapting code by learning adaptation patterns from previously migrated code. Similarly, Dagenais et al.~\cite{dagenais2011recommending,5070565,10.1145/1932682.1869486} also use a recommendation mechanism of code changes by mining them from previously migrated code. 
+ %
+ Anderson et al.~\cite{andersen2010generic} proposed to migrate drivers in response to evolutions in Linux internal libraries. It identifies common changes made in a set of files to extract a generic patch that can be reused on other code parts. Gerasimou et al. \cite{10.1145/3194793.3194798} extract a set of mapping rules and apply code-based transformations to update its clients.
+ %todo Coccinelle http://coccinelle.lip6.fr/
+ 
+% \input{RelatedWorkTable}
+ 
+ Our current work distinguishes from these code migration approaches~\cite{henkel2005catchup,nguyen2010graph,dagenais2011recommending,andersen2010generic,10.1145/3194793.3194798} by considering and reasoning on the changes at the metamodel level to match the different pattern usages of the generated code elements. 
+ %and not at the code level. Thus, our approach treats way less changes to identify the impacted parts in the code than code migration approaches \cite{henkel2005catchup,nguyen2010graph,dagenais2011recommending,andersen2010generic}. 
+ This is possible thanks to the abstraction offered by the metamodels. 
+ %Whereas our work considers $one$ change of a given element, $n$ changes must be considered in order to fully migrate the code. 
+ %
+ % our approach VS api migration approaches
+ % \cite{henkel2005catchup,andersen2010generic} 
+ Moreover, there are similarities with migration approaches, %(example-based approaches and code transformation based approaches) in the aim, 
+ which is evolving the dependent client code. But these approaches do not handle all the equivalents of the impacting metamodel changes we do (see Table~\ref{table:ResolutionsCatalog}), and that occurred in our case studies. They handle only a subset of changes~\cite{henkel2005catchup,andersen2010generic}. %The second main difference between our approach and the example-based approaches is that we don't use a pre-collected examples to learn how to evolve the additional code/\red{client}, we update the impacted parts of the additional code/\red{client} using only the set of detected metamodel changes \cite{6606596,9079197}. The main difference between our approach and code transformation based approaches is that they start by detecting the usages of the API, then they migrate the usages using a mapping between the old and the new version of the API. Our approach starts by detecting the changes of the metamodel then locating the impacted code before evolving it \cite{8443580}. The last main difference is that we validate our approach using test suites. Many other approaches don't treat validation step \cite{4814159}.
+ %
+ %Therefore, we did not consider them as a baseline because we know a priori that too many changes would not be treated, hence, the comparison would be unfair and biased. %Moreover, we used EMF for the implementation and the valuation, but our approach conceptually remains valid for other abstracted models that affect a Java code, such as in JHipster or OpenAPI.
+ Other migration approaches~\cite{6606596,10.1145/3387905.3388608,9079197} rely on pre-collected examples to learn how to evolve the additional client code. Xu et al. \cite{8813263} instead of learning from code examples, it constructs a database of edits to use during clients' migration. Our approach starts by detecting the changes of the metamodel and then locating the impacted code before co-evolving it without the need to learn from previous examples. 
+ 
+ %Zhong et al. \cite{10.1145/3597503.3639084} propose "LibCatch", a compiler-directed tool for migrating API callsite of client code. LibCatch uses compiling error message to match it with an error type. Each error type has several corresponding migration actions to resolve the error. Then, it follows an optimization algorithm to find the right migration action to apply that minimizes the total number of compiling errors.
+ 
+ Zhong et al. \cite{10.1145/3597503.3639084} proposes "LibCatch", a tool to co-evolve client code to APIs evolution by reducing the compilation errors. They do not consider the API changes to correctly propagate them to the code, which may lead to only eliminating the code errors while they could be incorrect resolutions, as shown in our RQ3. They further do not use any mechanism to check the behavioral correctness of the code co-evolution and with not comparison to a ground-truth.
+ 
+ 
+ %\blue{Here summarize quickly the table 9}
+ %To summarize, our approach overcomes the following limitations of existing approaches:
+ %\begin{itemize}
+ %   \item No approach can automatically co-evolve the code without learning previously from exiting examples.
+ %   \item Using change interface to detect the metamodel changes which allows handling any change type.
+ %   \item Only Fazzini et al. \cite{10.1145/3387905.3388608} propose to check the code migration using differential testing but it still needs previous example-based learning to update the client code.
+ %\end{itemize}
+ 
+ 
+ 
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+ 
+ \subsection{Automatic Program Repair}
+ \label{APR}
+ 
+ In addition to migration approaches, extensive state of the art exists on program repair~\cite{goues2019automated,liu2020efficiency,monperrus2018automatic,gazzola2017automatic}. However, they do not repair code errors, but rather bugs that are found due to failing tests (e.g., Meng at al.~\cite{10.5555/2486788.2486855}, etc.). They could be used as a next step after co-evolution. 
+ 
+
+ %Table~\ref{table:relatedWorkTable} 
+ summarizes closely related work from the metamodel and code co-evolution~\ref{metamodel_artifacts}, API-client code co-evolution~\ref{API_evolution}, and Automatic Program Repair~\ref{APR} categories. Moreover, it compares and highlights the advantages of our approach over those related work. In particular, we compare them with the following criteria: %selected the comparison features as follows : 
+ 
+ \begin{enumerate}
+ 	%\item Category: it represents the evolved artifact impacting the code.
+ 	%\item Approach: it gives the main idea of the approach.
+ 	\item Automation: it indicates whether the approach is automatic, semi-automatic, or manual.
+ 	\item "Requiring pre-learning": %many approaches need to analyse supplementary data to be capable of co-evolving the code. 
+ 	this feature indicates if a given approach is standalone by immediately co-evolving the code or needs previous external code analysis to learn how to co-evolve client code by synthesising the co-evolution pattern.
+ 	\item Changes types: it conveys the changes handled by each approach.
+ 	\item Validation: to ensure that the co-evolution did not impact the behavior of the code, a post validation step can be added. This feature indicates if the approach uses any mean of checking behavioral correctness of the code after the co-evolution.
+ \end{enumerate}
+ 
+ From Table~\ref{table:relatedWorkTable}, we observe that only two existing approaches are fully automatic and all the rest are semi-automatic. Only three approaches are standalone without requiring a pre-learning phase before the co-evolution. Our approach is fully automatic and standalone. Moreover, several different set of changes are handled by each approach, varying from low AST changes to high level composed (refactoring likes) changes as in Table~\ref{table:ResolutionsCatalog} in our work. Finally, only Fazzini et al.~\cite{10.1145/3387905.3388608} proposed to validate the co-evolved Android Apps with a similar methodology as in our work based on tests' execution. 
+ 
+ \subsection{Consistency checking }
+ \label{Consistency_checking}
+ Furthermore, close to code co-evolution, Riedl et al.~\cite{riedl2014towards} proposed an approach to detect inconsistencies between UML models and code. Kanakis et al.~\cite{kanakis2019empirical} showed that inconsistency information of model change and code error can help to resolve them in the code, which is equivalent to our matched pattern usages. 
+ Pham et al.~\cite{pham2017bidirectional} proposed an approach to synchronize architectural models and code with bidirectional mappings.
+ %
+ Jongeling et al.~\cite{jongeling2020towards} proposed an early approach for the consistency checking between system models and their implementations by focusing on recovering the traceability links between the models and the code. Jongeling et al.~\cite{jongeling2022Structural} later rely on the recovered traces to perform the consistency checking task.  %https://www.es.mdh.se/pdf_publications/5848.pdf
+ %
+ Zaheri et al.~\cite{zaheri2021towards} also proposed to support the checking of the consistency-breaking updates between models and generated artifacts, including the code. However,~\cite{pham2017bidirectional,jongeling2020towards,jongeling2022Structural,zaheri2021towards} do not focus on co-evolving the code to repair the inconsistencies with the models. 
+ 
+ % \section{API and Client co-evolution}
  %TODO What has been done so far: 
 %TODO Change detection
 %TODO Metamodel-Transformation co-evolution

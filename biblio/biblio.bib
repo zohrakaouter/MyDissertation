@@ -898,14 +898,23 @@
 	year={2014},
 	organization={Springer}
 }
-@inproceedings{garcia2013model,
-	title={Model transformation co-evolution: A semi-automatic approach},
-	author={Garc{\'\i}a, Jokin and Diaz, Oscar and Azanza, Maider},
-	booktitle={Software Language Engineering: 5th International Conference, SLE 2012, Dresden, Germany, September 26-28, 2012, Revised Selected Papers 5},
-	pages={144--163},
-	year={2013},
-	organization={Springer}
+
+@InProceedings{10.1007/978-3-642-36089-3_9,
+	author="Garc{\'i}a, Jokin
+	and Diaz, Oscar
+	and Azanza, Maider",
+	editor="Czarnecki, Krzysztof
+	and Hedin, G{\"o}rel",
+	title="Model Transformation Co-evolution: A Semi-automatic Approach",
+	booktitle="Software Language Engineering",
+	year="2013",
+	publisher="Springer Berlin Heidelberg",
+	address="Berlin, Heidelberg",
+	pages="144--163",
+	abstract="Model transformations are precious and effortful outcomes of Model-Driven Engineering. As any other artifact, transformations are also subject to evolution forces. Not only are they affected by changes to transformation requirements, but also by the changes to the associated metamodels. Manual co-evolution of transformations after these metamodel changes is cumbersome and error-prone. In this setting, this paper introduces a semi-automatic process for the co-evolution of transformations after metamodel evolution. The process is divided in two main stages: at the detection stage, the changes to the metamodel are detected and classified, while the required actions for each type of change are performed at the co-evolution stage. The contributions of this paper include the automatic co-evolution of breaking and resolvable changes and the assistance to the transformation developer to aid in the co-evolution of breaking and unresolvable changes. The presented process is implemented for ATL in the CO-URE prototype.",
+	isbn="978-3-642-36089-3"
 }
+
 @inproceedings{wachsmuth2007metamodel,
 	title={Metamodel adaptation and model co-adaptation},
 	author={Wachsmuth, Guido},
@@ -3018,3 +3027,438 @@ doi={10.1109/MS.2003.1231146}}
 	year={2023},
 	organization={IEEE}
 }
+@InProceedings{10.1007/978-3-540-87875-9_44,
+	author="Vermolen, Sander
+	and Visser, Eelco",
+	editor="Czarnecki, Krzysztof
+	and Ober, Ileana
+	and Bruel, Jean-Michel
+	and Uhl, Axel
+	and V{\"o}lter, Markus",
+	title="Heterogeneous Coupled Evolution of Software Languages",
+	booktitle="Model Driven Engineering Languages and Systems",
+	year="2008",
+	publisher="Springer Berlin Heidelberg",
+	address="Berlin, Heidelberg",
+	pages="630--644",
+	abstract="As most software artifacts, meta-models can evolve. Their evolution requires conforming models to co-evolve along with them. Coupled evolution supports this. Its applicability is not limited to the modeling domain. Other domains are for example evolving grammars or database schemas. Existing approaches to coupled evolution focus on a single, homogeneous domain. They solve the co-evolution problems locally and repeatedly. In this paper we present a systematic, heterogeneous approach to coupled evolution. It provides an automatically derived domain specific transformation language; a means of executing transformations at the top level; a derivation of the coupled bottom level transformation; and it allows for generic abstractions from elementary transformations. The feasibility of the architecture is evaluated by applying it to data model evolution.",
+	isbn="978-3-540-87875-9"
+}
+
+@article{sprinkle2004domain,
+	title={A domain-specific visual language for domain model evolution},
+	author={Sprinkle, Jonathan and Karsai, Gabor},
+	journal={Journal of Visual Languages \& Computing},
+	volume={15},
+	number={3-4},
+	pages={291--307},
+	year={2004},
+	publisher={Elsevier}
+}
+@inproceedings{wimmer2010using,
+	title={On using inplace transformations for model co-evolution},
+	author={Wimmer, Manuel and Kusel, Angelika and Sch{\"o}nb{\"o}ck, Johannes and Retschitzegger, Werner and Schwinger, Wieland and Kappel, Gerti},
+	booktitle={Proc. 2nd int. workshop model transformation with atl},
+	volume={711},
+	pages={65--78},
+	year={2010}
+}
+@InProceedings{10.1007/978-3-642-30476-7_13,
+	author="Wagelaar, Dennis
+	and Iovino, Ludovico
+	and Di Ruscio, Davide
+	and Pierantonio, Alfonso",
+	editor="Hu, Zhenjiang
+	and de Lara, Juan",
+	title="Translational Semantics of a Co-evolution Specific Language with the EMF Transformation Virtual Machine",
+	booktitle="Theory and Practice of Model Transformations",
+	year="2012",
+	publisher="Springer Berlin Heidelberg",
+	address="Berlin, Heidelberg",
+	pages="192--207",
+	abstract="Model-to-model transformations are often employed to establish translational semantics of Domain-Specific Languages (DSLs) by mapping high-level models into more concrete ones. Such semantics are also executable when there exists a target platform able to execute the target models. Conceiving a transformation that targets a low-level language still remains arduous due to the large semantic gap between the DSL and the corresponding target language. In this respect, depending on the domain of the DSL, this task can be made easier by reusing an existing platform and bytecode language for that domain, as for instance the EMF Transformation Virtual Machine (EMFTVM) for the domain of model transformation. This paper defines executable semantics for EMFMigrate, a model transformation language specifically designed for managing the coupled evolution in model-driven development. To this end, the approach considers EMFTVM as the runtime engine targeted by the proposed semantic mappings.",
+	isbn="978-3-642-30476-7"
+}
+@InProceedings{10.1007/978-3-642-38883-5_10,
+	author="Krause, Christian
+	and Dyck, Johannes
+	and Giese, Holger",
+	editor="Duddy, Keith
+	and Kappel, Gerti",
+	title="Metamodel-Specific Coupled Evolution Based on Dynamically Typed Graph Transformations",
+	booktitle="Theory and Practice of Model Transformations",
+	year="2013",
+	publisher="Springer Berlin Heidelberg",
+	address="Berlin, Heidelberg",
+	pages="76--91",
+	abstract="A key challenge in model-driven software engineering is the evolution of metamodels and the required effort in migrating their instance models. Even though there already exist both theoretical work and tool support for coupled evolution of metamodels and models, the existing approaches lack expressive power for defining metamodel-specific coupled changes or are too generic to permit assurance of metamodel conformance. In this paper, we devise a mechanism to define and execute coupled evolutions of metamodels and instance models based on graph transformations. We target the Eclipse Modeling Framework (EMF) and achieve the coupling of changes by bridging the conceptual gap between the metamodel and the instance model levels using a wrapper for EMF instance models. Coupled evolutions are then defined by means of dynamically typed graph transformation rules. This specification approach is expressive as it allows the developer to model customized migration rules, which are pivotal for metamodel-specific changes. We present static and run-time consistency checks and show how to decouple the execution of migrations. Our implementation consists of a wrapper package that is used in conjunction with the model transformation tool Henshin.",
+	isbn="978-3-642-38883-5"
+}
+@article{10.1007/s10270-012-0313-5,
+	author = {Levendovszky, Tihamer and Balasubramanian, Daniel and Narayanan, Anantha and Shi, Feng and Buskirk, Chris and Karsai, Gabor},
+	title = {A semi-formal description of migrating domain-specific models with evolving domains},
+	year = {2014},
+	issue_date = {May       2014},
+	publisher = {Springer-Verlag},
+	address = {Berlin, Heidelberg},
+	volume = {13},
+	number = {2},
+	issn = {1619-1366},
+	url = {https://doi.org/10.1007/s10270-012-0313-5},
+	doi = {10.1007/s10270-012-0313-5},
+	abstract = {One of the main advantages of defining a domain-specific modeling language (DSML) is the flexibility to adjust the language definition to changing requirements or in response to a deeper understanding of the domain. With the industrial applications of domain-specific modeling environments, models are valuable investments. If the modeling language evolves, these models must be seamlessly migrated to the evolved DSML. Although the changes stemming from the language evolution are not abrupt in nature, migrating existing models to a new language is still a challenging task. Our solution is the Model Change Language (MCL) tool set, which defines a DSML to describe the migration rules and then performs the model migration automatically. In this paper, we describe the precise semantics of MCL and its execution, along with the confluence of the migration.},
+	journal = {Softw. Syst. Model.},
+	month = {may},
+	pages = {807–823},
+	numpages = {17}
+}
+@article{10.1007/s10270-012-0296-2,
+	author = {Rose, Louis M. and Kolovos, Dimitrios S. and Paige, Richard F. and Polack, Fiona A. and Poulding, Simon},
+	title = {Epsilon Flock: a model migration language},
+	year = {2014},
+	issue_date = {May       2014},
+	publisher = {Springer-Verlag},
+	address = {Berlin, Heidelberg},
+	volume = {13},
+	number = {2},
+	issn = {1619-1366},
+	url = {https://doi.org/10.1007/s10270-012-0296-2},
+	doi = {10.1007/s10270-012-0296-2},
+	abstract = {Model-driven engineering introduces additional challenges for controlling and managing software evolution. Today, tools exist for generating model editors and for managing models with transformation, validation, merging and weaving. There is limited support, however, for model migration--a development activity in which instance models are updated in response to metamodel evolution. In this paper, we propose conservative copy--a style of model transformation that we believe is well-suited to model migration--and Epsilon Flock--a compact model-to-model transformation language tailored for model migration. The proposed structures are evaluated by comparing the conciseness of model migration strategies written in different styles of transformation language, using several examples of evolution taken from UML and the graphical modelling framework.},
+	journal = {Softw. Syst. Model.},
+	month = {may},
+	pages = {735–755},
+	numpages = {21},
+	keywords = {Metamodel evolution, Model migration, Model transformation}
+}
+
+@inproceedings{del2007semi,
+	title={Semi-automatic model integration using matching transformations and weaving models},
+	author={Del Fabro, Marcos Didonet and Valduriez, Patrick},
+	booktitle={Proceedings of the 2007 ACM symposium on Applied computing},
+	pages={963--970},
+	year={2007}
+}
+@inproceedings{de2008generating,
+	title={Generating version convertors for domain-specific languages},
+	author={de Geest, Gerardo and Vermolen, Sander and van Deursen, Arie and Visser, Eelco},
+	booktitle={2008 15th Working Conference on Reverse Engineering},
+	pages={197--201},
+	year={2008},
+	organization={IEEE}
+}
+@inproceedings{garces2009managing,
+	title={Managing model adaptation by precise detection of metamodel changes},
+	author={Garc{\'e}s, Kelly and Jouault, Fr{\'e}d{\'e}ric and Cointe, Pierre and B{\'e}zivin, Jean},
+	booktitle={Model Driven Architecture-Foundations and Applications: 5th European Conference, ECMDA-FA 2009, Enschede, The Netherlands, June 23-26, 2009. Proceedings 5},
+	pages={34--49},
+	year={2009},
+	organization={Springer}
+}
+@article{meyers2011generic,
+	title={A generic in-place transformation-based approach to structured model co-evolution},
+	author={Meyers, Bart and Wimmer, Manuel and Cicchetti, Antonio and Sprinkle, Jonathan},
+	journal={Electronic Communications of the EASST},
+	volume={42},
+	year={2011}
+}
+@article{mantz2013well,
+	title={Well-formed model co-evolution with customizable model migration},
+	author={Mantz, Florian and Taentzer, Gabriele and Lamo, Yngve},
+	journal={Electronic Communications of the EASST},
+	year={2013}
+}
+@inproceedings{anguel2014using,
+	title={Using weaving models in metamodel and model co-evolution approach},
+	author={Anguel, Fouzia and Amirat, Abdelkrim and Bounour, Nora},
+	booktitle={2014 6th International Conference on Computer Science and Information Technology (CSIT)},
+	pages={142--147},
+	year={2014},
+	organization={IEEE}
+}
+@article{hossler2005coevolution,
+	title={Coevolution of models, metamodels and transformations},
+	author={H{\"o}{\ss}ler, Joachim and Soden, Michael and Eichler, Hajo and others},
+	journal={Models and Human Reasoning},
+	pages={129--154},
+	year={2005},
+	publisher={Wissenschaft und Technik Verlag Berlin}
+}
+@inproceedings{florez2012coevolution,
+	title={Coevolution assistance for enterprise architecture models},
+	author={Florez, Hector and S{\'a}nchez, Mario and Villalobos, Jorge and Vega, Germ{\'a}n},
+	booktitle={Proceedings of the 6th International Workshop on Models and Evolution},
+	pages={27--32},
+	year={2012}
+}
+@article{fernandez2013adapting,
+	title={Adapting models in metamodels composition processes},
+	author={Fernandez, Hector Arturo Florez and others},
+	journal={Revista Vinculos},
+	volume={10},
+	number={1},
+	pages={96--108},
+	year={2013}
+}
+@inproceedings{wachsmuth2007metamodel,
+	title={Metamodel adaptation and model co-adaptation},
+	author={Wachsmuth, Guido},
+	booktitle={European conference on object-oriented programming},
+	pages={600--624},
+	year={2007},
+	organization={Springer}
+}
+@inproceedings{cicchetti2009managing,
+	title={Managing dependent changes in coupled evolution},
+	author={Cicchetti, Antonio and Di Ruscio, Davide and Pierantonio, Alfonso},
+	booktitle={International Conference on Theory and Practice of Model Transformations},
+	pages={35--51},
+	year={2009},
+	organization={Springer}
+}
+@inproceedings{van2011generic,
+	title={A generic solution for syntax-driven model co-evolution},
+	author={Van Den Brand, Mark and Proti{\'c}, Zvezdan and Verhoeff, Tom},
+	booktitle={Objects, Models, Components, Patterns: 49th International Conference, TOOLS 2011, Zurich, Switzerland, June 28-30, 2011. Proceedings 49},
+	pages={36--51},
+	year={2011},
+	organization={Springer}
+}
+@inproceedings{becker2007process,
+	title={A process model and classification scheme for semi-automatic meta-model evolution},
+	author={Becker, Steffen and Gruschko, Boris and Goldschmidt, Thomas and Koziolek, Heiko},
+	booktitle={1st Workshop MDD, SOA und IT-Management (MSI), GI, GiTO-Verlag},
+	pages={35--46},
+	year={2007}
+}
+@inproceedings{herrmannsdoerfer2009operation,
+	title={Operation-based versioning of metamodels with COPE},
+	author={Herrmannsdoerfer, Markus},
+	booktitle={2009 ICSE Workshop on Comparison and Versioning of Software Models},
+	pages={49--54},
+	year={2009},
+	organization={IEEE}
+}
+@inproceedings{wittern2013determining,
+	title={Determining the necessity of human intervention when migrating models of an evolved DSL},
+	author={Wittern, Hauke},
+	booktitle={2013 17th IEEE International Enterprise Distributed Object Computing Conference Workshops},
+	pages={209--218},
+	year={2013},
+	organization={IEEE}
+}
+@misc{Hebig2017,
+	abstract = {Modeling languages, just as all software artifacts, evolve. This poses the risk that legacy models of a company get lost, when they become incompatible with the new language version. To address this risk, a multitude of approaches for metamodel-model co-evolution were proposed in the last 10 years. However, the high number of solutions makes it difficult for practitioners to choose an appropriate approach. In this paper, we present a survey on 31 approaches to support metamodel-model co-evolution. We introduce a taxonomy of solution techniques and classify the existing approaches. To support researchers, we discuss the state of the art, in order to better identify open issues. Furthermore, we use the results to provide a decision support for practitioners, who aim to adopt solutions from research.},
+	author = {Hebig, Regina and Khelladi, Djamel Eddine and Bendraou, Reda},
+	booktitle = {IEEE Transactions on Software Engineering},
+	doi = {10.1109/TSE.2016.2610424},
+	file = {:home/zkebaili/.var/app/com.elsevier.MendeleyDesktop/data/data/Mendeley Ltd./Mendeley Desktop/Downloaded/Hebig, Khelladi, Bendraou - 2017 - Approaches to co-evolution of metamodels and models A survey.pdf:pdf},
+	issn = {00985589},
+	keywords = {Design notations and documentation,Metamodels,Models,Software engineering,Survey},
+	mendeley-groups = {MM models coevolution},
+	month = {may},
+	number = {5},
+	pages = {396--414},
+	publisher = {Institute of Electrical and Electronics Engineers Inc.},
+	title = {{Approaches to co-evolution of metamodels and models: A survey}},
+	volume = {43},
+	year = {2017}
+}
+
+@inproceedings{anguel2013towards,
+	title={Towards models and metamodels co-evolution approach},
+	author={Anguel, Fouzia and Amirat, Abdelkrim and Bounour, Nora},
+	booktitle={2013 11th International Symposium on Programming and Systems (ISPS)},
+	pages={163--167},
+	year={2013},
+	organization={IEEE}
+}
+@article{demuth2016co,
+	title={Co-evolution of metamodels and models through consistent change propagation},
+	author={Demuth, Andreas and Riedl-Ehrenleitner, Markus and Lopez-Herrejon, Roberto E and Egyed, Alexander},
+	journal={Journal of Systems and Software},
+	volume={111},
+	pages={281--297},
+	year={2016},
+	publisher={Elsevier}
+}
+@article{gomez2014approach,
+	title={An approach to the co-creation of models and metamodels in Enterprise Architecture Projects.},
+	author={G{\'o}mez, Paola and S{\'a}nchez, Mario E and Florez, Hector and Villalobos, Jorge},
+	journal={J. Object Technol.},
+	volume={13},
+	number={3},
+	pages={2--1},
+	year={2014}
+}
+@inproceedings{kessentini2016automated,
+	title={Automated metamodel/model co-evolution using a multi-objective optimization approach},
+	author={Kessentini, Wael and Sahraoui, Houari and Wimmer, Manuel},
+	booktitle={Modelling Foundations and Applications: 12th European Conference, ECMFA 2016, Held as Part of STAF 2016, Vienna, Austria, July 6-7, 2016, Proceedings 12},
+	pages={138--155},
+	year={2016},
+	organization={Springer}
+}
+@article{kessentini2019automated,
+	title={Automated metamodel/model co-evolution: A search-based approach},
+	author={Kessentini, Wael and Sahraoui, Houari and Wimmer, Manuel},
+	journal={Information and Software Technology},
+	volume={106},
+	pages={49--67},
+	year={2019},
+	publisher={Elsevier}
+}
+@inproceedings{kessentini2020interactive,
+	title={Interactive metamodel/model co-evolution using unsupervised learning and multi-objective search},
+	author={Kessentini, Wael and Alizadeh, Vahid},
+	booktitle={Proceedings of the 23rd ACM/IEEE International Conference on Model Driven Engineering Languages and Systems},
+	pages={68--78},
+	year={2020}
+}
+@inproceedings{schonbock2014care,
+	title={CARE: a constraint-based approach for re-establishing conformance-relationships},
+	author={Sch{\"o}nb{\"o}ck, Johannes and Kusel, Angelika and Etzlstorfer, Juergen and Kapsammer, Elisabeth and Schwinger, Wieland and Wimmer, Manuel and Wischenbart, Martin},
+	booktitle={Proceedings of the Tenth Asia-Pacific Conference on Conceptual Modelling-Volume 154},
+	pages={19--28},
+	year={2014}
+}
+@INPROCEEDINGS{8101267,
+	author={Batot, Edouard and Kessentini, Wael and Sahraoui, Houari and Famelis, Michalis},
+	booktitle={2017 ACM/IEEE 20th International Conference on Model Driven Engineering Languages and Systems (MODELS)}, 
+	title={Heuristic-Based Recommendation for Metamodel — OCL Coevolution}, 
+	year={2017},
+	volume={},
+	number={},
+	pages={210-220},
+	keywords={Model driven engineering;Software Engineering;Genetic Pogramming;Coevolution},
+	doi={10.1109/MODELS.2017.25}}
+	
+	@inproceedings{10.1007/978-3-642-41533-3_18,
+		author = {Demuth, Andreas and Lopez-Herrejon, Roberto E. and Egyed, Alexander},
+		title = {Supporting the Co-evolution of Metamodels and Constraints through Incremental Constraint Management},
+		year = {2013},
+		isbn = {9783642415326},
+		publisher = {Springer-Verlag},
+		address = {Berlin, Heidelberg},
+		url = {https://doi.org/10.1007/978-3-642-41533-3_18},
+		doi = {10.1007/978-3-642-41533-3_18},
+		abstract = {Design models must abide by constraints that can come from diverse sources, like metamodels, requirements, or the problem domain. Modelers intent to live by these constraints and thus desire automated mechanism that provide instant feedback on constraint violations. However, typical approaches assume that constraints do not evolve over time, which, unfortunately, is becoming increasingly unrealistic. For example, the co-evolution of metamodels and models requires corresponding constraints to be co-evolved continuously. This demands efficient constraint adaptation mechanisms to ensure that validated constraints are up-to-date. This paper presents an approach based on constraint templates that tackles this evolution scenario by automatically updating constraints. We developed the Cross-Layer Modeler XLM approach which relies on incremental consistency-checking. As a case study, we performed evolutions of the UML-metamodel and 21 design models. Our approach is sound and the empirical evaluation shows that it is near instant and scales with increasing model sizes.},
+		booktitle = {Proceedings of the 16th International Conference on Model-Driven Engineering Languages and Systems - Volume 8107},
+		pages = {287–303},
+		numpages = {17},
+		keywords = {metamodeling, consistency-checking, Co-evolution}
+	}
+	@article{markovic2008refactoring,
+		title={Refactoring OCL annotated UML class diagrams},
+		author={Markovi{\'c}, Slavi{\v{s}}a and Baar, Thomas},
+		journal={Software \& Systems Modeling},
+		volume={7},
+		pages={25--47},
+		year={2008},
+		publisher={Springer}
+	}
+	@inproceedings{hassam2011assistance,
+		title={Assistance system for ocl constraints adaptation during metamodel evolution},
+		author={Hassam, Kahina and Sadou, Salah and Le Gloahec, Vincent and Fleurquin, R{\'e}gis},
+		booktitle={2011 15th European conference on software maintenance and reengineering},
+		pages={151--160},
+		year={2011},
+		organization={IEEE}
+	}
+	@inproceedings{kusel2014systematic,
+		title={A Systematic Taxonomy of Metamodel Evolution Impacts on OCL Expressions.},
+		author={Kusel, Angelika and Etzlstorfer, Juergen and Kapsammer, Elisabeth and Langer, Philip and Retschitzegger, Werner and Schoenboeck, Johannes and Schwinger, Wieland and Wimmer, Manuel},
+		booktitle={ME@ MoDELS},
+		pages={2--11},
+		year={2014}
+	}
+	@inproceedings{cabot2004automatic,
+		title={Automatic integrity constraint evolution due to model subtract operations},
+		author={Cabot, Jordi and Conesa, Jordi},
+		booktitle={Conceptual Modeling for Advanced Application Domains: ER 2004 Workshops CoMoGIS, CoMWIM, ECDM, CoMoA, DGOV, and eCOMO, Shanghai, China, November 8-12, 2004. Proceedings 23},
+		pages={350--362},
+		year={2004},
+		organization={Springer}
+	}
+	@article{khelladi2017semi,
+		title={A semi-automatic maintenance and co-evolution of OCL constraints with (meta) model evolution},
+		author={Khelladi, Djamel Eddine and Bendraou, Reda and Hebig, Regina and Gervais, Marie-Pierre},
+		journal={Journal of Systems and Software},
+		volume={134},
+		pages={242--260},
+		year={2017},
+		publisher={Elsevier}
+	}
+	@article{mendez2010towards,
+		title={Towards transformation migration after metamodel evolution},
+		author={Mendez, David and Etien, Anne and Muller, Alexis and Casallas, Rubby},
+		journal={Model and Evolution Wokshop},
+		year={2010}
+	}
+	@inproceedings{di2011needed,
+		title={What is needed for managing co-evolution in mde?},
+		author={Di Ruscio, Davide and Iovino, Ludovico and Pierantonio, Alfonso},
+		booktitle={Proceedings of the 2nd International Workshop on Model Comparison in Practice},
+		pages={30--38},
+		year={2011}
+	}
+	@article{garces2014adapting,
+		title={Adapting transformations to metamodel changes via external transformation composition},
+		author={Garc{\'e}s, Kelly and Vara, Juan M and Jouault, Fr{\'e}d{\'e}ric and Marcos, Esperanza},
+		journal={Software \& Systems Modeling},
+		volume={13},
+		pages={789--806},
+		year={2014},
+		publisher={Springer}
+	}
+	@inproceedings{kusel2015consistent,
+		title={Consistent co-evolution of models and transformations},
+		author={Kusel, Angelika and Etzlstorfer, J{\"u}rgen and Kapsammer, Elisabeth and Retschitzegger, Werner and Schwinger, Wieland and Sch{\"o}nb{\"o}ck, Johannes},
+		booktitle={2015 ACM/IEEE 18th International Conference on Model Driven Engineering Languages and Systems (MODELS)},
+		pages={116--125},
+		year={2015},
+		organization={IEEE}
+	}
+	@inproceedings{khelladi2018change,
+		title={Change propagation-based and composition-based co-evolution of transformations with evolving metamodels},
+		author={Khelladi, Djamel Eddine and Kretschmer, Roland and Egyed, Alexander},
+		booktitle={Proceedings of the 21th ACM/IEEE international conference on model driven engineering languages and systems},
+		pages={404--414},
+		year={2018}
+	}
+	@inproceedings{garcia2012model,
+		title={Model transformation co-evolution: A semi-automatic approach},
+		author={Garcia, Jokin and Diaz, Oscar and Azanza, Maider},
+		booktitle={International conference on software language engineering},
+		pages={144--163},
+		year={2012},
+		organization={Springer}
+	}
+	@inproceedings{kessentini2018automated,
+		title={Automated co-evolution of metamodels and transformation rules: A search-based approach},
+		author={Kessentini, Wael and Sahraoui, Houari and Wimmer, Manuel},
+		booktitle={Search-Based Software Engineering: 10th International Symposium, SSBSE 2018, Montpellier, France, September 8-9, 2018, Proceedings 10},
+		pages={229--245},
+		year={2018},
+		organization={Springer}
+	}
+	@article{10.1145/1932682.1869486,
+		author = {Nguyen, Hoan Anh and Nguyen, Tung Thanh and Wilson, Gary and Nguyen, Anh Tuan and Kim, Miryung and Nguyen, Tien N.},
+		title = {A Graph-Based Approach to API Usage Adaptation},
+		year = {2010},
+		issue_date = {October 2010},
+		publisher = {Association for Computing Machinery},
+		address = {New York, NY, USA},
+		volume = {45},
+		number = {10},
+		issn = {0362-1340},
+		url = {https://doi.org/10.1145/1932682.1869486},
+		doi = {10.1145/1932682.1869486},
+		abstract = {Reusing existing library components is essential for reducing the cost of software development and maintenance. When library components evolve to accommodate new feature requests, to fix bugs, or to meet new standards, the clients of software libraries often need to make corresponding changes to correctly use the updated libraries. Existing API usage adaptation techniques support simple adaptation such as replacing the target of calls to a deprecated API, however, cannot handle complex adaptations such as creating a new object to be passed to a different API method, or adding an exception handling logic that surrounds the updated API method calls.This paper presents LIBSYNC that guides developers in adapting API usage code by learning complex API usage adaptation patterns from other clients that already migrated to a new library version (and also from the API usages within the library's test code). LIBSYNC uses several graph-based techniques (1) to identify changes to API declarations by comparing two library versions, (2) to extract associated API usage skeletons before and after library migration, and (3) to compare the extracted API usage skeletons to recover API usage adaptation patterns. Using the learned adaptation patterns, LIBSYNC recommends the locations and edit operations for adapting API usages. The evaluation of LIBSYNC on real-world software systems shows that it is highly correct and useful with a precision of 100% and a recall of 91%.},
+		journal = {SIGPLAN Not.},
+		month = {oct},
+		pages = {302–321},
+		numpages = {20},
+		keywords = {software evolution, API evolution, API usage adaptation, API usage model, program differencing}
+	}
+	
