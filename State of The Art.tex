@@ -18,7 +18,7 @@ In this chapter, we introduce the field of Model-Driven engineering. In section 
 To develop a software, a list of specifications is given to the developers, to code the final product. This approach can work in the case of small projects. When the complexity of the software increases, more efficient approaches must be adopted. Model driven engineering has proven  its efficiency comparing to other engineering disciplines \cite{1231146}.
 
 %\boitemagique{Model-Driven Enginereering}{
-\textit{Model-Driven Engineering(MDE)} is the systematic use of models as primary artifacts during a software engineering process. MDE includes various model-driven approaches to software development, including model-driven architecture, domain-specific modeling and model-integrated computing~\cite{10.1145/1985793.1985882}. The first appearance of MDE like approaches started in the 80's \cite{10.1007/s10270-005-0079-0}. MDE still adopted  and a lot of work is being done in academia and industry, refs.
+\textit{Model-Driven Engineering(MDE)} is the systematic use of models as primary artifacts during a software engineering process. MDE includes various model-driven approaches to software development, including model-driven architecture, domain-specific modeling and model-integrated computing~\cite{10.1145/1985793.1985882}. The first appearance of MDE like approaches started in the 80's \cite{10.1007/s10270-005-0079-0}. MDE is still adopted  and a lot of work is being done in academia and industry, refs.
 
 %}
 %TODO detaills the benefits of MDE
@@ -29,11 +29,11 @@ The goal of MDE is to improve productivity, quality, and maintainability by leve
 %Metamodeling and modeling langugaes
 
 % MEtamodel def :
-The metamodel represent the main artifact in MDE. There are many definitions of the concept "metamodel" that can be found in literature:
+The metamodel represent the main artifact in MDE. There are many definitions of the concept "metamodel" that can be found in literature \cite{stahl2006model}:
 
 \textit{A metamodel} describes concepts that can be used for modeling the model (i.e. in the instances of the metamodel).
 
-\textit {Metamodels} are models that make statements about modeling. More precisely, a metamodel describes the possible structure of models in an abstract way, it defines the constructs of a modeling language and their relationships, as well as constraints and modeling rules – but not the concrete syntax of the language.
+\textit {Metamodels} are models that make statements about modeling. More precisely, a metamodel describes the possible structure of models in an abstract way, it defines the constructs of a modeling language and their relationships, as well as constraints and modeling rules, but not the concrete syntax of the language.
 
 \textit{A metamodel} defines the abstract syntax and the static semantics of a modeling language ,Vice versa, each formal language, such as Java or UML, possesses a metamodel.
 
@@ -42,9 +42,9 @@ Seidewitz \cite{seidewitz2003models} gives another commonly used definition of \
 \section{Metamodeling}
 
 %%
-\textit{Metamodeling} is the process of metamodel creation. Metamodeling is done thanks to metamodeling languages ( that is in turn described by a meta metamodel).
+\textit{Metamodeling} is the process of metamodel creation. Metamodeling is done thanks to metamodeling languages ( that is in turn described by a meta-metamodel).
 
-Metamodeling must gathers the whole  knowledge that is required to define, precise, and deal with MDE challenges in its different tasks:
+Metamodeling must gather the whole  knowledge that is required to define, precise, and deal with MDE challenges in its different tasks \cite{wortmann2020modeling}:
 
 %DSL/ sftware language 
 %Construction of domain-specific modeling languages (DSLs): 
@@ -58,7 +58,7 @@ Metamodeling must gathers the whole  knowledge that is required to define, preci
 \end{itemize}
 
 
-In the context Domain-Specific Language, DSMLs can be tailored via metamodeling to precisely match the domain's semantics and syntax. The concrete syntax that is, the concrete form of the textual or graphical constructs with which the modeling is done must represent the metamodel in an unambiguous way. Having graphic elements that linked directly to a familiar domain makes it easier to learn and allows domain  experts to contribute, such as system engineers and experienced software architects, ensure that software systems meet user needs \cite{volter2013model}. The metamodel is the basis for the automated, tool-supported processing of Metamodeling models. On the other hand, a suitable concrete syntax is the interface to the modeler and its quality decides what degree of readability the models have \cite{}.
+In the context of Domain-Specific Language, DSMLs can be tailored via metamodeling to precisely match the domain's semantics and syntax. The concrete syntax that is, the concrete form of the textual or graphical constructs with which the modeling is done must represent the metamodel in an unambiguous way. Having graphic elements that linked directly to a familiar domain makes it easier to learn and allows domain  experts to contribute, such as system engineers and experienced software architects, ensure that software systems meet user needs \cite{volter2013model}. The metamodel is the basis for the automated, tool-supported processing of Metamodeling models. On the other hand, a suitable concrete syntax is the interface to the modeler and its quality decides what degree of readability the models have \cite{}.
 
 
 %Metamodeling tools/languages/techniques examples :
@@ -149,17 +149,17 @@ that lead to adapt the software to new changes \cite{}.
 
 \chaptermark{State Of The Art}
 %offline and online process
-we present an overview of what has been done in the field of code co-evolution in the context of model-driven engineering. We split this overview into ? parts. In section ?, we present the metamodel change detection approaches. Section ? presents the co-evolution of model, transformations, constraints with evolving metamodel. In section ?, we discuss code co-evolution and relevant literature about API-client evolution, language evolution, and evolution in low-code platforms. We finish this chapter with a discussion with focus on limitations and research gap.
+In this chapter, we present an overview of what has been done in the field of code co-evolution in the context of Model-Driven Engineering. We split this overview into ? parts. In section ?, we present the metamodel change detection approaches. Section ? presents the co-evolution of model, transformations, constraints with evolving metamodel. In section ?, we discuss code co-evolution and relevant literature about API-client evolution, language evolution, and evolution in low-code platforms. We finish this chapter with a discussion focused on limitations and research gap.
  \section{Metamodel change detection}
  One of the intrinsic properties of software artifacts is its continuous evolution~\cite{mens2008introduction}. Like any software artifact, metamodels are meant to evolve to meet the represented domain. %one key sentence of the context
  In this thesis, our context is triggered by the metamodel evolution, that's why we find essential to understand this evolution in detail.
  %metamodel diffing
  A lot of work has been done on metamodel diffing.
- Detection approaches can be classfied into two main categories; online detection approaches, and offline detection approaches. Thid classification can be refined using some factors : automation degree, types of detected changes, considered issues (overlap, indefinit length, hidden changes, order of changes, undo operations)\cite{hebig2016approaches}.
+ Detection approaches can be classified into two main categories; online\footnote{Offline approaches perform detection after the metamodel has been evolved.} detection approaches, and offline\footnote{Online approaches perform instant detection for each change during the metamodel evolution} detection approaches. Thid classification can be refined using some factors : automation degree, types of detected changes, considered issues (overlap, indefinit length, hidden changes, order of changes, and undo operations)\cite{hebig2016approaches}.
  
  
  
-  In another hand, many of them classified the detected changes based on their impact on the treated artifact (for ex, on models, constraint, transformation). Here we put the largest set of changes types, later, we will specify treated types with their possible impact on the code.
+  In another hand, many of them classified the detected changes based on their impact on the treated artifact (models, constraint, transformation, and code). Here we put the largest set of changes types, later, we will specify treated types with their possible impact on the code.
  
  
  Two types of evolution changes are considered when evolving a metamodel: \emph{atomic} and \emph{complex} changes~\cite{hebig2016approaches,Herrmannsdoerfer2011}. 
@@ -197,7 +197,7 @@ we present an overview of what has been done in the field of code co-evolution i
  	breaking and unresolvable
  	
  \section{Co-evolution of models, constraints, and transformation}
- In MDE ecosystem, the metamodel is the starting point to have other artifacts that we defined in section ?. in this section, we will present an overview of the existing works about these artifacts co-evolution. Note that if the solution est applied during the evolution of the metamodel, we call it an online solution, otherwise it is offline.
+ In MDE ecosystem, the metamodel is the starting point to have other artifacts that we defined in section ?. in this section, we will present an overview of the existing work about these artifacts co-evolution. Note that if the solution is applied during the evolution of the metamodel, we call it an online solution, otherwise it is offline.
  The comparison, advantages, and drawbacks of the presented approaches is out of the scope of this dissertation.
  
 \subsection{Metamodel and model co-evolution}
@@ -233,11 +233,12 @@ Another artifact that depends on the metamodel and needs to be adapted to the ev
 Almost all the existing transformation approaches that we find in literature start by analyzing the impact of the metamodel on the model transformations.
 Mendez et al. \cite{mendez2010towards}, Ruscio et al. \cite{di2011needed}, Garces et al.\cite{garces2014adapting}, Kusel, et al.\cite{kusel2015consistent}, and khelladi et al. \cite{khelladi2018change} proposed to co-evolve impacted transformations with a set of resolutions. The approach of khelladi et al. \cite{khelladi2018change} covers the largest set of possible resolutions where Ruscio et al. \cite{di2011needed}, estimate the cost of the co-evolution to decide about the co-evolution,they further explored the variability of the co-evolution due to the possible alternative resolution. Garcia et al.\cite{garcia2012model} proposed a ATL transformation-based approach which means that their resolutions are ATL transformations. All the approaches propose unique resolution to co-evolve each transformation.
 Ruscio et al. \cite{di2011needed} approach allows developers to manually replace or refine a resolution. Khelladi et al. \cite{khelladi2018change}  allow to compose existing resolutions into a new one. Kessentini et al. \cite{kessentini2018automated} used a different approach that do not use the changes of the metamodel as input and do not process by an impact analysis, but it uses a search-based approach that relied on multi objective heuristic algorithm NSGA-II.
- \section{Metamodel and code co-evolution}
- \textbf{code}~\cite{pham2017bidirectional,jongeling2020towards,jongeling2022Structural,zaheri2021towards,yu2012maintaining,Khelladi2020}. 
- Co-evolution of code is distinguished from the co-evolution of other artifacts by the fact that $one$ change in a metamodel element will affect $n$ different code elements (see Table~\ref{table:locationofMMelemen}), in contrast to a $one$ to $one$ impact relationship between metamodel elements and models, constraints and transformation elements~\cite{kessentini2018integrating,kessentini2019automated,cicchetti2008automating,herrmannsdoerfer2009cope,garces2009managing,wachsmuth2007metamodel,batot2017heuristic,khelladi2017semi,correa2007refactoring,kessentini2018automated,khelladi2018change,garces2014adapting,10.1007/978-3-642-36089-3_9,kusel2015consistent,kusel2015systematic}.
+ \section{Code co-evolution}
+ We divided the related work to code co-evolution  into four (4) main categories : 1) Metamodel and code co-evolution, 2) API and client code co-evolution, 3) Automatic Program repair, and 4) Consistency checking. 
+ \subsection{Metamodel and code co-evolution}
+ Co-evolution of code is distinguished from the co-evolution of other artifacts by the fact that $one$ change in a metamodel element will affect $n$ different code elements, in contrast to a $one$ to $one$ impact relationship between metamodel elements and models, constraints and transformation elements~\cite{kessentini2018integrating,kessentini2019automated,cicchetti2008automating,herrmannsdoerfer2009cope,garces2009managing,wachsmuth2007metamodel,batot2017heuristic,khelladi2017semi,correa2007refactoring,kessentini2018automated,khelladi2018change,garces2014adapting,10.1007/978-3-642-36089-3_9,kusel2015consistent,kusel2015systematic}.
  
- Yu et al.~\cite{yu2012maintaining} proposed to co-evolve the metamodels and the generated API in both directions. However, they do not co-evolve the code on top of it, which our approach does. 
+ Yu et al.~\cite{yu2012maintaining} proposed to co-evolve the metamodels and the generated API in both directions. However, they do not co-evolve the code on top of it.% which our approach does. 
  %
  Khelladi et al.~\cite{Khelladi2020} proposed an approach that propagates metamodel changes in the code as a co-evolution mechanism. However, it is based on static analysis to detect the impacts and not on the actual errors that appear from the compilation of the code after the metamodel evolution. It further applies a semi-automatic co-evolution requiring developers' intervention, and without checking behavioral correctness with tests with no comparison to a baseline. 
  
@@ -248,7 +249,8 @@ Ruscio et al. \cite{di2011needed} approach allows developers to manually replace
  
  %In this paper, we focus so far the co-evolution on the direction metamodel to code, which is not trivial. 
  
- Existing approaches for code migration are related to our work. We focus on the main existing approaches to compare them with our approach. Henkel et al.~\cite{henkel2005catchup} proposed an approach that captures refactoring actions and replays them on the code to migrate. However, they support only the changes renames, moves, and type changes. 
+ Existing approaches for code migration are related to our work.% We focus on the main existing approaches to compare them with our approach.
+  Henkel et al.~\cite{henkel2005catchup} proposed an approach that captures refactoring actions and replays them on the code to migrate. However, they support only the changes renames, moves, and type changes. 
  
  Nguyen et al. \cite{nguyen2010graph} also proposed an approach that guides developers in adapting code by learning adaptation patterns from previously migrated code. Similarly, Dagenais et al.~\cite{dagenais2011recommending,5070565,10.1145/1932682.1869486} also use a recommendation mechanism of code changes by mining them from previously migrated code. 
  %
@@ -257,18 +259,18 @@ Ruscio et al. \cite{di2011needed} approach allows developers to manually replace
  
 % \input{RelatedWorkTable}
  
- Our current work distinguishes from these code migration approaches~\cite{henkel2005catchup,nguyen2010graph,dagenais2011recommending,andersen2010generic,10.1145/3194793.3194798} by considering and reasoning on the changes at the metamodel level to match the different pattern usages of the generated code elements. 
+ %Our current work distinguishes from these code migration approaches~\cite{henkel2005catchup,nguyen2010graph,dagenais2011recommending,andersen2010generic,10.1145/3194793.3194798} by considering and reasoning on the changes at the metamodel level to match the different pattern usages of the generated code elements. 
  %and not at the code level. Thus, our approach treats way less changes to identify the impacted parts in the code than code migration approaches \cite{henkel2005catchup,nguyen2010graph,dagenais2011recommending,andersen2010generic}. 
- This is possible thanks to the abstraction offered by the metamodels. 
+% This is possible thanks to the abstraction offered by the metamodels. 
  %Whereas our work considers $one$ change of a given element, $n$ changes must be considered in order to fully migrate the code. 
  %
  % our approach VS api migration approaches
  % \cite{henkel2005catchup,andersen2010generic} 
- Moreover, there are similarities with migration approaches, %(example-based approaches and code transformation based approaches) in the aim, 
- which is evolving the dependent client code. But these approaches do not handle all the equivalents of the impacting metamodel changes we do (see Table~\ref{table:ResolutionsCatalog}), and that occurred in our case studies. They handle only a subset of changes~\cite{henkel2005catchup,andersen2010generic}. %The second main difference between our approach and the example-based approaches is that we don't use a pre-collected examples to learn how to evolve the additional code/\red{client}, we update the impacted parts of the additional code/\red{client} using only the set of detected metamodel changes \cite{6606596,9079197}. The main difference between our approach and code transformation based approaches is that they start by detecting the usages of the API, then they migrate the usages using a mapping between the old and the new version of the API. Our approach starts by detecting the changes of the metamodel then locating the impacted code before evolving it \cite{8443580}. The last main difference is that we validate our approach using test suites. Many other approaches don't treat validation step \cite{4814159}.
+% Moreover, there are similarities with migration approaches, %(example-based approaches and code transformation based approaches) in the aim, 
+% which is evolving the dependent client code. But these approaches do not handle all the equivalents of the impacting metamodel changes we do (see Table~\ref{table:ResolutionsCatalog}), and that occurred in our case studies. They handle only a subset of changes~\cite{henkel2005catchup,andersen2010generic}. %The second main difference between our approach and the example-based approaches is that we don't use a pre-collected examples to learn how to evolve the additional code/\red{client}, we update the impacted parts of the additional code/\red{client} using only the set of detected metamodel changes \cite{6606596,9079197}. The main difference between our approach and code transformation based approaches is that they start by detecting the usages of the API, then they migrate the usages using a mapping between the old and the new version of the API. Our approach starts by detecting the changes of the metamodel then locating the impacted code before evolving it \cite{8443580}. The last main difference is that we validate our approach using test suites. Many other approaches don't treat validation step \cite{4814159}.
  %
  %Therefore, we did not consider them as a baseline because we know a priori that too many changes would not be treated, hence, the comparison would be unfair and biased. %Moreover, we used EMF for the implementation and the valuation, but our approach conceptually remains valid for other abstracted models that affect a Java code, such as in JHipster or OpenAPI.
- Other migration approaches~\cite{6606596,10.1145/3387905.3388608,9079197} rely on pre-collected examples to learn how to evolve the additional client code. Xu et al. \cite{8813263} instead of learning from code examples, it constructs a database of edits to use during clients' migration. Our approach starts by detecting the changes of the metamodel and then locating the impacted code before co-evolving it without the need to learn from previous examples. 
+ Other migration approaches~\cite{6606596,10.1145/3387905.3388608,9079197} rely on pre-collected examples to learn how to evolve the additional client code. Xu et al. \cite{8813263} instead of learning from code examples, it constructs a database of edits to use during clients' migration. %Our approach starts by detecting the changes of the metamodel and then locating the impacted code before co-evolving it without the need to learn from previous examples. 
  
  %Zhong et al. \cite{10.1145/3597503.3639084} propose "LibCatch", a compiler-directed tool for migrating API callsite of client code. LibCatch uses compiling error message to match it with an error type. Each error type has several corresponding migration actions to resolve the error. Then, it follows an optimization algorithm to find the right migration action to apply that minimizes the total number of compiling errors.
  
@@ -293,21 +295,22 @@ Ruscio et al. \cite{di2011needed} approach allows developers to manually replace
  
  In addition to migration approaches, extensive state of the art exists on program repair~\cite{goues2019automated,liu2020efficiency,monperrus2018automatic,gazzola2017automatic}. However, they do not repair code errors, but rather bugs that are found due to failing tests (e.g., Meng at al.~\cite{10.5555/2486788.2486855}, etc.). They could be used as a next step after co-evolution. 
  
+ //To refresh new references
 
  %Table~\ref{table:relatedWorkTable} 
- summarizes closely related work from the metamodel and code co-evolution~\ref{metamodel_artifacts}, API-client code co-evolution~\ref{API_evolution}, and Automatic Program Repair~\ref{APR} categories. Moreover, it compares and highlights the advantages of our approach over those related work. In particular, we compare them with the following criteria: %selected the comparison features as follows : 
+ %summarizes closely related work from the metamodel and code co-evolution~\ref{metamodel_artifacts}, API-client code co-evolution~\ref{API_evolution}, and Automatic Program Repair~\ref{APR} categories. Moreover, it compares and highlights the advantages of our approach over those related work. In particular, we compare them with the following criteria: %selected the comparison features as follows : 
  
- \begin{enumerate}
+ %\begin{enumerate}
  	%\item Category: it represents the evolved artifact impacting the code.
  	%\item Approach: it gives the main idea of the approach.
- 	\item Automation: it indicates whether the approach is automatic, semi-automatic, or manual.
- 	\item "Requiring pre-learning": %many approaches need to analyse supplementary data to be capable of co-evolving the code. 
- 	this feature indicates if a given approach is standalone by immediately co-evolving the code or needs previous external code analysis to learn how to co-evolve client code by synthesising the co-evolution pattern.
- 	\item Changes types: it conveys the changes handled by each approach.
- 	\item Validation: to ensure that the co-evolution did not impact the behavior of the code, a post validation step can be added. This feature indicates if the approach uses any mean of checking behavioral correctness of the code after the co-evolution.
- \end{enumerate}
+ %	\item Automation: it indicates whether the approach is automatic, semi-automatic, or manual.
+ %	\item "Requiring pre-learning": %many approaches need to analyse supplementary data to be capable of co-evolving the code. 
+ %	this feature indicates if a given approach is standalone by immediately co-evolving the code or needs previous external code analysis to learn how to co-evolve client code by synthesising the co-evolution pattern.
+ %	\item Changes types: it conveys the changes handled by each approach.
+ %	\item Validation: to ensure that the co-evolution did not impact the behavior of the code, a post validation step can be added. This feature indicates if the approach uses any mean of checking behavioral correctness of the code after the co-evolution.
+% \end{enumerate}
  
- From Table~\ref{table:relatedWorkTable}, we observe that only two existing approaches are fully automatic and all the rest are semi-automatic. Only three approaches are standalone without requiring a pre-learning phase before the co-evolution. Our approach is fully automatic and standalone. Moreover, several different set of changes are handled by each approach, varying from low AST changes to high level composed (refactoring likes) changes as in Table~\ref{table:ResolutionsCatalog} in our work. Finally, only Fazzini et al.~\cite{10.1145/3387905.3388608} proposed to validate the co-evolved Android Apps with a similar methodology as in our work based on tests' execution. 
+% From Table~\ref{table:relatedWorkTable}, we observe that only two existing approaches are fully automatic and all the rest are semi-automatic. Only three approaches are standalone without requiring a pre-learning phase before the co-evolution. Our approach is fully automatic and standalone. Moreover, several different set of changes are handled by each approach, varying from low AST changes to high level composed (refactoring likes) changes as in Table~\ref{table:ResolutionsCatalog} in our work. Finally, only Fazzini et al.~\cite{10.1145/3387905.3388608} proposed to validate the co-evolved Android Apps with a similar methodology as in our work based on tests' execution. 
  
  \subsection{Consistency checking }
  \label{Consistency_checking}
