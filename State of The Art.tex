@@ -191,11 +191,14 @@ In this chapter, we present an overview of what has been done in the field of co
  	  
  	\vspace{1em}
  	
- 	Categorization of changes : 
- 	non breaking
- 	breaking resolvable
- 	breaking and unresolvable
+ In Model-Dricen Engineering area, metamodel changes can be divided into three categories\cite{gruschko2007towards}:
+ \begin{itemize}
  	
+ \item	Non-breaking changes can be resolved automatically.
+  \item Breaking and resolvable changes break the conformance of existing data, although they can be automatically adapted.
+ \item Breaking and unresolvable changes break the conformance of existing data, that cannot be automatically adapted, and require user intervention
+ \end{itemize}
+ 	In API evolution context, API changes can be classified as Non-breaking API Changes	or Breaking API Changes. A breaking change is not backwards compatible. In this case, client code calling the evolved API by a Breaking Change fails to compile or may behave differently at runtime. A non-breaking change is backwards compatible. This kind of changes aims to extend the functionalities or fix errors \cite{dig2006apis}.
  \section{Co-evolution of models, constraints, and transformation}
  In MDE ecosystem, the metamodel is the starting point to have other artifacts that we defined in section ?. in this section, we will present an overview of the existing work about these artifacts co-evolution. Note that if the solution is applied during the evolution of the metamodel, we call it an online solution, otherwise it is offline.
  The comparison, advantages, and drawbacks of the presented approaches is out of the scope of this dissertation.
