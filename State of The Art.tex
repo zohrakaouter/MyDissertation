@@ -19,6 +19,7 @@ To develop a software, a list of specifications is given to the developers, to c
 
 %\boitemagique{Model-Driven Enginereering}{
 \textit{Model-Driven Engineering(MDE)} is the systematic use of models as primary artifacts during a software engineering process. MDE includes various model-driven approaches to software development, including model-driven architecture, domain-specific modeling and model-integrated computing~\cite{10.1145/1985793.1985882}. The first appearance of MDE like approaches started in the 80's \cite{10.1007/s10270-005-0079-0}. MDE is still adopted  and a lot of work is being done in academia and industry, refs.
+//improve communication between multi-disciplinary collaborators.
 
 %}
 %TODO detaills the benefits of MDE
@@ -209,7 +210,7 @@ Due to metamodel evolution, the model becomes "no conform". A set of resolutions
 %Once the metamodel changes are detected, using one of the previously presented approaches in Section ?, 
  %a set of resolutions are applied to co-evolve the model to gain again the conformity to the metamodel.
  %change order, resolution order
- The co-evolution between metamodel and models can be processed manually but it requires a huge expertise. 
+ The co-evolution between metamodel and models can be processed manually but it requires a huge expertise, and when the number of models to co-evolve increases, manual co-evolution becomes hard task. 
  Most of automatic and semi-automatic Co-evolution  approaches use automatic or manual diffing metamodel approaches in their solutions. Model co-evolution approaches that we found can be categorized into five categories \cite{Hebig2017}. The first category is Resolution Strategy Languages that specifies in a transformation language how to update the model given the list of metamodel changes \cite{10.1007/978-3-540-87875-9_44,sprinkle2004domain,wimmer2010using,10.1007/978-3-642-30476-7_13,10.1007/978-3-642-38883-5_10,10.1007/s10270-012-0313-5,10.1007/s10270-012-0296-2}. The category Resolution Strategy Generation groups approaches that generate full or partial resolution for each metamodel change \cite{del2007semi,de2008generating,garces2009managing,meyers2011generic,anguel2014using}.
  
  
@@ -258,6 +259,7 @@ Ruscio et al. \cite{di2011needed} approach allows developers to manually replace
  Nguyen et al. \cite{nguyen2010graph} also proposed an approach that guides developers in adapting code by learning adaptation patterns from previously migrated code. Similarly, Dagenais et al.~\cite{dagenais2011recommending,5070565,10.1145/1932682.1869486} also use a recommendation mechanism of code changes by mining them from previously migrated code. 
  %
  Anderson et al.~\cite{andersen2010generic} proposed to migrate drivers in response to evolutions in Linux internal libraries. It identifies common changes made in a set of files to extract a generic patch that can be reused on other code parts. Gerasimou et al. \cite{10.1145/3194793.3194798} extract a set of mapping rules and apply code-based transformations to update its clients.
+ // Survey about Library evolution \cite{10043250}
  %todo Coccinelle http://coccinelle.lip6.fr/
  
 % \input{RelatedWorkTable}
@@ -296,7 +298,8 @@ Ruscio et al. \cite{di2011needed} approach allows developers to manually replace
  \subsection{Automatic Program Repair}
  \label{APR}
  
- In addition to migration approaches, extensive state of the art exists on program repair~\cite{goues2019automated,liu2020efficiency,monperrus2018automatic,gazzola2017automatic}. However, they do not repair code errors, but rather bugs that are found due to failing tests (e.g., Meng at al.~\cite{10.5555/2486788.2486855}, etc.). They could be used as a next step after co-evolution. 
+ In addition to migration approaches, extensive state of the art exists on program repair~\cite{goues2019automated,liu2020efficiency,monperrus2018automatic,gazzola2017automatic}. However, they do not repair code errors, but rather bugs that are found due to failing tests (e.g., Meng at al.~\cite{10.5555/2486788.2486855}). 
+ They could be used as a next step after o co-evolution. 
  
  //To refresh new references
 
@@ -323,7 +326,46 @@ Ruscio et al. \cite{di2011needed} approach allows developers to manually replace
  Jongeling et al.~\cite{jongeling2020towards} proposed an early approach for the consistency checking between system models and their implementations by focusing on recovering the traceability links between the models and the code. Jongeling et al.~\cite{jongeling2022Structural} later rely on the recovered traces to perform the consistency checking task.  %https://www.es.mdh.se/pdf_publications/5848.pdf
  %
  Zaheri et al.~\cite{zaheri2021towards} also proposed to support the checking of the consistency-breaking updates between models and generated artifacts, including the code. However,~\cite{pham2017bidirectional,jongeling2020towards,jongeling2022Structural,zaheri2021towards} do not focus on co-evolving the code to repair the inconsistencies with the models. 
+ \subsection{Language evolution}
+ Programming languages evolution consist of feeature additions.
+ This evolution is due to two types of causes : external : hardware, the control of business needs, and the progress of scientific research. Internal : bug fix, improving verbosity of the language.
+ Every change to a programming language has the potential to affect programs written
+ in this language. For example, Python 2 and 3 have major incompatibilities that leads to maintenance costs.
+ A recent study shows that developers lack awareness of the subsequent possible incompatibilities 
+ \cite{dietrich2016java}
  
+Regarding progrmaming laguages evolution, many works were centrured around change-impact analysis :
+\cite{arnold1996software,ren2004chianti,ryder2001change}
+
+
+ 
+ pytypemonitor,Infer: A dynamic light-weight type inference tool for Python to automatically pro- vide insights useful for migration about a Python program \cite{urma2017programming}
+ few works were done for specific languages evolution, for example :Expansion and evolution of the R programming language regarding linguistic understanding of human language \cite{urma2017programming}.
+ 
+ DSL evolution 
+  works treated the topic of dsl evolution from many aspects and from different ecosystems (case studies).
+  
+ ref :Industrial experiences with the evolution of a DSL \cite{schuts2021industrial}
+ DSL is strictly coupled to the domain and
+ its requirements/capabilities at the time in which the DSL is written. If the domain requirements and/or capabilities change, then the DSL could become inadequate to deal with the changed domain.
+ incrementally changed the languag ()a five year old DSL) supporting multiple hardware configurations. initially prefixed later defined by the user. Domain experts no longer need DSL experts to define new configuration with new movements, states and zones.
+ Ref2 :DSL/Model Co-Evolution in Industrial EMF-Based MDSE Ecosystems \cite{mengerink2016dsl}
+ J.G.M.
+ DSL evolves : J.-M. Favre, “Languages evolve too! changing the
+ software time scale,” in Principles of Software
+ Evolution, 2005, pp. 33–42.  \cite{favre2005languages}, M. Herrmannsdörfer and G. Wachsmuth, “Coupled
+ evolution of software metamodels and models,” in
+ Evolving Software Systems. Springer, 2014, pp. \cite{herrmannsdorfer2013coupled}
+ 33–63.
+ that presence of inter-DSL dependencies in an MDSE ecosystem causes a ripple effect and increases costs of manual maintenance. Hence, an automatic approach is required to facilitate co-evolution of artifacts in MDSE ecosystems.
+ 
+ ref :Language Evolution in Practice: The History of GMF ,Herrmannsdoerfer, \cite{10.1007/978-3-642-12107-4_3}
+ presented a method to investigate the evolution of modeling languages
+ hint at the possible effects on the related language development artifacts
+ It concerns various technological spaces \cite{article}. Language evolution affects all these spaces: Grammars evolve in grammarware \cite{5279907}, metamodels evolve in modelware \cite{article2} [2], schemas evolve in XMLware [7] and dataware [8], ontologies evolve [9], and APIs evolve [10], too.
+ works treated the topic of dsl evolution from many aspects and from different ecosystems (case studies).
+ 
+ ref :
  % \section{API and Client co-evolution}
  %TODO What has been done so far: 
 %TODO Change detection
