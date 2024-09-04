@@ -320,35 +320,37 @@ Ruscio et al. \cite{di2011needed} approach allows developers to manually replace
  
  \subsection{Consistency checking }
  \label{Consistency_checking}
- Furthermore, close to code co-evolution, Riedl et al.~\cite{riedl2014towards} proposed an approach to detect inconsistencies between UML models and code. Kanakis et al.~\cite{kanakis2019empirical} showed that inconsistency information of model change and code error can help to resolve them in the code, which is equivalent to our matched pattern usages. 
+  Close to code co-evolution, Riedl et al.~\cite{riedl2014towards} proposed an approach to detect inconsistencies between UML models and code. Kanakis et al.~\cite{kanakis2019empirical} showed that inconsistency information of model change and code error can help to resolve them in the code, which is equivalent to our matched pattern usages. 
  Pham et al.~\cite{pham2017bidirectional} proposed an approach to synchronize architectural models and code with bidirectional mappings.
  %
  Jongeling et al.~\cite{jongeling2020towards} proposed an early approach for the consistency checking between system models and their implementations by focusing on recovering the traceability links between the models and the code. Jongeling et al.~\cite{jongeling2022Structural} later rely on the recovered traces to perform the consistency checking task.  %https://www.es.mdh.se/pdf_publications/5848.pdf
  %
  Zaheri et al.~\cite{zaheri2021towards} also proposed to support the checking of the consistency-breaking updates between models and generated artifacts, including the code. However,~\cite{pham2017bidirectional,jongeling2020towards,jongeling2022Structural,zaheri2021towards} do not focus on co-evolving the code to repair the inconsistencies with the models. 
  \subsection{Language evolution}
- Programming languages evolution consist of feeature additions.
- This evolution is due to two types of causes : external : hardware, the control of business needs, and the progress of scientific research. Internal : bug fix, improving verbosity of the language.
- Every change to a programming language has the potential to affect programs written
+ 
+Language evolution is related to  various technological spaces \cite{ivanov2002technological}. Grammars evolve in \cite{5279907}, metamodels evolve \cite{favre2003meta}, schemas evolve  \cite{lammel2001format,meyer1996schema}, ontologies evolve \cite{flouris2008ontology}, and APIs evolve \cite{dig2006apis}, too.
+  
+    
+ There are two types of languages: General Purpose Languages (GPL) and Domain-Specific Languages(DSL).
+ Programming languages are General purpose one. Their evolution consist mainly of feature additions that allows at sopme extent the stability of the code and do not break it.
+ This evolution is due to two types of causes : 1) External, for example for hardware changes, the control of business needs, or the progress of scientific research. 2) Internal for bug fixing, or improving the verbosity of the language.
+ Every change to a programming language API has the potential to affect programs written
  in this language. For example, Python 2 and 3 have major incompatibilities that leads to maintenance costs.
- A recent study shows that developers lack awareness of the subsequent possible incompatibilities 
- \cite{dietrich2016java}
+ A recent study shows that developers lack awareness of the subsequent possible incompatibilities which make code maintenance a hard task \cite{dietrich2016java}
  
-Regarding progrmaming laguages evolution, many works were centrured around change-impact analysis :
-\cite{arnold1996software,ren2004chianti,ryder2001change}
+Regarding programming languages evolution, many works were centered around change-impact analysis before proposing an adaptation approach \cite{arnold1996software,ren2004chianti,ryder2001change}
 
 
  
- pytypemonitor,Infer: A dynamic light-weight type inference tool for Python to automatically pro- vide insights useful for migration about a Python program \cite{urma2017programming}
- few works were done for specific languages evolution, for example :Expansion and evolution of the R programming language regarding linguistic understanding of human language \cite{urma2017programming}.
+ \cite{urma2017programming} propose PytypemonitorInfer, a dynamic light-weight type inference tool for Python to automatically provide insights useful for migration about a Python program.
+ few works were done for specific languages evolution, for example, Expansion and evolution of the R programming language regarding linguistic understanding of human language \cite{urma2017programming}.
  
- DSL evolution 
-  works treated the topic of dsl evolution from many aspects and from different ecosystems (case studies).
+ Regarding Domain-Specific evolution, works treated this topic from many aspects, and from different ecosystems and case studies.
   
  ref :Industrial experiences with the evolution of a DSL \cite{schuts2021industrial}
  DSL is strictly coupled to the domain and
  its requirements/capabilities at the time in which the DSL is written. If the domain requirements and/or capabilities change, then the DSL could become inadequate to deal with the changed domain.
- incrementally changed the languag ()a five year old DSL) supporting multiple hardware configurations. initially prefixed later defined by the user. Domain experts no longer need DSL experts to define new configuration with new movements, states and zones.
+ incrementally changed the language ()a five year old DSL) supporting multiple hardware configurations. initially prefixed later defined by the user. Domain experts no longer need DSL experts to define new configuration with new movements, states and zones.
  Ref2 :DSL/Model Co-Evolution in Industrial EMF-Based MDSE Ecosystems \cite{mengerink2016dsl}
  J.G.M.
  DSL evolves : J.-M. Favre, “Languages evolve too! changing the
@@ -362,11 +364,12 @@ Regarding progrmaming laguages evolution, many works were centrured around chang
  ref :Language Evolution in Practice: The History of GMF ,Herrmannsdoerfer, \cite{10.1007/978-3-642-12107-4_3}
  presented a method to investigate the evolution of modeling languages
  hint at the possible effects on the related language development artifacts
- It concerns various technological spaces \cite{article}. Language evolution affects all these spaces: Grammars evolve in grammarware \cite{5279907}, metamodels evolve in modelware \cite{article2} [2], schemas evolve in XMLware [7] and dataware [8], ontologies evolve [9], and APIs evolve [10], too.
+
  works treated the topic of dsl evolution from many aspects and from different ecosystems (case studies).
  
  ref :
- % \section{API and Client co-evolution}
+ \section{Behavioral correctness of the co-evolution}
+  \section{LLMs for co-evolution }
  %TODO What has been done so far: 
 %TODO Change detection
 %TODO Metamodel-Transformation co-evolution
