@@ -328,11 +328,31 @@ Ruscio et al. \cite{di2011needed} approach allows developers to manually replace
  Zaheri et al.~\cite{zaheri2021towards} also proposed to support the checking of the consistency-breaking updates between models and generated artifacts, including the code. However,~\cite{pham2017bidirectional,jongeling2020towards,jongeling2022Structural,zaheri2021towards} do not focus on co-evolving the code to repair the inconsistencies with the models. 
  \subsection{Language evolution}
  
-Language evolution is related to  various technological spaces \cite{ivanov2002technological}. Grammars evolve in \cite{5279907}, metamodels evolve \cite{favre2003meta}, schemas evolve  \cite{lammel2001format,meyer1996schema}, ontologies evolve \cite{flouris2008ontology}, and APIs evolve \cite{dig2006apis}, too.
+Language evolution is related to  various technological spaces \cite{ivanov2002technological}. Metamodels evolve \cite{favre2003meta} (Section ?), APIs evolve \cite{dig2006apis}(Section ?), grammars evolve in \cite{5279907}, schemas evolve  \cite{lammel2001format,meyer1996schema}, and ontologies evolve \cite{flouris2008ontology}, too.
   
+   There are two types of languages: General Purpose Languages (GPL) and Domain-Specific Languages(DSL). 
+   
+  
+ % ref :Industrial experiences with the evolution of a DSL \cite{schuts2021industrial}
+  DSL is strictly coupled to the domain and
+  its requirements/capabilities at the time in which the DSL is written. If the domain requirements and/or capabilities change, then the DSL could become inadequate to deal with the changed domain.
+  \cite{schuts2021industrial}  incrementally changed the language ()a five year old DSL) supporting multiple hardware configurations. initially prefixed later defined by the user. Domain experts no longer need DSL experts to define new configuration with new movements, states and zones.
+  DSLs evolve \cite{favre2005languages,herrmannsdorfer2013coupled}, 
+  that presence of inter-DSL dependencies in an MDSE ecosystem causes a ripple effect and increases costs of manual maintenance. Hence, an automatic approach is required to facilitate co-evolution of artifacts in MDSE ecosystems.
+   Regarding Domain-Specific evolution, works treated this topic from many aspects, and from different ecosystems and case studies\cite{mengerink2016dsl}.
+  Opensource ecosystems like GMF \footnote{https://eclipse.dev/modeling/gmp/?project=gmf-runtime} The Graphical Modeling Framework (GMF) is a widely used open source frame- work for the model-driven development of diagram editors implemented on top of the Eclipse Modeling Framework (EMF)2 and.
+%  Ref2 :DSL/Model Co-Evolution in Industrial EMF-Based MDSE Ecosystems \cite{mengerink2016dsl}
+ 
+  
+ % ref :Language Evolution in Practice: The History of GMF ,Herrmannsdoerfer, \cite{10.1007/978-3-642-12107-4_3}
+ \cite{10.1007/978-3-642-12107-4_3}  presented a method to investigate the evolution of modeling languages
+  hint at the possible effects on the related language development artifacts
+  
+%  works treated the topic of dsl evolution from many aspects and from different ecosystems (case studies).
     
- There are two types of languages: General Purpose Languages (GPL) and Domain-Specific Languages(DSL).
- Programming languages are General purpose one. Their evolution consist mainly of feature additions that allows at sopme extent the stability of the code and do not break it.
+Industrial  ecosystems like CARM (Control Architecture Reference Model) is an industrial ecosystem for ASML \footnote{https://www.asml.com/en} is the world’s leading provider of complex lithography systems for the semiconductor industry  \cite{mengerink2016dsl}.
+
+In another hand, we have Programming Languages which are General purpose one. Their evolution consist mainly of feature additions that allows at sopme extent the stability of the code and do not break it.
  This evolution is due to two types of causes : 1) External, for example for hardware changes, the control of business needs, or the progress of scientific research. 2) Internal for bug fixing, or improving the verbosity of the language.
  Every change to a programming language API has the potential to affect programs written
  in this language. For example, Python 2 and 3 have major incompatibilities that leads to maintenance costs.
@@ -344,31 +364,12 @@ Regarding programming languages evolution, many works were centered around chang
  
  \cite{urma2017programming} propose PytypemonitorInfer, a dynamic light-weight type inference tool for Python to automatically provide insights useful for migration about a Python program.
  few works were done for specific languages evolution, for example, Expansion and evolution of the R programming language regarding linguistic understanding of human language \cite{urma2017programming}.
- 
- Regarding Domain-Specific evolution, works treated this topic from many aspects, and from different ecosystems and case studies.
-  
- ref :Industrial experiences with the evolution of a DSL \cite{schuts2021industrial}
- DSL is strictly coupled to the domain and
- its requirements/capabilities at the time in which the DSL is written. If the domain requirements and/or capabilities change, then the DSL could become inadequate to deal with the changed domain.
- incrementally changed the language ()a five year old DSL) supporting multiple hardware configurations. initially prefixed later defined by the user. Domain experts no longer need DSL experts to define new configuration with new movements, states and zones.
- Ref2 :DSL/Model Co-Evolution in Industrial EMF-Based MDSE Ecosystems \cite{mengerink2016dsl}
- J.G.M.
- DSL evolves : J.-M. Favre, “Languages evolve too! changing the
- software time scale,” in Principles of Software
- Evolution, 2005, pp. 33–42.  \cite{favre2005languages}, M. Herrmannsdörfer and G. Wachsmuth, “Coupled
- evolution of software metamodels and models,” in
- Evolving Software Systems. Springer, 2014, pp. \cite{herrmannsdorfer2013coupled}
- 33–63.
- that presence of inter-DSL dependencies in an MDSE ecosystem causes a ripple effect and increases costs of manual maintenance. Hence, an automatic approach is required to facilitate co-evolution of artifacts in MDSE ecosystems.
- 
- ref :Language Evolution in Practice: The History of GMF ,Herrmannsdoerfer, \cite{10.1007/978-3-642-12107-4_3}
- presented a method to investigate the evolution of modeling languages
- hint at the possible effects on the related language development artifacts
-
- works treated the topic of dsl evolution from many aspects and from different ecosystems (case studies).
- 
- ref :
+ %these pharo api evolution zaytsev:tel-03998632
+Another programming lanquage, Pharo \cite{7332471} in their empirical study, analysed the the most important changes in Pharo API and their impact on different systemps in PHaro ecosystem.
+\cite{10.1145/3510455.3512783} propose Breakbot, a tool to analyse the impact of  the breaking changes of java librairies on their client code.
+	
  \section{Behavioral correctness of the co-evolution}
+ 
   \section{LLMs for co-evolution }
  %TODO What has been done so far: 
 %TODO Change detection
