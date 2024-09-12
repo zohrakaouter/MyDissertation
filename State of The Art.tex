@@ -260,6 +260,9 @@ Ruscio et al. \cite{di2011needed} approach allows developers to manually replace
  %
  Anderson et al.~\cite{andersen2010generic} proposed to migrate drivers in response to evolutions in Linux internal libraries. It identifies common changes made in a set of files to extract a generic patch that can be reused on other code parts. Gerasimou et al. \cite{10.1145/3194793.3194798} extract a set of mapping rules and apply code-based transformations to update its clients.
  // Survey about Library evolution \cite{10043250}
+ 
+ ref :Automatically Generating Refactorings to Support API Evolution
+ ref :Experience Paper: A Study on Behavioral Backward Incompatibilities of Java Software Libraries
  %todo Coccinelle http://coccinelle.lip6.fr/
  
 % \input{RelatedWorkTable}
@@ -297,6 +300,7 @@ Ruscio et al. \cite{di2011needed} approach allows developers to manually replace
  
  \subsection{Automatic Program Repair}
  \label{APR}
+ \cite{LIU2021110817} : evaluation metrics of APR systems could be biased. 
  
  In addition to migration approaches, extensive state of the art exists on program repair~\cite{goues2019automated,liu2020efficiency,monperrus2018automatic,gazzola2017automatic}. However, they do not repair code errors, but rather bugs that are found due to failing tests (e.g., Meng at al.~\cite{10.5555/2486788.2486855}). 
  They could be used as a next step after o co-evolution. 
@@ -356,7 +360,8 @@ In another hand, we have Programming Languages which are General purpose one. Th
  This evolution is due to two types of causes : 1) External, for example for hardware changes, the control of business needs, or the progress of scientific research. 2) Internal for bug fixing, or improving the verbosity of the language.
  Every change to a programming language API has the potential to affect programs written
  in this language. For example, Python 2 and 3 have major incompatibilities that leads to maintenance costs.
- A recent study shows that developers lack awareness of the subsequent possible incompatibilities which make code maintenance a hard task \cite{dietrich2016java}
+ A recent study shows that developers lack awareness of the subsgenerated tests
+ often present limitationsequent possible incompatibilities which make code maintenance a hard task \cite{dietrich2016java}
  
 Regarding programming languages evolution, many works were centered around change-impact analysis before proposing an adaptation approach \cite{arnold1996software,ren2004chianti,ryder2001change}
 
@@ -370,6 +375,35 @@ Another programming lanquage, Pharo \cite{7332471} in their empirical study, ana
 	
  \section{Behavioral correctness of the co-evolution}
  
+% co-evolution is an evolution form
+ 
+ 
+ %applicability of the other approches in co-evolutuion ? here or in the discussion
+ 
+ 
+ %Code quality measurment : metrics, test suite ? fault localisation?, formal methods
+ %Code evolution quality measurment 
+% Code refactoring by definiton a set of operation that do not alter the behavior of the code 
+ 
+
+%semantic errors only depend on the developer’s intentions 
+%predetermined patches requires extensive understanding all possible situations in which an error may occur Zaheri thesis
+ To ensure the behavioral correctness of a given version of the code, we can follow different methods. The first one is manual and exhaustive debugging to ensure that the code acts as expected. This method can be tedious and error prone for relatively complex code. Another method which is widely exploited is Testing. Testing in software engineering is a large domain with different approaches and tools. To check the behavioral correctness of a program, we can use Unit Testing through good quality unit tests that pass. In the case of more critical systems (Medical devices systems, autopilot systems, avionics engineering..etc), it is primordial to use formal methods like model checking or theorem proving (costly).
+ 
+ In the context of code evolution, we need to verify that this evolution operations did not alter the behavior of the code. 
+ In more large perspective, we would like to check the impact of this evolution on the code, did it improve, kept, or alter the behavior of the code. From this point of view, we investigated the literature to explore the different approaches that are used for this puspose : checking the impact of a code evolution on the behavioral correctness of the code.
+ 
+In Automatic program repair :after fault localization, removing bugs --> test suit that passes.
+
+In code refactoring minimize code smells, unit tests that pass
+
+In code co-evolution 
+Assumption: 
+%Regression testing
+Unit test can be used to check the behavioral correctness of the code at some state
+if transformation from code state 1  to code state 2 has improved, kept, or altered the behavior of the code?
+ 
+ Talk about limitations?
   \section{LLMs for co-evolution }
  %TODO What has been done so far: 
 %TODO Change detection
