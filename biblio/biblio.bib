@@ -3697,3 +3697,73 @@ doi={10.1109/MS.2003.1231146}}
 		keywords = {Automated program repair, Evaluation, Assessment, Metrics},
 		abstract = {Automated Program Repair (APR) has attracted significant attention from software engineering research and practice communities in the last decade. Several teams have recorded promising performance in fixing real bugs and there is a race in the literature to fix as many bugs as possible from established benchmarks. Gradually, repair performance of APR tools in the literature has gone from being evaluated with a metric on the number of generated plausible patches to the number of correct patches. This evolution is necessary after a study highlighting the overfitting issue in test suite-based automatic patch generation. Simultaneously, some researchers are also insisting on providing time cost in the repair scenario as a metric for comparing state-of-the-art systems. In this paper, we discuss how the latest evaluation metrics of APR systems could be biased. Since design decisions (both in approach and evaluation setup) are not always fully disclosed, the impact on repair performance is unknown and computed metrics are often misleading. To reduce notable biases of design decisions in program repair approaches, we conduct a critical review on the evaluation of patch generation systems and propose eight evaluation metrics for fairly assessing the performance of APR tools. Eventually, we show with experimental data on 11 baseline program repair systems that the proposed metrics allow to highlight some caveats in the literature. We expect wide adoption of these metrics in the community to contribute to boosting the development of practical, and reliably performable program repair tools.}
 	}
+	
+	@INPROCEEDINGS {10638555,
+		author = {H. Ruan and H. Nguyen and R. Shariffdeen and Y. Noller and A. Roychoudhury},
+		booktitle = {2024 IEEE Conference on Software Testing, Verification and Validation (ICST)},
+		title = {Evolutionary Testing for Program Repair},
+		year = {2024},
+		volume = {},
+		issn = {2159-4848},
+		pages = {105-116},
+		abstract = {Automated program repair (APR) allows for au-tonomous software protection and improvement. Many proposed repair techniques rely on available test suites, since tests are available in real-world settings. Tests are incomplete specifications, however. As a result, repairs generated based on tests may suffer from the test overfitting problem. The patches produced by APR techniques may pass the given tests and thus be plausible, and yet be an incorrect patch. This hints towards more extensive test suites to guide program repair. Generating additional tests to improve the test suite quality is generally difficult because the oracle or expected observable behavior of the generated tests is unknown. In our work, we first construct additional oracles by instrumenting buggy programs from the Defects4j benchmark with the knowledge obtained from the available bug reports. Then, we formulate a coevolution approach that generates tests and repairs in a unified workflow. The complete workflow is implemented as an extension of the well-known Java testing framework Evosuite. This includes re-purposing the search in Evosuite to search for repairs (instead of searching for tests) and enables an easy adoption for developers who are already familiar with Evosuite for test suite generation. The evaluation of our tool EvoREPAIR shows that coevolution positively impacts the quality of patches and tests. In the future, we hope that such coevolution can inspire new repair tools and techniques.},
+		keywords = {software testing;java;software protection;instruments;computer bugs;maintenance engineering;software},
+		doi = {10.1109/ICST60714.2024.00058},
+		url = {https://doi.ieeecomputersociety.org/10.1109/ICST60714.2024.00058},
+		publisher = {IEEE Computer Society},
+		address = {Los Alamitos, CA, USA},
+		month = {may}
+	}
+	@article{roziere2021leveraging,
+		title={Leveraging automated unit tests for unsupervised code translation},
+		author={Roziere, Baptiste and Zhang, Jie M and Charton, Francois and Harman, Mark and Synnaeve, Gabriel and Lample, Guillaume},
+		journal={arXiv preprint arXiv:2110.06773},
+		year={2021}
+	}
+	
+	@inproceedings{soares2009generating,
+		title={Generating unit tests for checking refactoring safety},
+		author={Soares, Gustavo and Gheyi, Rohit and Massoni, Tiago and Corn{\'e}lio, M{\'a}rcio and Cavalcanti, Diego},
+		booktitle={Brazilian Symposium on Programming Languages},
+		volume={1175},
+		pages={159--172},
+		year={2009}
+	}
+	@INPROCEEDINGS{9425945,
+		author={Wang, Sinan and Wen, Ming and Liu, Yepang and Wang, Ying and Wu, Rongxin},
+		booktitle={2021 IEEE International Conference on Software Analysis, Evolution and Reengineering (SANER)}, 
+		title={Understanding and Facilitating the Co-Evolution of Production and Test Code}, 
+		year={2021},
+		volume={},
+		number={},
+		pages={272-283},
+		keywords={Java;Conferences;Semantics;Production;Machine learning;Syntactics;Feature extraction;Software evolution;test maintenance;mining software repositories},
+		doi={10.1109/SANER50967.2021.00033}}
+	
+	@article{ZHANG201312,
+		title = {Formalization and Verification of Behavioral Correctness of Dynamic Software Updates},
+		journal = {Electronic Notes in Theoretical Computer Science},
+		volume = {294},
+		pages = {12-23},
+		year = {2013},
+		note = {Proceedings of the 2013 Validation Strategies for Software Evolution (VSSE) Workshop},
+		issn = {1571-0661},
+		doi = {https://doi.org/10.1016/j.entcs.2013.02.013},
+		url = {https://www.sciencedirect.com/science/article/pii/S1571066113000157},
+		author = {Min Zhang and Kazuhiro Ogata and Kokichi Futatsugi},
+		keywords = {dynamic software updating, algebraic specification, verification, behavioral property},
+		abstract = {Dynamic Software Updating (DSU) is a technique of updating running software systems on-the-fly. Whereas there are some studies on the correctness of dynamic updating, they focus on how to deploy updates correctly at the code level, e.g., if procedures refer to the data of correct types. However, little attention has been paid to the correctness of the dynamic updating at the behavior level, e.g., if systems after being updated behave as expected, and if unexpected behaviors can never occur. We present an algebraic methodology of specifying dynamic updates and verifying their behavioral correctness by using off-the-shelf theorem proving and model checking tools. By theorem proving we can show that systems after being updated indeed satisfy their desired properties, and by model checking we can detect potential errors. Our methodology is general in that: (1) it can be applied to three updating models that are mainly used in current DSU systems; and (2) it is not restricted to dynamic updates for certain programming models.}
+	}
+	@article{LIU2021110817,
+		title = {A critical review on the evaluation of automated program repair systems},
+		journal = {Journal of Systems and Software},
+		volume = {171},
+		pages = {110817},
+		year = {2021},
+		issn = {0164-1212},
+		doi = {https://doi.org/10.1016/j.jss.2020.110817},
+		url = {https://www.sciencedirect.com/science/article/pii/S0164121220302156},
+		author = {Kui Liu and Li Li and Anil Koyuncu and Dongsun Kim and Zhe Liu and Jacques Klein and Tegawendé F. Bissyandé},
+		keywords = {Automated program repair, Evaluation, Assessment, Metrics},
+		abstract = {Automated Program Repair (APR) has attracted significant attention from software engineering research and practice communities in the last decade. Several teams have recorded promising performance in fixing real bugs and there is a race in the literature to fix as many bugs as possible from established benchmarks. Gradually, repair performance of APR tools in the literature has gone from being evaluated with a metric on the number of generated plausible patches to the number of correct patches. This evolution is necessary after a study highlighting the overfitting issue in test suite-based automatic patch generation. Simultaneously, some researchers are also insisting on providing time cost in the repair scenario as a metric for comparing state-of-the-art systems. In this paper, we discuss how the latest evaluation metrics of APR systems could be biased. Since design decisions (both in approach and evaluation setup) are not always fully disclosed, the impact on repair performance is unknown and computed metrics are often misleading. To reduce notable biases of design decisions in program repair approaches, we conduct a critical review on the evaluation of patch generation systems and propose eight evaluation metrics for fairly assessing the performance of APR tools. Eventually, we show with experimental data on 11 baseline program repair systems that the proposed metrics allow to highlight some caveats in the literature. We expect wide adoption of these metrics in the community to contribute to boosting the development of practical, and reliably performable program repair tools.}
+	}

@@ -388,15 +388,26 @@ Another programming lanquage, Pharo \cite{7332471} in their empirical study, ana
 
 %semantic errors only depend on the developer’s intentions 
 %predetermined patches requires extensive understanding all possible situations in which an error may occur Zaheri thesis
- To ensure the behavioral correctness of a given version of the code, we can follow different methods. The first one is manual and exhaustive debugging to ensure that the code acts as expected. This method can be tedious and error prone for relatively complex code. Another method which is widely exploited is Testing. Testing in software engineering is a large domain with different approaches and tools. To check the behavioral correctness of a program, we can use Unit Testing through good quality unit tests that pass. In the case of more critical systems (Medical devices systems, autopilot systems, avionics engineering..etc), it is primordial to use formal methods like model checking or theorem proving (costly).
+ To ensure the behavioral correctness of a given version of the code, we can follow different methods. The first one is manual and exhaustive debugging to ensure that the code acts as expected. This method can be tedious and error prone for relatively complex code. Another method which is widely exploited is Testing. Testing in software engineering is a large domain with different approaches and tools. To check the behavioral correctness of a program, we can use Unit Testing through good quality unit tests that pass. In the case of more critical systems (Medical devices systems, autopilot systems, avionics engineering..etc), it is primordial to use formal methods like model checking or theorem proving \cite{ZHANG201312} (costly).
  
  In the context of code evolution, we need to verify that this evolution operations did not alter the behavior of the code. 
- In more large perspective, we would like to check the impact of this evolution on the code, did it improve, kept, or alter the behavior of the code. From this point of view, we investigated the literature to explore the different approaches that are used for this puspose : checking the impact of a code evolution on the behavioral correctness of the code.
+ In more large perspective, we would like to check the impact of this evolution on the code, did it improve, kept, or alter the behavior of the code. From this point of view, we investigated the literature to explore the different approaches that are used for this purpose : checking the impact of a code evolution on the behavioral correctness of the code.
  
 In Automatic program repair :after fault localization, removing bugs --> test suit that passes.
+\cite{10638555} propose an extension of EVOSUITE, that generates repairs patches of better quality plus the tests proves the veracity of the patches.
+\cite{roziere2021leveraging} leverage generated unit tests to filter out invalid translations and reduce the noise in the generated translations to have better candidates.
+\cite{LIU2021110817}
 
-In code refactoring minimize code smells, unit tests that pass
-
+In code refactoring minimize code smells, unit tests that pass,
+\cite{soares2009generating} Generating Unit Tests for Checking Refactoring Safety : deal with semantic errors (non behavior-preserving transformations). The current practice to avoid refactoring errors relies on compilation and tests to
+assure semantics preservation, their approach staets by identifying common methods between source and target source code (before and after refactroing). then generates tests on the common methods, run them on source then the target if no test fail, developer will have more confidence the correctness of the refactorings.
+\cite{LIU2021110817} the number of bugs for which a correct patch is generated appeared to be a more reasonable metric nd is now widely accepted in the literature for evaluating APR tools.  mtric :number of successfully fixed bugs +patch can pass all the given test cases (both previously-passing and previously-failing test cases on the buggy version). validated patch might break a necessary behaviour or introduce other faults+
+In the literature, correctness is gen- erally assessed manually by comparing the APR-generated patch against the developer-provided patch available in the benchmark.this paper proposes metrics that limit the biases when assessing APR tools.- :Upper bound Repair Performance metric aims to clearly provide an indication of the patch generation limitations when focusing on this part of the APR system (i.e., APR systems are given with the exact bug-fixing positions obtained from the ground-truth developers’ patches).
+• Fault Localization Sensitiveness metric aims to assess the impact of the used fault localization on the repair performance of the APR system.
+• Patch Generation Efficiency metrics aim to clarify the APR efficiency, the effort to yield a plausible/correct patch.
+• Bug Diversity metrics aim at evaluating APR system per- formance from intrinsic attributes of bugs.
+• Benchmark Overfitting metrics aim to clarify the dif- ference of APR systems performance between in-the-lab and in-the-wild assessment settings
+\cite{8612557} two main approaches on as- sessing patched program correctness: formal specifications and test suits., apr assesment metrics
 In code co-evolution 
 Assumption: 
 %Regression testing
