@@ -7,7 +7,7 @@
 %Main concepts: metamodel, constraint, transformation,
 %Automation in MDE
 %Evolution in MDE
-In this chapter, we introduce the field of Model-Driven engineering. In section ?, we present the activity of metamodeling and the involved artifacts. Section ? discusses the automation task related to the artifacts presented in section ?. We finish this chapter with a presentation of the evolution concept in the context of model driven engineering.
+In this chapter, we introduce the field of Model-Driven Engineering. In Section \ref{Metamodeling}, we present the activity of metamodeling and the involved artifacts. Section \ref{mde_automation} discusses the automation task related to the artifacts presented in Section \ref{Metamodeling}. We finish this chapter with a presentation of the evolution concept in the context of model driven engineering.
 %define the terminology of the main concepts that we use. 
 % We define the specific scope of problems addressed in this thesis
 % and discuss the spectrum of problems that arise in this field. 
@@ -15,37 +15,42 @@ In this chapter, we introduce the field of Model-Driven engineering. In section 
 % Metamodel, co-evolution, code, maintenance, refactoring
 
 \section{Model-Driven Engineering}
-To develop a software, a list of specifications is given to the developers, to code the final product. This approach can work in the case of small projects. When the complexity of the software increases, more efficient approaches must be adopted. Model driven engineering has proven  its efficiency comparing to other engineering disciplines \cite{1231146}.
+\label{mde}
+To develop a software, a list of specifications is given to the developers, to code the final product. This approach can work in the case of small projects. When the complexity of the software increases, more efficient approaches must be adopted. Model-Driven Engineering has proven its efficiency comparing to other engineering disciplines in developing hyper-complex systems \cite{1231146}.
 
 %\boitemagique{Model-Driven Enginereering}{
-\textit{Model-Driven Engineering(MDE)} is the systematic use of models as primary artifacts during a software engineering process. MDE includes various model-driven approaches to software development, including model-driven architecture, domain-specific modeling and model-integrated computing~\cite{10.1145/1985793.1985882}. The first appearance of MDE like approaches started in the 80's \cite{10.1007/s10270-005-0079-0}. MDE is still adopted  and a lot of work is being done in academia and industry, refs.
-//improve communication between multi-disciplinary collaborators.
+\textit{Model-Driven Engineering(MDE)} is the systematic use of models as primary artifacts during a software engineering process. MDE includes various Model-Driven approaches to software development, including Model-Driven Architecture, Domain-Specific Modeling and Model-Integrated Computing~\cite{10.1145/1985793.1985882}. The first appearance of MDE-like approaches started in the 80's \cite{10.1007/s10270-005-0079-0}. MDE is still adopted  and a lot of work is being done in academia and industry \cite{Mohagheghi2009,mohagheghi2008proof,jongeling2022Structural,wortmann2020modeling}.
+
+
 
 %}
 %TODO detaills the benefits of MDE
 
 %Details about MDE approach 
-The goal of MDE is to improve productivity, quality, and maintainability by leveraging high level abstractions throughout the development process. The metamodeling phase implied the experts of the domain who focus on the major key aspects of the problem rather than being concerned about the underlying programming language and the implementation.
+The goal of MDE is to improve productivity, quality, and maintainability by leveraging high level abstractions throughout the development process. The metamodeling phase implied the experts of the domain who focus on the major key aspects of the problem rather than being concerned about the underlying programming language and the implementation. Moreover, it aims to improve communication between multi-disciplinary collaborators \cite{wortmann2020modeling}.
 %about major key aspects of the problem statement rather than focusing on programming.
 %Metamodeling and modeling langugaes
 
 % MEtamodel def :
-The metamodel represent the main artifact in MDE. There are many definitions of the concept "metamodel" that can be found in literature \cite{stahl2006model}:
+The metamodel represents the main artifact in MDE. There are many definitions of the concept "metamodel" that can be found in literature \cite{stahl2006model}:
 
-\textit{A metamodel} describes concepts that can be used for modeling the model (i.e. in the instances of the metamodel).
+\textbf{Definition 01}: \textit{A metamodel} describes concepts that can be used for modeling the model (i.e. in the instances of the metamodel).
 
-\textit {Metamodels} are models that make statements about modeling. More precisely, a metamodel describes the possible structure of models in an abstract way, it defines the constructs of a modeling language and their relationships, as well as constraints and modeling rules, but not the concrete syntax of the language.
+\textbf{Definition 02}: \textit {Metamodels} are models that make statements about modeling. More precisely, a metamodel describes the possible structure of models in an abstract way, it defines the constructs of a modeling language and their relationships, as well as constraints and modeling rules, but not the concrete syntax of the language.
 
-\textit{A metamodel} defines the abstract syntax and the static semantics of a modeling language ,Vice versa, each formal language, such as Java or UML, possesses a metamodel.
+\textbf{Definition 03}: \textit{A metamodel} defines the abstract syntax and the static semantics of a modeling language ,Vice versa, each formal language, such as Java or UML, possesses a metamodel.
 
-Seidewitz \cite{seidewitz2003models} gives another commonly used definition of \textit{metamodels} in MDE. A metamodel is a specification model for a class of systems under study where each system under study in the class is itself a valid model expressed in a certain modeling language.
+Seidewitz \cite{seidewitz2003models} gives another commonly used definition of \textit{metamodels} in MDE:
+
+\textbf{Definition 04}: \textit{A metamodel} is a specification model for a class of systems under study where each system under study in the class is itself a valid model expressed in a certain modeling language.
 
 \section{Metamodeling}
-
+\label{Metamodeling}
+%definition, related tasks and artifacts, usages in different languages, tools
 %%
 \textit{Metamodeling} is the process of metamodel creation. Metamodeling is done thanks to metamodeling languages ( that is in turn described by a meta-metamodel).
 
-Metamodeling must gather the whole  knowledge that is required to define, precise, and deal with MDE challenges in its different tasks \cite{wortmann2020modeling}:
+Metamodeling must gather the whole  knowledge that is required to define, precise, and deal with MDE challenges in its different tasks \cite{wortmann2020modeling}, related to other artifacts shown in Figure \ref{fig:mde_ecosystem}:
 
 %DSL/ sftware language 
 %Construction of domain-specific modeling languages (DSLs): 
@@ -59,46 +64,46 @@ Metamodeling must gather the whole  knowledge that is required to define, precis
 \end{itemize}
 
 
-In the context of Domain-Specific Language, DSMLs can be tailored via metamodeling to precisely match the domain's semantics and syntax. The concrete syntax that is, the concrete form of the textual or graphical constructs with which the modeling is done must represent the metamodel in an unambiguous way. Having graphic elements that linked directly to a familiar domain makes it easier to learn and allows domain  experts to contribute, such as system engineers and experienced software architects, ensure that software systems meet user needs \cite{volter2013model}. The metamodel is the basis for the automated, tool-supported processing of Metamodeling models. On the other hand, a suitable concrete syntax is the interface to the modeler and its quality decides what degree of readability the models have \cite{}.
+In the context of Domain-Specific Languages, DSMLs can be tailored via metamodeling to precisely match the domain's semantics and syntax. The concrete syntax that is, the concrete form of the textual or graphical constructs with which the modeling is done must represent the metamodel in an unambiguous way. Having graphic elements that linked directly to a familiar domain makes it easier to learn and allows domain  experts to contribute, such as system engineers and experienced software architects, ensure that software systems meet user needs \cite{volter2013model}. The metamodel is the basis for the automated, tool-supported processing of Metamodeling models. On the other hand, a suitable concrete syntax is the interface to the modeler and its quality decides what degree of readability the models have \cite{stahl2006model}.
 
 
 %Metamodeling tools/languages/techniques examples :
 
-// Add figure?
+%// Add figure?
 
-Metamodeling languages are classfied into two categories languistic and ontological\cite{gavsevic2007metamodeling}. Linguistic metamodeling represents  way for defining modeling languages and their primitives (e.g., Object, Class, MetaClass) on the layer of a metamodel. Ontological metamodeling aims to represent domain knowledge accurately, it is s concerned with semantics and meaning, ex: OWL \cite{}. Linguistic metamodeling aims to define a language for creating models. it is concerned with syntax and structure.
-We can use a different classfication by purpose: General Purpose Modeling Langugaes and Domain-Specific Modeling Languages \cite{de2012domain}. General purpose modeling languages as for example : UML and its variants, generic metamodeling frameworks, such as MOF \cite{}, and Ecore \cite{}. As examples of DSLs, we cite sysML and EXPRESS DSL.
+Metamodeling languages are classified into two categories linguistic and ontological \cite{gavsevic2007metamodeling}. Linguistic metamodeling represents  way for defining modeling languages and their primitives (e.g., Object, Class, MetaClass) on the layer of a metamodel. Ontological metamodeling aims to represent domain knowledge accurately, it is concerned with semantics and meaning, e.g., OWL\footnote{https://www.w3.org/TR/owl-features/}. Linguistic metamodeling aims to define a language for creating models. it is concerned with syntax and structure.
+We can use a different classification by purpose: General Purpose Modeling Langugaes and Domain-Specific Modeling Languages~\cite{de2012domain}. General purpose modeling languages as for example : UML and its variants, generic metamodeling frameworks, such as MOF \footnote{https://www.omg.org/mof/}, and Ecore \footnote{https://eclipse.dev/modeling/emft/search/concepts/subtopic.html}. As examples of DSLs, we cite sysML and EXPRESS DSL.
 
-In MDE, there are language workbenches that are used for language creation, such as Xtext, MetaEdit+.
+In MDE, there are language workbenches that are used for language creation, such as Xtext, MetaEdit+ \cite{wortmann2020modeling}.
 % Add figure for above languages/techniques/frameworks
 
 %\textbf{Generated artifacts, artifacts linked to the metamodel}
 
 
-Metamodel is the backbone in model driven engineering. In the language modeling ecosystem, other artifacts are created by the mean of the metamodel. By definition, the model is an instance of a metamodel, which mean that the metamodel defines the concepts with which a model can be created. Constraints are written in Object Constraint Language. The created models can be validated through a set of constraints to check the models' correctness. They precise specifications on the model that cannot be  expressed by diagrammatic notation. In order to safe effort and avoid errors, models transformation is one of the common automated tasks in Model-driven engineering. Model transformation are expressed in  Transformation Languages for example, ATL). A transformation consists of a set of rules that map the source metamodel elements to the metamodel target’s elements. 
+%Metamodel is the backbone in model driven engineering. 
+In the language modeling ecosystem, other artifacts are created by the mean of the metamodel. By definition, the model is an instance of a metamodel, which means that the metamodel defines the concepts with which a model can be created. The created models can be validated through a set of constraints to check the models' correctness. Constraints are written in Object Constraint Language. They precise specifications on the model that cannot be  expressed by diagrammatic notation. In order to save effort and avoid errors, models transformation is one of the common automated tasks in Model-driven engineering. Model transformation are expressed in  Transformation Languages for example, ATL). A transformation consists of a set of rules that map the source metamodel elements to the metamodel target’s elements. All of these artifacts have its specific tools and represent an important topic of research in MDE.
 
-// Add example of Metamodel+ model+constraint+transformation ?
+%// Add example of Metamodel+ model+constraint+transformation ?
 
 %ex constraint : the age of a person is not negative, a person is younger than its parents
 %Automation in the ecosystem
 %code gen 
 %tests
 \section{Automation in the MDE ecosystem}
+\label{mde_automation}
+Brief description about automated tasks in MDE.
 
-Brief description about approaches that allow automated tasks in MDE.
-
-\textbf{Code Generation}
+\subsection{Code Generation}
 
 One of the most important advantages of MDE, is the automation in many of its activities. The code generation activity is recurrent, and its automation enhances the productivity and the cost.
-For example, Eclipse Modeling Framework built-in code generator allows to generated a java API from an Ecore metamodel. The generated code API structure and technical choices are done to fit Java programming language and model driven engineering abstraction standards/principles (ex: each metaclass is used to generate an interface and concrete implementation class that extends the generated interface, pattern observer), to have an efficient as possible.
-\textit{@generated} annotation is used to mark generated interfaces, classes, methods, and fields.
+For example, Eclipse Modeling Framework built-in code generator allows to generated a java API from an Ecore metamodel. The generated code API structure and technical choices are done to fit Java programming language and model driven engineering abstraction standards/principles ( e.g., each metaclass is used to generate an interface and concrete implementation class that extends the generated interface, pattern observer), to have an efficient as possible.
+\textit{@generated} annotation is used to mark generated interfaces, classes, methods, and fields. This annotation can be used to differentiate the generated code from the manually written one.
 
-In Eclipse Modeling Framework, two model resources (files) are manipulated: the .ecore file that contains  xmli serialization of the E
-core model and the .genmodel for the serialized generator model.
+In Eclipse Modeling Framework, two model resources (files) are manipulated: the .ecore file that contains  xmli serialization of the Ecore model and the .genmodel for the serialized generator model. The Ecore file is the document that contains the metamodeled main concepts that are used in code generation process.
 
-\section{Evolution in the MDE context}
+\subsection{Evolution in the MDE context}
 
-During the software development process, software artifacts are meant to be changed, due to many reasons: client requirements and domain specification, software maintenance or bug correction. Like any other software system, modeling languages are the subject of an inevitable evolution, during their process of building, multiple versions are developed, tested, and adapted until a stable version is reached. 
+During the software development process, software artifacts are meant to be changed, due to many reasons: client requirements and domain specifications, software maintenance, or bug correction. Like any other software system, modeling languages are the subject of an inevitable evolution, during their process of building, multiple versions are developed, tested, and adapted until a stable version is reached. 
 
 Different types of evolution are categorized depending on the impact and purpose of the applied modifications \cite{lientz1980software,Swanson1976}:
 \begin{itemize}
@@ -110,27 +115,27 @@ Different types of evolution are categorized depending on the impact and purpose
 	\item Perfective: this evolution aims to improve functionalities, enhance the performance, reliability, or to increase the maintainability of a software.  
 	
 \end{itemize}
+It is unavoidable to change, whether to answer to requirement modifications, and/or technological progress.
+The term \textit{Evolution} can be refined as the literature presents various related terms like: Maintenance, Refactoring, and \textbf{Co-evolution}, which are different types of modifications that could be applied on a software.
 
-The term \textit{Evolution} can be refined as the literature presents various related terms like : Maintenance, Refactoring, and \textbf{Co-evolution}, which are different types of modifications that could be applied on a software.
+%/Why we need to perform evolution ?
+%examples?
+%TODO Add defs references
 
-//Why we need to perform evolution ?
-Answer to requirment changing, and technological progress : examples?
+\textbf{Evolution}: when users and developers get by learning  new requirements that lead to adapt the software to new changes. 
 
-\textit{Evolution}: when users and developers get by learning  new requirements  
-that lead to adapt the software to new changes \cite{}. 
+\textbf{Maintenance}: It is modifying a software product after delivery to correct faults, to improve performance, or to adapt the product to a changing environment.
 
-\textit{Maintenance}:It is modifying a software product after delivery to correct faults, to improve performance, or to adapt the product to a changing environment  \cite{}.
+\textbf{Refactoring}: It is an oriented object term, that means modifications of software to make it easier to understand and to change or to make it less susceptible to errors when future changes are introduced. 
 
-\textit{Refactoring}: It is an oriented object term, that means modifications of software to make it easier to understand and to change or to make it less susceptible to errors when future changes are introduced  \cite{}. 
-
-\textit{co-evolution}: It consists of the process of adapting and correcting a set of artifacts $A_1$, $A_2$, ...$A_N$ in response to the evolution of an artifact B on which $A_1$, $A_2$, ...$A_N$  strongly depend  \cite{}, for example the co-evolution of models with the evolving metamodel.
+\textbf{Co-evolution}: It consists of the process of adapting and correcting a set of artifacts $A_1$, $A_2$, ...$A_N$ in response to the evolution of an artifact B on which $A_1$, $A_2$, ...$A_N$  strongly depend, for example the co-evolution of models with the evolving metamodel.
 
 
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[width=0.6\linewidth]{./pics/soaPics/solicy.png}
 	\end{center}
-	\caption{Software Life Cycle}
+	\caption{Software Life Cycle ( not sure to include)}
 %	{\footnotesize Titre plus long avec des explications.}
 	\label{fig:softwarelifecyle}
 \end{figure}
@@ -139,7 +144,7 @@ that lead to adapt the software to new changes \cite{}.
 	\begin{center}
 		\includegraphics[width=0.6\linewidth]{./pics/soaPics/mdeecosystem.png}
 	\end{center}
-	\caption{MDE Ecosystem}
+	\caption{MDE Ecosystem ( not sure to include)}
 %	{\footnotesize Titre plus long avec des explications.}
 	\label{fig:mde_ecosystem}
 \end{figure}
@@ -150,13 +155,14 @@ that lead to adapt the software to new changes \cite{}.
 
 \chaptermark{State Of The Art}
 %offline and online process
-In this chapter, we present an overview of what has been done in the field of code co-evolution in the context of Model-Driven Engineering. We split this overview into ? parts. In section ?, we present the metamodel change detection approaches. Section ? presents the co-evolution of model, transformations, constraints with evolving metamodel. In section ?, we discuss code co-evolution and relevant literature about API-client evolution, language evolution, and evolution in low-code platforms. We finish this chapter with a discussion focused on limitations and research gap.
+In this chapter, we present an overview of what has been done in the field of code co-evolution in the context of Model-Driven Engineering. We split this overview into four  parts. In section \ref{changedetection}, we present the metamodel change detection approaches. Section \ref{coevolutionartifacts} presents the co-evolution of model, transformations, constraints with evolving metamodel. In section \ref{coevolutioncode}, we discuss code co-evolution and relevant literature about API-client evolution, and language evolution. In Section \ref{behavioralcorrectness}, we browse related work to checking the behavioral correctness of code co-evolution. Section \ref{llmsforcoevolution}, presents an overview of the use of LLMs in related MDE and SLE tasks. We finish this chapter with a discussion focused on limitations and research gap.
  \section{Metamodel change detection}
+ \label{changedetection}
  One of the intrinsic properties of software artifacts is its continuous evolution~\cite{mens2008introduction}. Like any software artifact, metamodels are meant to evolve to meet the represented domain. %one key sentence of the context
  In this thesis, our context is triggered by the metamodel evolution, that's why we find essential to understand this evolution in detail.
  %metamodel diffing
  A lot of work has been done on metamodel diffing.
- Detection approaches can be classified into two main categories; online\footnote{Offline approaches perform detection after the metamodel has been evolved.} detection approaches, and offline\footnote{Online approaches perform instant detection for each change during the metamodel evolution} detection approaches. Thid classification can be refined using some factors : automation degree, types of detected changes, considered issues (overlap, indefinit length, hidden changes, order of changes, and undo operations)\cite{hebig2016approaches}.
+ Detection approaches can be classified into two main categories; online\footnote{Offline approaches perform detection after the metamodel has been evolved.} detection approaches, and offline\footnote{Online approaches perform instant detection for each change during the metamodel evolution} detection approaches. This classification can be refined using some factors: automation degree, types of detected changes, considered issues (overlap, indefinite length, hidden changes, order of changes, and undo operations)\cite{hebig2016approaches}.
  
  
  
@@ -166,9 +172,12 @@ In this chapter, we present an overview of what has been done in the field of co
  Two types of evolution changes are considered when evolving a metamodel: \emph{atomic} and \emph{complex} changes~\cite{hebig2016approaches,Herrmannsdoerfer2011}. 
  Atomic changes are additions, removals, and updates of a metamodel element. Complex changes consist of a sequence of atomic changes combined together~\cite{vermolen_reconstructing_2012},~\cite{khelladi2015detecting}. For example, move property is a complex change where a property is moved from a source class to a target class. This is composed of two atomic changes: delete property and add property~\cite{Herrmannsdoerfer2011}. 
  Many approaches in the literature~\cite{Alter2015, williams2012searching,cicchetti_managing_2009,langer_posteriori_2013,vermolen_reconstructing_2012,Khelladi2016,bettini2022executable} exist to detect metamodel changes between two versions.
-  
+  \begin{table*}[t]
+  		\caption{Catalog of changes that occur during the metamodel evolution. (To fill)}
+  	\label{table:changesCatalog}
  \vspace{1em}
  	\begin{tabular}{ |c|c| } 
+ 	
  		\hline
  		Type  & Change name \\
  		\hline
@@ -189,7 +198,7 @@ In this chapter, we present an overview of what has been done in the field of co
  		\hline
  		
  	\end{tabular}
- 	  
+ 	\end{table*}
  	\vspace{1em}
  	
  In Model-Dricen Engineering area, metamodel changes can be divided into three categories\cite{gruschko2007towards}:
@@ -201,6 +210,7 @@ In this chapter, we present an overview of what has been done in the field of co
  \end{itemize}
  	In API evolution context, API changes can be classified as Non-breaking API Changes	or Breaking API Changes. A breaking change is not backwards compatible. In this case, client code calling the evolved API by a Breaking Change fails to compile or may behave differently at runtime. A non-breaking change is backwards compatible. This kind of changes aims to extend the functionalities or fix errors \cite{dig2006apis}.
  \section{Co-evolution of models, constraints, and transformation}
+ \label{coevolutionartifacts}
  In MDE ecosystem, the metamodel is the starting point to have other artifacts that we defined in section ?. in this section, we will present an overview of the existing work about these artifacts co-evolution. Note that if the solution is applied during the evolution of the metamodel, we call it an online solution, otherwise it is offline.
  The comparison, advantages, and drawbacks of the presented approaches is out of the scope of this dissertation.
  
@@ -238,6 +248,7 @@ Almost all the existing transformation approaches that we find in literature sta
 Mendez et al. \cite{mendez2010towards}, Ruscio et al. \cite{di2011needed}, Garces et al.\cite{garces2014adapting}, Kusel, et al.\cite{kusel2015consistent}, and khelladi et al. \cite{khelladi2018change} proposed to co-evolve impacted transformations with a set of resolutions. The approach of khelladi et al. \cite{khelladi2018change} covers the largest set of possible resolutions where Ruscio et al. \cite{di2011needed}, estimate the cost of the co-evolution to decide about the co-evolution,they further explored the variability of the co-evolution due to the possible alternative resolution. Garcia et al.\cite{garcia2012model} proposed a ATL transformation-based approach which means that their resolutions are ATL transformations. All the approaches propose unique resolution to co-evolve each transformation.
 Ruscio et al. \cite{di2011needed} approach allows developers to manually replace or refine a resolution. Khelladi et al. \cite{khelladi2018change}  allow to compose existing resolutions into a new one. Kessentini et al. \cite{kessentini2018automated} used a different approach that do not use the changes of the metamodel as input and do not process by an impact analysis, but it uses a search-based approach that relied on multi objective heuristic algorithm NSGA-II.
  \section{Code co-evolution}
+ \label{coevolutioncode}
  We divided the related work to code co-evolution  into four (4) main categories : 1) Metamodel and code co-evolution, 2) API and client code co-evolution, 3) Automatic Program repair, and 4) Consistency checking. 
  \subsection{Metamodel and code co-evolution}
  Co-evolution of code is distinguished from the co-evolution of other artifacts by the fact that $one$ change in a metamodel element will affect $n$ different code elements, in contrast to a $one$ to $one$ impact relationship between metamodel elements and models, constraints and transformation elements~\cite{kessentini2018integrating,kessentini2019automated,cicchetti2008automating,herrmannsdoerfer2009cope,garces2009managing,wachsmuth2007metamodel,batot2017heuristic,khelladi2017semi,correa2007refactoring,kessentini2018automated,khelladi2018change,garces2014adapting,10.1007/978-3-642-36089-3_9,kusel2015consistent,kusel2015systematic}.
@@ -259,11 +270,11 @@ Ruscio et al. \cite{di2011needed} approach allows developers to manually replace
  Nguyen et al. \cite{nguyen2010graph} also proposed an approach that guides developers in adapting code by learning adaptation patterns from previously migrated code. Similarly, Dagenais et al.~\cite{dagenais2011recommending,5070565,10.1145/1932682.1869486} also use a recommendation mechanism of code changes by mining them from previously migrated code. 
  %
  Anderson et al.~\cite{andersen2010generic} proposed to migrate drivers in response to evolutions in Linux internal libraries. It identifies common changes made in a set of files to extract a generic patch that can be reused on other code parts. Gerasimou et al. \cite{10.1145/3194793.3194798} extract a set of mapping rules and apply code-based transformations to update its clients.
+ 
  // Survey about Library evolution \cite{10043250}
  
  ref :Automatically Generating Refactorings to Support API Evolution
  ref :Experience Paper: A Study on Behavioral Backward Incompatibilities of Java Software Libraries
- %todo Coccinelle http://coccinelle.lip6.fr/
  
 % \input{RelatedWorkTable}
  
@@ -332,7 +343,7 @@ Ruscio et al. \cite{di2011needed} approach allows developers to manually replace
  Zaheri et al.~\cite{zaheri2021towards} also proposed to support the checking of the consistency-breaking updates between models and generated artifacts, including the code. However,~\cite{pham2017bidirectional,jongeling2020towards,jongeling2022Structural,zaheri2021towards} do not focus on co-evolving the code to repair the inconsistencies with the models. 
  \subsection{Language evolution}
  
-Language evolution is related to  various technological spaces \cite{ivanov2002technological}. Metamodels evolve \cite{favre2003meta} (Section ?), APIs evolve \cite{dig2006apis}(Section ?), grammars evolve in \cite{5279907}, schemas evolve  \cite{lammel2001format,meyer1996schema}, and ontologies evolve \cite{flouris2008ontology}, too.
+Language evolution is related to  various technological spaces ~\cite{ivanov2002technological}. Metamodels evolve~\cite{favre2003meta} (Section \ref{coevolutionartifacts}), APIs evolve \cite{dig2006apis} (Section ~\ref{API_evolution}), grammars evolve in ~\cite{5279907}, schemas evolve~\cite{lammel2001format,meyer1996schema}, and ontologies evolve \cite{flouris2008ontology}, too.
   
    There are two types of languages: General Purpose Languages (GPL) and Domain-Specific Languages(DSL). 
    
@@ -343,37 +354,38 @@ Language evolution is related to  various technological spaces \cite{ivanov2002t
   \cite{schuts2021industrial}  incrementally changed the language ()a five year old DSL) supporting multiple hardware configurations. initially prefixed later defined by the user. Domain experts no longer need DSL experts to define new configuration with new movements, states and zones.
   DSLs evolve \cite{favre2005languages,herrmannsdorfer2013coupled}, 
   that presence of inter-DSL dependencies in an MDSE ecosystem causes a ripple effect and increases costs of manual maintenance. Hence, an automatic approach is required to facilitate co-evolution of artifacts in MDSE ecosystems.
-   Regarding Domain-Specific evolution, works treated this topic from many aspects, and from different ecosystems and case studies\cite{mengerink2016dsl}.
-  Opensource ecosystems like GMF \footnote{https://eclipse.dev/modeling/gmp/?project=gmf-runtime} The Graphical Modeling Framework (GMF) is a widely used open source frame- work for the model-driven development of diagram editors implemented on top of the Eclipse Modeling Framework (EMF)2 and.
+   Regarding Domain-Specific evolution, works treated this topic from many aspects, and from different ecosystems and case studies \cite{mengerink2016dsl}.
+  Opensource ecosystems like GMF \footnote{https://eclipse.dev/modeling/gmp/?project=gmf-runtime} The Graphical Modeling Framework (GMF) is a widely used open source framework for the model-driven development of diagram editors implemented on top of the Eclipse Modeling Framework (EMF).
 %  Ref2 :DSL/Model Co-Evolution in Industrial EMF-Based MDSE Ecosystems \cite{mengerink2016dsl}
  
   
  % ref :Language Evolution in Practice: The History of GMF ,Herrmannsdoerfer, \cite{10.1007/978-3-642-12107-4_3}
- \cite{10.1007/978-3-642-12107-4_3}  presented a method to investigate the evolution of modeling languages
-  hint at the possible effects on the related language development artifacts
+Herrmannsdoerfer et al. present a method to investigate the evolution of modeling languages
+  hint at the possible effects on the related language development artifacts  \cite{10.1007/978-3-642-12107-4_3}.
   
 %  works treated the topic of dsl evolution from many aspects and from different ecosystems (case studies).
     
 Industrial  ecosystems like CARM (Control Architecture Reference Model) is an industrial ecosystem for ASML \footnote{https://www.asml.com/en} is the world’s leading provider of complex lithography systems for the semiconductor industry  \cite{mengerink2016dsl}.
 
-In another hand, we have Programming Languages which are General purpose one. Their evolution consist mainly of feature additions that allows at sopme extent the stability of the code and do not break it.
+In another hand, we have Programming Languages which are General purpose one. Their evolution consist mainly of feature additions that allows at some extent the stability of the code and do not break it.
  This evolution is due to two types of causes : 1) External, for example for hardware changes, the control of business needs, or the progress of scientific research. 2) Internal for bug fixing, or improving the verbosity of the language.
  Every change to a programming language API has the potential to affect programs written
  in this language. For example, Python 2 and 3 have major incompatibilities that leads to maintenance costs.
- A recent study shows that developers lack awareness of the subsgenerated tests
- often present limitationsequent possible incompatibilities which make code maintenance a hard task \cite{dietrich2016java}
+ A recent study shows that developers lack awareness of the subs-generated tests
+ often present limitations and possible incompatibilities which make code maintenance a hard task \cite{dietrich2016java}.
  
 Regarding programming languages evolution, many works were centered around change-impact analysis before proposing an adaptation approach \cite{arnold1996software,ren2004chianti,ryder2001change}
 
 
  
- \cite{urma2017programming} propose PytypemonitorInfer, a dynamic light-weight type inference tool for Python to automatically provide insights useful for migration about a Python program.
+ Urma et al.\cite{urma2017programming} propose PytypemonitorInfer, a dynamic light-weight type inference tool for Python to automatically provide insights useful for migration about a Python program.
  few works were done for specific languages evolution, for example, Expansion and evolution of the R programming language regarding linguistic understanding of human language \cite{urma2017programming}.
  %these pharo api evolution zaytsev:tel-03998632
-Another programming lanquage, Pharo \cite{7332471} in their empirical study, analysed the the most important changes in Pharo API and their impact on different systemps in PHaro ecosystem.
-\cite{10.1145/3510455.3512783} propose Breakbot, a tool to analyse the impact of  the breaking changes of java librairies on their client code.
+Another programming language, Pharo \cite{7332471} in their empirical study, analyzed the the most important changes in Pharo API and their impact on different systems in Pharo ecosystem.
+Ochoa et al. \cite{10.1145/3510455.3512783} propose Breakbot, a tool to analyze the impact of  the breaking changes of java libraries on their client code.
 	
  \section{Behavioral correctness of the co-evolution}
+ \label{behavioralcorrectness}
  
 % co-evolution is an evolution form
  
@@ -388,34 +400,53 @@ Another programming lanquage, Pharo \cite{7332471} in their empirical study, ana
 
 %semantic errors only depend on the developer’s intentions 
 %predetermined patches requires extensive understanding all possible situations in which an error may occur Zaheri thesis
- To ensure the behavioral correctness of a given version of the code, we can follow different methods. The first one is manual and exhaustive debugging to ensure that the code acts as expected. This method can be tedious and error prone for relatively complex code. Another method which is widely exploited is Testing. Testing in software engineering is a large domain with different approaches and tools. To check the behavioral correctness of a program, we can use Unit Testing through good quality unit tests that pass. In the case of more critical systems (Medical devices systems, autopilot systems, avionics engineering..etc), it is primordial to use formal methods like model checking or theorem proving \cite{ZHANG201312} (costly).
+ To ensure the behavioral correctness of a given version of the code, we can follow different methods. The first one is manual and exhaustive debugging to ensure that the code acts as expected. This method can be tedious and error prone for relatively complex code. Another method which is widely exploited is Testing. Testing in software engineering is a large research area with different approaches and tools. To check the behavioral correctness of a program, we can use Unit Testing through good quality unit tests that pass. In the case of more critical systems (Medical devices systems, autopilot systems, avionics engineering..etc), it is primordial to use formal methods like model checking or theorem proving \cite{ZHANG201312} (costly).
  
  In the context of code evolution, we need to verify that this evolution operations did not alter the behavior of the code. 
- In more large perspective, we would like to check the impact of this evolution on the code, did it improve, kept, or alter the behavior of the code. From this point of view, we investigated the literature to explore the different approaches that are used for this purpose : checking the impact of a code evolution on the behavioral correctness of the code.
+ In more large perspective, we would like to check the impact of this evolution on the code, did it improve, kept, or alter the behavior of the code. From this point of view, we investigated the literature to explore the different approaches that are used for this purpose : checking the impact of a code different type of evolution on the behavioral correctness of the code.
  
-In Automatic program repair :after fault localization, removing bugs --> test suit that passes.
+In Automatic program repair, after fault localization, the goal is to remove bugs. The correctness of this bug removal is often checked using test suit that passes.
 \cite{10638555} propose an extension of EVOSUITE, that generates repairs patches of better quality plus the tests proves the veracity of the patches.
-\cite{roziere2021leveraging} leverage generated unit tests to filter out invalid translations and reduce the noise in the generated translations to have better candidates.
-\cite{LIU2021110817}
+Roziere et al. \cite{roziere2021leveraging} leverage generated unit tests to filter out invalid translations and reduce the noise in the generated translations to have better candidates.
+%\cite{LIU2021110817}
 
-In code refactoring minimize code smells, unit tests that pass,
-\cite{soares2009generating} Generating Unit Tests for Checking Refactoring Safety : deal with semantic errors (non behavior-preserving transformations). The current practice to avoid refactoring errors relies on compilation and tests to
-assure semantics preservation, their approach staets by identifying common methods between source and target source code (before and after refactroing). then generates tests on the common methods, run them on source then the target if no test fail, developer will have more confidence the correctness of the refactorings.
-\cite{LIU2021110817} the number of bugs for which a correct patch is generated appeared to be a more reasonable metric nd is now widely accepted in the literature for evaluating APR tools.  mtric :number of successfully fixed bugs +patch can pass all the given test cases (both previously-passing and previously-failing test cases on the buggy version). validated patch might break a necessary behaviour or introduce other faults+
-In the literature, correctness is gen- erally assessed manually by comparing the APR-generated patch against the developer-provided patch available in the benchmark.this paper proposes metrics that limit the biases when assessing APR tools.- :Upper bound Repair Performance metric aims to clearly provide an indication of the patch generation limitations when focusing on this part of the APR system (i.e., APR systems are given with the exact bug-fixing positions obtained from the ground-truth developers’ patches).
-• Fault Localization Sensitiveness metric aims to assess the impact of the used fault localization on the repair performance of the APR system.
-• Patch Generation Efficiency metrics aim to clarify the APR efficiency, the effort to yield a plausible/correct patch.
-• Bug Diversity metrics aim at evaluating APR system per- formance from intrinsic attributes of bugs.
-• Benchmark Overfitting metrics aim to clarify the dif- ference of APR systems performance between in-the-lab and in-the-wild assessment settings
-\cite{8612557} two main approaches on as- sessing patched program correctness: formal specifications and test suits., apr assesment metrics
-In code co-evolution 
-Assumption: 
+
+In the literature, correctness is generally assessed manually by comparing the APR-generated patch against the developer-provided patch available in the benchmark. This paper proposes metrics that limit the biases when assessing APR tools.- :Upper bound Repair Performance metric aims to clearly provide an indication of the patch generation limitations when focusing on this part of the APR system (i.e., APR systems are given with the exact bug-fixing positions obtained from the ground of truth developers’ patches). The list of the used metrics:\\
+• Fault Localization Sensitiveness metric aims to assess the impact of the used fault localization on the repair performance of the APR system.\
+• Patch Generation Efficiency metrics aim to clarify the APR efficiency, the effort to yield a plausible/correct patch.\\
+• Bug Diversity metrics aim at evaluating APR system performance from intrinsic attributes of bugs.\\
+• Benchmark Overfitting metrics aim to clarify the difference of APR systems performance between in-the-lab and in-the-wild assessment settings.\\
+
+Qi et al. \cite{8612557} also divide exsting approaches for APR assessment into two main approaches on assessing patched program correctness: formal specifications and APR assessment metrics with test suits.
+
+Liu et al. \cite{LIU2021110817} exploit the number of bugs for which a correct patch is generated appeared to be a more reasonable metric and is now widely accepted in the literature for evaluating APR tools.  metric: number of successfully fixed bugs with patches can pass all the given test cases (both previously-passing and previously failing test cases on the buggy version). validated patch might break a necessary behavior or introduce other faults.
+
+In code refactoring, one of the followed approaches is to minimize the number of code smells, and a test suite that passes or both.
+Soares et al. \cite{soares2009generating} deal with semantic errors (non behavior-preserving transformations). The current practice to avoid refactoring errors relies on compilation and tests to assure semantics preservation, their approach starts by identifying common methods between source and target source code (before and after refactoring). Then generates tests on the common methods, run them on source then the target if no test fail, developer will have more confidence the correctness of the refactorings.
+Wahler et al. \cite{7816501} use static analysis and software metrics as  objective evaluation combined with Software Engineers judgment as subjective evaluation to validate refactorings and to improve the maintainability of their case study.
+
+Da Silva et al. \cite{DASILVA2024112070} leverage generated unit tests to detect semantic conflicts in different merging scenarios, and differential generated unit tests generated and run on both commit the changed commit pairs. Their results show the efficiency of the generated unit tests and no conflict was wrongly detected.
+%In code co-evolution 
+%Assumption: 
 %Regression testing
-Unit test can be used to check the behavioral correctness of the code at some state
-if transformation from code state 1  to code state 2 has improved, kept, or altered the behavior of the code?
+\\
+\textbf{Assumption}:
+
+Unit test can be used to check the behavioral correctness of the code at some state.
+If a transformation occurs in the code from a state to another, We can use unit tests (manually written or generated) to check if the code evolution has improved, kept, or altered the behavior of the code.
  
  Talk about limitations?
   \section{LLMs for co-evolution }
+  \label{llmsforcoevolution}
+  Since their appearance in 2022 \footnote{texthttps://www.dataversity.net/a-brief-history-of-large-language-models/}, Large Language Models revolutionized the computer science industry and the industry of the world since computer science is concretely used everywhere. In this thesis, that started a little bit before this revolution, we found that it is important to investigate the path of LLMs and its intersection with the scope of our work. Thousands of scientific papers are produced in many domains to treat thousands of topics. In this section, we present the most related work to code co-evolution.
+  
+ White et al. \cite{White2024} propose a set of prompt patterns for different tasks that can be used in different phases in the life cycle of a software development, for example: API generation prompt pattern, DSL creation prompt pattern, code quality, and refactoring prompt patterns.
+  
+Sridhara et al. \cite{sridhara2023chatgpt} explore how ChatGPT can be used in ambiguity resolution in Method Name Suggestion
+   Log Summarization, Anaphora resolution, Python Type Inference,  Commit Message Generation, Code Review, Duplicate Bug Report Detection, Natural Language Code Search, Vulnerability Detection, Code Clone Detection, Test Oracle Generation, Code Generation from natural language, Merge Conflict Resolution, and Code Refactoring. Some of Extract Method refactorings meet developers' refactorings where other  results that do not meet developers' refactorings  are syntactically correct and semantically correct.
+
+  Besides code generation and code documentation, the paper of Sadik et al. \cite{sadik2023analysis} investigates the potential application ChatGPT as an LLM for bug detection and refactoring particular code bad smell detection.
+  Hemberg et al. \cite{hemberg2024evolving} explain their approach on how an algorithm, with the general algorithmic structure of an EA and evolutionary operators, can use an LLM to evolve code, how the operators are designed to formulate LLM prompts, task the LLM via the prompts, and process LLM responses, while code is represented as a sequence of text in code syntax. Its goal is to get the best solution code that fits the best the beforehand mentioned operators as hyper parameters of the genetic algorithm.
  %TODO What has been done so far: 
 %TODO Change detection
 %TODO Metamodel-Transformation co-evolution
