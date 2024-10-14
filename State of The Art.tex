@@ -63,10 +63,9 @@ Metamodeling must gather the whole  knowledge that is required to define, precis
 \item Tool integration: based on the metamodel, modeling tools can be adapted to the respective domain. 
 \end{itemize}
 
-
+\textcolor{blue}{
 In the context of Domain-Specific Languages, DSMLs can be tailored via metamodeling to precisely match the domain's semantics and syntax. The concrete syntax that is, the concrete form of the textual or graphical constructs with which the modeling is done must represent the metamodel in an unambiguous way. Having graphic elements that linked directly to a familiar domain makes it easier to learn and allows domain  experts to contribute, such as system engineers and experienced software architects, ensure that software systems meet user needs \cite{volter2013model}. The metamodel is the basis for the automated, tool-supported processing of Metamodeling models. On the other hand, a suitable concrete syntax is the interface to the modeler and its quality decides what degree of readability the models have \cite{stahl2006model}.
-
-
+}
 %Metamodeling tools/languages/techniques examples :
 
 %// Add figure?
@@ -96,11 +95,12 @@ Brief description about automated tasks in MDE.
 \subsection{Code Generation}
 
 One of the most important advantages of MDE, is the automation in many of its activities. The code generation activity is recurrent, and its automation enhances the productivity and the cost.
-For example, Eclipse Modeling Framework built-in code generator allows to generated a java API from an Ecore metamodel. The generated code API structure and technical choices are done to fit Java programming language and model driven engineering abstraction standards/principles ( e.g., each metaclass is used to generate an interface and concrete implementation class that extends the generated interface, pattern observer), to have an efficient as possible.
-\textit{@generated} annotation is used to mark generated interfaces, classes, methods, and fields. This annotation can be used to differentiate the generated code from the manually written one.
+For example, Eclipse Modeling Framework built-in code generator allows to generated a java API from an Ecore metamodel. The generated code API structure and technical choices are done to fit Java programming language and model driven engineering abstraction standards/principles ( e.g., each metaclass is used to generate an interface and concrete implementation class that extends the generated interface, pattern observer), to have an efficient as possible. The annotation 
+\textit{@generated} is used to mark generated interfaces, classes, methods, and fields. This annotation can be used to differentiate the generated code from the manually written one.
 
 In Eclipse Modeling Framework, two model resources (files) are manipulated: the .ecore file that contains  xmli serialization of the Ecore model and the .genmodel for the serialized generator model. The Ecore file is the document that contains the metamodeled main concepts that are used in code generation process.
 
+\textcolor{blue}{Develop this paragraph?}
 \subsection{Evolution in the MDE context}
 
 During the software development process, software artifacts are meant to be changed, due to many reasons: client requirements and domain specifications, software maintenance, or bug correction. Like any other software system, modeling languages are the subject of an inevitable evolution, during their process of building, multiple versions are developed, tested, and adapted until a stable version is reached. 
@@ -164,7 +164,7 @@ In this chapter, we present an overview of what has been done in the field of co
  A lot of work has been done on metamodel diffing.
  Detection approaches can be classified into two main categories; online\footnote{Offline approaches perform detection after the metamodel has been evolved.} detection approaches, and offline\footnote{Online approaches perform instant detection for each change during the metamodel evolution} detection approaches. This classification can be refined using some factors: automation degree, types of detected changes, considered issues (overlap, indefinite length, hidden changes, order of changes, and undo operations)\cite{hebig2016approaches}.
  
- 
+ %breaking not breaking?
  
   In another hand, many of them classified the detected changes based on their impact on the treated artifact (models, constraint, transformation, and code). Here we put the largest set of changes types, later, we will specify treated types with their possible impact on the code.
  
@@ -201,14 +201,52 @@ In this chapter, we present an overview of what has been done in the field of co
  	\end{table*}
  	\vspace{1em}
  	
- In Model-Dricen Engineering area, metamodel changes can be divided into three categories\cite{gruschko2007towards}:
+ In Model-Driven Engineering area, metamodel changes can be divided into three categories\cite{gruschko2007towards}:
  \begin{itemize}
  	
  \item	Non-breaking changes can be resolved automatically.
   \item Breaking and resolvable changes break the conformance of existing data, although they can be automatically adapted.
- \item Breaking and unresolvable changes break the conformance of existing data, that cannot be automatically adapted, and require user intervention
+ \item Breaking and unsolvable changes break the conformance of existing data, that cannot be automatically adapted, and require user intervention
  \end{itemize}
  	In API evolution context, API changes can be classified as Non-breaking API Changes	or Breaking API Changes. A breaking change is not backwards compatible. In this case, client code calling the evolved API by a Breaking Change fails to compile or may behave differently at runtime. A non-breaking change is backwards compatible. This kind of changes aims to extend the functionalities or fix errors \cite{dig2006apis}.
+ 	
+ 	
+ 	
+
+%TODO Discussion part 
+
+All these approaches propose structural changes detection : Additions, deletions, or modifications to classes, attributes, associations, or inheritance structures.
+Definition of metamodel : definition of the structural side of the representation of the given domain. Behavioral side is given through constraints. Following this definition, in this section, we give the structural changes. Another usage ? behavioral impact ? structural impact? structural error ? behavioral error? static/ runtime? 
+
+
+ 
+
+Demuth et al. [37, 39, 40], Herrmannsdoerfer 62 ,63, khelladi2016detecting are online approaches, where offline [141, 41, 90, 29, 47, 84, 49, 145,
+102, 136] are offline.  Offline detection may cause an order issue, particularly in 141, 41, 90, 47, 84, 49, 145,. 102]. 
+All of them do not consider hidden changes except 136.
+
+
+Herrmannsdoerfer et al. [63, 62] and
+Williams et al. [141] are manual. Di Ruscio et al. [41], Vermolen et al. [136], and khelladi2016detecting are all semi-automatic that require user decision to select final output changes.
+Demuth 37,39,40; Levendovszky 90,Cicchetti 29, Garces 47, Langer 84, Garcia 49, Xing 145, Moghadam 102 full automatic approaches.
+
+Herrmannsdoerfer and khelladi2016detecting as online approaches take into consideration undo operations.
+
+
+Moghadam 102, Vermolen 136 and khelladi2016detecting take into consideration indefinite length of a complex change.
+khelladi2016detecting take into consideration overlap issue.
+
+
+%Structural Changes: Additions, deletions, or modifications to classes, attributes, associations, or inheritance structures.
+%Semantics or Behavioral Changes: Modifications in the constraints, rules, or behavior definitions in the metamodel.
+
+
+After studying the literature change detection approaches of metamodel, we found that khelladi2016detecting handle all type of changes. Furthermore, their approach hangle all the issues that we mentionned. 
+It is a semi automatic approach but this adds a trust value to the approach because automatic approach may have order or overlap issues.
+
+Another reaoson to choose khelladi2016detecting approach is their output representation and vocabulary. It required a minimum effort of adaptation because we use the same changes representation.
+%What we chose is describes in section??
+
  \section{Co-evolution of models, constraints, and transformation}
  \label{coevolutionartifacts}
  In MDE ecosystem, the metamodel is the starting point to have other artifacts that we defined in section ?. in this section, we will present an overview of the existing work about these artifacts co-evolution. Note that if the solution is applied during the evolution of the metamodel, we call it an online solution, otherwise it is offline.
@@ -412,7 +450,7 @@ Roziere et al. \cite{roziere2021leveraging} leverage generated unit tests to fil
 
 
 In the literature, correctness is generally assessed manually by comparing the APR-generated patch against the developer-provided patch available in the benchmark. This paper proposes metrics that limit the biases when assessing APR tools.- :Upper bound Repair Performance metric aims to clearly provide an indication of the patch generation limitations when focusing on this part of the APR system (i.e., APR systems are given with the exact bug-fixing positions obtained from the ground of truth developers’ patches). The list of the used metrics:\\
-• Fault Localization Sensitiveness metric aims to assess the impact of the used fault localization on the repair performance of the APR system.\
+• Fault Localization Sensitiveness metric aims to assess the impact of the used fault localization on the repair performance of the APR system.\\
 • Patch Generation Efficiency metrics aim to clarify the APR efficiency, the effort to yield a plausible/correct patch.\\
 • Bug Diversity metrics aim at evaluating APR system performance from intrinsic attributes of bugs.\\
 • Benchmark Overfitting metrics aim to clarify the difference of APR systems performance between in-the-lab and in-the-wild assessment settings.\\
@@ -447,6 +485,19 @@ Sridhara et al. \cite{sridhara2023chatgpt} explore how ChatGPT can be used in am
 
   Besides code generation and code documentation, the paper of Sadik et al. \cite{sadik2023analysis} investigates the potential application ChatGPT as an LLM for bug detection and refactoring particular code bad smell detection.
   Hemberg et al. \cite{hemberg2024evolving} explain their approach on how an algorithm, with the general algorithmic structure of an EA and evolutionary operators, can use an LLM to evolve code, how the operators are designed to formulate LLM prompts, task the LLM via the prompts, and process LLM responses, while code is represented as a sequence of text in code syntax. Its goal is to get the best solution code that fits the best the beforehand mentioned operators as hyper parameters of the genetic algorithm.
+  
+  \section{Summary and Discussion}
+  Summary of the works cited above.
+  
+  Regarding C1, code evolution 
+  Position of our contributions in the overview of SOTA. 
+  
+  Factors of comparing/discussing.
+  
+  Talk about the case of coders who do not know MDE, do not have enough information about the metamodel.
+  
+  Defined scope of the thesis.
+  
  %TODO What has been done so far: 
 %TODO Change detection
 %TODO Metamodel-Transformation co-evolution

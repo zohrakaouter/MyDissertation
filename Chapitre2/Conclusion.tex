@@ -1,0 +1,32 @@
+\section{Conclusion}
+\label{sec_conclusion}
+This paper proposes an automated tracing of the impacted tests due to metamodel evolution. Thus, by tracing the tests before and after code co-evolution, we check its behavioral correctness. 
+Our approach takes as input the metamodel changes and then finds the different pattern usages of each metamodel element in the code. 
+After that, we recursively search for its usages in the code call graph until reaching the tests. Thus, we end up matching metamodel changes with impacted code methods and their corresponding tests. 
+%
+We further implemented our approach in an Eclipse plugin that allows to trace the tests, map them with state-of-the-art solution GumTree and execute them. We then report them back as a diagnostic to the developers for an easier in-depth analysis of the effect of metamodel evolutions rather than re-running and analyzing the whole test suite.
+
+\red{The user study experiment we conducted showed that tracing manually the tests impacted by the evolution of the metamodel is a hard and error-prone task. Not only the participants could not trace all tests, but they even wrongly traced non-impacted tests.  
+We then evaluated our approach on 18 Eclipse projects from OCL, Modisco, Papyrus, and EMF over several evolved versions of metamodels. Four projects had manually written tests and we generate tests for the other 14 projects. 
+The results show that we successfully traced the impacted tests automatically by selecting 1608 out of 34612 tests due to 473 metamodel changes. 
+
+%We evaluated our approach on three implementations of OCL, Modisco and Papyrus in Eclipse on 14 projects from over several evolved versions of metamodels, and with generated tests with EvoSuite. Results show that we automatically traced 1408 out of 33840 tests based on the 466 metamodel changes. %928 and 480 impacted tests 
+%
+When running the traced tests before and after co-evolution, we observed two cases indicating possibly both behaviorally incorrect and correct code co-evolution. Thus, helping the developers to locate the code co-evolution to investigate in more detail. Furthermore, our approach provided gains that represent, on average, a reduction of 88\% in number of tests and \red{84\%} in execution time. No significant difference was observed between projects with manually written tests and automatically generated ones.}   
+
+As future work, we first plan to improve the performance of our implementation with optimization of the tests' tracing.  %first evaluate on more case studies that could have manually written test. 
+%we will 
+We also plan to extend our approach to projects that use an equivalent form of metamodels in other technological space than Eclipse, such as JHipster and OpenAPI that both generate code from a model specification similar to a metamodel. Thus, we can have alternative case studies. 
+
+After that, we plan to investigate the techniques of test amplification on the selected tests we traced from the metamodel changes. Indeed, once we select a subset of tests, we could amplify them by generating more similar tests, yet, with different assertions to cover more corner cases. This would amplify the behavioral check of the code co-evolution. 
+
+Finally, we will also explore another type of amplification, which is the interchange of the tests between the original and evolved versions. In other words, we aim to co-evolve the tests of the original and evolved versions, respectively forward and backward to the evolved and original versions, while removing duplicates. 
+
+%%Moreover, the knowledge about the generated code elements from the metamodel elements (e.g., getter/setter for EAttribute, class/interface for EClass, etc.) is so far hard-coded in the implementation. The mappings must be provided for our approach to be able to trace the tests. We could express these mappings in a generic way as a configuration file taken as input in our approach. Thus, we could reuse our approach more easily in other scenarios than EMF Eclipse (e.g., jHipster), given their corresponding mappings as input. This is left as future work to generalize our approach.
+
+
+%evaluate existing approaches of automatic code co-evolution with out technique to better assess their effect on the code. 
+
+\section*{Acknowledgment.} 
+%The research leading to this paper received funding from \emph{Anonym} research project under grant $n^{o}$ \emph{Anonym}.
+The research leading to these results has received funding from the \emph{RENNES METROPOLE} under grant \emph{AIS no. 19C0330} and from \emph{ANR} agency under grant \emph{ANR JCJC MC-EVO$^{2}$ 204687}.

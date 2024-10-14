@@ -1,0 +1,126 @@
+\section{Introduction}
+\label{sec_introduction}
+
+\begin{comment}
+\section*{Topic and context}
+\begin{itemize}
+ \item {Large scale systems}
+
+ \item {MDE}
+  \item {Software langugaes}
+ \item {Metamodels artifacts for SL Specs}
+ \item {EMF}
+ EXAMPLES
+ 
+ 
+
+  
+ 
+\end{itemize}
+
+
+\section*{ Focus and scope}
+\begin{itemize}
+ \item {Existence of many projects that leverage on the code generated ( \textit{i.e.} code api) by EMF, as a result many languages have been developed using EMF and its ecosystem :: examples ?? BPMN UML ,these code APi have been complemeneted ( this point of code api completion will be detailed ) to get these existing softwares}
+ \item { Evolution of metamodel—> impact on artifacts (:::)}
+ 
+\end{itemize}
+After code generation and obtaining the code API, it can be used later by other projects, for example, UML and BPMN are modeling languages created from a code API generated from a metamodel input  using EMF  and that has been complemented.
+
+Because a metamodel is a real life abstraction, it is meant to change and to evolve, which will have a direct impact on the generated code API and on the other projects relying on this code API.
+
+Metamodel -- code generation -- other artifacts generation
+
+
+
+\section*{ Relevance and importance} 
+\begin{itemize}
+ \item {need of mm and code coevolving , 
+what exists in literature??? :
+metamodel and models , constraints ,transformations}
+ \item {Change detection / propagation ??}
+ \item { Describe contribution of this work.}
+\end{itemize}
+
+The evolution of metamodel that implies other generated artifacts evolution, as a consequence, a manual updating of depending projects is mendatory to keep them operational. One of the most chanlleging steps now in MDE is to allow Metamodel and generated artifacts co-evolution to make the updating of depending projects  semi-automatic or even automatic.
+
+
+\section*{  Questions and objectives}
+\begin{itemize}
+ \item {Design and implementation of the solution :
+Giving a scenario, the blocking point , and  how our solution will unblock the situation}
+ \item {Ojective : Evaluation of  our solution:
+inputs and outputs, evaluation mesures }
+ \item { research questions ???}
+ \item { Discussion of results briefly }
+\end{itemize}
+My work is about metamodel and code co-evolution. Given a metamodel that avolves from version to another, generating different code APIs, how can we update depending projects ?
+\section*{  Overview of the structure} 
+
+\end{comment}
+
+\emph{Model-driven engineering (MDE)} is a state-of-art software engineering approach for supporting the increasingly complex construction and maintenance of large-scale systems~\cite{kent2002, hutchinson2011empirical,hutchinson2011model}. In particular, MDE allows domain experts, architects, and developers to build languages and their tools that play an important role in all phases of the development process~\cite{tolvanen2009metaedit}.
+
+A central artifact in MDE when building languages is the \emph{metamodel} that defines the aspects of a business domain, i.e. the main concepts, their properties, and the relationships between them \cite{cabot2012object}. A metamodel is the cornerstone to not only specify model instances, constraints, or transformations, but also the code when building the necessary language tooling, e.g., editor, checker, compiler, data access layers, etc. 
+In particular, metamodels are used as inputs for complex code generators that leverage the abstract concepts defined in metamodels.
+\emph{Eclipse Modeling Framework (EMF)}~\cite{steinberg2008emf} is a prominent example that supports the generation of Java code consisting of a core code API for creating, loading and manipulating the model instances, adapters, serialization facilities, and an editor, all from the metamodel elements.
+This generated code is further enriched by developers to offer additional functionalities and tooling, such as validation, transformation, simulation, or debugging. A metamodel and its generated code API are, hence, a cornerstone when building a language and its tooling.
+For instance, UML\footnote{\url{https://www.eclipse.org/modeling/mdt/downloads/?project=uml2}}  and BPMN\footnote{\url{https://www.eclipse.org/bpmn2-modeler/}} Eclipse implementations rely on the UML and BPMN metamodels to generate their corresponding code API before building around it all their tooling and services in the additional code. %Then, the developers need to check the behavior correctness of their implementations, including the code API and the additional code by using unit tests(ref?).
+
+One of the foremost challenges to deal with in \emph{MDE}, is the impact of the evolution of metamodels on its dependent artifacts, in particular, the impacted code.
+Indeed, when a metamodel evolves between two releases, and as the core API is re-generated again, the additional code implemented by developers can be impacted. As a consequence, it is co-evolved accordingly by the developer in the next release. 
+%
+However, while developers co-evolve their code either manually or automatically, they cannot ensure that the code co-evolution is behaviorally correct, i.e., without altering the behavior of their impacted code. Especially, when there is alternative co-evolution of the same impacted code. 
+One way to check this is to re-run all the tests after each code co-evolution, which is expensive and time-consuming. It is also tedious and error-prone when the developer checks the output of the tests' execution and manually maps them between the original and evolved versions. 
+Whereas several existing approaches automate the metamodels and code co-evolution \cite{riedl2014towards,pham2017bidirectional,jongeling2020towards,jongeling2022Structural,zaheri2021towards,yu2012maintaining,Khelladi2020}, to the best of our knowledge, they do not focus on checking the behavioral correctness of the co-evolved code and do not trace till the impacted tests. 
+%  -our position among related work 
+
+%\red{cite paper that co-evolve code with models (from icse paper) and say they dont test the co-evolution, so no confidence is given for it except the error disapearance. }
+
+
+This paper proposes a new fully automatic approach to check the behavioral correctness of the code co-evolution between different releases of a language when its metamodel evolves. We leverage the test suites of the original and evolved versions of the language, and hence, its metamodels and code. \red{Test suits are usually used to check the code is behaviorally correct. In our work, we use unit test suites before and after code co-evolution to check that the co-evolution did not alter the behavior of the code.} % 
+The approach first takes as input the metamodel evolution changes and then parses the code to compute the code call graph (CCG). With the changes and the CCG, \red{we first locate all usages of the metamodel elements in the generated code. For example, a getter/setter of a metamodel attribute/reference, interface, the class implementation, etc. 
+%methods initialization of a metamodel class, etc. %{changes} and {CCG} are used later to find the different pattern usages of each metamodel element in the code. 
+After that, we recursively trace the code usages of the metamodel elements in the CCG throughout the methods calls in the additional code until reaching the test methods.}
+%iteratively look for its usages in the code call graph, computed already, until reaching the test methods. 
+Thus, we end up matching the metamodel changes with impacted code methods and their corresponding tests. We perform this step on both releases corresponding to the original and evolved metamodels and code to be able to check the behavioral correctness of the code before and after co-evolution.  
+%
+We implemented our approach in an Eclipse plugin that allows to trace the tests, map them with state-of-the-art solution GumTree \cite{falleri2014fine} and execute them. Then, we report them back in a form of diagnostic to the developers for an easier in-depth analysis of the effect of metamodel evolution rather than re-running and analysing the whole test suite.
+%For instance, many releases of MDE projects are provided without any test to check the correctness if their code behavior. (the uses of these mde projects by others).
+
+%\red{A first part of the evaluation consisted on a user study to investigate how difficult is to trace tests after metamodel evolution and co-evolution. Results showed that ...}
+
+\red{A first part of the evaluation consisted of an user study experiment to gain evidence on the difficulty or not of the manual task of tracing impacted tests after metamodel evolution and co-evolution. We found that tracing manually the tests impacted by the evolution of the metamodel is a hard and error-prone task. Not only the participants could not trace all tests, but they even wrongly traced non-impacted tests. The post-questionnaire results after a demonstration of our automatic approach suggest its high usefulness and adoption likelihood. 
+%
+We then evaluated our approach on 18 Eclipse projects from OCL, Modisco, Papyrus, and EMF over several evolved versions of metamodels.  
+For four projects we had manually written tests. 
+%As we did not find manually written tests in those projects
+For the 14 projects without manual tests, we generated a test suite for each release with the best available state-of-the-art tool EvoSuite \cite{fraser2011evosuite}. 
+%\red{To mitigate the lack of manual tests, we added four Eclipse projects from EMF that already had manually written tests.}
+%
+Results show that we automatically traced 1608 out of 34612 tests %, respectively in the original and evolved versions, 928 and 480 tests
+based on 473 metamodel changes.} 
+%
+When running the traced tests before and after co-evolution, we observed the two cases, indicating possibly both behaviorally incorrect and correct code co-evolution. Thus, helping the developer to locate code co-evolution to investigate in more details. In addition, our approach provided gains representing, on average a reduction of 88\% in the number of tests and 84\% in execution time.  
+%When running the generated tests before and after co-evolution, we observed that the \% of passing, failing and erroneous tests stayed the same with insignificant variations in some projects.   
+
+\begin{comment}
+\red{
+In summary the contributions of this paper are as follows:\todo{reformulate if needed}
+\begin{itemize}
+    \item provide a diagnostic mechanism for developers 
+    \item synthesis tests tailored to check the behavioral correctness of the co-evolution.
+    \item 
+\end{itemize}
+}
+\end{comment}
+
+This paper significantly extends our previous vision paper~\cite{Kebaili2023towards} where we laid out the base for the test tracing. In addition to a more detailed approach, we extend this work by additional core contributions of 1) the mapping of impacted tests between original and evolved versions, 2) executing them programmatically, and 3) reporting the result of the mapped tests and the causing metamodel changes in a GUI to the user. 
+Moreover, the preliminary evaluation of the vision paper~\cite{Kebaili2023towards} was extensively improved both 1) in research questions with three added structured questions, 2) in the number of case studies that was extended from 4 projects to 18 projects \red{with both manually written tests and automatically generated tests, and 3) a user study experiment with 8 participants.} 
+
+The rest of the paper is structured as follows. 
+%Section 1 presents ...
+Section~\ref{sec_background} discusses the background. 
+Section~\ref{sec_approach} presents our approach for test tracing while Section~\ref{sec_evaluation} evaluates it.
+Sections~\ref{threat} and~\ref{sec_relatedwork} discuss threats to validity and related work.
+Finally, Section~\ref{sec_conclusion} concludes the paper and discusses future work plan. 

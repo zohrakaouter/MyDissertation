@@ -1,0 +1,48 @@
+\section{Related work}
+\label{sec_relatedwork}
+
+%Here the approaches fo code co-evolution in MDE, maybe even API/code, and say while they focus on automating the co-evolution, they do not focus on testing it, devs do not have a way to know the design impact of metamodel evolution on the code between releases
+
+This section discusses the main related work w.r.t. testing the metamodel and code co-evolution.
+
+Extensive literature exists on co-evolution of metamodel and models~\cite{kessentini2020interactive,kessentini2018integrating,kessentini2019automated,cicchetti2008automating,herrmannsdoerfer2009cope,garces2009managing,wachsmuth2007metamodel, paige2016evolving,hebig2016approaches,demuth2016co}, constraints~\cite{cherfa2021identifying,batot2017heuristic,khelladi2016metamodel,khelladi2017semi,correa2007refactoring,kusel2015systematic} and transformations~\cite{kessentini2018automated,khelladi2018change,garces2014adapting,garcia2013model,kusel2015consistent}. 
+Several other approaches propose to automate the code co-evolution. Henkel et al. \cite{henkel2005catchup} proposed an approach that captures refactoring actions and replays them on the code to migrate. They support only the changes renames, moves, and type changes. 
+%
+Nguyen et al. \cite{nguyen2010graph} also proposed an approach that guides developers in adapting code by learning adaptation patterns from previously migrated code. Similarly, Dagenais et al. \cite{dagenais2011recommending} also used a recommendation mechanism of code changes by mining them from previously migrated code. 
+%
+Anderson et al. \cite{andersen2010generic} proposed to migrate drivers in response to evolutions in Linux internal libraries. It identifies common changes made in a set of files to extract a generic patch that can be reused on other code parts. 
+However, all those approaches are not tailored to metamodel and code co-evolution. More importantly, they do not test the behavioral correctness of their co-evolution. 
+
+Moreover, a more related approach to metamodel co-evolution, Riedl et al. \cite{riedl2014towards} proposed an approach to detect inconsistencies between UML models and code. %Kanakis et al. \cite{kanakis2019empirical} showed that inconsistency information of model change and code error can help in resolving them in the code, which is equivalent to our matched pattern usages. 
+Pham et al. \cite{pham2017bidirectional} proposed an approach to synchronize architectural models and code with bidirectional mappings.
+%
+Jongeling et al. \cite{jongeling2020towards} propose an early approach for the consistency checking between system models and their implementations by focusing on recovering the traceability links between the models and the code. Jongeling et al. \cite{jongeling2022Structural} later relied on the recovered traces to perform the consistency checking task.  %https://www.es.mdh.se/pdf_publications/5848.pdf
+%
+Zaheri et al. \cite{zaheri2021towards} also proposed to support the checking of the consistency-breaking updates between models and generated artifacts, including the code. %However, \cite{pham2017bidirectional,jongeling2020towards,jongeling2022Structural,zaheri2021towards} do not focus co-evolving the code to repair the inconsistencies with the models. 
+%
+Yu et al. \cite{yu2012maintaining} proposed to co-evolve the metamodels and the generated API in both directions. %However, they do not co-evolve the additional code on top of it, which our approach does. 
+%
+Khelladi et al. \cite{Khelladi2020} proposed an approach that propagates the metamodel changes to the code as a co-evolution mechanism. %However, it is based on static analysis to detect the impacts and not on the actual errors that appear from the compilation of the code after the metamodel evolution. It further applies a semi-automatic co-evolution requiring developers intervention. 
+%
+However, all those approaches \cite{riedl2014towards,pham2017bidirectional,jongeling2020towards,jongeling2022Structural,zaheri2021towards,yu2012maintaining,Khelladi2020} focus on co-evolving the code without checking the behavioral correctness of the co-evolved code. 
+
+Our work is also related to regression test selection \cite{engstrom2010systematic}, where different approaches exist based on Genetic algorithms \cite{mansour1997natural}, slicing \cite{gupta1992approach}, or database safety \cite{willmor2005safe}. However, our goals are different. Our approach aims to trace the impact of metamodel evolution up to the tests to check the behavioral correctness of the code co-evolution rather than fault localization.
+\blue{
+%Our work is one of the Test Case Selection approaches defined by Yoo et al. ~\cite{10.1002/stv.430} as techniques that aim to identify fault-revealing test cases. 
+Furthermore, from the survey of Yoo et al. ~\cite{10.1002/stv.430}, our approach can be categorized along the incremental test selection approaches, such as Infinitest\footnote{\url{https://infinitest.github.io/doc/eclipse}}, EKSTAZI~\cite{7203050}, and Moose~\cite{ducasse2000moose}. However, our approach is different from several aspects.
+%
+%By analysing related tools, we found that Infinitest\footnote{\url{https://infinitest.github.io/doc/eclipse}}, EKSTAZI~\cite{7203050}, Moose~\cite{ducasse2000moose}, which are also part of the test case selection approaches, are the nearest tools to our approach. 
+Infinitest is a test case selection plugin. It selects only the direct tests of changed methods and not indirectly impacted tests as in our work (cf. Section~\ref{section: tracing the impacted tests}). EKSTAZI~\cite{7203050} is a regression test selection tool by dynamically analyzing the code and the tests. EKSTAZI must compile the code including the tests to be able to track the changes of a .class files later and then select the subset of impacted tests. Our work only needs to parse the code and the tests. 
+Moose~\cite{ducasse2000moose} represents source code entities in a model. This model gathers entities such as packages, classes, methods, and the relations between them. This is the opposite flow of our work because our starting point is a Metamodel. All of Infinitest, EKSTAZI and Moose 
+%These Test Selection Tools 
+aim to analyze code changes incrementally to select impacted tests in the evolved version of the code only. As a consequence, the developers can only have the latest states of their selected tests after code changes. They cannot compare them with before and after the applied changes. To do so, developers would have to manually undo the code changes and to manually select and re-run the same tests to be able to compare them before and after manually, which represents a significant burden for the developers. 
+Our approach automates the tests' tracing before and after code co-evolution and gives the output as a visual report to developers for an easier analysis of the impact of each metamodel change and its code co-evolution. 
+%Moreover, testing the code is not our aim in itself. We need more analysis between the results of tests between the before and after code co-evolution. This is the reason behind giving the output as a visual report too. 
+If there is an issue, this report would allow the developer to know which metamodel changes are causing this issue, with the tests impacted by these metamodel changes. 
+}
+
+Finally, Ge et al. \cite{ge2014Manual} propose to verify the correctness of refactoring with a set of condition checkers that are executed only after the refactoring application. This is rather similar to the intention of our work. However, we rely on a testing technique that is applied to check before and after code co-evolution with the metamodel evolution. 
+
+
+To the best of our knowledge, our work is the first attempt to propose a fully automatic approach for checking the behavioral correctness of the code co-evolution. We leverage the tests in the original and evolved versions and trace the impacted tests before and after co-evolution. Thus, allowing developers to have more confidence in the automatic co-evolution or at least to locate the tests that must be investigated after co-evolution in case of a bug introduction. This avoids to re-run all test suite, which is expensive and time-consuming before manually mapping the tests in both versions, which is tedious and error-prone. 
+%removing the burden of manual co-evolution from developers. 
