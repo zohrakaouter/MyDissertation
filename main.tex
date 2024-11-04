@@ -1,8 +1,9 @@
 % Ce fichier main.tex est le fichier principal \`{a} partir duquel tout est g\'{e}n\'{e}r\'{e}
 % This file is the main file where the final document is generated
-\documentclass{these-dbl}
+\documentclass[table]{these-dbl}
 % Remplir les metadonnees du pdf
 % Fill the pdf metadata
+
 \hypersetup{
 %    pdfauthor   = {XYZ},
 %    pdftitle    = {Th\`{e}se de doctorat de XYZ},
@@ -15,8 +16,10 @@
 % Spécifier vos fichiers de bibliographie
 % Specify you bibliography files here
 \addbibresource{./biblio/biblio.bib}
+%\usepackage[table]{xcolor}
 %\bibliography{./biblio/biblio.bib}
 \usepackage[ruled,vlined,linesnumbered,algo2e]{algorithm2e} 
+%\usepackage{xcolor}
 \usepackage{amsmath,amssymb,amsfonts}
 
 \newcommand{\ie}{\emph{i.e.,}\xspace}
@@ -28,11 +31,14 @@
 \usepackage{multirow}
 \usepackage{xurl}
 
-
+\usepackage{hhline}
 \newcommand{\blue}[1]{{#1}}
 \newcommand{\green}[1]{{\color{teal}{#1}}}
 \newcommand{\red}[1]{{#1}}
-\usepackage{xcolor}
+
+
+\usepackage{ragged2e}
+\definecolor{CellColor1}{rgb}{1,1,0.82}
 \begin{document}
 	
 %\newcommand{\red}[1]{{\color{red}{#1}}}
@@ -95,7 +101,7 @@
 %\newpage
 %\nocite{*}
 %\printbibliography[heading=secondary,keyword=secondary]
-\clearemptydoublepage
+ \clearemptydoublepage
 % Pour avoir la quatrième de couverture sur une page paire
 % To have the back cover on an even page
 \cleartoevenpage[\thispagestyle{empty}]

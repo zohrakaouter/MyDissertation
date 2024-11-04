@@ -224,7 +224,23 @@
 }
 
 
-
+@inproceedings{10.1145/2000410.2000416,
+	author = {Di Ruscio, Davide and Iovino, Ludovico and Pierantonio, Alfonso},
+	title = {What is needed for managing co-evolution in MDE?},
+	year = {2011},
+	isbn = {9781450306683},
+	publisher = {Association for Computing Machinery},
+	address = {New York, NY, USA},
+	url = {https://doi.org/10.1145/2000410.2000416},
+	doi = {10.1145/2000410.2000416},
+	abstract = {Metamodels can be considered one of the cardinal concepts of Model-Driven Engineering, one which a number of coordinated entities such as models, transformations and tools, are dependent on. Analogously to any software artifact, metamodels are equally prone to evolution during their lifetime. As a consequence, whenever a metamodel changes, any related entity must be consistently adapted for preserving its wellformedness, consistency, or intrinsic correctness.This paper discusses the problem of co-adapting models, transformations, and tools. Different aspects are taken into account and a prospective and unifying characterization is given with the intent of clarifying the main difficulties and outline the basic requirements for possible solutions. In this respect, EMFMigrate a comprehensive approach to the metamodel co-evolution problem is proposed.},
+	booktitle = {Proceedings of the 2nd International Workshop on Model Comparison in Practice},
+	pages = {30–38},
+	numpages = {9},
+	keywords = {metamodel co-evolution, model differences, model driven engineering},
+	location = {Zurich, Switzerland},
+	series = {IWMCP '11}
+}
 
 
 @article{Jiang2013,
@@ -1147,7 +1163,7 @@
 }
 
 @CONFERENCE {ReginaApsec2015,
-	author    = {Regina Hebig and Djamel Eddine Khelladi and Reda Bendraou},
+	author    = {Regina Hebig and Djamel Eddine adi and Reda Bendraou},
 	title     = {Surveying the Corpus of Model Resolution Strategies for Metamodel Evolution},
 	booktitle = {The 22nd Asia-Pacific Software Engineering Conference {APSEC}},
 	year      = {2015}
@@ -1470,6 +1486,16 @@
 	year={2010},
 	school={Paris 6}
 }
+@INPROCEEDINGS{8443581,
+	author={Eilertsen, Anna Maria and Bagge, Anya Helene},
+	booktitle={2018 IEEE/ACM 2nd International Workshop on API Usage and Evolution (WAPI)}, 
+	title={Exploring API/Client Co-Evolution}, 
+	year={2018},
+	volume={},
+	number={},
+	pages={10-13},
+	keywords={Software;Tools;Data mining;Libraries;Java;Semantics;Syntactics;API evolution;Co-evolution;repository mining;software evolution;bytecode analysis},
+	doi={}}
 
 @inproceedings{Kessentini2016automated,
 	title={Automated Metamodel/Model Co-Evolution using a Multi-Objective Optimization Approach},
@@ -2035,13 +2061,21 @@
 
 
 
-@inproceedings{di2013methodological,
-	title={A methodological approach for the coupled evolution of metamodels and atl transformations},
-	author={Di Ruscio, Davide and Iovino, Ludovico and Pierantonio, Alfonso},
-	booktitle={ICMT},
-	pages={60--75},
-	year={2013},
-	organization={Springer}
+@inproceedings{10.1007/978-3-642-33654-62,
+	author = {Di Ruscio, Davide and Iovino, Ludovico and Pierantonio, Alfonso},
+	title = {Evolutionary togetherness: how to manage coupled evolution in metamodeling ecosystems},
+	year = {2012},
+	isbn = {9783642336539},
+	publisher = {Springer-Verlag},
+	address = {Berlin, Heidelberg},
+	url = {https://doi.org/10.1007/978-3-642-33654-6_2},
+	doi = {10.1007/978-3-642-33654-6_2},
+	abstract = {In Model-Driven Engineering (MDE) metamodels are cornerstones for defining a wide range of related artifacts interlaced with explicit or implicit correspondences. According to this view, models, transformations, editors, and supporting tools can be regarded as a whole pursuing a common scope and therefore constituting an ecosystem. Analogously to software, metamodels are subject to evolutionary pressures too. However, changing a metamodel might compromise the validity of the artifacts in the ecosystem which therefore require to co-evolve as well in order to restore their validity.Different approaches have been proposed to support at different extent the adaptation of artifacts according to the changes operated on the corresponding metamodels. Each technique is specialized in the adaptation of specific kind of artifact (e.g., models, or transformations) by forcing modelers to learn different technologies and languages. This paper discusses the different relations occurring in a typical metamodeling ecosystem among the metamodel and the related artifacts, and identifies the commonalities which can be leveraged to define a unifying and comprehensive adaptation process. A language and corresponding supporting tools are also proposed for the management of metamodel evolution and the corresponding togetherness with the related artifacts.},
+	booktitle = {Proceedings of the 6th International Conference on Graph Transformations},
+	pages = {20–37},
+	numpages = {18},
+	location = {Bremen, Germany},
+	series = {ICGT'12}
 }
 
 @inproceedings{di2014dealing,
@@ -3224,6 +3258,25 @@ doi={10.1109/MS.2003.1231146}}
 	year={2011},
 	organization={Springer}
 }
+@article{10.1007/s10515-012-0102-y,
+	author = {Guerra, Esther and Lara, Juan and Wimmer, Manuel and Kappel, Gerti and Kusel, Angelika and Retschitzegger, Werner and Sch\"{o}nb\"{o}ck, Johannes and Schwinger, Wieland},
+	title = {Automated verification of model transformations based on visual contracts},
+	year = {2013},
+	issue_date = {March     2013},
+	publisher = {Kluwer Academic Publishers},
+	address = {USA},
+	volume = {20},
+	number = {1},
+	issn = {0928-8910},
+	url = {https://doi.org/10.1007/s10515-012-0102-y},
+	doi = {10.1007/s10515-012-0102-y},
+	abstract = {Model-Driven Engineering promotes the use of models to conduct the different phases of the software development. In this way, models are transformed between different languages and notations until code is generated for the final application. Hence, the construction of correct Model-to-Model (M2M) transformations becomes a crucial aspect in this approach.Even though many languages and tools have been proposed to build and execute M2M transformations, there is scarce support to specify correctness requirements for such transformations in an implementation-independent way, i.e., irrespective of the actual transformation language used.In this paper we fill this gap by proposing a declarative language for the specification of visual contracts, enabling the verification of transformations defined with any transformation language. The verification is performed by compiling the contracts into QVT to detect disconformities of transformation results with respect to the contracts. As a proof of concept, we also report on a graphical modeling environment for the specification of contracts, and on its use for the verification of transformations in several case studies.},
+	journal = {Automated Software Engg.},
+	month = mar,
+	pages = {5–46},
+	numpages = {42},
+	keywords = {Contract-based specification, Model transformation, Model-Driven Engineering, QVT-relations, Verification}
+}
 @inproceedings{becker2007process,
 	title={A process model and classification scheme for semi-automatic meta-model evolution},
 	author={Becker, Steffen and Gruschko, Boris and Goldschmidt, Thomas and Koziolek, Heiko},
@@ -3729,6 +3782,17 @@ doi={10.1109/MS.2003.1231146}}
 		pages={159--172},
 		year={2009}
 	}
+	@phdthesis{10.5555/169783,
+		author = {Opdyke, William F.},
+		title = {Refactoring object-oriented frameworks},
+		year = {1992},
+		publisher = {University of Illinois at Urbana-Champaign},
+		address = {USA},
+		abstract = {This thesis defines a set of program restructuring operations (refactorings) that support the design, evolution and reuse of object-oriented application frameworks. The focus of the thesis is on automating the refactorings in a way that preserves the behavior of a program. The refactorings are defined to be behavior preserving, provided that their preconditions are met. Most of the refactorings are simple to implement and it is almost trivial to show that they are behavior preserving. However, for a few refactorings, one or more of their preconditions are in general undecidable. Fortunately, for some cases it can be determined whether these refactorings can be applied safely.Three of the most complex refactorings are defined in detail: generalizing the inheritance hierarchy, specializing the inheritance hierarchy and using aggregations to model the relationships among classes. These operations are decomposed into more primitive parts, and the power of these operations is discussed from the perspectives of automatability and usefulness in supporting design.Two design constraints needed in refactoring are class invariants and exclusive components. These constraints are needed to ensure that behavior is preserved across some refactorings. This thesis gives some conservative algorithms for determining whether a program satisfies these constraints, and describes how to use this design information to refactor a program.},
+		note = {UMI Order No. GAX93-05645}
+	}
+	
+	
 	@INPROCEEDINGS{9425945,
 		author={Wang, Sinan and Wen, Ming and Liu, Yepang and Wang, Ying and Wu, Rongxin},
 		booktitle={2021 IEEE International Conference on Software Analysis, Evolution and Reengineering (SANER)}, 
@@ -3827,6 +3891,23 @@ doi={10.1109/MS.2003.1231146}}
 		journal={arXiv preprint arXiv:2305.16837},
 		year={2023}
 	}
+	@inproceedings{10.1145/2950290.2950305,
+		author = {Silva, Danilo and Tsantalis, Nikolaos and Valente, Marco Tulio},
+		title = {Why we refactor? confessions of GitHub contributors},
+		year = {2016},
+		isbn = {9781450342186},
+		publisher = {Association for Computing Machinery},
+		address = {New York, NY, USA},
+		url = {https://doi.org/10.1145/2950290.2950305},
+		doi = {10.1145/2950290.2950305},
+		abstract = {Refactoring is a widespread practice that helps developers to improve the maintainability and readability of their code. However, there is a limited number of studies empirically investigating the actual motivations behind specific refactoring operations applied by developers. To fill this gap, we monitored Java projects hosted on GitHub to detect recently applied refactorings, and asked the developers to explain the reasons behind their decision to refactor the code. By applying thematic analysis on the collected responses, we compiled a catalogue of 44 distinct motivations for 12 well-known refactoring types. We found that refactoring activity is mainly driven by changes in the requirements and much less by code smells. Extract Method is the most versatile refactoring operation serving 11 different purposes. Finally, we found evidence that the IDE used by the developers affects the adoption of automated refactoring tools.},
+		booktitle = {Proceedings of the 2016 24th ACM SIGSOFT International Symposium on Foundations of Software Engineering},
+		pages = {858–870},
+		numpages = {13},
+		keywords = {software evolution, code smells, Refactoring, GitHub},
+		location = {Seattle, WA, USA},
+		series = {FSE 2016}
+	}
 	@Inbook{White2024,
 		author="White, Jules
 		and Hays, Sam
@@ -3846,5 +3927,334 @@ doi={10.1109/MS.2003.1231146}}
 		isbn="978-3-031-55642-5",
 		doi="10.1007/978-3-031-55642-5_4",
 		url="https://doi.org/10.1007/978-3-031-55642-5_4"
+	}
+	
+	%client side  for the survey 
+	@inproceedings{10.1145/2393596.2393662,
+		author = {Robbes, Romain and Lungu, Mircea and R\"{o}thlisberger, David},
+		title = {How do developers react to API deprecation? the case of a smalltalk ecosystem},
+		year = {2012},
+		isbn = {9781450316149},
+		publisher = {Association for Computing Machinery},
+		address = {New York, NY, USA},
+		url = {https://doi.org/10.1145/2393596.2393662},
+		doi = {10.1145/2393596.2393662},
+		abstract = {When the Application Programming Interface (API) of a framework or library changes, its clients must be adapted. This change propagation---known as a ripple effect---is a problem that has garnered interest: several approaches have been proposed in the literature to react to these changes.Although studies of ripple effects exist at the single system level, no study has been performed on the actual extent and impact of these API changes in practice, on an entire software ecosystem associated with a community of developers. This paper reports on an empirical study of API deprecations that led to ripple effects across an entire ecosystem. Our case study subject is the development community gravitating around the Squeak and Pharo software ecosystems: seven years of evolution, more than 3,000 contributors, and more than 2,600 distinct systems. We analyzed 577 methods and 186 classes that were deprecated, and answer research questions regarding the frequency, magnitude, duration, adaptation, and consistency of the ripple effects triggered by API changes.},
+		booktitle = {Proceedings of the ACM SIGSOFT 20th International Symposium on the Foundations of Software Engineering},
+		articleno = {56},
+		numpages = {11},
+		keywords = {ecosystems, empirical studies, mining software repositories},
+		location = {Cary, North Carolina},
+		series = {FSE '12}
+	}
+	%7332471
+	@INPROCEEDINGS{7816485,
+		author={Sawant, Anand Ashok and Robbes, Romain and Bacchelli, Alberto},
+		booktitle={2016 IEEE International Conference on Software Maintenance and Evolution (ICSME)}, 
+		title={On the Reaction to Deprecation of 25,357 Clients of 4+1 Popular Java APIs}, 
+		year={2016},
+		volume={},
+		number={},
+		pages={400-410},
+		keywords={Java;Ecosystems;History;Programming;Software;Libraries;Documentation;API;deprecation;mining software repositories},
+		doi={10.1109/ICSME.2016.64}}
+	
+	@INPROCEEDINGS{7884616,
+		author={Xavier, Laerte and Brito, Aline and Hora, Andre and Valente, Marco Tulio},
+		booktitle={2017 IEEE 24th International Conference on Software Analysis, Evolution and Reengineering (SANER)}, 
+		title={Historical and impact analysis of API breaking changes: A large-scale study}, 
+		year={2017},
+		volume={},
+		number={},
+		pages={138-147},
+		keywords={Libraries;Java;Time-frequency analysis;Contracts;Software;Maintenance engineering;Software Evolution;API Usage;API Stability;Backwards Compatibility},
+		doi={10.1109/SANER.2017.7884616}}
+	@article{10.1007/s11219-016-9344-4,
+		author = {Hora, Andr\'{e} and Robbes, Romain and Valente, Marco Tulio and Anquetil, Nicolas and Etien, Anne and Ducasse, St\'{e}phane},
+		title = {How do developers react to API evolution? A large-scale empirical study},
+		year = {2018},
+		issue_date = {March     2018},
+		publisher = {Kluwer Academic Publishers},
+		address = {USA},
+		volume = {26},
+		number = {1},
+		issn = {0963-9314},
+		url = {https://doi.org/10.1007/s11219-016-9344-4},
+		doi = {10.1007/s11219-016-9344-4},
+		abstract = {Software engineering research now considers that no system is an island, but it is part of an ecosystem involving other systems, developers, and users. When a framework or a library evolves, its clients often must adapt. For example, client developers might need to adapt to functionalities, client systems might need to be adapted to a new API, and client users might need to adapt to a new user interface. The consequences of these changes are yet unclear: what proportion of the ecosystem might be expected to react, how long might it take for a change to diffuse in the ecosystem, do all clients react in the same way? This paper reports an exploratory study aimed at observing API evolution and its impact on a large software ecosystem, Pharo, which has about 3600 distinct systems, and 6 years of evolution. We analyze 118 API changes in the context of method replacement and suggestion, and answer research questions regarding the magnitude, duration, extension, and consistency of such changes in the ecosystem. The results of this study help to characterize the impact of API evolution in large software ecosystems and provide the basis to better understand how such impact can be alleviated.},
+		journal = {Software Quality Journal},
+		month = mar,
+		pages = {161–191},
+		numpages = {31},
+		keywords = {API deprecation, API evolution, Empirical study, Software ecosystem}
+	}
+	@article{10.1007/s10664-017-9521-5,
+		author = {Kula, Raula Gaikovina and German, Daniel M. and Ouni, Ali and Ishio, Takashi and Inoue, Katsuro},
+		title = {Do developers update their library dependencies?},
+		year = {2018},
+		issue_date = {February  2018},
+		publisher = {Kluwer Academic Publishers},
+		address = {USA},
+		volume = {23},
+		number = {1},
+		issn = {1382-3256},
+		url = {https://doi.org/10.1007/s10664-017-9521-5},
+		doi = {10.1007/s10664-017-9521-5},
+		abstract = {Third-party library reuse has become common practice in contemporary software development, as it includes several benefits for developers. Library dependencies are constantly evolving, with newly added features and patches that fix bugs in older versions. To take full advantage of third-party reuse, developers should always keep up to date with the latest versions of their library dependencies. In this paper, we investigate the extent of which developers update their library dependencies. Specifically, we conducted an empirical study on library migration that covers over 4,600 GitHub software projects and 2,700 library dependencies. Results show that although many of these systems rely heavily on dependencies, 81.5\% of the studied systems still keep their outdated dependencies. In the case of updating a vulnerable dependency, the study reveals that affected developers are not likely to respond to a security advisory. Surveying these developers, we find that 69\% of the interviewees claimed to be unaware of their vulnerable dependencies. Moreover, developers are not likely to prioritize a library update, as it is perceived to be extra workload and responsibility. This study concludes that even though third-party reuse is common practice, updating a dependency is not as common for many developers.},
+		journal = {Empirical Softw. Engg.},
+		month = feb,
+		pages = {384–417},
+		numpages = {34},
+		keywords = {Software reuse, Software maintenance, Security vulnerabilities}
+	}
+	
+	%lib side
+	@article{10.1016/j.infsof.2017.09.007,
+		author = {Kula, Raula Gaikovina and Ouni, Ali and German, Daniel M. and Inoue, Katsuro},
+		title = {An empirical study on the impact of refactoring activities on evolving client-used APIs},
+		year = {2018},
+		issue_date = {January 2018},
+		publisher = {Butterworth-Heinemann},
+		address = {USA},
+		volume = {93},
+		number = {C},
+		issn = {0950-5849},
+		url = {https://doi.org/10.1016/j.infsof.2017.09.007},
+		doi = {10.1016/j.infsof.2017.09.007},
+		abstract = {ContextRefactoring is recognized as an effective practice to maintain evolving software systems. For software libraries, we study how library developers refactor their Application Programming Interfaces (APIs), especially when it impacts client users by breaking an API of the library. ObjectiveOur work aims to understand how clients that use a library API are affected by refactoring activities. We target popular libraries that potentially impact more library client users. MethodWe distinguish between library APIs based on their client-usage (referred to as client-used APIs) in order to understand the extent to which API breakages relate to refactorings. Our tool-based approach allows for a large-scale study across eight libraries (i.e.,totaling 183 consecutive versions) with around 900 clients projects. ResultsWe find that library maintainers are less likely to break client-used API classes. Quantitatively, we find that refactoring activities break less than 37\% of all client-used APIs. In a more qualitative analysis, we show two documented cases of where non-refactoring API breaking changes are motivated other maintenance issues (i.e., bug fix and new features) and involve more complex refactoring operations. ConclusionUsing our automated approach, we find that library developers are less likely to break APIs and tend to break client-used APIs when performing maintenance issues.},
+		journal = {Inf. Softw. Technol.},
+		month = jan,
+		pages = {186–199},
+		numpages = {14},
+		keywords = {API Breakages, Refactoring, Software evolution, Software libraries}
+	}
+	%both 
+	@article{10.1016/j.infsof.2015.02.014,
+		author = {Jezek, Kamil and Dietrich, Jens and Brada, Premek},
+		title = {How Java APIs break - An empirical study},
+		year = {2015},
+		issue_date = {September 2015},
+		publisher = {Butterworth-Heinemann},
+		address = {USA},
+		volume = {65},
+		number = {C},
+		issn = {0950-5849},
+		url = {https://doi.org/10.1016/j.infsof.2015.02.014},
+		doi = {10.1016/j.infsof.2015.02.014},
+		abstract = {ContextIt has become common practice to build programs by using libraries. While the benefits of reuse are well known, an often overlooked risk are system runtime failures due to API changes in libraries that evolve independently. Traditionally, the consistency between a program and the libraries it uses is checked at build time when the entire system is compiled and tested. However, the trend towards partially upgrading systems by redeploying only evolved library versions results in situations where these crucial verification steps are skipped. For Java programs, partial upgrades create additional interesting problems as the compiler and the virtual machine use different rule sets to enforce contracts between the providers and the consumers of APIs. ObjectiveWe have studied the extent of the problem in real world programs. We were interested in two aspects: the compatibility of API changes as libraries evolve, and the impact this has on programs using these libraries. MethodThis study is based on the qualitas corpus version 20120401. A data set consisting of 109 Java open-source programs and 564 program versions was used from this corpus. We have investigated two types of library dependencies: explicit dependencies to embedded libraries, and dependencies defined by symbolic references in Maven build files that are resolved at build time. We have used JaCC for API analysis, this tool is based on the popular ASM byte code analysis library. ResultsWe found that for most of the programs we investigated, APIs are unstable as incompatible changes are common. Surprisingly, there are more compatibility problems in projects that use automated dependency resolution. However, we found only a few cases where this has an actual impact on other programs using such an API. ConclusionIt is concluded that API instability is common and causes problems for programs using these APIs. Therefore, better tools and methods are needed to safeguard library evolution.},
+		journal = {Inf. Softw. Technol.},
+		month = sep,
+		pages = {129–146},
+		numpages = {18},
+		keywords = {API evolution, Backward compatibility, Binary compatibility, Byte-code, Java}
+	}
+	@phdthesis{zaytsev:tel-03998632,
+		TITLE = {{Data Mining-based tools to support library update}},
+		AUTHOR = {Zaytsev, Oleksandr},
+		URL = {https://theses.hal.science/tel-03998632},
+		NUMBER = {2022ULILB028},
+		SCHOOL = {{Universit{\'e} de Lille}},
+		YEAR = {2022},
+		MONTH = Oct,
+		KEYWORDS = {Software Evolution ; Library Update ; Library Migration ; Data Mining ; Artificial Intelligence ; Software Engineering ; {\'E}volution Logicielle ; Mise {\`a} jour des biblioth{\`e}ques},
+		TYPE = {Theses},
+		PDF = {https://theses.hal.science/tel-03998632v1/file/These_ZAYTSEV_Oleksandr.pdf},
+		HAL_ID = {tel-03998632},
+		HAL_VERSION = {v1},
+	}
+	@inproceedings{10.1145/3092703.3092721,
+		author = {Mostafa, Shaikh and Rodriguez, Rodney and Wang, Xiaoyin},
+		title = {Experience paper: a study on behavioral backward incompatibilities of Java software libraries},
+		year = {2017},
+		isbn = {9781450350761},
+		publisher = {Association for Computing Machinery},
+		address = {New York, NY, USA},
+		url = {https://doi.org/10.1145/3092703.3092721},
+		doi = {10.1145/3092703.3092721},
+		abstract = {Nowadays, due to the frequent technological innovation and market changes, software libraries are evolving very quickly. Backward compatibility has always been one of the most important requirements during the evolution of software platforms and libraries. However, backward compatibility is seldom fully achieved in practice, and many relevant software failures are reported. Therefore, it is important to understand the status, major reasons, and impact of backward incompatibilities in real world software. This paper presents an empirical study to understand behavioral changes of APIs during evolution of software libraries. Specifically, we performed a large-scale cross-version regression testing on 68 consecutive version pairs from 15 popular Java software libraries. Furthermore, we collected and studied 126 real-world software bugs reports on backward incompatibilities of software libraries. Our major findings include: (1) 1,094 test failures / errors and 296 behavioral backward incompatibilities are detected from 52 of 68 consecutive version pairs; (2) there is a distribution mismatch between incompatibilities detected by library-side regression testing, and bug-inducing incompatibilities; (3) the majority of behavioral backward incompatibilities are not well documented in API documents or release notes; and (4) 67\% of fixed client bugs caused by backward incompatibilities in software libraries are fixed by client developers, through several simple change patterns made to the backward incompatible API invocation.},
+		booktitle = {Proceedings of the 26th ACM SIGSOFT International Symposium on Software Testing and Analysis},
+		pages = {215–225},
+		numpages = {11},
+		keywords = {Library Evolution, Behavioral Backward Incompatibilities},
+		location = {Santa Barbara, CA, USA},
+		series = {ISSTA 2017}
+	}
+	
+	% APR
+	@inproceedings{10.1109/ICSE48619.2023.00129,
+		author = {Xia, Chunqiu Steven and Wei, Yuxiang and Zhang, Lingming},
+		title = {Automated Program Repair in the Era of Large Pre-Trained Language Models},
+		year = {2023},
+		isbn = {9781665457019},
+		publisher = {IEEE Press},
+		url = {https://doi.org/10.1109/ICSE48619.2023.00129},
+		doi = {10.1109/ICSE48619.2023.00129},
+		abstract = {Automated Program Repair (APR) aims to help developers automatically patch software bugs. However, current state-of-the-art traditional and learning-based APR techniques face the problem of limited patch variety, failing to fix complicated bugs. This is mainly due to the reliance on bug-fixing datasets to craft fix templates (traditional) or directly predict potential patches (learning-based). Large Pre-Trained Language Models (LLMs), trained using billions of text/code tokens, can potentially help avoid this issue. Very recently, researchers have directly leveraged LLMs for APR without relying on any bug-fixing datasets. Meanwhile, such existing work either failed to include state-of-the-art LLMs or was not evaluated on realistic datasets. Thus, the true power of modern LLMs on the important APR problem is yet to be revealed.In this work, we perform the first extensive study on directly applying LLMs for APR. We select 9 recent state-of-the-art LLMs, including both generative and infilling models, ranging from 125M to 20B in size. We designed 3 different repair settings to evaluate the different ways we can use LLMs to generate patches: 1) generate the entire patch function, 2) fill in a chunk of code given the prefix and suffix 3) output a single line fix. We apply the LLMs under these repair settings on 5 datasets across 3 different languages and compare different LLMs in the number of bugs fixed, generation speed and compilation rate. We also compare the LLMs against recent state-of-the-art APR tools. Our study demonstrates that directly applying state-of-the-art LLMs can already substantially outperform all existing APR techniques on all our datasets. Among the studied LLMs, the scaling effect exists for APR where larger models tend to achieve better performance. Also, we show for the first time that suffix code after the buggy line (adopted in infilling-style APR) is important in not only generating more fixes but more patches with higher compilation rate. Besides patch generation, the LLMs consider correct patches to be more natural than other ones, and can even be leveraged for effective patch ranking or patch correctness checking. Lastly, we show that LLM-based APR can be further substantially boosted via: 1) increasing the sample size, and 2) incorporating fix template information.},
+		booktitle = {Proceedings of the 45th International Conference on Software Engineering},
+		pages = {1482–1494},
+		numpages = {13},
+		location = {Melbourne, Victoria, Australia},
+		series = {ICSE '23}
+	}
+	@inproceedings{10.1145/3650212.3680323,
+		author = {Xia, Chunqiu Steven and Zhang, Lingming},
+		title = {Automated Program Repair via Conversation: Fixing 162 out of 337 Bugs for $0.42 Each using ChatGPT},
+		year = {2024},
+		isbn = {9798400706127},
+		publisher = {Association for Computing Machinery},
+		address = {New York, NY, USA},
+		url = {https://doi.org/10.1145/3650212.3680323},
+		doi = {10.1145/3650212.3680323},
+		abstract = {Automated Program Repair (APR) aims to automatically generate patches for buggy programs. Traditional APR techniques suffer from a lack of patch variety as they rely heavily on handcrafted or mined bug fixing patterns and cannot easily generalize to other bug/fix types. To address this limitation, recent APR work has been focused on leveraging modern Large Language Models (LLMs) to directly generate patches for APR. Such LLM-based APR tools work by first constructing an input prompt built using the original buggy code and then querying the LLM to either fill-in (cloze-style APR) the correct code at the bug location or to produce a completely new code snippet as the patch. While the LLM-based APR tools are able to achieve state-of-the-art results, they still follow the classic Generate and Validate (GV) repair paradigm of first generating lots of patches by sampling from the same initial prompt and then validating each one afterwards. This not only leads to many repeated patches that are incorrect, but also misses the crucial and yet previously ignored information in test failures as well as in plausible patches.        To address these aforementioned limitations, we propose ChatRepair, the first fully automated conversation-driven APR approach that interleaves patch generation with instant feedback to perform APR in a conversational style. ChatRepair first feeds the LLM with relevant test failure information to start with, and then learns from both failures and successes of earlier patching attempts of the same bug for more powerful APR. For earlier patches that failed to pass all tests, we combine the incorrect patches with their corresponding relevant test failure information to construct a new prompt for the LLM to generate the next patch. In this way, we can avoid making the same    mistakes. For earlier patches that passed all the tests (i.e., plausible patches), we further ask the LLM to generate alternative variations of the original plausible patches. In this way, we can further build on and learn from earlier successes to generate more plausible patches to increase the chance of having correct patches. While our approach is general, we implement ChatRepair using state-of-the-art dialogue-based LLM  ChatGPT. Our evaluation on the widely studied Defects4j dataset shows that ChatRepair is able to achieve the new state-of-the-art in repair performance, achieving 114 and 48 correct fixes on Defects4j 1.2 and 2.0 respectively. By calculating the cost    of accessing ChatGPT, we can fix 162 out of 337 bugs for 0.42 each!},
+		booktitle = {Proceedings of the 33rd ACM SIGSOFT International Symposium on Software Testing and Analysis},
+		pages = {819–831},
+		numpages = {13},
+		keywords = {Automated Program Repair, Large Language Model},
+		location = {Vienna, Austria},
+		series = {ISSTA 2024}
+	}
+	@ARTICLE{9749899,
+		author={Chen, Liushan and Pei, Yu and Pan, Minxue and Zhang, Tian and Wang, Qixin and Furia, Carlo A.},
+		journal={IEEE Transactions on Software Engineering}, 
+		title={Program Repair With Repeated Learning}, 
+		year={2023},
+		volume={49},
+		number={2},
+		pages={831-848},
+		keywords={Java;Fitting;Computer bugs;Machine learning;Maintenance engineering;Benchmark testing;Context modeling;Automated program repair (APR);generate-and-validate APR;learning-to-rank;repeated learning},
+		doi={10.1109/TSE.2022.3164662}}
+	@inproceedings{zhang2024copilot,
+		title={Copilot-in-the-Loop: Fixing Code Smells in Copilot-Generated Python Code using Copilot},
+		author={Zhang, Beiqi and Liang, Peng and Feng, Qiong and Fu, Yujia and Li, Zengyang},
+		booktitle={Proceedings of the 39th IEEE/ACM International Conference on Automated Software Engineering},
+		pages={2230--2234},
+		year={2024}
+	}
+	@article{DIROCCO2025107588,
+		title = {DeepMig: A transformer-based approach to support coupled library and code migrations},
+		journal = {Information and Software Technology},
+		volume = {177},
+		pages = {107588},
+		year = {2025},
+		issn = {0950-5849},
+		doi = {https://doi.org/10.1016/j.infsof.2024.107588},
+		url = {https://www.sciencedirect.com/science/article/pii/S0950584924001939},
+		author = {Juri {Di Rocco} and Phuong T. Nguyen and Claudio {Di Sipio} and Riccardo Rubei and Davide {Di Ruscio} and Massimiliano {Di Penta}},
+		keywords = {Recommender system, Library migration, Transformers},
+		abstract = {Context:
+		While working on software projects, developers often replace third-party libraries (TPLs) with different ones offering similar functionalities. However, choosing a suitable TPL to migrate to is a complex task. As TPLs provide developers with Application Programming Interfaces (APIs) to allow for the invocation of their functionalities after adopting a new TPL, projects need to be migrated by the methods containing the affected API calls. Altogether, the coupled migration of TPLs and code is a strenuous process, requiring massive development effort. Most of the existing approaches either deal with library or API call migration but usually fail to solve both problems coherently simultaneously.
+		Objective:
+		This paper presents DeepMig, a novel approach to the coupled migration of TPLs and API calls. We aim to support developers in managing their projects, at the library and API level, allowing them to increase their productivity.
+		Methods:
+		DeepMig is based on a transformer architecture, accepts a set of libraries to predict a new set of libraries. Then, it looks for the changed API calls and recommends a migration plan for the affected methods. We evaluate DeepMig using datasets of Java projects collected from the Maven Central Repository, ensuring an assessment based on real-world dependency configurations.
+		Results:
+		Our evaluation reveals promising outcomes: DeepMig recommends both libraries and code; by several projects, it retrieves a perfect match for the recommended items, obtaining an accuracy of 1.0. Moreover, being fed with proper training data, DeepMig provides comparable code migration steps of a static API migrator, a baseline for the code migration task.
+		Conclusion:
+		We conclude that DeepMig is capable of recommending both TPL and API migration, providing developers with a practical tool to migrate the entire project.}
+	}
+	@article{10.1007/s10270-012-0313-5,
+		author = {Levendovszky, Tihamer and Balasubramanian, Daniel and Narayanan, Anantha and Shi, Feng and Buskirk, Chris and Karsai, Gabor},
+		title = {A semi-formal description of migrating domain-specific models with evolving domains},
+		year = {2014},
+		issue_date = {May       2014},
+		publisher = {Springer-Verlag},
+		address = {Berlin, Heidelberg},
+		volume = {13},
+		number = {2},
+		issn = {1619-1366},
+		url = {https://doi.org/10.1007/s10270-012-0313-5},
+		doi = {10.1007/s10270-012-0313-5},
+		abstract = {One of the main advantages of defining a domain-specific modeling language (DSML) is the flexibility to adjust the language definition to changing requirements or in response to a deeper understanding of the domain. With the industrial applications of domain-specific modeling environments, models are valuable investments. If the modeling language evolves, these models must be seamlessly migrated to the evolved DSML. Although the changes stemming from the language evolution are not abrupt in nature, migrating existing models to a new language is still a challenging task. Our solution is the Model Change Language (MCL) tool set, which defines a DSML to describe the migration rules and then performs the model migration automatically. In this paper, we describe the precise semantics of MCL and its execution, along with the confluence of the migration.},
+		journal = {Softw. Syst. Model.},
+		month = may,
+		pages = {807–823},
+		numpages = {17}
+	}
+	@inproceedings{pearce2022asleep,
+		title={Asleep at the keyboard? assessing the security of github copilot’s code contributions},
+		author={Pearce, Hammond and Ahmad, Baleegh and Tan, Benjamin and Dolan-Gavitt, Brendan and Karri, Ramesh},
+		booktitle={2022 IEEE Symposium on Security and Privacy (SP)},
+		pages={754--768},
+		year={2022},
+		organization={IEEE}
+	}
+	
+	@inproceedings{nguyen2022empirical,
+		title={An empirical evaluation of GitHub copilot's code suggestions},
+		author={Nguyen, Nhan and Nadi, Sarah},
+		booktitle={The 19th International Conference on Mining Software Repositories},
+		pages={1--5},
+		year={2022}
+	}
+	
+	@inproceedings{nathalia2023artificial,
+		title={Artificial Intelligence vs. Software Engineers: An Empirical Study on Performance and Efficiency using ChatGPT},
+		author={Nathalia, Nascimento and Paulo, Alencar and Donald, Cowan},
+		booktitle={The 33rd Annual International Conference on Computer Science and Software Engineering},
+		pages={24--33},
+		year={2023}
+	}
+	
+	@article{yeticstiren2023evaluating,
+		title={Evaluating the Code Quality of AI-Assisted Code Generation Tools: An Empirical Study on GitHub Copilot, Amazon CodeWhisperer, and ChatGPT},
+		author={Yeti{\c{s}}tiren, Burak and {\"O}zsoy, I{\c{s}}{\i}k and Ayerdem, Miray and T{\"u}z{\"u}n, Eray},
+		journal={arXiv preprint arXiv:2304.10778},
+		year={2023}
+	}
+	@article{doderlein2022piloting,
+		title={Piloting Copilot and Codex: Hot Temperature, Cold Prompts, or Black Magic?},
+		author={D{\"o}derlein, Jean-Baptiste and Acher, Mathieu and Khelladi, Djamel Eddine and Combemale, Benoit},
+		journal={arXiv preprint arXiv:2210.14699},
+		year={2022}
+	}
+	
+	@article{yeticstiren2023evaluating,
+		title={Evaluating the Code Quality of AI-Assisted Code Generation Tools: An Empirical Study on GitHub Copilot, Amazon CodeWhisperer, and ChatGPT},
+		author={Yeti{\c{s}}tiren, Burak and {\"O}zsoy, I{\c{s}}{\i}k and Ayerdem, Miray and T{\"u}z{\"u}n, Eray},
+		journal={arXiv preprint arXiv:2304.10778},
+		year={2023}
+	}
+	
+	@article{guo2023exploring,
+		title={Exploring the Potential of ChatGPT in Automated Code Refinement: An Empirical Study},
+		author={Guo, Qi and Cao, Junming and Xie, Xiaofei and Liu, Shangqing and Li, Xiaohong and Chen, Bihuan and Peng, Xin},
+		journal={arXiv preprint arXiv:2309.08221},
+		year={2023}
+	}
+	@INPROCEEDINGS{AbukhalafHK23,
+		author={Abukhalaf, Seif and Hamdaqa, Mohammad and Khomh, Foutse},
+		booktitle={2023 IEEE/ACM 20th International Conference on Mining Software Repositories (MSR)}, 
+		title={On Codex Prompt Engineering for {OCL} Generation: An Empirical Study}, 
+		year={2023},
+		pages={148-157}
+	}
+	@article{jiang2023selfevolve,
+		title={SelfEvolve: A Code Evolution Framework via Large Language Models},
+		author={Jiang, Shuyang and Wang, Yuhao and Wang, Yu},
+		journal={arXiv preprint arXiv:2306.02907},
+		year={2023}
+	}
+	@inproceedings{sobania2022choose,
+		title={Choose your programming copilot: A comparison of the program synthesis performance of github copilot and genetic programming},
+		author={Sobania, Dominik and Briesch, Martin and Rothlauf, Franz},
+		booktitle={Proceedings of the genetic and evolutionary computation conference},
+		pages={1019--1027},
+		year={2022}
+	}
+	
+	@inproceedings{ziegler2022productivity,
+		title={Productivity assessment of neural code completion},
+		author={Ziegler, Albert and Kalliamvakou, Eirini and Li, X Alice and Rice, Andrew and Rifkin, Devon and Simister, Shawn and Sittampalam, Ganesh and Aftandilian, Edward},
+		booktitle={ACM SIGPLAN International Symposium on Machine Programming},
+		pages={21--29},
+		year={2022}
+	}
+	
+	@inproceedings{vaithilingam2022expectation,
+		title={Expectation vs. experience: Evaluating the usability of code generation tools powered by large language models},
+		author={Vaithilingam, Priyan and Zhang, Tianyi and Glassman, Elena L},
+		booktitle={{Chi} conference on human factors in computing systems, extended abstracts},
+		pages={1--7},
+		year={2022}
 	}
 	
