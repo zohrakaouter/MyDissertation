@@ -1,0 +1,51 @@
+\section{Related Work}
+\label{RelatedWork}
+
+This section discusses close related work that focuses on empirically evaluating LLMs on code and MDE artifacts. % for the task of metamodels and code co-evolution.  
+
+
+In literature, several studies delve into examining how the evolution of the metamodel influences the generated artifacts. In particular
+\cite{kessentini2018integrating,kessentini2019automated,cicchetti2008automating,herrmannsdoerfer2009cope,garces2009managing,wachsmuth2007metamodel} have focused on the co-evolution of metamodel and models, \cite{batot2017heuristic,khelladi2017semi,correa2007refactoring,kusel2015systematic} studied the metamodel and constraints co-evolution, and other on the metamodel and transformations co-evolution \cite{kessentini2018automated,khelladi2018change,garces2014adapting,garcia2013model,kusel2015consistent}. Other approaches focused on the model consistency repair (e.g., \cite{kretschmer2017abstract,kretschmer2021consistent,kretschmer2021transforming,macedo2013model,pinna2015resolving}).  
+However, only a few works addressed the challenge of metamodels and code co-evolution. 
+In particular, \cite{riedl2014towards,kanakis2019empirical,pham2017bidirectional,jongeling2020towards,jongeling2022Structural,zaheri2021towards} focused on consistency checking between models and code, but not on its co-evolution. % by repairing the code inconsistencies. 
+Other works~\cite{yu2012maintaining,Khelladi2020} proposed to co-evolve the code. However, the former handles only the generated code API, it does not handle additional code and aims to maintain bidirectional traceability between the model and the code API. The latter supports a semi-automatic co-evolution requiring developers' intervention. %Moreover, it uses static analysis to propagate the metamodel changes through the additional code. Besides that, that it uses code static analysis and code transformation as an attempt to tackle the metamodel and code coevolution problem.
+
+
+Furthermore, several works evaluated the use of LLMs in software engineering tasks. 
+%
+Early studies on Copilot focus on the exploration of the security of the generated code~\cite{pearce2022asleep}, comparison of the performances of Copilot with mutation-based code generation techniques~\cite{sobania2022choose}, and  the impact on productivity and the usefulness of Copilot for developers~\cite{ziegler2022productivity,vaithilingam2022expectation}. 
+%
+%Nguyen et al. \cite{nguyen2022empirical} considered 33 problems in four languages to generate code for with Copilot.
+Nguyen et al.~\cite{nguyen2022empirical} performed an early empirical study on the performance and understandability of Copilot generated code on~34 problems from Leetcode. 
+%
+Doderlein et al. \cite{doderlein2022piloting} extended the study of Nguyen et al. \cite{nguyen2022empirical} and run an empirical study on the effect of varying temperature and prompts on the generated code with Copilot and Codex. They used a total of 446 questions to solve from Leetcode and Human Eval data set. 
+%
+Nathalia et al. \cite{nathalia2023artificial} evaluated the Performance and Efficiency of ChatGPT compared to beginners and experts software engineers. 
+%
+Yeticstiren et al. \cite{yeticstiren2023evaluating} compared the code quality generated from Copilot, CodeWhisperer, and ChatGPT, showing an advantage for ChatGPT in generating correct solutions. 
+%
+Guo et al. \cite{guo2023exploring} ran an empirical study on ChatGPT and its capabilities in refining code based on code reviews. 
+%
+Fu et al. \cite{fu2023chatgpt} also evaluated ChatGPT and its ability to detect, classify, and repair vulnerable code. 
+%
+Finally, Kabir et al. \cite{kabir2023empirical} evaluated ChatGPT ability to generate code and to maintain it by improving it based on a new feature description to add in the code. 
+%
+All the above studies focused on either evaluating the ability of LLMs to generate qualitative code, refining it, repairing it if vulnerable, or augmenting it. However, none of them specifically explored the task of code co-evolution.
+
+Moreover, other studies focused on evaluating LLMs in MDE activities. 
+\red{Chen et al. \cite{10344012} propose a comparative study between GPT-3.5 and GPT-4 in automatically generating domain models. This work shows that GPT-4 has better modeling results.}
+Chaaben et al. \cite{chaaben2023towards} showed how using few-shot learning with GTP3 model can be effective in model completion and in other modeling activities. 
+%
+Camara et al. \cite{camara2023assessment} further assessed how good ChatGPT is in generated UML models.
+%
+Finally, Abukhalaf \cite{AbukhalafHK23} run an empirical study on the quality of generated OCL constraints with Codex. %They used 15 UML models and 168 specifications of constraints. 
+%
+However, these studies also focused on the ability of LLMs to generate MDE artifacts, such as models and constraints, but not on their co-evolution. 
+%In addition, most of these studies focus on generation part of LLMs. 
+Only Fu et al. \cite{fu2023chatgpt} looked at repairing vulnerable code with ChatGPT. 
+%
+Jiang et al. \cite{jiang2023selfevolve} proposed self-augmented code generation framework based on LLMs called SelfEvolve. SelfEvolve allows generating code and keep correcting it iteratively with the LLM. % to have better generated code. % but does not treat the metamodel and code coevolution problem.
+%
+Zhang et al. \cite{zhang2023multilingual} proposed Codeditor, an LLM based tool for code co-evolution between different programming languages. It learns code evolutions as edit sequences and then uses LLMs for multilingual translation. % a  evolution translation from a programming language to another by modeling edit sequences and then learning how to apply them.
+
+To the best of our knowledge, no study investigated the ability of LLMs in the MDE problem of code co-evolution when metamodels evolve. We empirically evaluated how effective is \LLM in solving this co-evolution problem. 

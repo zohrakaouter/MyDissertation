@@ -1,0 +1,38 @@
+\section{Introduction}
+\label{intro}
+
+%\todo{rework intro later on}
+
+Large language models (LLMs) have emerged in the field of natural language processing, exhibiting high aptitude to transform and generate textual data. 
+Taking advantage of LLMs is highly dependent on good prompts. The use of LLMs is based on the human capacity of crafting high quality prompts: precise and concise. AI community gave the term "Prompt engineering" to the process of designing and refining prompts~\cite{clariso2023model}.
+Since their appearance, LLMs have been applied in different domains of scientific research, such as Software Engineering and Model-Driven Engineering (MDE) \cite{10109345,AbukhalafHK23,liu2023improving,hou2023large,pearce2022asleep,sobania2022choose,ziegler2022productivity,vaithilingam2022expectation,nguyen2022empirical,doderlein2022piloting,
+nathalia2023artificial,yeticstiren2023evaluating,guo2023exploring,fu2023chatgpt,kabir2023empirical,chaaben2023towards,camara2023assessment,AbukhalafHK23}.
+
+%Prompt engineering
+In MDE, metamodels are cornerstone. They define domain concepts and the relations between them~\cite{cabot2012object}.
+The metamodel is used to generate other artifacts, such as models, transformations, constraints, and code. The generated code can be used later as a code API to build editors, debuggers, and other language services and tooling. The evolution of the metamodel represents one of the %major 
+challenges encountered in MDE. %the model driven engineering field. 
+When the metamodel evolves, the code API is re-generated, and as a consequence, the additional code of the tools built on this code API are impacted and may be broken.
+%In literature, several studies delve into examining how the evolution of the metamodel influences the generated artifacts. \red{In particular \cite{kessentini2018integrating,kessentini2019automated,cicchetti2008automating,herrmannsdoerfer2009cope,garces2009managing,wachsmuth2007metamodel} have focused on the co-evolution of metamodel and models, \cite{batot2017heuristic,khelladi2017semi,correa2007refactoring,kusel2015systematic}studied the metamodel and constraints co-evolution, and other on the metamodel and transformations co-evolution \cite{kessentini2018automated,khelladi2018change,garces2014adapting,garcia2013model,kusel2015consistent}. }
+However, few approaches have addressed the challenge of metamodels and code co-evolution. 
+In particular,~\cite{riedl2014towards,kanakis2019empirical,pham2017bidirectional,jongeling2020towards,jongeling2022Structural,zaheri2021towards} focused on consistency checking between models and code, but not its co-evolution. % by repairing the code inconsistencies. 
+Other works~\cite{yu2012maintaining,Khelladi2020,khelladi2020power} proposed to co-evolve the code semi-automatically. %However, the former handles only the generated code API, it does not handle additional code and aims to maintain bidirectional traceability between the model and the code API. The latter supports a semi-automatic co-evolution requiring developers' intervention. Moreover, it uses static analysis to propagate the metamodel changes through the additional code. Besides that, that it uses code static analysis and code transformation as an attempt to tackle the metamodel and code coevolution problem.
+While LLMs have been so far empirically evaluated to generate qualitative code, refining it, repairing it if vulnerable or augment it \cite{10109345,AbukhalafHK23,liu2023improving,hou2023large,pearce2022asleep,sobania2022choose,ziegler2022productivity,vaithilingam2022expectation,nguyen2022empirical,doderlein2022piloting,
+nathalia2023artificial,yeticstiren2023evaluating,guo2023exploring,fu2023chatgpt,kabir2023empirical}, only few works evaluated LLMs in the context of MDE activities, such as generation of models and constraints \cite{chaaben2023towards,camara2023assessment,AbukhalafHK23}.
+However, to the best of our knowledge, no existing study evaluated the LLMs capabilities %to support the co-evolution tasks, in particular 
+to support developers in the problem of metamodels and code co-evolution. 
+
+In this paper, we fill this gap. 
+We explore a novel approach to mitigate the challenge of metamodel evolution impacts on the code using LLMs. 
+%Chatgpt as LLM 
+Our approach is based on prompt engineering, where we design and generate natural language prompts to best co-evolve the impacted code due to the metamodel evolution. We first designed a prompt template structure that contains contextual information about metamodel changes, the abstraction gap between the metamodel and the code, and the erroneous code to co-evolve. To investigate the usefulness of this template structure, we generated three more variations of these prompts. The generated prompts are then given to the LLM to co-evolve the impacted code errors.
+
+We evaluated our generated prompts and other three of their variations with \LLM version 3.5 on seven Eclipse \red{Modeling Framework (EMF)} projects from OCL, Modisco, and papyrus with three evolved metamodels. 
+Results show that \LLM can co-evolve correctly 88.7\% of the errors due to metamodel evolution, varying from 75\% to 100\% of correctness rate. 
+%Results also show that varying the temperature does impact the correctness of \LLM co-evolutions. 
+When varying the prompts, we observed increased correctness in two variants and decreased correctness in another variant. We also observed that varying the temperature hyperparameter yields better results with lower temperatures. 
+Our results are observed on a total of 5320 generated prompts. 
+Finally, when compared to the quick fixes of the IDE, the generated prompts co-evolutions completely outperform the quick fixes. 
+
+
+The paper is structured as follows.  Section 2 gives a motivating example to illustrate the problem of metamodels and code co-evolution. Section 3 presents our approach for generating prompts.  Section 4 details our followed methodology in this empirical study. Section 5 reports on the obtained results and discusses threats to validity. Section 6 discusses related work, and Section 7 concludes the paper. 

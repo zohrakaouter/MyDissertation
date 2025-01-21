@@ -41,6 +41,8 @@
 \RequirePackage{fix-cm}
 \RequirePackage{abstract}
 \RequirePackage{graphicx} % Pour ins\'{e}rer des images. Utiliser le format jpg pour plus de simplicit\'{e}.
+\RequirePackage{subcaption}
+%\RequirePackage{subfigure}
 \RequirePackage{sectsty} % obligatoire, pour jouer avec l'apparence des titres
 \RequirePackage{shorttoc} % pour le sommaire, au debut.
 \RequirePackage{fancyhdr} % Afin de r\'{e}aliser soi-même les en-têtes et pieds de page, voir chaque d\'{e}but de chapitre.
@@ -50,6 +52,15 @@
 \RequirePackage{wallpaper}
 \RequirePackage[inner=30mm,outer=20mm,top=30mm,bottom=20mm]{geometry}
 \usepackage{enumitem}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+
+\makeatother
+\algnewcommand\algorithmicswitch{\textbf{switch}}
+\algnewcommand\algorithmiccase{\textbf{case}}\algdef{SE}[SWITCH]{Switch}{EndSwitch}[1]{\algorithmicswitch\ #1\ \algorithmicdo}{\algorithmicend\ \algorithmicswitch}%
+\algdef{SE}[CASE]{Case}{EndCase}[1]{\algorithmiccase\ #1}{\algorithmicend\ \algorithmiccase}%
+\algtext*{EndSwitch}%
+\algtext*{EndCase}%
 %Ou bien : \RequirePackage[top=4 cm, bottom=4 cm, left=3 cm, right=3 cm]{geometry} % On peut modifier ces valeurs pour augmenter ou r\'{e}duire les marges. Attention aux en-têtes de chapitres. 
 \RequirePackage{epigraph} % \cleartoevenpage
 
@@ -60,6 +71,47 @@
 
 \RequirePackage{eso-pic} % For \AddToShipoutPicture used for cover backgrounds
 \RequirePackage{framed} % utilise pour coloriser les encarts
+
+\usepackage{listings}
+\usepackage{graphicx,color,soul}
+\usepackage{xcolor}
+\usepackage[Lenny]{fncychap}
+\usepackage{soul}
+\setul{0.5ex}{0.3ex}
+\definecolor{Red}{rgb}{1,0.0,0.0}
+\setulcolor{Red}
+
+\definecolor{forestgreen}{rgb}{0.0, 0.27, 0.13}
+\definecolor{plum}{rgb}{0.56, 0.27, 0.52}
+%\titleformat*{\subsubsection}{\large\bfseries}
+\lstdefinelanguage{Java}{
+	morekeywords={abstract, assert, boolean, break,
+		byte, case, catch, char,
+		class, const, continue, default,
+		do, double, else, enum,
+		extends, final, finally, float,
+		for, goto, if, implements,
+		import, instanceof, int, interface,
+		long, native, new, package,
+		private, protected, public, return,
+		short, static, strictfp, super,
+		switch, synchronized, this, throw,
+		throws, transient, try, void,
+		volatile, while, true, false, null},
+	keywordstyle=[2]{\textbf},
+	keywordstyle={\textbf},
+	keywordstyle=\color{plum}\bfseries,
+	morecomment=[l]{//}, 
+	morecomment=[s]{/*}{*/}, 
+	commentstyle=\color{forestgreen},
+	morestring=[b]",
+	tabsize=4,
+	basicstyle=\ttfamily\scriptsize,
+	numbers=left,
+	numbersep=1pt,
+	numberstyle=\footnotesize\color{darkgray},
+	stepnumber=1}%TODO basicstyle=\footnotesize
+
 
 \onehalfspacing %Interligne 1,5
 
@@ -147,7 +199,45 @@
 
 \partnumberfont{\sc\normalsize}
 
-
+\newcommand{\LLM}{ChatGPT}
+% Based on https://tex.stackexchange.com/questions/7032/good-way-to-make-textcircled-numbers
+%
+\usepackage{pict2e,picture}
+\pgfkeys{/csteps/inner ysep/.initial=4pt,
+	/csteps/inner xsep/.initial=4pt,
+	/csteps/inner color/.initial=black,
+	/csteps/outer color/.initial=black,
+}
+\newsavebox\csteps@CBox
+\newlength\csteps@XLength \newlength\csteps@YLength \newlength\csteps@YDepth \newlength\csteps@tmplen
+\def\csteps@CircledParam#1#2{\sbox\csteps@CBox{#2}%
+	\csteps@XLength=\wd\csteps@CBox\advance\csteps@XLength by\pgfkeysvalueof{/csteps/inner xsep}\relax
+	\csteps@tmplen=\pgfkeysvalueof{/csteps/inner ysep}\relax
+	\csteps@YDepth=\dp\csteps@CBox\advance\csteps@YDepth by 0.5\csteps@tmplen\relax
+	\csteps@YLength=\ht\csteps@CBox\advance\csteps@YLength by\dp\csteps@CBox\advance\csteps@YLength by\pgfkeysvalueof{/csteps/inner ysep}\relax
+	\typeout{DBG:#2\space X\space\the\csteps@XLength\space Y:\the\csteps@YLength\space D:\the\csteps@YDepth}%
+	\raisebox{-#1\csteps@YDepth}{%
+		\ifdim\csteps@XLength>\csteps@YLength
+		\makebox[\csteps@XLength]{% X bigger than Y
+			\makebox(0,\csteps@YLength){%
+				\color{\pgfkeysvalueof{/csteps/outer color}}\put(0,0){\oval(\csteps@XLength,\csteps@YLength)}%
+			}%
+			\makebox(0,\csteps@YLength){%
+				\put(-.5\wd\csteps@CBox,0){\textcolor{\pgfkeysvalueof{/csteps/inner color}}{#2}}%
+		}}%
+		\else
+		\makebox[\csteps@YLength]{%
+			\makebox(0,\csteps@YLength){%
+				\color{\pgfkeysvalueof{/csteps/outer color}}\put(0,0){\circle{\csteps@YLength}}%
+			}%
+			\makebox(0,\csteps@YLength){%
+				\put(-.5\wd\csteps@CBox,0){\textcolor{\pgfkeysvalueof{/csteps/inner color}}{#2}}%
+		}}%
+		\fi
+	}%
+}
+\def\Circled#1{\csteps@CircledParam{1}{#1}}
+%\def\CircledTop#1{\csteps@CircledParam{0}{#1}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%% REGLAGE DE LA BIBLIOGRAPHIE %%%%%%%%%%%%%%%%

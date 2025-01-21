@@ -1,0 +1,15 @@
+\section{Conclusion}
+\label{conclu}
+%write conclu here later \todo{Djamel}
+Co-evolving the impact of metamodel evolution on the code is costly and yet challenging. In this paper, we proposed a prompt-based approach for metamodel and code co-evolution. This approach relies on designing and generating a rich contextual information that we inject in the prompts, namely the abstraction gap knowledge, the metamodel changes information and  the impacted code to be co-evolved.
+We evaluated our approach on seven EMF projects and three evolved metamodels from three different Eclipse EMF implementations of OCL, Modisco and Papyrus, with a total of~5320 generated prompts. Results show that on average \LLM has successfully proposed~88.7\% of correct co-evolutions with our original generated prompts. We evaluated then the impact of the temperature variation on the proposed co-evolutions. We found that \LLM gives better responses with lower temperature values of~0 and~0.2. 
+Moreover, when experimenting other variations of the structure of generated prompts, we observed that there was improvement in two variations. 
+%The first one is changing the order of the contextual information in the prompt, and the second one is requiring alternative answers for the co-evolution. Varying the prompt by giving only a minimum code to co-evolve degraded the quality of the proposed co-evolutions. 
+The first one is giving the minimum impacted code to co-evolve in the prompt, and the second one is requiring alternative answers for the co-evolution. However, varying the prompt by changing the order of the contextual information degraded a little the quality of the proposed co-evolutions. 
+Finally, we compared our approach with the quick fixes of the IDE as a baseline. Results show that our approach significantly outperforms the quick fixes that do not take into account the context of the abstraction gap and the metamodel changes.
+
+As future work, we intend to evaluate or approach in other technological spaces than EMF, such as OpenAPI and the challenge of the API evolution impact on clients' code. After that, we plan to transform our approach into a DSL-based approach with a graphical user interface for the output report instead of a CSV file. To facilitate prompt generation and enhance the option of prompt variation, a DSL would be a viable solution. We also plan to replicate our empirical study with other LLMs and other contexts of co-evolution (e.g., between code and test \cite{le2021untangling}).  Another actionable element is to investigate the mining of contextual information from Software Engineering tasks to enrich the prompts, and then improve baseline results
+Finally,\red{ since our contributions focus on empirically studying the use of \LLM in metamodel and code co-evolution, we plan to implement an alternative of the quick fix engine in the Eclipse IDE based on our generated prompt structure. Integrating our prompt-based metamodel and code co-evolution in the IDE will have a direct impact in helping MDE developers and language engineers}. 
+
+
+%\newpage

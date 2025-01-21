@@ -1,0 +1,53 @@
+
+\begin{table*}[t]
+
+\caption{Classification of the different patterns of the generated code element from the metamodel elements. \\\hspace{3em} [Examples illustrated for a metaclass \emph{Rule}, property \emph{Status}, and method \emph{Execute()}]} 
+
+\label{table:locationofMMelemen}
+	\resizebox{17cm}{!} {
+{\small
+\begin{tabular}{llll}
+\toprule
+
+\begin{tabular}[c]{@{}l@{}} \textbf{Metamodel}\\ \textbf{element type} 
+\end{tabular} & \textbf{Generated code elements}& \textbf{Pattern of the generated code elements}& \textbf{Examples}\\ \midrule
+
+
+\multirow{6}{*}{Metaclass} & Interface & "MetaClassName" & \textit{Rule} \\ \cline{2-4} 
+ & \begin{tabular}[c]{@{}l@{}}createClass() \\ (in metamodelFactory class)\end{tabular} & "create"+"MetaClassName"() &\textit{createRule()} \\ \cmidrule{2-4} 
+ & \begin{tabular}[c]{@{}l@{}}Literals of the class \end{tabular} &
+ \begin{tabular}[c]{@{}l@{}}
+ "META\_CLASS\_NAME"\\
+ "META\_CLASS\_NAME"+"\_"+ "FEATURE\_COUNT"\\
+ "META\_CLASS\_NAME"+ "\_"+"OPERATION\_COUNT"
+ \end{tabular} 
+ & \begin{tabular}[c]{@{}l@{}}\textit{RULE}, \\ \textit{RULE\_FEATURE\_COUNT}, \\  \textit{RULE\_OPERATION\_COUNT}\end{tabular} \\ \cmidrule{2-4} 
+ & \begin{tabular}[c]{@{}l@{}}Accessor of Meta objects \\ (in metamodelPackage class)\end{tabular} & "get"+"MetaClassName"()& \textit{getRule() }\\ \cmidrule{2-4} 
+ & Class implementation & "MetaClassNameImpl" &\textit{RuleImpl }\\ \cmidrule{2-4} 
+ & Adapter & "create"+"MetaClassName"+"Adapter" & \textit{createRuleAdapter()} \\ \midrule
+
+
+\multirow{1}{*}{Attribute} & Signature of getters and setters & "get"+"AttributeName"(), "set"+"AttributeName"()& \textit{getStatus()}, \textit{setStatus() }\\ \cmidrule{2-4} 
+\multirow{2}{*}{(Same for a} & Accessor of Meta objects &"get"+"MetaClassName"+"\_"+"AttributeName"() &\textit{getRule\_Status()} \\ \cmidrule{2-4} 
+\multirow{1}{*}{Reference)}  & Literal & "META\_CLASS\_NAME"+"\_\_"+"ATTRIBUTE\_NAME"& \textit{RULE\_\_STATUS} \\ \cmidrule{2-4} 
+ & \begin{tabular}[c]{@{}l@{}}Implementation \\ of getters and setters\end{tabular} &"get"+"AttributeName"(), "set"+"AttributeName"()& getStatus(), setStatus() \\ \midrule
+
+
+\multirow{4}{*}{Method} & Declaration of the method& "methodName"()& \textit{Execute() }\\ \cmidrule{2-4} 
+ & Accessor of meta objects &"get"+"MetaClass"+"\_\_"+"MethodName"()& \textit{getRule\_\_Execute() }\\ \cmidrule{2-4} 
+ & Literal &"META\_CLASS\_NAME"+"\_\_"+"METHOD\_NAME"& \textit{RULE\_\_\_EXECUTE}\\ \cmidrule{2-4} 
+ & Implementation of the method &"methodName"()& \textit{Execute()} \\ %\midrule
+
+
+%\multirow{4}{*}{Reference} & Accessor of meta objects &"get"+"MetaClassName"+"\_"+"ReferenceName"()& \textit{getConstraint\_ConstraintElement()} \\ \cmidrule{2-4} 
+% & Signature of getters and setter & "get"+"ReferenceName"(),"set"+"ReferenceName"()&\textit{ getConstraintElement()}, \textit{setConstraintElement() }\\ \cmidrule{2-4} 
+% & Literal &"META\_CLASS\_NAME"+"\_\_"+"REFERENCE\_NAME"& \textit{CONSTRAINT\_\_CONSTRAINT\_ELEMENT} \\ \cmidrule{2-4} 
+% & \begin{tabular}[c]{@{}l@{}}Implementation of \\ getters and setters\end{tabular} &"get"+"ReferenceName"(), "set"+"RegerenceName"()& \textit{getConstraintElement()}, \textit{setConstrainElement() }\\ 
+\bottomrule
+ 
+ %cline hline replaced with cmidrule and midrule
+ 
+\end{tabular}
+}
+}
+\end{table*}

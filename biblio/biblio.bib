@@ -4257,4 +4257,241 @@ doi={10.1109/MS.2003.1231146}}
 		pages={1--7},
 		year={2022}
 	}
+	@article{DBLP:journals/corr/abs-2302-09419,
+		author       = {Ce Zhou and
+		Qian Li and
+		Chen Li and
+		Jun Yu and
+		Yixin Liu and
+		Guangjing Wang and
+		Kai Zhang and
+		Cheng Ji and
+		Qiben Yan and
+		Lifang He and
+		Hao Peng and
+		Jianxin Li and
+		Jia Wu and
+		Ziwei Liu and
+		Pengtao Xie and
+		Caiming Xiong and
+		Jian Pei and
+		Philip S. Yu and
+		Lichao Sun},
+		title        = {A Comprehensive Survey on Pretrained Foundation Models: {A} History
+		from {BERT} to ChatGPT},
+		journal      = {CoRR},
+		volume       = {abs/2302.09419},
+		year         = {2023},
+		url          = {https://doi.org/10.48550/arXiv.2302.09419},
+		doi          = {10.48550/ARXIV.2302.09419},
+		eprinttype    = {arXiv},
+		eprint       = {2302.09419},
+		timestamp    = {Mon, 29 Jul 2024 07:57:22 +0200},
+		biburl       = {https://dblp.org/rec/journals/corr/abs-2302-09419.bib},
+		bibsource    = {dblp computer science bibliography, https://dblp.org}
+	}
+	@misc{devlin2019bertpretrainingdeepbidirectional,
+		title={BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding}, 
+		author={Jacob Devlin and Ming-Wei Chang and Kenton Lee and Kristina Toutanova},
+		year={2019},
+		eprint={1810.04805},
+		archivePrefix={arXiv},
+		primaryClass={cs.CL},
+		url={https://arxiv.org/abs/1810.04805}, 
+	}
 	
+	
+	@misc{brown2020languagemodelsfewshotlearners,
+		title={Language Models are Few-Shot Learners}, 
+		author={Tom B. Brown and Benjamin Mann and Nick Ryder and Melanie Subbiah and Jared Kaplan and Prafulla Dhariwal and Arvind Neelakantan and Pranav Shyam and Girish Sastry and Amanda Askell and Sandhini Agarwal and Ariel Herbert-Voss and Gretchen Krueger and Tom Henighan and Rewon Child and Aditya Ramesh and Daniel M. Ziegler and Jeffrey Wu and Clemens Winter and Christopher Hesse and Mark Chen and Eric Sigler and Mateusz Litwin and Scott Gray and Benjamin Chess and Jack Clark and Christopher Berner and Sam McCandlish and Alec Radford and Ilya Sutskever and Dario Amodei},
+		year={2020},
+		eprint={2005.14165},
+		archivePrefix={arXiv},
+		primaryClass={cs.CL},
+		url={https://arxiv.org/abs/2005.14165}, 
+	}
+	@article{10.1145/3560815,
+		author = {Liu, Pengfei and Yuan, Weizhe and Fu, Jinlan and Jiang, Zhengbao and Hayashi, Hiroaki and Neubig, Graham},
+		title = {Pre-train, Prompt, and Predict: A Systematic Survey of Prompting Methods in Natural Language Processing},
+		year = {2023},
+		issue_date = {September 2023},
+		publisher = {Association for Computing Machinery},
+		address = {New York, NY, USA},
+		volume = {55},
+		number = {9},
+		issn = {0360-0300},
+		url = {https://doi.org/10.1145/3560815},
+		doi = {10.1145/3560815},
+		abstract = {This article surveys and organizes research works in a new paradigm in natural language processing, which we dub “prompt-based learning.” Unlike traditional supervised learning, which trains a model to take in an input x and predict an output y as P(y|x), prompt-based learning is based on language models that model the probability of text directly. To use these models to perform prediction tasks, the original input x is modified using a template into a textual string prompt x′ that has some unfilled slots, and then the language model is used to probabilistically fill the unfilled information to obtain a final string x̂, from which the final output y can be derived. This framework is powerful and attractive for a number of reasons: It allows the language model to be pre-trained on massive amounts of raw text, and by defining a new prompting function the model is able to perform few-shot or even zero-shot learning, adapting to new scenarios with few or no labeled data. In this article, we introduce the basics of this promising paradigm, describe a unified set of mathematical notations that can cover a wide variety of existing work, and organize existing work along several dimensions, e.g.,&nbsp;the choice of pre-trained language models, prompts, and tuning strategies. To make the field more accessible to interested beginners, we not only make a systematic review of existing works and a highly structured typology of prompt-based concepts but also release other resources, e.g., a website  including constantly updated survey and paperlist.},
+		journal = {ACM Comput. Surv.},
+		month = jan,
+		articleno = {195},
+		numpages = {35},
+		keywords = {Pre-trained language models, prompting}
+	}
+	@inproceedings{10.5555/3600270.3602070,
+		author = {Wei, Jason and Wang, Xuezhi and Schuurmans, Dale and Bosma, Maarten and Ichter, Brian and Xia, Fei and Chi, Ed H. and Le, Quoc V. and Zhou, Denny},
+		title = {Chain-of-thought prompting elicits reasoning in large language models},
+		year = {2024},
+		isbn = {9781713871088},
+		publisher = {Curran Associates Inc.},
+		address = {Red Hook, NY, USA},
+		abstract = {We explore how generating a chain of thought—a series of intermediate reasoning steps—significantly improves the ability of large language models to perform complex reasoning. In particular, we show how such reasoning abilities emerge naturally in sufficiently large language models via a simple method called chain-of-thought prompting, where a few chain of thought demonstrations are provided as exemplars in prompting.Experiments on three large language models show that chain-of-thought prompting improves performance on a range of arithmetic, commonsense, and symbolic reasoning tasks. The empirical gains can be striking. For instance, prompting a PaLM 540B with just eight chain-of-thought exemplars achieves state-of-the-art accuracy on the GSM8K benchmark of math word problems, surpassing even finetuned GPT-3 with a verifier.},
+		booktitle = {Proceedings of the 36th International Conference on Neural Information Processing Systems},
+		articleno = {1800},
+		numpages = {14},
+		location = {New Orleans, LA, USA},
+		series = {NIPS '22}
+	}
+	@inproceedings{10.5555/3666122.3667327,
+		author = {Frieder, Simon and Pinchetti, Luca and Chevalier, Alexis and Griffiths, Ryan-Rhys and Salvatori, Tommaso and Lukasiewicz, Thomas and Petersen, Philipp and Berner, Julius},
+		title = {Mathematical capabilities of ChatGPT},
+		year = {2024},
+		publisher = {Curran Associates Inc.},
+		address = {Red Hook, NY, USA},
+		abstract = {We investigate the mathematical capabilities of two versions of ChatGPT (released 9-January-2023 and 30-January-2023) and of GPT-4 by testing them on publicly available datasets, as well as hand-crafted ones, using a novel evaluation scheme. In contrast to formal mathematics, where large databases of formal proofs are available (e.g., mathlib, the Lean Mathematical Library), current datasets of natural-language mathematics used to benchmark language models either cover only elementary mathematics or are very small. We address this by publicly releasing two new datasets: GHOSTS and miniGHOSTS. These are the first natural-language datasets curated by working researchers in mathematics that (1) aim to cover graduate-level mathematics, (2) provide a holistic overview of the mathematical capabilities of language models, and (3) distinguish multiple dimensions of mathematical reasoning. These datasets test, by using 1636 human expert evaluations, whether ChatGPT and GPT-4 can be helpful assistants to professional mathematicians by emulating use cases that arise in the daily professional activities of mathematicians. We benchmark the models on a range of fine-grained performance metrics. For advanced mathematics, this is the most detailed evaluation effort to date. We find that ChatGPT and GPT-4 can be used most successfully as mathematical assistants for querying facts, acting as mathematical search engines and knowledge base interfaces. GPT-4 can additionally be used for undergraduate-level mathematics but fails on graduate-level difficulty. Contrary to many positive reports in the media about GPT-4 and ChatGPT's exam-solving abilities (a potential case of selection bias), their overall mathematical performance is well below the level of a graduate student. Hence, if you aim to use ChatGPT to pass a graduate-level math exam, you would be better off copying from your average peer!},
+		booktitle = {Proceedings of the 37th International Conference on Neural Information Processing Systems},
+		articleno = {1205},
+		numpages = {46},
+		location = {New Orleans, LA, USA},
+		series = {NIPS '23}
+	}
+	@inproceedings{10.5555/3495724.3495883,
+		author = {Brown, Tom B. and Mann, Benjamin and Ryder, Nick and Subbiah, Melanie and Kaplan, Jared and Dhariwal, Prafulla and Neelakantan, Arvind and Shyam, Pranav and Sastry, Girish and Askell, Amanda and Agarwal, Sandhini and Herbert-Voss, Ariel and Krueger, Gretchen and Henighan, Tom and Child, Rewon and Ramesh, Aditya and Ziegler, Daniel M. and Wu, Jeffrey and Winter, Clemens and Hesse, Christopher and Chen, Mark and Sigler, Eric and Litwin, Mateusz and Gray, Scott and Chess, Benjamin and Clark, Jack and Berner, Christopher and McCandlish, Sam and Radford, Alec and Sutskever, Ilya and Amodei, Dario},
+		title = {Language models are few-shot learners},
+		year = {2020},
+		isbn = {9781713829546},
+		publisher = {Curran Associates Inc.},
+		address = {Red Hook, NY, USA},
+		abstract = {We demonstrate that scaling up language models greatly improves task-agnostic, few-shot performance, sometimes even becoming competitive with prior state-of-the-art fine-tuning approaches. Specifically, we train GPT-3, an autoregressive language model with 175 billion parameters, 10x more than any previous non-sparse language model, and test its performance in the few-shot setting. For all tasks, GPT-3 is applied without any gradient updates or fine-tuning, with tasks and few-shot demonstrations specified purely via text interaction with the model. GPT-3 achieves strong performance on many NLP datasets, including translation, question-answering, and cloze tasks. We also identify some datasets where GPT-3's few-shot learning still struggles, as well as some datasets where GPT-3 faces methodological issues related to training on large web corpora.},
+		booktitle = {Proceedings of the 34th International Conference on Neural Information Processing Systems},
+		articleno = {159},
+		numpages = {25},
+		location = {Vancouver, BC, Canada},
+		series = {NIPS '20}
+	}
+	@article{10.5555/3648699.3648939,
+		author = {Chowdhery, Aakanksha and Narang, Sharan and Devlin, Jacob and Bosma, Maarten and Mishra, Gaurav and Roberts, Adam and Barham, Paul and Chung, Hyung Won and Sutton, Charles and Gehrmann, Sebastian and Schuh, Parker and Shi, Kensen and Tsvyashchenko, Sashank and Maynez, Joshua and Rao, Abhishek and Barnes, Parker and Tay, Yi and Shazeer, Noam and Prabhakaran, Vinodkumar and Reif, Emily and Du, Nan and Hutchinson, Ben and Pope, Reiner and Bradbury, James and Austin, Jacob and Isard, Michael and Gur-Ari, Guy and Yin, Pengcheng and Duke, Toju and Levskaya, Anselm and Ghemawat, Sanjay and Dev, Sunipa and Michalewski, Henryk and Garcia, Xavier and Misra, Vedant and Robinson, Kevin and Fedus, Liam and Zhou, Denny and Ippolito, Daphne and Luan, David and Lim, Hyeontaek and Zoph, Barret and Spiridonov, Alexander and Sepassi, Ryan and Dohan, David and Agrawal, Shivani and Omernick, Mark and Dai, Andrew M. and Pillai, Thanumalayan Sankaranarayana and Pellat, Marie and Lewkowycz, Aitor and Moreira, Erica and Child, Rewon and Polozov, Oleksandr and Lee, Katherine and Zhou, Zongwei and Wang, Xuezhi and Saeta, Brennan and Diaz, Mark and Firat, Orhan and Catasta, Michele and Wei, Jason and Meier-Hellstern, Kathy and Eck, Douglas and Dean, Jeff and Petrov, Slav and Fiedel, Noah},
+		title = {PaLM: scaling language modeling with pathways},
+		year = {2024},
+		issue_date = {January 2023},
+		publisher = {JMLR.org},
+		volume = {24},
+		number = {1},
+		issn = {1532-4435},
+		abstract = {Large language models have been shown to achieve remarkable performance across a variety of natural language tasks using few-shot learning, which drastically reduces the number of task-specific training examples needed to adapt the model to a particular application. To further our understanding of the impact of scale on few-shot learning, we trained a 540- billion parameter, densely activated, Transformer language model, which we call Pathways Language Model (PaLM).We trained PaLM on 6144 TPU v4 chips using Pathways, a new ML system which enables highly efficient training across multiple TPU Pods. We demonstrate continued benefits of scaling by achieving state-of-the-art few-shot learning results on hundreds of language understanding and generation benchmarks. On a number of these tasks, PaLM 540B achieves breakthrough performance, outperforming the finetuned state-of-the-art on a suite of multi-step reasoning tasks, and outperforming average human performance on the recently released BIG-bench benchmark. A significant number of BIG-bench tasks showed discontinuous improvements from model scale, meaning that performance steeply increased as we scaled to our largest model. PaLM also has strong capabilities in multilingual tasks and source code generation, which we demonstrate on a wide array of benchmarks. We additionally provide a comprehensive analysis on bias and toxicity, and study the extent of training data memorization with respect to model scale. Finally, we discuss the ethical considerations related to large language models and discuss potential mitigation strategies.},
+		journal = {J. Mach. Learn. Res.},
+		month = mar,
+		articleno = {240},
+		numpages = {113},
+		keywords = {large language models, few-shot learning, natural language processing, scalable deep learning}
+	}
+	@inproceedings{10.5555/3600270.3602446,
+		author = {Hoffmann, Jordan and Borgeaud, Sebastian and Mensch, Arthur and Buchatskaya, Elena and Cai, Trevor and Rutherford, Eliza and de Las Casas, Diego and Hendricks, Lisa Anne and Welbl, Johannes and Clark, Aidan and Hennigan, Tom and Noland, Eric and Millican, Katie and van den Driessche, George and Damoc, Bogdan and Guy, Aurelia and Osindero, Simon and Simonyan, Karen and Elsen, Erich and Vinyals, Oriol and Rae, Jack W. and Sifre, Laurent},
+		title = {Training compute-optimal large language models},
+		year = {2024},
+		isbn = {9781713871088},
+		publisher = {Curran Associates Inc.},
+		address = {Red Hook, NY, USA},
+		abstract = {We investigate the optimal model size and number of tokens for training a Transformer language model under a given compute budget. We find that current large language models are significantly undertrained, a consequence of the recent focus on scaling language models whilst keeping the amount of training data constant. By training over 400 language models ranging from 70 million to over 16 billion parameters on 5 to 500 billion tokens, we find that for compute-optimal training, the model size and the number of training tokens should be scaled equally: for every doubling of model size the number of training tokens should also be doubled. We test this hypothesis by training a predicted compute-optimal model, Chinchilla, that uses the same compute budget as Gopher but with 70B parameters and 4\texttimes{} more more data. Chinchilla uniformly and significantly outperforms Gopher (280B), GPT-3 (175B), Jurassic-1 (178B), and Megatron-Turing NLG (530B) on a large range of downstream evaluation tasks. This also means that Chinchilla uses substantially less compute for fine-tuning and inference, greatly facilitating downstream usage. As a highlight, Chinchilla reaches a state-of-the-art average accuracy of 67.5\% on the MMLU benchmark, greater than a 7\% improvement over Gopher.},
+		booktitle = {Proceedings of the 36th International Conference on Neural Information Processing Systems},
+		articleno = {2176},
+		numpages = {15},
+		location = {New Orleans, LA, USA},
+		series = {NIPS '22}
+	}
+	@INPROCEEDINGS{10685583,
+		author={Yokoyama, Daiki and Nishiura, Kinari and Monden, Akito},
+		booktitle={2024 IEEE/ACIS 22nd International Conference on Software Engineering Research, Management and Applications (SERA)}, 
+		title={Identifying Security Bugs in Issue Reports: Comparison of BERT, N-gram IDF and ChatGPT}, 
+		year={2024},
+		volume={},
+		number={},
+		pages={328-333},
+		keywords={Computer bugs;Natural languages;Machine learning;Chatbots;Transformers;Security;Online services;issue classification;bug report;bug triage;large language model},
+		doi={10.1109/SERA61261.2024.10685583}}
+	@inproceedings{10.5555/3295222.3295349,
+		author = {Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N. and Kaiser, \L{}ukasz and Polosukhin, Illia},
+		title = {Attention is all you need},
+		year = {2017},
+		isbn = {9781510860964},
+		publisher = {Curran Associates Inc.},
+		address = {Red Hook, NY, USA},
+		abstract = {The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely. Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train. Our model achieves 28.4 BLEU on the WMT 2014 English-to-German translation task, improving over the existing best results, including ensembles, by over 2 BLEU. On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.0 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature.},
+		booktitle = {Proceedings of the 31st International Conference on Neural Information Processing Systems},
+		pages = {6000–6010},
+		numpages = {11},
+		location = {Long Beach, California, USA},
+		series = {NIPS'17}
+	}
+	@misc{lewis2019bartdenoisingsequencetosequencepretraining,
+		title={BART: Denoising Sequence-to-Sequence Pre-training for Natural Language Generation, Translation, and Comprehension}, 
+		author={Mike Lewis and Yinhan Liu and Naman Goyal and Marjan Ghazvininejad and Abdelrahman Mohamed and Omer Levy and Ves Stoyanov and Luke Zettlemoyer},
+		year={2019},
+		eprint={1910.13461},
+		archivePrefix={arXiv},
+		primaryClass={cs.CL},
+		url={https://arxiv.org/abs/1910.13461}, 
+	}
+	@ARTICLE{10113601,
+		author={Wu, Tianyu and He, Shizhu and Liu, Jingping and Sun, Siqi and Liu, Kang and Han, Qing-Long and Tang, Yang},
+		journal={IEEE/CAA Journal of Automatica Sinica}, 
+		title={A Brief Overview of ChatGPT: The History, Status Quo and Potential Future Development}, 
+		year={2023},
+		volume={10},
+		number={5},
+		pages={1122-1136},
+		keywords={Three-dimensional displays;Web and internet services;Reinforcement learning;Chatbots;Robot sensing systems;Transformers;History;AIGC;ChatGPT;GPT-3;GPT-4;human feedback;large language models},
+		doi={10.1109/JAS.2023.123618}}
+	@article{10.1007/s10270-013-0392-y,
+		author = {L\'{o}pez-Fern\'{a}ndez, Jes\'{u}s J. and Cuadrado, Jes\'{u}s S\'{a}nchez and Guerra, Esther and Lara, Juan},
+		title = {Example-driven meta-model development},
+		year = {2015},
+		issue_date = {October   2015},
+		publisher = {Springer-Verlag},
+		address = {Berlin, Heidelberg},
+		volume = {14},
+		number = {4},
+		issn = {1619-1366},
+		url = {https://doi.org/10.1007/s10270-013-0392-y},
+		doi = {10.1007/s10270-013-0392-y},
+		abstract = {The intensive use of models in model-driven engineering (MDE) raises the need to develop meta-models with different aims, such as the construction of textual and visual modelling languages and the specification of source and target ends of model-to-model transformations. While domain experts have the knowledge about the concepts of the domain, they usually lack the skills to build meta-models. Moreover, meta-models typically need to be tailored according to their future usage and specific implementation platform, which demands knowledge available only to engineers with great expertise in specific MDE platforms. These issues hinder a wider adoption of MDE both by domain experts and software engineers. In order to alleviate this situation, we propose an interactive, iterative approach to meta-model construction, enabling the specification of example model fragments by domain experts, with the possibility of using informal drawing tools like Dia or yED. These fragments can be annotated with hints about the intention or needs for certain elements. A meta-model is then automatically induced, which can be refactored in an interactive way, and then compiled into an implementation meta-model using profiles and patterns for different platforms and purposes. Our approach includes the use of a virtual assistant, which provides suggestions for improving the meta-model based on well-known refactorings, and a validation mode, enabling the validation of the meta-model by means of examples.},
+		journal = {Softw. Syst. Model.},
+		month = oct,
+		pages = {1323–1347},
+		numpages = {25},
+		keywords = {Domain-specific modelling languages, Example-driven modelling, Interactive meta-modelling, Meta-model design exploration, Meta-model induction, Meta-model validation, Meta-modelling}
+	}
+	@inproceedings{barais:hal-01609576,
+		TITLE = {{Language Engineering with the GEMOC Studio}},
+		AUTHOR = {Barais, Olivier and Combemale, Benoit and Wortmann, Andreas},
+		URL = {https://inria.hal.science/hal-01609576},
+		BOOKTITLE = {{ICSAW 2017 - IEEE International Conference on Software Architecture Workshops}},
+		ADDRESS = {Gothenburg, Sweden},
+		EDITOR = {IEEE},
+		PAGES = {3},
+		YEAR = {2017},
+		MONTH = Apr,
+		PDF = {https://inria.hal.science/hal-01609576v1/file/language-engineering-gemoc.pdf},
+		HAL_ID = {hal-01609576},
+		HAL_VERSION = {v1},
+	}
+	@article{10.1007/s10515-009-0053-0,
+		author = {Gargantini, Angelo and Riccobene, Elvinia and Scandurra, Patrizia},
+		title = {A semantic framework for metamodel-based languages},
+		year = {2009},
+		issue_date = {December  2009},
+		publisher = {Kluwer Academic Publishers},
+		address = {USA},
+		volume = {16},
+		number = {3–4},
+		issn = {0928-8910},
+		url = {https://doi.org/10.1007/s10515-009-0053-0},
+		doi = {10.1007/s10515-009-0053-0},
+		abstract = {In the model-based development context, metamodel-based languages are increasingly being defined and adopted either for general purposes or for specific domains of interest. However, meta-languages such as the MOF (Meta Object Facility)--combined with the OCL (Object Constraint Language) for expressing constraints--used to specify metamodels focus on structural and static semantics but have no built-in support for specifying behavioral semantics. This paper introduces a formal semantic framework for the definition of the semantics of metamodel-based languages. Using metamodelling principles, we propose several techniques, some based on the translational approach while others based on the weaving approach, all showing how the Abstract State Machine formal method can be integrated with current metamodel engineering environments to endow language metamodels with precise and executable semantics.We exemplify the use of our semantic framework by applying the proposed techniques to the OMG metamodelling framework for the behaviour specification of the Finite State Machines provided in terms of a metamodel.},
+		journal = {Automated Software Engg.},
+		month = dec,
+		pages = {415–454},
+		numpages = {40},
+		keywords = {Weaving behaviour, Semantic (meta-)hooking, Model-based development, Model driven engineering, Metamodelling, Language semantics, Formal methods, Abstract state machines}
+	}

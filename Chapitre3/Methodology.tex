@@ -1,0 +1,174 @@
+\section{Methodology}
+\label{evaluation}
+
+This section describes our methodology for empirically assessing the capabilities of \LLM in addressing the problem of metamodel and code co-evolution. 
+It first describes the selected LLM and the followed evaluation process.
+Then, it presents our research questions and the data set.
+
+\subsection{Selected LLM}\label{selectedLLM}
+%\red(GPT-3.5, 4.0 ?)
+% Motivate the use of chatgpt
+% Motivate the use of gpt-3.5-turbo, chat mode
+
+We chose to use \LLM \emph{GPT-3.5-turbo} in chat mode. It currently points to \emph{gpt-3.5-turbo-0613} released in June 2023. We opted for this model because of four factors. The first one is that prompt content is only textual, we don't need to inject audio or image content. The second one is its capacity to generate good answers for requests about code and models generation \cite{nathalia2023artificial,yeticstiren2023evaluating,guo2023exploring,fu2023chatgpt,kabir2023empirical,chaaben2023towards,camara2023assessment}. The third factor is that it was the latest API version that is accessible, \emph{gpt-4} API still not accessible for us. The last one is related to the high popularity of \LLM as a tool. It has more than 100 million users, and its website saw more than 1.7 billion visitors in the last three months, with Software and Software Development as visitors' top category\footnote{\url{https://www.similarweb.com/fr/website/chat.openai.com/\#demographics}}. 
+
+
+\subsection{Evaluation Process}
+
+
+First, as we aim to query \LLM to co-evolve the erroneous code due to metamodel evolution, we need to provoke the errors in the code. To do so, we replace the original metamodel by the evolved metamodel. Then, we regenerate the code API with EMF. This will cause errors in the additional code that must co-evolve. 
+%
+After that, we must map the errors with the causing metamodel change before to generate a prompt with all appropriate information to be able to co-evolve the code errors. We then rely on the OpenAI API to query \LLM before to analyze its results. 
+%
+%\todo{explain how we measure correctness ?}
+%
+Finally, we measure the correctness of \LLM co-evolution by comparing its co-evolution with the manually co-evolved version by developers. \red{Note that the comparison is processed manually by authors}. This allows us to measure the \emph{correctness} reached by \LLM. %We distinguish between \emph{syntactically} and \emph{semantically} correct co-evolution. The former is when \LLM gives the exact expected co-evolution that is also , whereas the latter is syntactically different but behave the same as the expected co-evolution, hence, semantically correct. 
+%We consider a solution to be correct if it matches 
+Correctness varies from~0 to~1, i.e., 0\% to 100\% and is defined as follows:
+%alternative to terminology of syntactically, semantically
+\vspace{0.5em}
+
+\noindent $ Correctness = \dfrac{LLM Coevolutions \cap Manual Coevolutions}{Manual Coevolutions} $
+
+\vspace{0.5em}
+
+We chose the structure shown in Figure \ref{fig:promptstructure} since it contains the contextual information needed for our problem of metamodels and code co-evolution. \red{This structure was built after few manual naive attempts with \LLM, starting from a minimum context (as shown in the Motivating Example of Figure~\ref{fig: chatgptanswer} that failed) and by enriching the structure with more context information}. However, we do not claim its completeness in terms of needed information or if it is the best structure. Other variants can lead to different results. 
+%for generated prompts after several manual attempts with Chatgpt. 
+To investigate more this choice, we generated three more variations of this structure to observe its effect on the results. Table \ref{table: op variations} contains each variation and its corresponding explanation. Since our prompt contains three parts, we can change the order of these parts (Order Change operator) and the size of the erroneous code we put in the prompt (Minimal Code operator). Finally, rather than asking for a single co-evolution solution, we ask for alternative ones (Alternative Answers operator) in the prompt prefix. \red{To stress out our evaluation, we conducted 5 runs separated by almost a day, the time we needed for one run to check manually the results of each project, which means that each generated prompt is proposed to \LLM five times. This aims to check whether \LLM gives a same or different answer, hence, assess its robustness. 
+Finally, we compare \LLM to a baseline, namely the IDE quick fixes that are provided to repair the code errors. Note that we do not take as a baseline \LLM with prompts that only contain the code error, since as shown in Section \ref{example} and Figure \ref{fig: chatgptanswer}, it does not work. 
+}
+
+
+\subsection{Research Questions}
+
+To assess the capabilities of \LLM in the co-evolution of code, we set the following research questions. 
+
+\begin{itemize}
+    \item[RQ1] %\subsubsection{RQ1} 
+    %Can our code and metamodel coevolution appraoch using LLMs coevolve the code correctly? 
+    To what extent can \LLM co-evolve the code with evolved metamodels? 
+    This aims to assess the ability of \LLM to give correct resolutions to co-evolve the code according to the metamodel changes.
+    
+    \item[RQ2] %\subsubsection{RQ2}
+    How does varying the temperature hyperparameter affect the output of the co-evolution? %How does our coevolution approach react to the variation of the prompt? 
+    The temperature hyperparameter controls the creativity of the language model. 
+    This question aims to assess the capability of \LLM to co-evolve the erroneous code when given less or more creativity in the generation of the solution. 
+    
+    
+    \item[RQ3] %\subsubsection{RQ2}
+    How does varying the prompt structure affect the output of the co-evolution? %How does our coevolution approach react to the variation of the prompt? 
+    This aims to assess the quality improvement of the co-evolutions due to the prompts' variations.
+    
+
+    \item[RQ4] %\subsubsection{RQ3} 
+    How does \LLM proposed co-evolution compare to the quick fix baseline? 
+    As quick fixes are provided by default in an IDE to repair the code errors, this question aims to assess which method outperforms the other in the task of code co-evolution with evolving metamodels. %We measure its precision and recall and compare it with precision and recall of our automatic co-evolution approach.
+
+    
+\end{itemize}
+
+
+
+\begin{table*}[t]
+\centering
+\caption{Variation operators of our original prompt (OP).}
+\label{table: op variations}
+\resizebox{14cm}{!} {
+\begin{tabular}{ll}
+\toprule
+Variation Operators       & Explanation                               \\ \midrule
+Order Change (OC)         & \begin{tabular}[c]{@{}l@{}}We change the order between the three structured parts of the prompt. \\  We start by describing  the metamodel change before the abstraction gap.\end{tabular} \\ \midrule
+Minimal Code (MC)         & \begin{tabular}[c]{@{}l@{}}Instead of giving the whole method that contains the code error to co-evolve, \\ we only give the instruction of code error.\end{tabular}     \\ \midrule
+Alternative Answers (AA)  & \begin{tabular}[c]{@{}l@{}}Instead of asking the LLM to give one solution of co-evolution, \\ we specifically ask for alternative ways to co-evolve the code error.\end{tabular}           \\
+\bottomrule
+
+\end{tabular}
+}
+\end{table*}
+
+
+\begin{table*}[t]
+\centering
+		\caption{Details of the metamodels and their evolutions.}
+		\label{CaseStudies_Evolution}
+	\resizebox{16.5cm}{!} {
+	\begin{tabular}{cllll}
+		\toprule
+		Case study                                                                            & \begin{tabular}[c]{@{}l@{}}Evolved \\ metamodels\end{tabular}                 & Versions & 
+		\multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Atomic changes \\in the metamodel\end{tabular}} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Complex changes \\in the metamodel\end{tabular}} \\ \midrule		
+
+	
+		OCL & \begin{tabular}[c]{@{}l@{}}Pivot.ecore in project\\ocl.examples.pivot\end{tabular}                        &  \begin{tabular}[c]{@{}l@{}}3.2.2 to\\ 3.4.4\end{tabular}        &   
+		\begin{tabular}[c]{@{}l@{}} Deletes: 2 classes, 16 properties, 6 super types \\ Renames: 1 class, 5 properties \\ Property changes: 4 types; 2 multiplicities \\ Adds: 25 classes, 121 properties, 36 super types  \end{tabular}                                                         &    \begin{tabular}[c]{@{}l@{}} 1 pull property \\ 2 push properties  \end{tabular}                                                        \\ \midrule 
+		Modisco & \begin{tabular}[c]{@{}l@{}}Benchmark.ecore in project\\modisco.infra.discovery.benchmark\end{tabular}                & \begin{tabular}[c]{@{}l@{}}0.9.0 to\\ 0.13.0\end{tabular}         &     
+		\begin{tabular}[c]{@{}l@{}} Deletes: 6 classes, 19 properties, 5 super types \\ Renames: 5 properties  \\ Adds: 7 classes, 24 properties, 4 super types  \end{tabular}                                                        &     \begin{tabular}[c]{@{}l@{}} 4 moves property \\ 6 pull property \\ 1 extract class \\ 1 extract super class \end{tabular}                                                       \\ \midrule		
+
+	 
+		Papyrus & \begin{tabular}[c]{@{}l@{}}ExtendedTypes.ecore in project\\papyrus.infra.extendedtypes\end{tabular}            & \begin{tabular}[c]{@{}l@{}}0.9.0 to\\ 1.1.0\end{tabular}         &   
+		\begin{tabular}[c]{@{}l@{}}Deletes: 10 properties, 2 super types \\ Renames: 3 classes, 2 properies \\ Adds: 8 classes, 9 properties, 8 super types  \end{tabular}                                                      &    \begin{tabular}[c]{@{}l@{}} 2 pull property \\ 1 push property \\ 1 extract super class \end{tabular} \\  \bottomrule 		
+	\end{tabular}
+}
+\end{table*}
+
+
+
+\begin{table*}[t]
+		\caption{Details of the projects and their caused errors by the metamodels' evolution.}
+		\label{CaseStudies_CoEvolution}
+	\resizebox{18.5cm}{!} {
+	\begin{tabular}{llcccccc}
+		\toprule
+		\begin{tabular}[c]{@{}l@{}}Evolved \\ metamodels\end{tabular}                 & \begin{tabular}[c]{@{}l@{}}Projects to co-evolve in response to the \\ evolved metamodels \end{tabular} 	& \begin{tabular}[c]{@{}c@{}}$N^{o}$ of \\ packages\end{tabular} & \begin{tabular}[c]{@{}c@{}}$N^{o}$ of \\ classes\end{tabular} & 
+		\begin{tabular}[c]{@{}c@{}}$N^{o}$ of \\ LOC\end{tabular} & \begin{tabular}[c]{@{}c@{}}$N^{o}$ of Impacted \\ classes\end{tabular} & \begin{tabular}[c]{@{}c@{}}$N^{o}$ of total \\ errors \end{tabular}\\ \midrule		
+
+		\begin{tabular}[c]{@{}l@{}}OCL  Pivot.ecore\end{tabular}                     
+  & \begin{tabular}[c]{@{}l@{}} $[P1]$ ocl.examples.xtext.base \\ \end{tabular}   
+  &   \begin{tabular}[c]{@{}l@{}}12 \end{tabular}    
+  & \begin{tabular}[c]{@{}l@{}}181 \end{tabular}                 
+  & 	\begin{tabular}[c]{@{}l@{}}17599 \end{tabular} 
+  & \begin{tabular}[c]{@{}l@{}} 10 \end{tabular} 
+  & \begin{tabular}[c]{@{}l@{}} 29 \end{tabular}
+\\ \midrule	
+  \begin{tabular}[c]{@{}l@{}}Modisco \\ Benchmark.ecore\end{tabular}            
+ & \begin{tabular}[c]{@{}l@{}} $[P2]$ modisco.infra.discovery.benchmark\\ $[P3]$ gmt.modisco.java.discoverer.benchmark\\ $[P4]$ modisco.java.discoverer.benchmark\\ $[P5]$ modisco.java.discoverer.benchmark.javaBenchmark\end{tabular}  
+ & \begin{tabular}[c]{@{}l@{}}3 \\8 \\10 \\3  \end{tabular}
+ & \begin{tabular}[c]{@{}l@{}}28 \\21 \\28 \\16 \end{tabular} 
+ & \begin{tabular}[c]{@{}l@{}}2333 \\1947 \\2794 \\1654 \end{tabular} 
+ & \begin{tabular}[c]{@{}l@{}}1\\4 \\9 \\9 \end{tabular} 
+ & \begin{tabular}[c]{@{}l@{}}6 \\30 \\56 \\73 \end{tabular} 
+ \\ \midrule		
+\begin{tabular}[c]{@{}l@{}}Papyrus \\ ExtendedTypes.ecore\end{tabular}          
+& \begin{tabular}[c]{@{}l@{}} $[P6]$ papyrus.infra.extendedtypes\\   $[P7]$ papyrus.uml.tools.extendedtypes\end{tabular}  & \begin{tabular}[c]{@{}l@{}}8 \\7 \end{tabular}
+& \begin{tabular}[c]{@{}l@{}}37 \\15  \end{tabular} 
+&\begin{tabular}[c]{@{}l@{}}2057  \\725  \end{tabular} 
+& \begin{tabular}[c]{@{}l@{}}8 \\7   \end{tabular}
+& \begin{tabular}[c]{@{}l@{}} 44\\28 \end{tabular} 
+\\ \bottomrule		
+	\end{tabular}
+}
+\end{table*}
+
+
+
+
+\subsection{Data set}
+\label{dataset}
+This section presents the used data set in our empirical study, to be found in the attached supplementary material\footnote{\url{https://figshare.com/s/bf35039892799c0e6f34}}. 
+
+We chose \red{Eclipse Modeling Framework (EMF) platform as technological space}, which allows us to build modeling tools and applications based on Ecore metamodels \cite{steinberg2008emf}. %This open source tool, is also adopted in industry, for instance, in SAP company\footnote{\url{https://help.sap.com/docs/SAP_POWERDESIGNER/1cc460ad80f446e6a9d19303919ee269/c7f1d7456e1b1014b1f5de4946b14e20.html?version=16.7.05}} thanks to its architecture and the tools it offers. It is actively updated, the last release was in November, 2023\footnote{\url{https://download.eclipse.org/modeling/emf/emf/builds/release/latest/index.html}}.    % \cite{ref?}. %In 2022, Eclipse IDE was downloaded 1 million times per month.
+%
+First, we aimed at selecting metamodels with meaningful \red{real} evolutions that do not consist in only deleting metamodel elements, but rather including complex evolution changes (see subsection \ref{mmchanges}). 
+
+%By complex changes, we mean ....
+
+This selection criterion resulted in seven Java projects from three case studies of three different language implementations in Eclipse, namely OCL~\cite{MDTOCL}, Papyrus \cite{MDTPapyrus}, and Modisco~\cite{MDTModisco} \red{with their versions that was manually co-evolved by developers, that represent our ground of truth}.
+%
+OCL is a standard language defined by the Object Management Group (OMG) to specify First-order logic constraints. Papyrus is an industrial project led by CEA\footnote{\url{http://www-list.cea.fr/en/}} to support model-based simulation, formal testing, safety analysis, etc. Modisco is an academic initiative to support development of model-driven tools, reverse engineering, verification, and transformation of existing software systems. 
+%Papyrus is an industrial project led by CEA\footnote{\url{http://www-list.cea.fr/en/}} to support model-based simulation, formal testing, safety analysis, etc.  
+Thus, the case studies cover standard, industrial, and academic languages that have evolved several times for more than 10 years of continuous development period.
+%In particular, Papyrus and OCL are open source projects are actively maintained with frequent releases per year.
+
+Table~\ref{CaseStudies_Evolution} presents the details on the selected case studies, in particular about their metamodels and the occurred changes during evolution. The total of applied metamodel changes was~330 atomic changes, including~19 complex changes in the three metamodels. 
+%
+Table~\ref{CaseStudies_CoEvolution} presents the details on the size of the seven projects and code of the original versions that we co-evolve in addition to the number of errors after the metamodels evolution. 
+

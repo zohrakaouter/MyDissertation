@@ -45,11 +45,10 @@ First, we present the data set and the evaluation process. Then, we set the rese
 
 
 \subsection{Data Set}
-%\red{//TODO double check} 
+ 
 This section presents the used data set in our evaluation to be found in the attached supplementary material\footnote{\url{https://figshare.com/s/b6251b9e47fa82983ce5}}. 
 
-%
-%We evaluate on the case study of the Object Constraint Language (OCL) implementation in Eclipse\cite{MDTOCL}. The OCL case study is standardized languages that have evolved several times for more than 16 years of continuous development period since 2006\footnote{https://www.eclipse.org/modeling/mdt/downloads/?project=ocl}. 
+
 
 We evaluate our approach on four case studies of language implementations in Eclipse, namely OCL \cite{MDTOCL}, Modisco \cite{MDTModisco}, Papyrus \cite{MDTPapyrus}, and EMF \cite{EclipseEMF} project. 
 %
@@ -60,49 +59,34 @@ Thus, the four case studies cover standard, academic, and industrial languages t
 
 Moreover, we aimed at selecting meaningful evolutions that do not consist in only deleting metamodel elements, but rather include complex evolution changes. We also aimed to select long and short evolution intervals in the selected releases versions to stress test our approach in different scenarios. 
 \red{This is the case for the OCL, Modisco, and Papyrus case studies. However, they do not have manually written tests. Thus, we added the EMF case study that have manually written tests, but its metamodel is stable with no evolutions. Therefore, we had to simulate a set of metamodel evolution changes similar to those real-world changes observed in our three first case studies and we co-evolved their impacts with our previous work  \cite{Khelladi2020}.} 
-%To enhance the evaluation of our approach, we studied its applicability on EMF project\footnote{\url{https://github.com/eclipse-emf/org.eclipse.emf}}. Even though EMF project contains manually written tests, unlike the three previously described projects, the metamodel of EMF project does not evolve over time. In order to include manually written tests in the applicability evaluation of our approach, we provoke a total of seven changes in the metamodel (Table \ref{CaseStudies_Evolution}). The provoked evolution required that the project and its tests must co-evolve accordingly. To co-evolve the source code and the tests, we used the catalog of resolutions of Khelladi et al.\cite{Khelladi2020}.} 
+
 
 Table \ref{CaseStudies_Evolution} gives details about the selected case studies, in particular about their metamodels and the changes applied during evolution. 
 %\red{Also about the code and tests details in each project.}
 The total of applied metamodel changes was \red{452} atomic changes and \red{21} complex changes in the five metamodels.
 %
-Table~\ref{CaseStudies_CoEvolution} gives details on the size of the projects in terms of code and tests of the original and evolved versions. % that we co-evolve in addition to the number of direct and indirect errors after the metamodel evolution. 
-\red{
-%For those \red{four} case studies, we collected 14 versions of Eclipse Java projects that had evolving metamodels and co-evolving code. %We collected the original and evolved Java code of those projects.
+Table~\ref{CaseStudies_CoEvolution} gives details on the size of the projects in terms of code and tests of the original and evolved versions. 
 We collected a total of~18 projects to evaluate our approach on.  
-%For OCL, papyrus, and modisco case studies, we collected a total of 14 versions of Eclipse Java projects that had evolving metamodels and co-evolving code. For EMF project case study, we collected the original version of the two projects org.eclipse.emf.test.core and org.eclipse.test.xml.
-}
+
 
 
 \subsection{Evaluation Process}
 
-\red{We evaluate our approach by: 1) investigating its usefulness compared to the manual tracing of the impacted tests with user study, 2) measuring its ability to automatically trace the impacted tests due to impacting metamodel changes both in the original and evolved version of the project, 3) assessing its ability to give an indication about the correctness of the code and metamodel co-evolution, and finally 4) measuring the gains of its usage in terms of reduction of tests and their execution time.} 
-%We evaluate our approach by measuring its ability to trace the impacted tests due to impacting metamodel changes both in the original and evolved version of the project. %We further measure its time performance %. Herein, we use with the function $System.nanoTime()$ for time measurement. 
-%
-Not that as the metamodel changes are taken as input of our automatic test tracing, we studied the original and evolved versions to confirm the metamodel changes. Therefore, we do not take an incorrect input of metamodel changes that would mislead our traced tests, which would mislead the behavioral checking of the code co-evolution. 
+\red{We evaluate our approach by: 1) investigating its usefulness compared to the manual tracing of the impacted tests with user study, 2) measuring its ability to automatically trace the impacted tests due to impacting metamodel changes both in the original and evolved version of the project, 3) assessing its ability to give an indication about the correctness of the code and metamodel co-evolution, and finally 4) measuring the gains of its usage in terms of reduction of tests and their execution time.} Note that as the metamodel changes are taken as input of our automatic test tracing, we studied the original and evolved versions to confirm the metamodel changes. Therefore, we do not take an incorrect input of metamodel changes that would mislead our traced tests, which would mislead the behavioral checking of the code co-evolution. 
 
 
-%\subsubsection{Metamodel Evolution in our Case Studies}
-
-%\subsubsection{Test Suite in our Case Studies}
-
-\red{Regarding the tests, only the EMF case study had manually written tests. Thus, we had to generate tests for OCL, Modisco, and Papyrus case studies. We used %as the selected EMF projects did not contain tests, we had to generate them using 
+\red{Regarding the tests, only the EMF case study had manually written tests. Thus, we had to generate tests for OCL, Modisco, and Papyrus case studies. We used 
 a state-of-the-art tool, namely EvoSuite~\cite{fraser2011evosuite}. 
-Evosuite is a search-based tool for Unit Tests generation. It uses a heuristic algorithm, particularly, genetic algorithm
+EvoSuite is a search-based tool for Unit Tests generation. It uses a heuristic algorithm, particularly, genetic algorithm
 % ( explain different elements of it ?)
 in the Test Suit generation. In their used approach Fraser et al.~\cite{fraser2011evosuite} aimed to maximize the coverage metric and mutation score which guarantees good-quality tests. 
-Evosuite is largely used and it was evaluated not only in literature but also in the industrial context. Firhard et al.~\cite{10.1007/978-3-031-21251-2_2} compared it with DSpot, a state-of-the-art tool for test amplification, their results show that Evosuite achieves a statistically better mutation score. Herculano et al. found that Evosuite's generated tests can successfully help to identify faults during maintenance tasks~\cite{9954000}. In industry, Rozière et al. use automated tests generated with Evosuite to filter invalid code translations in the context of their work done for Meta \cite{roziere2021leveraging}. 
+EvoSuite is largely used and it was evaluated not only in literature but also in the industrial context. Firhard et al.~\cite{10.1007/978-3-031-21251-2_2} compared it with DSpot, a state-of-the-art tool for test amplification, their results show that EvoSuite achieves a statistically better mutation score. Herculano et al. found that EvoSuite's generated tests can successfully help to identify faults during maintenance tasks~\cite{9954000}. In industry, Rozière et al. use automated tests generated with EvoSuite to filter invalid code translations in the context of their work done for Meta \cite{roziere2021leveraging}. 
 Gruber et al.~\cite{gruber2023automatic} further showed the quality and robustness of the generated tests. It showed that while flakiness is at least as common in generated tests as in developer-written tests, EvoSuite is effective in alleviating this issue giving~71.7\% fewer flaky tests. Thus, EvoSuite is appropriate in our work to generate robust tests in the original code and in the co-evolved code to compare their results, i.e., check behavioral correctness.} 
 We simply let EvoSuite run to generate Junit test classes for the selected projects with the following parameters: \emph{-DmemoryInMB=2000 -Dcores=4 -DtimeInMinutesPerClass=10 evosuite:generate evosuite:export}. It uses up to 2GO of RAM, 4 CPU cores, and 10 minutes per test class. 
 Generating tests is a best practice, in particular w.r.t. its efficiency in test generation and at a large scale for all public methods \cite{DANGLOT2019110398,https://doi.org/10.1002/stvr.1601}. 
 EvoSuite generates tests for all public methods, whereas developers tend to manually write a few tests for only some targeted methods. Thus, relying only on manually written tests increases the risk of not assessing the behavioral correctness of many cases of code co-evolutions that are not covered by test cases. Generating tests alleviates this risk. 
 \red{Indeed, this is observed when computing the coverage metric for each of our considered projects. Table \ref{table:coverage} shows that the highest coverage (69\% to 95\%) is obtained on projects with automatically generated tests and the lowest coverage (17\% to 33\%) were on the two projects with manually written tests.}  
-%\red{Nonetheless, we will further discuss this step in the threats to validity.}  
 
-%We ran the implementation of our approach on the following hardware configuration: \textit{i9-11950H CPU @ 2.60GHz; 32Gb; 1 T SSD}, running \textit{Fedora}.
-%\textit{2 x Intel(R) Xeon(R) Gold 6238 CPU @ 2.10GHz; 187Gb ram; 1 T SSD}, running \textit{Ubuntu}.
-
-%\todo{do we talk about recall and precision here, we can if we trace ourselves (with IDE features) the impacted tests, then we can compare, but too much work}
 
 
 
@@ -234,10 +218,7 @@ This also aims further to assess our approach’s usefulness through main observ
 \textbf{\emph{RQ2.}} \emph{What is the observed behavioral correctness level of the code co-evolution?} This aims to assess through running the selected tests the effect of the code co-evolution, whether it keeps the tests' results stable, or instead degrade or improve them. %\todo{here if you mapp them, we can look at the different cases}
 
 
-\textbf{\emph{RQ3.}} \emph{What are the observed gains (w.r.t. test case reduction and execution time) obtained from our approach of tracing impacted tests by metamodel evolution ?} This aims to highlight the benefit of our approach compared to when not using it and relying on the whole test suite as a baseline. %or no tests at all. 
-%\blue{ compare the number of traced tests to original tests, compare execution time as well}
-
-%\todo{shall we add a third RQ, maybe a user study? use PhDs of the teams, and didier, and ask them to use it and what do they think ? I think this could be very useful, fo example we can ask them on oen or our project to try to identify manuall the tests, then to use our tool, and tell us what do they think => I take this task to think about it more.}
+\textbf{\emph{RQ3.}} \emph{What are the observed gains (w.r.t. test case reduction and execution time) obtained from our approach of tracing impacted tests by metamodel evolution ?} This aims to highlight the benefit of our approach compared to when not using it and relying on the whole test suite as a baseline. 
 
 
 \subsection{Results}
@@ -252,17 +233,9 @@ The first goal of our evaluation is to gain evidence on the difficulty or not of
 \paragraph{RQ0 Set Up} We first describe our user study experiment.
 
 \textbf{Subjects selection.}
-%We ran a user study with 8 participants (x females and y males), x PhD candidates and y engineers in our IRISA Laboratory, at University of Rennes. 
-%All participants had knowledge in xxxx. Some (how many?) had no programming experience
-%and XYZ had between 1 and ?? years of programming experience. Overall, they had an average of x years and y months
-%of experience as developers. => do the same for EMF experience etc.
-The experiment was conducted with 8 participants (2 females and 6 males), including PhD students and research engineers in IRISA Laboratory, at the University of Rennes. The participants have a varying level of experience in programming (from 3 to 12 years with an average of 7 years), and a varying level in model-driven engineering (MDE) (from 0 to 7 years with an average of 2 years and 6 months).
+The experiment was conducted with 8 participants (2 females and 6 males), including PhD students and research engineers in IRISA Laboratory, at the University of Rennes. The participants have a varying level of experience in programming (from~3 to~12 years with an average of~7 years), and a varying level in model-driven engineering (MDE) (from 0 to 7 years with an average of~2 years and 6 months).
 
 \textbf{Experiment Task.} 
-%All participants were in one group and performed the same task. We used one of our projects that had manually written tests, namely \texttt{org.eclipse.emf.test.core} fitting for the limited time allocated for the experiment. 
-%We presented the applied metamodel evolutions, and gave a guideline explaining what code elements are generated from each metamodel element. 
-%Then, we asked the participants to trace the impacted tests. 
-%After the end of this task, we presented the participants our automatic tracing approach and ran a post questionnaire. 
 The experiment aims to evaluate the ability of participants to trace manually and analyze the affected unit tests before and after the metamodel evolution.
 We prepared two Eclipse workspaces. The first one contains the original version of the project \texttt{org.eclipse.emf.test.core}, and the second workspace contains the evolved version of the same project. 
 The number of tests is 322 in both versions. The number of tests that must be traced is respectively 173 and 17 in the original and evolved versions. 
@@ -331,7 +304,7 @@ We could successfully trace the tests that must be executed before and after the
 
 After tracing the tests, we could execute them to observe their effect before and after co-evolution of the code. Table \ref{table:tracedTests} depicts the results for the original and evolved projects' versions. The second line gives the number of traced class tests and the rest of the lines categorizes the tests. \red{We overall observe no significant difference between projects with automatically generated tests and projects with manually tests.} 
 
-The most interesting project is the first $[P1_{V1}]$ to $[P1_{V2}]$. Even though the tests decreased by \red{161 (455 - 294 from Figure \ref{fig:tracedTests}}), the number of passing tests decreased only by 9 (\red{106 - 97 from Table \ref{table:tracedTests}}). Whereas the error tests decreased by 155. However, the failing tests increased by 3 from 2 to 5\red{, as shown in Table \ref{table:tracedTests}. There was also the appearance of one failing test in $[P8]$.} These cases of increased failing tests indicate that the code co-evolution may be not completely behaviorally correct. 
+The most interesting project is the first $[P1_{V1}]$ to $[P1_{V2}]$. Even though the tests decreased by \red{161 (455 - 294 from Figure \ref{fig:tracedTests}}), the number of passing tests decreased only by 9 (\red{106 - 97 from Table \ref{table:tracedTests}}). Regarding the error tests, they decreased by 155. However, the failing tests increased by 3 from 2 to 5\red{, as shown in Table \ref{table:tracedTests}. There was also the appearance of one failing test in $[P8]$.} These cases of increased failing tests indicate that the code co-evolution may be not completely behaviorally correct. 
 
 Moreover, in the other projects $[P2][P3][P7][P8]$, many tests that existed in the original version were not in the evolved version due to the delete changes of the metamodels. This is actually a sign of behavioral correct co-evolution, as indeed the tests should be removed following the removal of the generated code for those deleted metamodel elements. 
 \red{}In the rest of the projects $[P4][P5][P6][P9]$, roughly the same number of tests in the original version behaved the same in the evolved version, suggesting again a behaviorally correct co-evolution.
@@ -528,13 +501,11 @@ gaining, on average, a reduction of 88\% in the number of tests and 84\% in exec
 \noindent This section discusses threats to validity \cite{wohlin2012experimentation}.
 
 \subsection{Internal Validity.}
-To be able to trace the impact of metamodel changes to the tests, we had to have a test suite in the selected projects. However, we observed that the Eclipse projects relying on metamodels do not come with the test suite. This was not only the case of OCL\cite{MDTOCL}, papyrus \cite{MDTPapyrus} or Modisco \cite{MDTModisco}, but also other Eclipse languages \cite{UML241,BPMN2}. Therefore, we were obliged to generate the test suite with a state-of-the-art available tool Evosuite \cite{fraser2011evosuite}. 
+To be able to trace the impact of metamodel changes to the tests, we had to have a test suite in the selected projects. However, we observed that the Eclipse projects relying on metamodels do not come with the test suite. This was not only the case of OCL\cite{MDTOCL}, papyrus \cite{MDTPapyrus} or Modisco \cite{MDTModisco}, but also other Eclipse languages \cite{UML241,BPMN2}. Therefore, we were obliged to generate the test suite with a state-of-the-art available tool EvoSuite \cite{fraser2011evosuite}. 
 Even though, automatic test generation is a best practice, there is the risk of having tests that are different from manually written tests. 
 However, this does not pose a risk to our approach as the main algorithm of our approach is generic and would be able to trace the impact of a metamodel change in the same way for both automatically generated tests as well as manually written tests. \red{This is what we observed with the fourth EMF case study having manually written tests. Indeed, the overall results of tracing tests and reduction gains were not significantly different in all case studies regardless of whether the tests are automatically generated or manually written.} 
-%that tend to be more integration tests. To mitigate the risk, our approach only needs unit tests and not integration tests. 
 The main risk is related to the behavioral correctness of the code co-evolution. To check it, we require unit tests that target single methods. 
 However, automatic test generation can even be more advantageous herein. Indeed, it generates tests for all public methods, whereas developers tend to manually write only few tests for some targeted methods. Thus, if relying only on manually written tests, there is a high risk of not assessing the behavioral correctness of many cases of code co-evolutions that are not covered by test cases. 
-%of missing cases of behaviorally incorrect co-evolutions that are not covered by test cases. 
 This is mitigated by relying on EvoSuite that generates a full test suite of unit tests with Junit assertions. This tool has shown his efficiency in test generation as a state-of-the-art tool~\cite{DANGLOT2019110398,https://doi.org/10.1002/stvr.1601}. \red{Indeed, this is observed when computing the coverage metric for each of our considered projects (see Table \ref{table:coverage}). The highest coverage is on projects with automatically generated tests and the lowest coverage is on the two projects with manually written tests.}
  
 Therefore, our approach not only checks the correctness of the code co-evolution with the traced tests, but also favors the best practice of tests generation in each release of a software language after its metamodel evolution.
@@ -550,10 +521,8 @@ Further evaluation on a ground truth is left for future work.}
 We implemented and evaluated our approach for EMF/Ecore metamodels and Java code with Junit tests. Other languages, such as C\# or C++, use a different syntax, but conceptually use the same constructions as in Java.
 Although we think that the tracing would be applicable for other languages, we cannot generalize our results. Further experimentation on other languages is necessary. However, the only requirement to apply our approach to other languages is to have access to the ASTs of the parsed code and tests, and to adapt our tracing of the tests in the build call graph. 
 %
-Moreover, our evaluation was performed on Eclipse projects from five languages. Thus, we cannot generalize our findings to all software languages or DSLs. We also cannot generalize our results on manually written tests, in particular the test verdicts of the traced tests, i.e., pass, fail, and error. Further experimentation remains necessary and is left for future work. %However, if they are linked to a code element generated from a metamodel element, our approach should be able to trace it. 
-%This is left for future work to 
+Moreover, our evaluation was performed on Eclipse projects from five languages. Thus, we cannot generalize our findings to all software languages or DSLs. We also cannot generalize our results on manually written tests, in particular the test verdicts of the traced tests, i.e., pass, fail, and error. Further experimentation remains necessary and is left for future work. 
 
 \subsection{Conclusion Validity.}
 Our evaluation gave promising results, showing that we could trace the impact of metamodel changes till the tests, and hence, check the behavioral correctness of the code co-evolution in practice for real-world projects. 
 However, even though we evaluated our approach on 18 projects of metamodel evolution and code co-evolution with automatically generated tests and manually written tests, further evaluation is needed on more case studies to have more insights and statistical evidence. \red{Finally, our user study experiment suggesting our approach usefulness needs to be replicated with more participants.} 
-%than our \red{7} projects in this paper.

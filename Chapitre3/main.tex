@@ -1,0 +1,230 @@
+\documentclass[]{jot} 
+% Use the documentclass option 'lineno' to view line numbers
+
+% Enter the JOT metadata in the following 
+
+\usepackage{multirow}
+\newcommand{\LLM}{ChatGPT }
+\usepackage{tikz}
+\usepackage[ruled,vlined,linesnumbered,algo2e]{algorithm2e} 
+\usepackage[compatible]{algpseudocode}
+\usepackage{tcolorbox} 
+\usepackage{rotating}
+\makeatletter
+% Based on https://tex.stackexchange.com/questions/7032/good-way-to-make-textcircled-numbers
+%
+\usepackage{pict2e,picture}
+\pgfkeys{/csteps/inner ysep/.initial=4pt,
+    /csteps/inner xsep/.initial=4pt,
+    /csteps/inner color/.initial=black,
+    /csteps/outer color/.initial=black,
+}
+\newsavebox\csteps@CBox
+\newlength\csteps@XLength \newlength\csteps@YLength \newlength\csteps@YDepth \newlength\csteps@tmplen
+\def\csteps@CircledParam#1#2{\sbox\csteps@CBox{#2}%
+    \csteps@XLength=\wd\csteps@CBox\advance\csteps@XLength by\pgfkeysvalueof{/csteps/inner xsep}\relax
+    \csteps@tmplen=\pgfkeysvalueof{/csteps/inner ysep}\relax
+    \csteps@YDepth=\dp\csteps@CBox\advance\csteps@YDepth by 0.5\csteps@tmplen\relax
+    \csteps@YLength=\ht\csteps@CBox\advance\csteps@YLength by\dp\csteps@CBox\advance\csteps@YLength by\pgfkeysvalueof{/csteps/inner ysep}\relax
+    \typeout{DBG:#2\space X\space\the\csteps@XLength\space Y:\the\csteps@YLength\space D:\the\csteps@YDepth}%
+    \raisebox{-#1\csteps@YDepth}{%
+    \ifdim\csteps@XLength>\csteps@YLength
+    \makebox[\csteps@XLength]{% X bigger than Y
+        \makebox(0,\csteps@YLength){%
+            \color{\pgfkeysvalueof{/csteps/outer color}}\put(0,0){\oval(\csteps@XLength,\csteps@YLength)}%
+        }%
+    \makebox(0,\csteps@YLength){%
+        \put(-.5\wd\csteps@CBox,0){\textcolor{\pgfkeysvalueof{/csteps/inner color}}{#2}}%
+    }}%
+    \else
+    \makebox[\csteps@YLength]{%
+        \makebox(0,\csteps@YLength){%
+            \color{\pgfkeysvalueof{/csteps/outer color}}\put(0,0){\circle{\csteps@YLength}}%
+        }%
+    \makebox(0,\csteps@YLength){%
+        \put(-.5\wd\csteps@CBox,0){\textcolor{\pgfkeysvalueof{/csteps/inner color}}{#2}}%
+     }}%
+    \fi
+    }%
+}
+\def\Circled#1{\csteps@CircledParam{1}{#1}}
+%\def\CircledTop#1{\csteps@CircledParam{0}{#1}}
+
+
+%\newcommand{\red}[1]{{\color{red}{#1}}}
+\newcommand{\red}[1]{{#1}}
+
+\jotdetails{
+    volume=23,      % volume
+    number=3,       % number or issue
+    articleno=a6,   % article number, eg a1 for research articles, e for editorials
+    year=2024,      % year
+    license=ccbyncnd    % choose from ccby, ccbynd, ccbyncnd
+}
+
+
+
+\newcommand{\command}[1]{{\color{codepurple}\texttt{\textbackslash #1}}}
+\newcommand{\param}[1]{{\color{blue}\texttt{#1}}}
+\newcommand{\ie}{\emph{i.e.,}\xspace}
+\newcommand{\eg}{\emph{e.g.,}\xspace}
+\newcommand{\cf}{\emph{cf.}\xspace}
+\newcommand{\etal}{\emph{et al.}\xspace}
+\newcommand{\etc}{\emph{etc.}\xspace}
+\usepackage{underscore}
+% Select the article type
+
+\articletype{regular} 
+
+    % {editorial} editorial 
+    % {regular} regular contribution
+    % {manual} manual
+    % {column} column
+   % \usepackage{listings}
+\usepackage{graphicx,color,soul}
+\usepackage{soul}
+\setul{0.5ex}{0.3ex}
+\definecolor{Red}{rgb}{1,0.0,0.0}
+\setulcolor{Red}
+
+\definecolor{forestgreen}{rgb}{0.0, 0.27, 0.13}
+\definecolor{plum}{rgb}{0.56, 0.27, 0.52}
+\lstdefinelanguage{Java}{
+	morekeywords={abstract, assert, boolean, break,
+		byte, case, catch, char,
+		class, const, continue, default,
+		do, double, else, enum,
+		extends, final, finally, float,
+		for, goto, if, implements,
+		import, instanceof, int, interface,
+		long, native, new, package,
+		private, protected, public, return,
+		short, static, strictfp, super,
+		switch, synchronized, this, throw,
+		throws, transient, try, void,
+		volatile, while, true, false, null},
+	keywordstyle=[2]{\textbf},
+	keywordstyle={\textbf},
+	keywordstyle=\color{plum}\bfseries,
+	morecomment=[l]{//}, 
+	morecomment=[s]{/*}{*/}, 
+	commentstyle=\color{forestgreen},
+	morestring=[b]",
+	tabsize=4,
+	basicstyle=\ttfamily\footnotesize,
+	numbers=left,
+	numbersep=1pt,
+	numberstyle=\footnotesize\color{darkgray},
+	stepnumber=1}%TODO basicstyle=\footnotesize
+	
+	\makeatletter
+\def\lst@makecaption{%
+  \def\@captype{table}%
+  \@makecaption
+}
+\makeatother
+\algnewcommand\algorithmicswitch{\textbf{switch}}
+\algnewcommand\algorithmiccase{\textbf{case}}\algdef{SE}[SWITCH]{Switch}{EndSwitch}[1]{\algorithmicswitch\ #1\ \algorithmicdo}{\algorithmicend\ \algorithmicswitch}%
+\algdef{SE}[CASE]{Case}{EndCase}[1]{\algorithmiccase\ #1}{\algorithmicend\ \algorithmiccase}%
+\algtext*{EndSwitch}%
+\algtext*{EndCase}%
+
+\newcommand{\lstETL}[1]{\lstinline[language=ETL,breaklines=true,basicstyle=\listingsfontinline,mathescape,literate={\-}{}{0\discretionary{-}{}{}}]§#1§}
+
+\lstset{
+	escapeinside={(*}{*)}
+}
+
+\title{An Empirical Study on Leveraging LLMs for Metamodels and Code Co-evolution}
+
+\author[$\ast$]{Zohra Kaouter~Kebaili}
+\author[$\ast$]{Djamel Eddine~Khelladi}
+\author[$\dagger$]{Mathieu~Acher}
+\author[$\ddagger$]{Olivier~Barais}
+%\author[$\ast\ast$,2,3]{Sixth Author}
+
+\affil[$\ast$]{CNRS, Univ. Rennes, IRISA, INRIA, France}
+\affil[$\dagger$]{INSA Rennes, IUF, IRISA, INRIA, France}
+\affil[$\ddagger$]{Univ. Rennes, IRISA, INRIA, France}
+%\affil[$\S$]{Author four affiliation}
+%\affil[$\ast\ast$]{Author five affiliation}
+
+%\keywords{Typesetting, \LaTeX\, JOT format style.}
+\keywords{Metemodel evolution, code evolution, LLM, chatgpt, coevolution, prompt engineering}
+
+\runningtitle{An Empirical Study on Leveraging LLMs for Metamodels
+and Code Co-evolution} % For use in the internal pages 
+
+%% For the footnote.
+%% Give the last name of the first author if only one author;
+% \runningauthor{FirstAuthorLastname}
+%% last names of both authors if there are two authors;
+% \runningauthor{FirstAuthorLastname and SecondAuthorLastname}
+%% last name of the first author followed by et al, if more than two authors.
+\runningauthor{Kebaili \textit{et al.}}
+
+\begin{abstract}
+\justify
+Metamodels play an important role in MDE and in specifying a software language.
+%A metamodel is 
+They are cornerstone to generate other artifacts of lower abstraction level, such as code. Developers then enrich the generated code to build their language services and tooling, e.g., editors, and checkers. 
+When a metamodel evolves, part of the code is regenerated and all the additional developers' code can be impacted. Thus, requiring erroneous code to be co-evolved accordingly. 
+%While state of the art at best support a semi-automatic code co-evolution when metamodels evolves. 
+
+In this paper, we explore a novel approach to mitigate the challenge of metamodel evolution impacts on the code using LLMs. In fact LLMs stand as promising tools for tackling increasingly complex problems and support developers in various tasks of writing, correcting and documenting source code, models, and other artifacts. However, while there is an extensive empirical assessment of the LLMs capabilities in generating models, code and tests, there is a lack of work on their ability to support their maintenance. In this paper, we focus on the particular problem of metamodels and code co-evolution. 
+%
+We first designed a prompt template structure that contains contextual information about metamodel changes, the abstraction gap between the metamodel and the code, and the erroneous code to co-evolve. To investigate the usefulness of this template, we generated three more variations of the prompts. The generated prompts are then given to the LLM to co-evolve the impacted code. %get and treat its answers.
+%we conducted a comparison with the use of quick fixes that represent a usual tool of correcting code errors in an IDE.
+%\red{We evaluated our generated prompts with \LLM version x.y on nine Eclipse projects from OCL, Modisco, and Papyrus over several evolved versions of three metamodels. }
+
+We evaluated our generated prompts and other three of their variations with \LLM version 3.5 on seven Eclipse projects from OCL and Modisco evolved metamodels.  
+Results show that \LLM can co-evolve correctly 88.7 \% of the errors due to metamodel evolution, varying from 75\% to 100\% of correctness rate.
+When varying the prompts, we observed increased correctness in two variants and decreased correctness in another variant. We also observed that varying the temperature hyperparameter yields better results with lower temperatures. 
+Our results are observed on a total of 5320 generated prompts. 
+Finally, when compared to the quick fixes of the IDE, the generated prompts co-evolutions completely outperform the quick fixes.  
+\end{abstract}
+
+\acknowledgment{
+The research leading to these results has received funding %from the \emph{RENNES METROPOLE} under grant \emph{AIS no. 19C0330} and 
+from the \emph{ANR} agency under grant \emph{ANR JCJC MC-EVO$^{2}$ 204687}.
+}
+
+
+
+
+\begin{document}
+\maketitle
+\urlstyle{rm}
+
+\input{JOT_TEMPLATE_2_6/Introduction}
+\input{JOT_TEMPLATE_2_6/MotivatingExample}
+
+\input{JOT_TEMPLATE_2_6/Approach}
+
+\input{Methodology}
+
+\input{Results}
+
+\input{RelatedWork}
+
+\input{Conclusion}
+
+
+\bibliography{bibliography}
+\section*{About the authors}
+\shortbio{Zohra kaouter Kebaili}{is a PhD student at the IRISA research lab in the DiverSE team, University of Rennes 1, France. Her current research interests are in model-driven engineering, software engineering, and software evolution.\authorcontactf[]{zohra-kaouter.kebaili@irisa.fr}}
+
+\shortbio{Djamel-Eddine Khelladi}{is a CNRS researcher at the IRISA research lab in the DiverSE team, University of Rennes 1, Rennes, France. His current research interests are Software engineering, Model-Driven Engineering, Software Evolution, Co-evolution, Empirical Software Engineering, Incremental Build, Scaling Code Analysis, and Software Processes.
+He is a senior member of the ACM.\authorcontact[]{djamel-eddine.khelladi@irisa.fr}}
+
+\shortbio{Mathieu Acher}{is Professor at University of Rennes/IRISA/Inria, France. His research focuses on modelling, reverse engineering, and learning (deep) variability of software-intensive systems. Beyond its applicability, his research is original in combining software engineering and artificial intelligence techniques (symbolic reasoning, machine learning, generative AI). He is the author of more than 150 peer-reviewed publications in international journals and conferences. His work has received Most Influential Paper Award (SLE’19) and Best Paper Awards (SPLC’13, ICPE’19, SPLC’21, ICSR’22, MODELS’23, AST'24). Since 2021, he is a junior research fellow at Institut Universitaire de France (IUF).\authorcontact[ https://mathieuacher.com/]{mathieu.acher@irisa.fr} %for more information.
+}
+
+\shortbio{Olivier Barais}{is a full professor of software engineering at the University of Rennes 1 and heads the INRIA DiverSE team in Rennes. With a career dedicated to advancing the field of software engineering, Dr. Barais has made significant contributions to model-driven engineering, software architecture, adaptive systems and open-source software supply chain security. In his role at INRIA, Dr. Barais leads several high-impact research projects and collaborates with industry partners to bring cutting-edge solutions to real-world challenges. Outside of his professional endeavors, he is passionate about mentoring students and fostering collaborative environments that encourage innovation and excellence in software engineering.\authorcontact[https://olivier.barais.fr]{olivier.barais@irisa.fr} %for more information.
+}
+%\section*{About the authors}
+%\shortbio{Alfonso Pierantonio}{is professor at the Università degli Studi dell'Aquila (Italy) and Editor-in-Chief of the Journal of Object Technology. \editorcontact[http://pieranton.io]{alfonso.pierantonio@univaq.it}}
+%\shortbio{Mark van den Brand}{is professor at the Technical University of Eindhoven (The Netherlands) and Deputy Editor-in-Chief of the Journal of Object Technology. \editorcontact[]{m.g.j.v.d.brand@tue.nl}}
+%\shortbio{Benoit Combemale}{is professor at the University of Toulouse (France) and Deputy Editor-in-Chief of the Journal of Object Technology. \editorcontact[]{benoit.combemale@irisa.fr}}
+%\onecolumngrid
+\end{document}

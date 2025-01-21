@@ -10,7 +10,7 @@ This section gives a background on how metamodels play a significant role when b
 \centering
 %\hspace*{-1em}
 % \vspace{-5mm}
-\includegraphics[width=0.9\textwidth]{img/background.png}
+\includegraphics[width=0.9\textwidth]{./pics/chapter2pics/background.png}
 %\caption{Artifacts and structure of a software language in the Eclipse platform.}
 \caption{Evolution of metamodels and related artifacts of a software language}
 \label{fig:SL_useage}
@@ -72,7 +72,7 @@ The next section presents our contribution for an automated tracing of the tests
 \centering
 %\hspace*{-1em}
 %\vspace{-5mm}
-\includegraphics[width=0.7\textwidth]{img/excerptmodisco.png}
+\includegraphics[width=0.7\textwidth]{./pics/chapter2pics/excerptmodisco.png}
 
 \caption{Excerpt of Modisco Benchmark metamodel in version 0.9.0.}
 \label{fig:excerptmodisco}
@@ -81,24 +81,6 @@ The next section presents our contribution for an automated tracing of the tests
 
 \setulcolor{green} 
 
-\begin{comment}
-
-\begin{lstlisting}[language=Java,breaklines=true,mathescape,literate={\-}{}{0\discretionary{-}{}{}},caption=Excerpt of an impacted test in Modisco V1.\label{lis:Modisco_impactedtest_V1}]
-   @Test(timeout=4000) public void test000() throws Throwable {
-   
-      DiscoveryImpl discoveryImpl0=new DiscoveryImpl();
-      ...
-      assertEquals(0L,discoveryImpl0.getMaxUsedMemoryInBytes());
-      assertNull(discoveryImpl0.getAlgorithmVariant()); assertEquals(0.0, (*\ul{discoveryImpl0.getTotalExecutionTimeInSeconds()}*),0.01);
-      assertEquals(4,EObjectImpl.ELAST_EOBJECT_FLAG);
-      assertTrue(discoveryImpl0.eDeliver());
-      assertEquals(0.0, (*\ul{discoveryImpl0.getSaveTimeInSeconds()}*),0.01);
-      ...
-}
-    
-    
-\end{lstlisting}
-\end{comment}
 
 
 %\setulcolor{green} 

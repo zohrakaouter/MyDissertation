@@ -7,7 +7,7 @@
 %Main concepts: metamodel, constraint, transformation,
 %Automation in MDE
 %Evolution in MDE
-In this chapter, I introduce the necessary background for Model-Driven Engineering. In Section \ref{Metamodeling}, I present the activity of metamodeling and the involved artifacts. Section \ref{mde_automation} discusses the automation task related to the artifacts presented in Section \ref{Metamodeling}. I finish this chapter with a presentation of the evolution and co-evolution concept in the context of model driven engineering.
+In this chapter, I introduce the necessary background for Model-Driven Engineering. In Section~\ref{Metamodeling}, I present the activity of metamodeling and the involved artifacts. Section~\ref{mde_automation} discusses the automation task related to the artifacts presented in Section~\ref{Metamodeling}, followed by a presentation of the evolution and co-evolution concepts in the context of Model-Driven Engineering. I finish this chapter with few main information about Large Language Models.
 %define the terminology of the main concepts that we use. 
 % We define the specific scope of problems addressed in this thesis
 % and discuss the spectrum of problems that arise in this field. 
@@ -16,10 +16,10 @@ In this chapter, I introduce the necessary background for Model-Driven Engineeri
 
 \section{Model-Driven Engineering}
 \label{mde}
-To develop a software, a list of specifications is given to the developers, to code the final product. This approach can work in the case of small projects. When the complexity of the software increases, more efficient approaches must be adopted. Model-Driven Engineering has proven its efficiency comparing to other engineering disciplines in developing hyper-complex systems \cite{1231146}.
+To develop a software, a list of specifications is given to the developers to code the final product. This approach can work in the case of small projects. When the complexity of the software increases, more efficient approaches must be adopted. Model-Driven Engineering has proven its efficiency comparing to other engineering disciplines in developing hyper-complex systems \cite{1231146}.
 
 %\boitemagique{Model-Driven Enginereering}{
-\textit{Model-Driven Engineering (MDE)} is the systematic use of models as primary artifacts during a software engineering process. The usage of models allows more abstraction that helps in managing complexity. MDE includes various Model-Driven approaches to software development, including Model-Driven Architecture, Domain-Specific Modeling and Model-Integrated Computing~\cite{10.1145/1985793.1985882}. The first appearance of MDE-like approaches started in the 80's \cite{10.1007/s10270-005-0079-0}. Till today, MDE is still adopted  and a lot of work is being done in academia and industry \cite{Mohagheghi2009,mohagheghi2008proof,jongeling2022Structural,wortmann2020modeling}.
+\textit{Model-Driven Engineering (MDE)} is the systematic use of models as primary artifacts during a software engineering process. The usage of models allows more abstraction that helps in managing complexity. The first appearance of MDE-like approaches started in the 80's \cite{10.1007/s10270-005-0079-0}. Till today, MDE is still adopted  and a lot of work is being done in both academia and industry \cite{Mohagheghi2009,mohagheghi2008proof,jongeling2022Structural,wortmann2020modeling}. MDE includes various Model-Driven approaches to software development, including Model-Driven Architecture, Domain-Specific Modeling and Model-Integrated Computing~\cite{10.1145/1985793.1985882}. 
 
 
 
@@ -32,11 +32,12 @@ The goal of MDE is to improve productivity, quality, and maintainability by leve
 %Metamodeling and modeling langugaes
 
 % MEtamodel def :
-The metamodel represents the main artifact in MDE. There are many definitions of the concept "metamodel" that can be found in literature from Stahl et al. \cite{stahl2006model}:
+The metamodel represents the main artifact in MDE, it is also a main concept in my work. There are many definitions of the concept "metamodel" that can be found in literature from Stahl et al. \cite{stahl2006model}:
 
 \textbf{Definition 01}: \textit{A metamodel} describes concepts that can be used for modeling the model (i.e. in the instances of the metamodel).
 
-\textbf{Definition 02}: \textit {Metamodels} are models that make statements about modeling. More precisely, a metamodel describes the possible structure of models in an abstract way, it defines the constructs of a modeling language and their relationships, as well as constraints and modeling rules, but not the concrete syntax of the language.
+\textbf{Definition 02}: \textit {Metamodels} are models that make statements about modeling. More precisely, a metamodel describes the possible structure of models in an abstract way, it defines the constructs of a modeling language and their relationships.
+%as well as constraints and modeling rules, but not the concrete syntax of the language.
 
 \textbf{Definition 03}: \textit{A metamodel} defines the abstract syntax and the static semantics of a modeling language. Analogously, like a written program instance (e.g., in c or java, etc.) conforms to a grammar, a model instance conforms to a metamodel.
 % vice versa, each formal language, such as Java or UML, possesses a metamodel.
@@ -49,29 +50,31 @@ Seidewitz \cite{seidewitz2003models} gives another commonly used definition of \
 \label{Metamodeling}
 %definition, related tasks and artifacts, usages in different languages, tools
 %%
-\textit{Metamodeling} is the process of metamodel creation. Metamodeling is done thanks to metamodeling languages (that is in turn described by a meta-metamodel) \ref{fig:mofmodellevels}.
+\textit{Metamodeling} is the process of metamodel creation. Metamodeling is done thanks to metamodeling languages (that is in turn described by a meta-metamodel) as illustrated in Figure\ref{fig:mofmodellevels}.
 
-Metamodeling must gather the whole  knowledge that is required to define, precise, and deal with MDE challenges in its different tasks \cite{wortmann2020modeling}, related to other artifacts shown in Figure \ref{fig:mde_ecosystem}:
+Metamodeling must gather the whole  knowledge that is required to define, precise, and deal with MDE challenges in its different tasks \cite{wortmann2020modeling}, related to other artifacts shown in Figure \ref{fig:mde_ecosystem}. The main metamodeling-related tasks are:
 
 %DSL/ sftware language 
 %Construction of domain-specific modeling languages (DSLs): 
 %The metamodeling activity includes other tasks:
 \begin{itemize}
-\item The construction of metamodel describes the abstract syntax of target (software languages, solution system).
+\item The construction of metamodel itself: it describes the abstract syntax of target software languages or  solution system.
 \item Model validation: models are validated against the constraints defined in the metamodel. 
-\item Model-to-model transformations: such transformations are defined as mapping rules between two metamodels.
-\item Code generation: the generation templates refer to the metamodel of the "system". 
+\item Model-to-model transformations: such transformations are defined as mapping rules between source model and a target model .
+\item Code generation: it consists of automatically producing source code from models, bridging the gap between high-level abstractions and executable software.
 \item Tool integration: based on the metamodel, modeling tools can be adapted to the respective domain. 
 \end{itemize}
 
-\textcolor{blue}{
-In the context of Domain-Specific Languages, DSMLs can be tailored via metamodeling to precisely match the domain's semantics and syntax. The concrete syntax that is, the concrete form of the textual or graphical constructs with which the modeling is done must represent the metamodel in an unambiguous way. Having graphic elements that linked directly to a familiar domain makes it easier to learn and allows domain  experts to contribute, such as system engineers and experienced software architects, ensure that software systems meet user needs \cite{volter2013model}. The metamodel is the basis for the automated, tool-supported processing of Metamodeling models. On the other hand, a suitable concrete syntax is the interface to the modeler and its quality decides what degree of readability the models have \cite{stahl2006model}.
-}
+
+In the context of Domain-Specific Languages,  represent an essential application of metamodels in practice. A DSL is a specialized language tailored to the needs and constructs of a specific domain, enabling domain experts to express solutions at a higher level of abstraction without delving into general-purpose programming complexities. These languages are typically defined by a metamodel that establishes their syntax and semantics, ensuring consistency and precision. By leveraging metamodeling to create DSLs, engineers can align software artifacts closely with domain-specific requirements, enhancing clarity, maintainability, and automation potential in the software development process \cite{volter2013model}. 
+
+%The metamodel is the basis for the automated, tool-supported processing of models. On the other hand, a suitable concrete syntax is the interface to the modeler and its quality decides what degree of readability the models have \cite{stahl2006model}.
+
 %Metamodeling tools/languages/techniques examples :
 
 %// Add figure?
 
-Metamodeling languages are classified into two categories, namely linguistic and ontological \cite{gavsevic2007metamodeling}. Linguistic metamodeling represents a way for defining modeling languages and their primitives (e.g., Object, Class, MetaClass) on the layer of a metamodel. Ontological metamodeling aims to represent domain knowledge accurately, it is concerned with semantics and meaning, e.g., OWL\footnote{https://www.w3.org/TR/owl-features/}. Linguistic metamodeling aims to define a language for creating models. it is concerned with syntax and structure.
+Metamodeling languages are classified into two categories, namely linguistic and ontological \cite{gavsevic2007metamodeling}. Linguistic metamodeling represents a way for defining modeling languages and their primitives (e.g., Object, Class, MetaClass) on the layer of a metamodel. Ontological metamodeling aims to represent domain knowledge accurately. It is concerned with semantics and meaning, e.g., OWL\footnote{https://www.w3.org/TR/owl-features/}. Linguistic metamodeling aims to define a language for creating models. it is concerned with syntax and structure.
 I can use a different classification by purpose: General Purpose Modeling Languages and Domain-Specific Modeling Languages~\cite{de2012domain}. General Purpose Modeling Languages as for example : UML and its variants, generic metamodeling frameworks, such as MOF \footnote{https://www.omg.org/mof/}, and Ecore \footnote{https://eclipse.dev/modeling/emft/search/concepts/subtopic.html}. As examples of DSLs, I cite sysML and EXPRESS DSL (ref).
 
 In MDE, there are language workbenches that are used for language creation, such as Xtext, MetaEdit+ \cite{wortmann2020modeling}.
@@ -92,21 +95,31 @@ In the language modeling ecosystem, other artifacts are created by the mean of t
 \section{Automation in the MDE ecosystem}
 \label{mde_automation}
 %Brief description about automated tasks in MDE.
- Automation plays a pivotal role within the MDE ecosystem. It is considered as one of the most important advantages of MDE. This section explores the significance of automation in MDE, particularly in the code generation activity and during the evolution of the metamodel cornerstone artifact. , its impact on the development lifecycle.% and key strategies for achieving efficient model-driven processes.
+ Automation plays a pivotal role within the MDE ecosystem. It is considered as one of the most important advantages of MDE. This section explores the significance of automation in MDE, particularly in the code generation activity and during the evolution of the metamodel cornerstone artifact.
+ 
+ % This section explores also the impact of automation on the development lifecycle.% and key strategies for achieving efficient model-driven processes.
 
 \subsection{Code Generation}
 
-One of the most important activities in MDE is the code generation activity is recurrent, and its automation enhances the productivity and the cost.
-For example, Eclipse Modeling Framework built-in code generator allows to generated a java API from an Ecore metamodel. The generated code API structure and technical choices are done to fit Java programming language and Model-Driven Engineering abstraction standards/principles (e.g., each metaclass is used to generate an interface and concrete implementation class that extends the generated interface, pattern observer).
+One of the most important activities in MDE is the code generation activity. It is recurrent, and its automation enhances the productivity and the cost. For example, Eclipse Modeling Framework built-in code generator allows to generated a java API from an Ecore metamodel. The generated code API structure and technical choices are done to fit Java programming language and Model-Driven Engineering abstraction standards and principles (e.g., each metaclass is used to generate an interface and concrete implementation class that extends the generated interface, pattern observer).
 % to have an efficient as possible
  The annotation \textit{@generated} is used to mark generated interfaces, classes, methods, and fields. This annotation can be used to differentiate the generated code from the manually written one.
 
 In Eclipse Modeling Framework, two model resources (files) are manipulated: the .ecore file that contains  XMI serialization of the Ecore model and the .genmodel for the serialized generator model. The Ecore file is the document that contains the metamodeled main concepts that are used in code generation process.
 
-\textcolor{blue}{Develop this paragraph?}
-\subsection{Evolution in the MDE context}
-
-During the software development process, software artifacts are meant to be changed, due to many reasons: client requirements and domain specifications, software maintenance, or bug correction. Like any other software system, modeling languages are the subject of an inevitable evolution, during their process of building, multiple versions are developed, tested, and adapted until a stable version is reached. 
+%\textcolor{blue}{Develop this paragraph?}
+\subsection{Software evolution}
+From operating systems to mobile apps, software is the cornerstone of modern innovation. However, software does not remain static, it evolves over time to meet new demands, address challenges, and incorporate advancements. Here some numbers showing how much a software can evolve. The first example is Linux kernel \footnote{\url{https://github.com/torvalds/linux}} with 1324878 commits and 40 million lines of code. Then
+chromium \footnote{\url{https://github.com/chromium/chromium.git}} with 1524157 commits and 32 million lines of code. The last example is
+cpython \footnote{\url{https://github.com/python/cpython}} with 124936 commits , 350k lines of C code and  600k lines of python code.
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[width=0.6\linewidth]{./pics/soaPics/softwareartifacts.png}
+	\end{center}
+	\caption{software artifacts}
+	\label{fig:softwareartifacts}
+\end{figure}
+During the software development process, software artifacts are meant to be changed, due to many reasons: client requirements and domain specifications, software maintenance, or bug correction. The evolution can impact one artifact ore more in the software ecosystem (Figure \ref{fig:softwareartifacts}). Like any other software system, modeling languages are the subject of an inevitable evolution, during their process of building, multiple versions are developed, tested, and adapted until a stable version is reached. 
 
 Different types of evolution are categorized depending on the impact and purpose of the applied modifications \cite{lientz1980software,Swanson1976}:
 \begin{itemize}
@@ -118,8 +131,8 @@ Different types of evolution are categorized depending on the impact and purpose
 	\item Perfective: this evolution aims to improve functionalities, to enhance the performance, reliability, or to increase the maintainability of a software.  
 	
 \end{itemize}
-It is unavoidable to change, whether to answer to requirement modifications and/or technological progress.
-The term \textit{Evolution} can be refined as the literature presents various related terms like: Maintenance, Refactoring, and \textbf{Co-evolution}, which are different types of modifications that could be applied on a software.
+%It is unavoidable to change, whether to answer to requirement modifications and/or technological progress.
+The term \textit{Evolution} can be refined as the literature presents various related terms like: Maintenance, Refactoring, and \textbf{Co-evolution}, which are different types of modifications that could be applied on a software. There is no clear definition for each of them, however, in figure \ref{fig:evolutiontypes} I describe the relationship between these terms by intent and by artifacts on which the task is applied.
 
 %/Why we need to perform evolution ?
 %examples?
@@ -131,12 +144,10 @@ The term \textit{Evolution} can be refined as the literature presents various re
 
 \textbf{Refactoring}: It is an oriented object term, that means modifications of software to make it easier to understand and to change or to make it less susceptible to errors when future changes are introduced \cite{mens2004survey}. 
 
-\textbf{Co-evolution}: It consists of the process of adapting and correcting a set of artifacts $A_1$, $A_2$, ...$A_N$ in response to the evolution of an artifact B on which $A_1$, $A_2$, ...$A_N$  strongly depend, for example the co-evolution of models with the evolving metamodel as used in Kessentini et al. paper \cite{Kessentini2016automated}, and the co-evolution of API/client as used in Eilertsen et al. paper \cite{8443581} .
-
-Coupled evolution \cite{herrmannsdoerfer2009cope}
+\textbf{Co-evolution}: It consists of the process of adapting and correcting a set of artifacts $A_1$, $A_2$, ...$A_N$ in response to the evolution of an artifact B on which $A_1$, $A_2$, ...$A_N$  strongly depend, for example the co-evolution of models with the evolving metamodel as used in Kessentini et al. paper \cite{Kessentini2016automated}, and the co-evolution of API/client as used in Eilertsen et al. paper \cite{8443581}. The term "Coupled evolution" was also mentionned in the work of Herrmannsdoerfer et al. in the context of metamodel and model co-evolution \cite{herrmannsdoerfer2009cope}
 \begin{figure}[htbp]
 	\begin{center}
-		\includegraphics[width=0.6\linewidth]{./pics/soaPics/mofmodellevels.png}
+		\includegraphics[width=0.6\linewidth]{./pics/soaPics/mofmodellevels2.png}
 	\end{center}
 	\caption{MDA’s Modeling Level Hierarchy}
 	%	{\footnotesize Titre plus long avec des explications.}
@@ -153,13 +164,122 @@ Coupled evolution \cite{herrmannsdoerfer2009cope}
 
 \begin{figure}[htbp]
 	\begin{center}
-		\includegraphics[width=0.6\linewidth]{./pics/soaPics/mdeecosystem.png}
+		\includegraphics[width=\linewidth]{./pics/soaPics/notabstractecosystem2.png}
 	\end{center}
-	\caption{MDE Ecosystem ( not sure to include)}
+	\caption{MDE Ecosystem}
 %	{\footnotesize Titre plus long avec des explications.}
 	\label{fig:mde_ecosystem}
 \end{figure}
 
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[width=0.6\linewidth]{./pics/soaPics/evolutiontypes.png}
+	\end{center}
+	\caption{Evolution related terminology}
+	%	{\footnotesize Titre plus long avec des explications.}
+	\label{fig:evolutiontypes}
+\end{figure}
+
+\section{Large Language Models}
+In this section, I outline the fundamental concepts related to Large Language Models, namely Transformer models and prompt engineering. I give a short historical view to understand the added value of using LLMs in my third contribution (cf. Chapter ?).
+
+\subsection{From Transformer Models to Large Language Models}
+
+%Rule-based and hand-crafted solutions are rigid and hard to scale.
+Machine learning field introduced statistical models that learn from input data. As an improvement of traditional machine learning approaches, neural networks brought breakthroughs in image and speech recognition, inspiring their application to Natural Language Processing (NLP). A markup point in the history of machine learning is The Attention Mechanism \cite{10.5555/3295222.3295349}. It allows models to focus on relevant parts of input sequences, significantly enhancing translation and comprehension tasks.
+This mechanism allows the model to weigh the importance of all words in a sequence simultaneously, leading to: 1) Parallel processing for a faster computation, and 2) Better handling of long-range dependencies. After neural networks and Attention mechanism application in NLP, the transformer models appearance first in 2018, marked by the emergence of BERT and its variations \cite{DBLP:journals/corr/abs-2302-09419}.
+
+
+%Bert def and caract vs traditional models)
+\textbf{BERT} (Bidirectional Encoder Representations from Transformers) is a encoder-only transformer model owned by Google \cite{devlin2019bertpretrainingdeepbidirectional}. Regarding data corpus, BERT is pre-trained from  Wikipedia and Google’s BooksCorpus. Another remarkable model is \textbf{BART} (Bidirectional and Auto-Regressive Transformers). It was introduced by Lewis et al. \cite{lewis2019bartdenoisingsequencetosequencepretraining}.
+Unlike BERT’s encoder-only design, BART’s architecture is a sequence-to-sequence model, featuring both encoder and decoder components.
+In 2018, OpenAPI has launched another large scale pre-trained transformer model: GPT, then \textbf{GPT-3} in 2020 \cite{10113601}.
+
+
+ 
+
+%BERT, BART, and GPT 
+%main doc :Utilizing Large Language Models for Question Answering in Task-Oriented Dialogues)
+
+No global and detailed comparison between GPT, BERT, and BART is established. However, some works have conducted targeted comparisons in specific context. For example, Yokoyama et al. compare between Chatgpt and BERT in security bug identification topic \cite{10685583}. Table \ref{table:bertvsbartvsgpt3} summarizes the key differences between BERT, BART, and GPT-3 depending on: their architecture, learning data, number of parameters, performance speed, application domain in which the model is most efficient, and the respective organizations that created them~\cite{DBLP:journals/corr/abs-2302-09419,lewis2019bartdenoisingsequencetosequencepretraining}.
+%https://scholar.google.fr/scholar?as_q=comparison+BERT+chatgpt&as_epq=&as_oq=&as_eq=&as_occt=title&as_sauthors=&as_publication=&as_ylo=&as_yhi=&hl=fr&as_sdt=0%2C5
+
+
+
+%Add the comparative table with BART column : https://updf.com/fr/chatgpt/bert-vs-gpt/
+\begin{table}[t]
+	\centering
+	\caption{Comparison BERT, BART, and GPT-3} 
+	\label{table:bertvsbartvsgpt3}
+\hspace{-2cm}
+\begin{tabular}{ | m{2.5cm}| m{4cm}| m{4.5cm} |m{5.5cm} |  } 
+
+	\hline
+	\textbf{Functionality}& \textbf{BERT} & \textbf{BART} &\textbf{GPT-3} \\ 
+	\hline\hline
+	\textbf{Architecture} & Bidirectional encoder-only model that considers both left and right contexts when making predictions. &  Encoder-decoder model, Bidirectional encoder with left-to-right autoregressive decoder it considers both left and right contexts when making predictions. &The autoregressive model generates text by predicting the next word in a sequence based on the preceding words \\ 
+	\hline
+		\textbf{Data} & Learning on data from sources such as English Wikipedia and BookCorpus 11038 books). & Learning from a combination of books and Wikipedia data &  extremely large corpus of English text data extracted from millions of web pages and then fine-tuned using Reinforcement Learning from Human Feedback (RLHF) \\ 
+	\hline
+		\textbf{Number of parameters }& $BERT_{base}$ 110 m parameters  $BERT_{large}$ 340 million parameters, a relatively smaller number than GPT-3. & $BART_{base}$ contains 139 million parameters and $BART_{large}$ contains around 400 million parameters&175 billion parameters, far more than any other language model.\\
+		\hline
+			\textbf{Performance speed?}& faster than BART and GPT-3
+			.& Decoding step and the number of parameters make it slower than BERT& the slowest one, because of the number of parameters, size of data, and the complex architecture.\\
+		\hline
+			\textbf{Application (domain)}&Top performance on a range of tasks, including text classification.
+			Requires further fine-tuning and learning to adapt to new domains and tasks.&particularly effective when fine-tuned for downstream NLP tasks, especially text generation&It has shown remarkable performance on a wide range of natural language processing tasks.
+			Can be generalized to new domains thanks to learning in a few steps, and adapted to new tasks thanks to transfer learning.\\
+			\hline
+
+\textbf{Origin organisation}&Google AI&Facebook AI& OpenAI\\
+\hline		
+\end{tabular}
+	\end{table}
+%Large scale pre-training, high scalability.
+
+
+\subsection{Prompt Engineering}
+
+
+\textbf{Definition -- Prompt Engineering.} It consists of techniques that are used to converse with LLMs. As a subdomain of LLMs field, it represents an active and rapidly evolving area of study. Frieder et al. confirm the impact of having a correct prompt structure in the capability of LLMs' problems resolution \cite{10.5555/3666122.3667327}. 
+Although GPT-3 may have popularized these prompt engineering techniques \cite{10.5555/3495724.3495883}, other LLMs are capable of these generalization techniques, such as PaLM \cite{10.5555/3648699.3648939} and Chinchilla \cite{10.5555/3600270.3602446}.
+
+Here I define two popular categories of prompt-engineering techniques: zero-shot/few-shot prompting and Chain-of-Thought reasoning:
+\begin{itemize}
+	\item Few-shot/zero-shot prompting: In few-shot prompting, the prompt is enriched with one or more examples of the task in the prefix before being asked to perform the task on new data. These examples serve as a way to prime the model to produce the desired output. In zero-shot prompting, no example is provided \cite{brown2020languagemodelsfewshotlearners,10.1145/3560815}.
+	
+%	Whatpu example nop , to demo next
+	
+	\item Chain-of-Thought reasoning: enables complex reasoning capabilities through intermediate reasoning steps. it can be combined with few-shot prompting to get better results on more complex tasks that require reasoning before responding \cite{10.5555/3600270.3602070}.
+	
+	Note that other techniques can be found in Liu et al. systematic survey of prompting methods in \cite{10.1145/3560815}, and in this prompting guide website \footnote{\url{https://www.promptingguide.ai/techniques}}.
+	
+	Let's take an example for the prompt "If Alice has 5 apples and gives 3 to Bob, how many apples does Alice have left?". Figure \ref{fig:fewshotexample} shows the prompt content in the case of few-shot prompting, and Figure \ref{fig:cotexample} shows the chain-of thought reasoning for the same prompt.
+	
+	
+	\begin{figure*}[t!]
+		\centering
+		\begin{subfigure}[t]{0.5\linewidth}
+			%\centering
+			\includegraphics[height=2in]{./pics/soaPics/fewshotpromtexample.png}
+			\caption{Few-shot prompt example}
+			\label{fig:fewshotexample}
+		\end{subfigure}%
+		~ 
+		\begin{subfigure}[t]{0.5\linewidth}
+			%\centering
+			\includegraphics[height=2in]{ ./pics/soaPics/cotpromptexample.png }
+		
+			\caption{Chain-of-thought prompt example}
+			\label{fig:cotexample}
+		\end{subfigure}
+	%	\label{fig:fewshotcotexample}
+		\caption{ Few-shot vs Chain-of thought example }
+	\end{figure*}
+	
+	
+	
+\end{itemize}
 
 %definition
 \chapter{State Of The Art}
@@ -170,20 +290,28 @@ In this chapter, I present an overview of what has been done in the field of cod
  \section{Metamodel change detection}
  \label{changedetection}
  One of the intrinsic properties of software artifacts is its continuous evolution ~\cite{mens2008introduction}. Like any software artifact, metamodels are meant to evolve to meet the represented domain. %one key sentence of the context
- In this thesis, our context is triggered by the metamodel evolution, that's why I find essential to understand this evolution in detail.
+ In this thesis, the context is triggered by the metamodel evolution, that's why I find essential to understand this evolution in detail.
  %metamodel diffing
  A lot of work has been done on metamodel diffing.
- Detection approaches can be classified into two main categories; online\footnote{Offline approaches perform detection after the metamodel has been evolved.} detection approaches, and offline\footnote{Online approaches perform instant detection for each change during the metamodel evolution} detection approaches. This classification can be refined using some factors as detailed by Hebig et al. \cite{hebig2016approaches}: automation degree, types of detected changes, considered issues (overlap, indefinite length, hidden changes, order of changes, and undo operations)\cite{hebig2016approaches}.
+ Detection approaches can be classified into two main categories: online\footnote{Offline approaches perform detection after the metamodel has been evolved.} detection approaches, and offline\footnote{Online approaches perform instant detection for each change during the metamodel evolution} detection approaches. This classification can be refined using some factors as detailed by Hebig et al. \cite{hebig2016approaches}: automation degree, types of detected changes, considered issues (overlap, indefinite length, hidden changes, order of changes, and undo operations)\cite{hebig2016approaches}.
  
  %breaking not breaking?
  
-  Furthermore, many of them classified the detected changes based on their impact on the treated artifact (e.g., models, constraint, transformation, and code). I table \ref{table:changesCatalog} I put the largest set of changes types that I found in literature \cite{herrmannsdoerfer_extensive_2011}. Later in Section \ref{sec: ap1_changedetection}, I will specify the treated subset of these changes. 
+  Furthermore, many of them classified the detected changes based on their impact on the treated artifact (e.g., models, constraint, transformation, and code). In Table \ref{table:changesCatalog}, I put the largest set of changes types that I found in literature \cite{herrmannsdoerfer_extensive_2011}. Later in Section \ref{sec: ap1_changedetection}, I specify the treated subset of these changes. 
   %with their possible impact on the code.
+  In Model-Driven Engineering, depending on their impact on model instances, metamodel changes can be divided into three categories \cite{gruschko2007towards}:
+ \begin{itemize}
+ 	
+ 	\item	Non-breaking changes that occur in the metamodel but do not break other artifacts of lower abstraction level.%can be resolved automatically.
+ 	\item Breaking and resolvable changes break the conformance of existing data, although they can be automatically adapted.
+ 	\item Breaking and unsolvable changes break the conformance of existing data, that cannot be automatically adapted, and require user intervention.
+ \end{itemize}
+ In API evolution similar context, API changes can be classified as non-breaking API changes or breaking API changes. A non-breaking change is backward compatible. This kind of changes aims to extend the functionalities or fix errors. A breaking change is not backward compatible. In this case, client code calling the evolved API by a breaking change fails to compile or may behave differently at runtime \cite{dig2006apis}.
  
  
- Two types of evolution changes are considered when evolving a metamodel: \emph{atomic} and \emph{complex} changes~\cite{hebig2016approaches,Herrmannsdoerfer2011}. 
- Atomic changes are additions, removals, and updates of a metamodel element. Complex changes consist of a sequence of atomic changes combined together~\cite{vermolen_reconstructing_2012},~\cite{khelladi2015detecting}. For example, move property is a complex change where a property is moved from a source class to a target class. This is composed of two atomic changes: delete property and add property~\cite{Herrmannsdoerfer2011}. 
- Many approaches in the literature~\cite{Alter2015, williams2012searching,cicchetti_managing_2009,langer_posteriori_2013,vermolen_reconstructing_2012,Khelladi2016,bettini2022executable} exist to detect metamodel changes between two versions.
+ In literature, two types of evolution changes are considered when evolving a metamodel: \emph{atomic} and \emph{complex} changes~\cite{hebig2016approaches,Herrmannsdoerfer2011}. 
+ Atomic changes are additions, removals, and updates of a metamodel element. Complex changes consist of a sequence of atomic changes combined together~\cite{vermolen_reconstructing_2012},~\cite{khelladi2015detecting}. For example, move property is a complex change. Where a property is moved from a source class to a target class. This complex change is composed of two atomic changes: delete property and add property~\cite{Herrmannsdoerfer2011}. 
+ Many approaches exist to detect changes between two metamodel versions~\cite{Alter2015, williams2012searching,cicchetti_managing_2009,langer_posteriori_2013,vermolen_reconstructing_2012,Khelladi2016,bettini2022executable}.
 %  \begin{table*}[t]
 %  		\caption{Catalog of changes that occur during the metamodel evolution. (To fill)}
 %  	\label{table:changesCatalog}
@@ -218,8 +346,7 @@ In this chapter, I present an overview of what has been done in the field of cod
  	
  	\begin{table*}[t]
  		\centering
- 		\caption{Catalog of model operators} 
- 		\label{table:catalogofchanges}
+ 		
  		\resizebox{16cm}{!} {
  			{\small
  				\begin{tabular}{l|c|c}%|l|l|l|l|l|l|l|}
@@ -261,17 +388,11 @@ In this chapter, I present an overview of what has been done in the field of cod
  				\end{tabular}
  			}
  		}
+ 		\caption{Catalog of model operators} 
+ 		\label{table:changesCatalog}
  	\end{table*}
  				
- In Model-Driven Engineering area, metamodel changes can be divided into three categories\cite{gruschko2007towards}:
- \begin{itemize}
- 	
- \item	Non-breaking changes that occur in the metamodel but do not break other artifacts of lower abstraction level.%can be resolved automatically.
-  \item Breaking and resolvable changes break the conformance of existing data, although they can be automatically adapted.
- \item Breaking and unsolvable changes break the conformance of existing data, that cannot be automatically adapted, and require user intervention.
- \end{itemize}
- 	In API evolution context, API changes can be classified as Non-breaking API Changes	or Breaking API Changes. A breaking change is not backward compatible. In this case, client code calling the evolved API by a Breaking Change fails to compile or may behave differently at runtime. A non-breaking change is backward compatible. This kind of changes aims to extend the functionalities or fix errors \cite{dig2006apis}.
- 	
+
  	
  	
 
@@ -279,20 +400,13 @@ In this chapter, I present an overview of what has been done in the field of cod
 
 %operation-base ?difference-based
 
-All these approaches propose structural changes detection: Additions, deletions, or modifications to classes, attributes, associations, or inheritance structures.
-Definition of metamodel: definition of the structural side of the representation of the given domain. Behavioral side is given through constraints. Following this definition, in this section, I give the structural changes. Another usage ? behavioral impact ? structural impact? structural error ? behavioral error? static/ runtime? 
+Demuth et al. \cite{demuth2015constraint}, Herrmannsdoerfer et al. \cite{herrmannsdoerfer2009cope}, Khelladi et al. \cite{khelladi2016detecting} are online approaches that take into consideration undo operations while the metamodel evolution.
+In contrast, other approaches \cite{williams2012searching,10.1145/2000410.2000416,levendovszky2014semi,garces2009managing,cicchetti_managing_2009,langer_posteriori_2013,garcia2012model,xing2006refactoring,moghadam2012automated,vermolen_reconstructing_2012} adopt offline detection method. However,  offline detection may cause an order issue, particularly in \cite{williams2012searching,10.1145/2000410.2000416,levendovszky2014semi,garces2009managing,langer_posteriori_2013,garcia2012model,xing2006refactoring,moghadam2012automated}. Notably, none of these approaches consider hidden changes, with the exception of Vermolen et al.~[57].
 
 
- 
-
-Demuth et al. \cite{demuth2015constraint}, Herrmannsdoerfer et al. \cite{herrmannsdoerfer2009cope}, Khelladi et al. \cite{khelladi2016detecting} are online approaches. These approaches take into consideration undo operations.
-Where other approaches \cite{williams2012searching,10.1145/2000410.2000416,levendovszky2014semi,garces2009managing,cicchetti_managing_2009,langer_posteriori_2013,garcia2012model,xing2006refactoring,moghadam2012automated,vermolen_reconstructing_2012} are offline.  Offline detection may cause an order issue, particularly in \cite{williams2012searching,10.1145/2000410.2000416,levendovszky2014semi,garces2009managing,langer_posteriori_2013,garcia2012model,xing2006refactoring,moghadam2012automated}. 
-All of them do not consider hidden changes except Vermolen et al. \cite{vermolen_reconstructing_2012}.
-
-
-Herrmannsdoerfer et al. \cite{herrmannsdoerfer2009cope} and
-Williams et al. \cite{williams2012searching} are manual. Di Ruscio et al. \cite{10.1145/2000410.2000416}, Vermolen et al. \cite{vermolen_reconstructing_2012}, and Khelladi et al. \cite{khelladi2016detecting} are all semi-automatic that require user decision to select final output changes.
-Demuth et al. \cite{demuth2015constraint}; Levendovszky \cite{levendovszky2014semi},Cicchetti et al. \cite{cicchetti_managing_2009}, Garces et al. \cite{garces2009managing}, Langer et al. \cite{langer_posteriori_2013}, Garcia \cite{garcia2012model}, Xing  et al. \cite{xing2006refactoring}, Moghadam et al. \cite{moghadam2012automated} are full automatic approaches.
+Regarding to the automation degree of the approaches, Herrmannsdoerfer et al. \cite{herrmannsdoerfer2009cope} and
+Williams et al. \cite{williams2012searching} are manual methos. Di Ruscio et al. \cite{10.1145/2000410.2000416}, Vermolen et al. \cite{vermolen_reconstructing_2012}, and Khelladi et al. \cite{khelladi2016detecting} are all semi-automatic that require user decision to select final output changes.
+Demuth et al. \cite{demuth2015constraint}; Levendovszky \cite{levendovszky2014semi},Cicchetti et al. \cite{cicchetti_managing_2009}, Garces et al. \cite{garces2009managing}, Langer et al.~\cite{langer_posteriori_2013}, Garcia \cite{garcia2012model}, Xing  et al. \cite{xing2006refactoring}, Moghadam et al. \cite{moghadam2012automated} are full automatic approaches.
 
 
 
@@ -303,14 +417,15 @@ Khelladi et al. \cite{khelladi2016detecting} take into consideration overlap iss
 
 %Structural Changes: Additions, deletions, or modifications to classes, attributes, associations, or inheritance structures.
 %Semantics or Behavioral Changes: Modifications in the constraints, rules, or behavior definitions in the metamodel.
+All these approaches propose structural changes detection: additions, deletions, or modifications to classes, attributes, associations, or inheritance structures \cite{10.1007/s10270-013-0392-y}. When a metamodel is defined, the definition of the structural side of the representation of a domain is given. The behavioral side is given through constraints \cite{10.1007/s10515-009-0053-0}. In this thesis, I focus only on the structural metamodel changes, any change occurring on behavioral aspects of a language, at metamodel level, is out of the scope of this dissertation.
+%Following this definition, in this section, I give the structural changes. Another usage ? behavioral impact ? structural impact? structural error ? behavioral error? static/ runtime? 
+%TODO  put this in a conclusion of the chapter?
+After studying the literature change detection approaches of metamodel, relatively to the challenges that I discussed in \ref{challenges}, I found that Khelladi et al. \cite{khelladi2016detecting} handle a large set of changes. Furthermore, their approach handle all the issues that I mentioned. 
+It is a semi-automatic approach but this adds a trust value to the approach because automatic approach may have order or overlap issues.
 
+Another reason to choose Khelladi et al. \cite{khelladi2016detecting} approach is their output representation and vocabulary. It required a minimum effort of adaptation because I use the same changes representation (more detail in Section \ref{??}).
 
-After studying the literature change detection approaches of metamodel, I found that Khelladi et al. \cite{khelladi2016detecting} handle all type of changes. Furthermore, their approach handle all the issues that I mentioned. 
-It is a semi automatic approach but this adds a trust value to the approach because automatic approach may have order or overlap issues.
-
-Another reason to choose khelladi2016detecting approach is their output representation and vocabulary. It required a minimum effort of adaptation because I use the same changes representation.
-
-The usage of Khelladi et al. \cite{khelladi2016detecting} in my work is explained in section??
+%The usage of Khelladi et al. \cite{khelladi2016detecting} in my work is explained in section??
 
  \section{Co-evolution of models, constraints, and transformation}
  \label{coevolutionartifacts}
@@ -319,27 +434,27 @@ The usage of Khelladi et al. \cite{khelladi2016detecting} in my work is explaine
  The comparison, advantages, and drawbacks of the presented approaches is out of the scope of this dissertation.
  
 \subsection{Metamodel and model co-evolution}
-Due to metamodel evolution, the model becomes no conformant. A set of resolutions are applied to co-evolve the model to gain again its conformity to the metamodel.
+Due to metamodel evolution, instance models become no conformant. A set of resolutions are applied to co-evolve the models to gain again the conformity to the metamodel.
  %  - COPE - Automating Coupled Evolution of Metamodels and Models : couple evolution co-evolution
 Two strategies to evolve models due to metamodel evolution. 
-The first strategy, the metamodel is the artifact to be adapted in a way that the old models can still be used with the evolved modeling language without adapting the models \cite{herrmannsdoerfer2009cope}. This approach suggest the resilience of the models. The second strategy adapts the metamodel in a breaking manner for the models, that must be adapted by transforming them into a new version that conforms to the adapted metamodel.
+In the first strategy, the metamodel is the artifact to be adapted in a way that the old models can still be used with the evolved modeling language without adapting the models \cite{herrmannsdoerfer2009cope}. This approach suggest the resilience of the models. The second strategy adapts the metamodel in a breaking manner for the models, that must be adapted by transforming them into a new version that conforms to the adapted metamodel.
 
 %change order, resolution order
 %Once the metamodel changes are detected, using one of the previously presented approaches in Section ?, 
  %a set of resolutions are applied to co-evolve the model to gain again the conformity to the metamodel.
  %change order, resolution order
- The co-evolution between metamodel and models can be processed manually but it requires a huge expertise, and when the number of models to co-evolve increases, manual co-evolution becomes hard task. 
- Most of automatic and semi-automatic co-evolution  approaches use automatic or manual diffing metamodel approaches in their solutions. Model co-evolution approaches that exist can be categorized into five categories \cite{Hebig2017}. The first category is Resolution Strategy Languages that specifies in a transformation language how to update the model given the list of metamodel changes \cite{10.1007/978-3-540-87875-9_44,sprinkle2004domain,wimmer2010using,10.1007/978-3-642-30476-7_13,10.1007/978-3-642-38883-5_10,10.1007/s10270-012-0313-5,10.1007/s10270-012-0296-2}. The category Resolution Strategy Generation groups approaches that generate full or partial resolution for each metamodel change \cite{del2007semi,de2008generating,garces2009managing,meyers2011generic,anguel2014using}.
+ The co-evolution between metamodel and models can be processed manually, but it requires a huge expertise, and when the number of models to co-evolve increases, manual co-evolution becomes hard task. 
+ Most of automatic and semi-automatic co-evolution approaches use automatic or manual diffing metamodel approaches in their solutions. Model co-evolution approaches that exist can be categorized into five categories \cite{Hebig2017}. The first category is Resolution Strategy Languages that specify in a transformation language how to update the model given the list of metamodel changes \cite{10.1007/978-3-540-87875-9_44,sprinkle2004domain,wimmer2010using,10.1007/978-3-642-30476-7_13,10.1007/978-3-642-38883-5_10,10.1007/s10270-012-0313-5,10.1007/s10270-012-0296-2}. The category Resolution Strategy Generation groups approaches that generate full or partial resolution for each metamodel change \cite{del2007semi,de2008generating,garces2009managing,meyers2011generic,anguel2014using}.
  
  
- The third group of "Predefined Resolution Strategies" contains approaches that provide automation, when it is possible, by applying predefined resolution strategies \cite{hossler2005coevolution,florez2012coevolution,fernandez2013adapting,wachsmuth2007metamodel,cicchetti2009managing,van2011generic,becker2007process,herrmannsdoerfer2009operation,wittern2013determining}. 
+ The third group of Predefined Resolution Strategies contains approaches that provide automation, when it is possible, by applying predefined resolution strategies \cite{hossler2005coevolution,florez2012coevolution,fernandez2013adapting,wachsmuth2007metamodel,cicchetti2009managing,van2011generic,becker2007process,herrmannsdoerfer2009operation,wittern2013determining}. 
  
  %We find three categories of metamodel and model co-evolution approaches.% Approaches based on resolution strategy languages that propose transformation languages created given the metamodel changes. The second category groups Resolution strategy generation approaches that allow to generate full or partial resolutions for each metamodel change.
  
-  Some of these approaches requires user intervention to make decision on the selected operation to adapt the model.
+  Some of these approaches require user intervention to make decision on the selected operation to adapt the model.
   The fourth category of Resolution Strategy Learning that adopts machine learning algorithm to select the resolution strategy for metamodel changes.\cite{anguel2013towards}.%TODO Look for full paper
  
-The fifth and last category is called Constrained Model Search. It groups approaches that do not use the metamodel change, but uses the original model and the new metamodel to apply a constrained-based search of valid model variants \cite{demuth2016co,gomez2014approach,schonbock2014care}. Other approaches consider the model co-evolution problem as an optimization one that does not need the list of changes of the metamodel \cite{kessentini2016automated,kessentini2019automated,kessentini2020interactive}.
+The fifth and last category is called Constrained Model Search approaches. It groups approaches that do not use the metamodel changes, but use the original model and the new metamodel to apply a constrained-based search of valid model variants \cite{demuth2016co,gomez2014approach,schonbock2014care}. Other approaches consider the model co-evolution problem as an optimization one that does not need the list of changes of the metamodel \cite{kessentini2016automated,kessentini2019automated,kessentini2020interactive}.
 %Demuth el al. [6] who used it for models co-evolution.
 % There are also approaches for semi-automatic co-evolution of models that rzquires the user intervention to make decision on the selected operation to adapt the model.
 
@@ -348,68 +463,76 @@ The fifth and last category is called Constrained Model Search. It groups approa
 
 %For example, when a type restriction is applied to a property in a metamodel, the generic solution implemented in the approaches of Meyers et al. and Edapt would delete prop- erty instances that are no longer conform. In contrast, the approach of Wachsmuth would allow the user to specify a type conversion. Thus, due to giving additional control to the user, the property values can be preserved in the mod- els. Consequently, if there is the need for an outcome that deviates from generic solutions, approaches are required to provide the user with a certain amount of control about the results of the resolution
 
-Depending on whether a user intervention is need or not to apply predefined or generated resolutions, we distinguish automatic and semi-automatic approaches.
-Di Ruscio et al. \cite{10.1007/978-3-642-33654-62},MCL (Levendovszky et al. \cite{levendovszky2014semi}, Anguel et al. \cite{anguel2014using},cicchetti et al. \cite{cicchetti2008automating}, brand et al. \cite{van2011generic}, CBRMig\cite{anguel2013towards} are automatic model co-evolution approaches.
+Depending on whether a user intervention is needed or not to apply predefined or generated resolutions, there are automatic and semi-automatic approaches.
+In one hand, Di Ruscio et al.~\cite{10.1007/978-3-642-33654-62}, Levendovszky et al.~\cite{levendovszky2014semi}, Anguel et al.~\cite{anguel2013towards,anguel2014using}, Cicchetti et al.~\cite{cicchetti2008automating}, van den Brand et al.~\cite{van2011generic}, are automatic model co-evolution approaches.
 
-Semi-automatic approaches that I find in literature are: de Geest et al. \cite{de2008generating},  Garcès et al \cite{garces2014adapting}, Wittern et al. \cite{wittern2013determining} (for atomic changes, the co-evolution is automatic, for complex changes, the co-evolution is manual).
+%Di Ruscio et al. \cite{10.1007/978-3-642-33654-62}, MCL Levendovszky et al. \cite{levendovszky2014semi}, Anguel et al. \cite{anguel2014using},cicchetti et al. \cite{cicchetti2008automating}, van den Brand et al. \cite{van2011generic}, CBRMig~\cite{anguel2013towards} are automatic model co-evolution approaches.
+
+In another hand, semi-automatic approaches that I found in literature are: de Geestwe et al.~\cite{de2008generating},  Garcès et al.~\cite{garces2014adapting}, Wittern et al.~\cite{wittern2013determining} (for atomic changes, the co-evolution is automatic, for complex changes, the co-evolution is manual).
 
 %semi-automatic vs automatic : trade-off between desired correctness of the resulting models and automation that khelladi survey cite an example of a property type restriction. Some approaches would delete the property instances that are no longer conform where other approaches propose a type conversion. 
 
-
-COPE \cite{herrmannsdoerfer2009cope}, and Wachsmuth et al. \cite{wachsmuth2007metamodel}, Kessentini et al. \cite{kessentini2018integrating,kessentini2020interactive} do not explicitly study the impact of metamodel evolution on  models.
+Related to the previous section \ref{changedetection}, some model co-evolution approaches were interested in studying the impact of metamodel evolution on models.
+COPE~\cite{herrmannsdoerfer2009cope}, Wachsmuth et al.~\cite{wachsmuth2007metamodel}, and Kessentini et al.~\cite{kessentini2018integrating,kessentini2020interactive} do not explicitly study the impact of metamodel evolution on  models.
  
- Cicchetti et al. \cite{cicchetti2008automating} categorize metamodel modifications  into additive, subtractive, and updative. Their approach starts by generating a difference model, then a transformation model to co-evolve models, without a step dedicated impact analysis.
-Garcès et al. \cite{garces2009managing} computes equivalences and differences between any pair of metamodels, simple and complex changes. These equivalences and differences are then represented as matching model. In the second step, the matching model is translated into an adaptation transformation by using a Higher-Order Transformation (HOT) that is later executed. A matching model is used to generate a transformation model but no explicit analysis for the impact if metamodel evolution on the models.
+ Cicchetti et al.~\cite{cicchetti2008automating} categorize metamodel modifications  into additive, subtractive, and updative. Their approach starts by generating a difference model, then a transformation model to co-evolve models, without a step dedicated impact analysis.
+Garcès et al.~\cite{garces2009managing} computes equivalences and differences between any pair of metamodels, simple and complex changes. These equivalences and differences are then represented as matching model. In the second step, the matching model is translated into an adaptation transformation by using a Higher-Order Transformation (HOT) that is later executed. A matching model is used to generate a transformation model but no explicit analysis for the impact of metamodel evolution on the models.
 
-Demuth et al.\cite{demuth2016co} consistent change propagation focuses on maintaining consistency between artifacts (metamodel itself and existing models ). Impacted constraints are used to propose repairs ( to regain model conformance), then manual intervention is needed to select and apply these repairs. ( metamodel changes are propagated through constraints that are used to repair moodel inconsistencies (by model and possible modification of metamodel)
+I found that only Demuth et al.~\cite{demuth2016co} studied the impact of metamodel evolution on models. Their consistent change propagation focuses on maintaining consistency between artifacts using constraints (metamodel itself and existing models). Later, the impacted constraints are used to propose repairs, then manual intervention is needed to select and apply these repairs.
 
  
 
 %\cite{kessentini2018integrating,kessentini2019automated,cicchetti2008automating,herrmannsdoerfer2009cope,garces2009managing,wachsmuth2007metamodel},
 \subsection{Metamodel and constraints co-evolution}
-Another artifact that depends on the metamodel and needs to be adapted to the evolution of its metamodel is Constraints.
- Constraints co-evolutions that exist in literature may be online \footnote{Online approaches perform instant co-evolution for each change during the metamodel evolution} or offline \footnote{Offline approaches perform co-evolution after the metamodel has been evolved.}. Every approach has its own co-evolution mechanism that treats specific types of metamodel changes and has its automation degree. Demuth et al. \cite{10.1007/978-3-642-41533-3_18} proposed a template-based, that cannot cover all changes types, of the predefined structure of the updated constraint. Markovich et al. \cite{markovic2008refactoring} proposed refactoring rules that depend on the impact of UML class diagram evolution on the constraints. In this approach, the user select the refactoring rule to be applied on the model then on the depending constraints.. Hassam et al. \cite{hassam2011assistance} propose METAEVOL, based on a transformation language. Kusel et al. \cite{kusel2014systematic} propose a solution for the co-evolution of the constraint body and do not include its context that may need co-evolution also.
- Cabot et al \cite{cabot2004automatic} treats OCL constraints co-evolution due to metamodel deletion change. Khelladi et al. \cite{khelladi2017semi} proposed an approach that record the metamodel atomic and complex changes in a chronological order then apply one or many resolutions to co-evolve the constraints. Batot et al. \cite{8101267} tackle the constraint co-evolution problem as  an multi-objective optimization problem and apply heuristic-based recommendation approach that does not require/use a predefined set of transformation rules/resolutions to co-evolve the constraints.
+Another artifact that depends on the metamodel and needs to be adapted as the metamodel evolves is constraints.
+ Constraints co-evolutions that exist in literature may be online \footnote{Online approaches perform instant co-evolution for each change during the metamodel evolution} or offline \footnote{Offline approaches perform co-evolution after the metamodel has been evolved.}. Every approach has its own co-evolution mechanism that treats specific types of metamodel changes and has its automation degree. Demuth et al. \cite{10.1007/978-3-642-41533-3_18} propose a template-based of the predefined structure of the updated constraint taking into consideration few change types. Markovich et al.~\cite{markovic2008refactoring} propose refactoring rules that depend on the impact of UML class diagram evolution on the constraints. In this approach, the user selects the refactoring rule to be applied on the model then on the depending constraints. Another constraints co-evolution approach is METAEVOL proposed by Hassam et al. \cite{hassam2011assistance}. METAEVOL is a tool based on a transformation language. Kusel et al.~\cite{kusel2014systematic} propose a solution for the co-evolution of the constraint body and do not include its context that may need to be co-evolved also.
+ Cabot et al.~\cite{cabot2004automatic} treat OCL constraints co-evolution due to metamodel deletion change. Khelladi et al.~\cite{khelladi2017semi} propose an approach that records the metamodel atomic and complex changes in a chronological order, then apply one or many resolutions to co-evolve the constraints. Batot et al.~\cite{8101267} tackle the constraint co-evolution problem as a multi-objective optimization problem. They apply heuristic-based recommendation approach that does not use a predefined set of transformation rules to co-evolve the constraints.
  
+ 
+ Cherfa et al. \cite{cherfa2021identifying} provide an assistance to developers working on OCL constraint co-evolution, by focusing on the structures in the metamodel that potentially cause problems and which ones need new OCL constraints (after the co-evolution). Their approach does no explicitly process an impact analysis.%instead of exploring the solution domain (generating the missing constraints), /
+ %Since the set of constraints (F) is incomplete and hence does not cover all the concepts of the new metamodel version, a set of MIS that can arise from the evolution operators. implies the designer  in treating these mis.
  
 % Describe what have been done in analysing the impact of metamodel evoluitoon on the constraits , and how the co-evolutinon correctness is checked becausie constrains are behavioral description of the metamodel.
- Kusel et al. \cite{kusel2014systematic}  studies the impact of metamodel evolution on OCL expressions. They distinguished between breaking and non-breaking impact. moreover, they divided the changes into three groups : constructives are non breaking where destructive changes, and updative changes are breaking changes. These breaking changes, are considered so if they have at least one breaking impact case. They give a table that contains every possible case, whether it is breaking or not and the corresponding resolution. This paper proposes syntactic co-evolution that can be checked by a compiler, where the semantic co-evolution correctness is checked through “Pattern-based formal specification Modeling Language for Model Transformations” (PaMoMo)\cite{10.1007/s10515-012-0102-y}. a set of Pamomo specifications (input models) are verified before and after OCL expressions' co-evolution. Pamomo states. properties the models must fulfill
+ Regarding the impact analysis of the metamodel evolution, Kusel et al.~\cite{kusel2014systematic} study this impact on OCL expressions. They distinguished between breaking and non-breaking impact. Moreover, they divided the changes into three groups: constructive changes which are non-breaking where destructive changes and updative changes which are considered breaking changes if they have at least one breaking impact case on the constraints. Furthermore, their study includes %a table that contains
+  every possible case and the corresponding resolution. This paper~\cite{kusel2014systematic} proposes syntactic co-evolution that can be checked by a compiler, where the semantic co-evolution correctness is checked through Pattern-based formal specification Modeling Language for Model Transformations (PaMoMo)~\cite{10.1007/s10515-012-0102-y}. The correctness checking process uses a set of Pamomo specifications (input models) to be verified before and after OCL expressions' co-evolution.
+  % Pamomo states. properties the models must fulfill
 
-Batot et al. \cite{batot2017heuristic} register metamodel elements that were deleted, added, or had their multiplicity changed between the two versions. Computing atomic differences does; but does not require high level changes identification. They do not explicitly analyze the impact of metamodel evolution on OCL constraints. Their goal is to satisfy the objectives of NSGA II  but no more checking is done. it proceed to syntactic comparison to determine if a candidate constraint is the same as the expected one.
+In their co-evolution approach, Batot et al.~\cite{batot2017heuristic} first register metamodel elements that were deleted, added, or had their multiplicity changed between the two versions. %Computing atomic differences does; but does not require high level changes identification. 
+ Then,they apply an NSGA-II heuristic algorithm to satisfy the objective functions. However, no additional correctness checking are performed. Finally, a syntactic comparison is processed to determine if a candidate constraint is the same as the expected one. Notably, the impact of metamodel evolution on OCL constraints is not explicitly analyzed.
   
    
-  Demuth, markovitch, cabot \cite{10.1007/978-3-642-41533-3_18,markovic2008refactoring,cabot2004automatic} their approaches ar fully automatic while Hassam, kusel and Khelladi, and Batot \cite{hassam2011assistance,kusel2014systematic,khelladi2017semi,8101267} propose semi-automatic approaches since the user must select from the recommended output constraints. 
+  
  
 %impact analysys: 
-Hassam et al \cite{hassam2011assistance} proceed by a partial impact analysis, through a table that contains  constraint context that is linked with the involved elements of mm that is evolved, the designer is responsible to check the validity of the constraint. 
+Hassam et al.~\cite{hassam2011assistance} proceed by a partial impact analysis, through a table that contains constraints context that is linked with the involved elements of the metamodel that is evolved. The designer is then, responsible to check the validity of the constraint. 
 
-Khelladi et al. \cite{khelladi2017semi}  associate each evolved metamodel element to impacted (context and body ) and precise impacted astnodes in a table. no further checking
+Khelladi et al.~\cite{khelladi2017semi} associate each evolved metamodel element to impacted constraint (context and body)  and precise the impacted constraint astnodes. However, no further correctness checking of their output.
 
-Other approaches do not study the impact of metamodel evolution on the constraint artifact like Batot et al. \cite{8101267}.
+%Other approaches do not study the impact of metamodel evolution on the constraint artifact like Batot et al. \cite{8101267}.
 
-Cabot et al. \cite{cabot2004automatic} as an impact analysis, identify of the elements to be deleted (those selected by the user plus all the elements affected by them)
-Cherfa et al. \cite{cherfa2021identifying}  provide an assistance to developers OCL constraint co-evolution, by focusing on the structures in the metamodel that potentially cause problems and which need new OCL constraints after the co-evolution). Their approach no explicitly process an impact analysis.%instead of exploring the solution domain (generating the missing constraints), /
-%Since the set of constraints (F) is incomplete and hence does not cover all the concepts of the new metamodel version, a set of MIS that can arise from the evolution operators. implies the designer  in treating these mis.
- 
+Cabot et al.~\cite{cabot2004automatic} as an impact analysis, identify the elements to be deleted (those selected by the user plus all the elements affected by them).
+
+Regarding the automation degree of the approaches above, Demuth et al., Markovitch et al., and Cabot et al. \cite{10.1007/978-3-642-41533-3_18,markovic2008refactoring,cabot2004automatic}  approaches are fully automatic while Hassam, kusel and Khelladi, and Batot \cite{hassam2011assistance,kusel2014systematic,khelladi2017semi,8101267} propose semi-automatic approaches since the user must select from the recommended output constraints. 
 \subsection{Metamodel and transformations co-evolution}
 
 Almost all the existing transformation approaches that I find in literature have the same strategy. This strategy consists of evolving the impacted parts in the transformations.
 %start by analyzing the impact of the metamodel on the model transformations.
-Mendez et al. \cite{mendez2010towards}, Ruscio et al. \cite{di2011needed}, Garces et al.\cite{garces2014adapting}, Kusel, et al.\cite{kusel2015consistent}, and khelladi et al. \cite{khelladi2018change} proposed to co-evolve impacted transformations with a set of resolutions. T
-Mendez et al. \cite{mendez2010towards}, Ruscio et al. \cite{di2011needed}, khelladi et al. \cite{khelladi2018change} while they propose to evolve impacted transformation, no impact analysys is explicitly studied. Garces et al.\cite{garces2014adapting} explains the impact of the evolution of the metamodel on the transformations through a motivating example but not an explicit study inddepend from the example.they are semi-automatic approaches.
+Garcia et al.~\cite{garcia2012model} proposed an ATL rule-based approach. This approach only guarantees that the evolved transformations are syntactically correct, but does not process any other correctness checking, including semantic correctness.% is not taken into consideration.
+  Kusel, et al.\cite{kusel2015consistent} explained explicitly that his approach verify semantic correctness by properties expressed in PaMoMo language as a kind of regression testing.
 
-Garcia et al.\cite{garcia2012model} proposed an ATL transformation-based approach, which means that their resolutions are ATL transformations. This approach only guarantees that the transformation is syntac-
-tically correct, mention that any other correctness properties, inclusing semantic correctness is not taken into consideration.
- Kusel, et al.\cite{kusel2015consistent} explained explicitly that his approach verify semantic correctness by properties expressed in PaMoMo language as a kind of regression testing.
-
-The approach of khelladi et al. \cite{khelladi2018change} covers the largest set of possible resolutions whereas Ruscio et al. \cite{di2011needed}, estimate the cost of the co-evolution to decide about the co-evolution. They further explored the variability of the co-evolution due to the possible alternative resolution. All the approaches propose unique resolution to co-evolve each transformation.
-Ruscio et al. \cite{di2011needed} approach allows developers to manually replace or refine a resolution. Khelladi et al. \cite{khelladi2018change}  in their ()change probagatoion-based approach,   allow to compose existing resolutions into a new one. This approach does not process any semantic verification of the transformation co-evolution.
+The approach of Khelladi et al. \cite{khelladi2018change} covers the largest set of possible resolutions whereas Ruscio et al. \cite{di2011needed}, estimate the cost of the co-evolution to decide about the co-evolution. They further explored the variability of the co-evolution due to the possible alternative resolution. All the approaches propose unique resolution to co-evolve each transformation.
+Ruscio et al. \cite{di2011needed} approach allows developers to manually replace or refine a resolution. Khelladi et al. \cite{khelladi2018change}  in their ()change propagation-based approach,   allow to compose existing resolutions into a new one. This approach does not process any semantic verification of the transformation co-evolution.
 Kessentini et al. \cite{kessentini2018automated} followed a different approach that does not use the changes of the metamodel as input and does not process an impact analysis, but rather uses a search-based approach that relied on multi objective heuristic algorithm NSGA-II. This approach has an objective function to minimize the number of errors of non-conformance between the metamodels and transformations. These errors can be statically detected by static semantic constraints.(no semantic verification of the approach's correctness).
 
 
 % kusel2015consistent: formal specification language to describe correct- ness requirements for transformations (cf. [7] for details). A PaMoMo specification consists of declarative visual patterns, which may be positive, i.e., describing necessary conditions to occur (denoted by a “P”), or negative, which state forbidden situations (denoted by an “N”). Patterns are composed of two compartments containing object graphs typed on the source MM (left compartment) or target MM (right compartment). Objects in the source and target compartments may have attributes that may be assigned either a concrete value or a variable. A variable may be assigned to several attributes to ensure equality of their values. The specified patterns provide a well-defined operational semantics on basis of QVT- Relations [17], which allows to check whether pairs of input models and resulting output models fulfill the specified cor- rectness requirements, which in consequence allows to evalu- ate the semantic correctness of a transformation definition
-Eventhough I consider the co-evolution in larger diameter in Model-Driven Engineering, my main focus is given to the co-evolution of the code that I detail in next section.
+Mendez et al. \cite{mendez2010towards}, Ruscio et al. \cite{di2011needed}, Garcés et al.\cite{garces2014adapting}, Kusel, et al.\cite{kusel2015consistent}, and Khelladi et al. \cite{khelladi2018change} proposed to co-evolve impacted transformations with a set of resolutions. Ruscio et al. \cite{di2011needed}, while they propose to evolve  transformation, no impact analysis is explicitly studied. However, Garcès et al.\cite{garces2014adapting} explains the impact of the evolution of the metamodel on the transformations through a motivating example but not an explicit study independent from the example. 
+I found that only Mendez et al.~\cite{mendez2010towards} and Khelladi et al.~\cite{khelladi2018change} dedicated a detailed part in their approaches for the analysis of the impact of metamodel evolution on the transformations.
 
+they are semi-automatic approaches.
+Even though I consider the co-evolution in a larger scope in Model-Driven Engineering, my main focus is given to the co-evolution of the code that I detail in next section.
+
+%\section{Software evolution}
 
  \section{Code co-evolution}
  \label{coevolutioncode}
