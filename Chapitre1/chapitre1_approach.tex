@@ -1,4 +1,7 @@
-
+One of the key findings of the state of the art chapter \ref{label}, is the gap that exists in tackling the problem of metamodel and code co-evolution. Most of the existing literature about evolution in Model-Driven Engineering, concerns the artifacts of models, constraints, and transformations, but rarely code. In this chapter, I present my contribution to address the challenge C1) about resolving the impact of the metamodel evolution on the code automatically. 
+This chapter is structured as follows. Section \ref{example} introduces a motivating example showing the breaking impact of the metamodel evolution on the code. 
+In section \ref{approach}, I present the overall automatic co-evolution approach. This approach starts by using the output changes of the metamodel, then it retrieves the errors that are caused by these changes. Thanks to the pattern matching, for each error a resolution is selected and executed. I first give a brief reminder about metamodel changes' detection and why we selected the approach of Khelladi et al.~\cite{k?}, and how its output is used in the approach. After that, I explain the error retrieval process, followed by a short subsection about the resolution catalog that I use. In the next subsections, I detail the pattern matching phase and the repair mechanism. The overall approach ends with a presentation of the prototype implementation.
+Section \ref{eval} details our evaluation that includes four research questions. These research questions aim to 1) assess the applicability of the approach, 2) to measure its efficiency and its behavioral correctness 3) to compare it with IDE quick fixes as a first baseline, and 4) to compare it with the approach of Khelladi et al.~\cite{??} as a second baseline. This section ends with the evaluation results and threats to validity. Finally, Section \ref{conclusion} concludes the chapter with a summary and highlights the approach main contributions. %reflects on future work.
 %\begin{wrapfigure}[0.5]{R}{0.5\textwidth}
 \begin{figure*}[t]\centering%
 	%\scalebox{0.9}{\small\input{pics/diagram-20220513}}%overallApproach}}
@@ -868,3 +871,708 @@ In Listing \ref{lis:Modisco_Code_External_V1}, Algorithm \ref{algo :ErrorPattern
 	%For the metamodel changes we use an existing approach \cite{Alter2015, williams2012searching,cicchetti_managing_2009,langer_posteriori_2013,vermolen_reconstructing_2012,Khelladi2016}. 
 	
 	%\todo{here say that we generate a report linking mm changes, to impacted lines in the code, error message, matched pattern, and how they were co-evoved it which resoluton}
+	
+	\section{Evaluation}\label{eval}
+	
+	This section evaluates our automatic co-evolution approach. 
+	First, we present the evaluation process and the data set. Then, we set the research questions we address and discuss the obtained results.
+	
+	
+	\subsection{Evaluation Process}
+	
+	We evaluate our automated co-evolution of code with metamodel evolution by measuring: 1) its ability to co-evolve the errors, 2) its time performance, 3) its correctness by using recall and precision metrics, 4) its behavioral correctness by using test suites before/after the automatic co-evolution, 5) and by comparing it with both quick fixes and our prior work~\cite{Khelladi2020}. %programmatically applying quick fixes.}
+	%% checking changes mentionned in threats to validity 
+	%%Before starting the evaluation process, we confirm the changes of %%metamodel. As these changes from version \emph{1} to version~\emph{2} serve %%as input of our automatic code co-evolution
+	
+	First, as our approach co-evolves the erroneous code due to metamodel evolution, we need to \textbf{provoke the errors in the code}. To do so, we replace the original metamodel with the evolved metamodel. Then, we regenerate the code API with EMF. This will cause errors in the code that our approach must co-evolve~(1).  
+	We then use the function $System.nanoTime()$ for time measurement~(2). 
+	After that, we measure the correctness of our code co-evolution~(3) by comparing, for the same set of code errors that we automatically co-evolved, how they were manually co-evolved by developers. This allows us to measure the \emph{precision} and \emph{recall} reached by our co-evolution approach. They vary from~0 to~1, i.e., 0\% to 100\%. They are defined as follows:
+	%We evaluate correctness by measuring \emph{precision} and \emph{recall}. We compare our applied co-evolution with the manually applied co-evolved by developers against our proposed co-evolution. 
+	%
+	%This allows us to measure the correctness of our co-evolution approach. %, i.e., correctness  of our proposed co-evolution. 
+	%
+	%In this experiment, we measure the correctness of our approach by using the two metrics \emph{precision} and \emph{recall} that 
+	%\emph{Precision} and \emph{recall} vary from 0 to 1, i.e., 0\% to 100\%. They are defined as follows:
+	%three case studies from three different language implementations in Eclipse, namely OCL \cite{MDTOCL}, Modisco \cite{MDTModisco}, and Papyrus \cite{MDTPapyrus}. 
+	%The correctness metric of our automated co-evolution is computed as follows:
+	
+	%\vspace{0.8em}
+	%$ correctness = \dfrac{Applied Resolutions \cap Expected Resolutions}{Applied Resolutions} $
+	%\vspace{0.8em}
+	
+	%The $Applied Resolutions$ are the resolutions applied by our approach (from Table \ref{table:ResolutionsCatalog}) and  the $Expected Resolutions$ are the actual manually performed resolutions by developers. The correctness varies from 0 to 1, i.e., 0\% to 100\%. %\red{Note that}
+	
+	\vspace{1em}
+	\noindent $ precision = \dfrac{Applied Resolutions \cap Expected Resolutions}{Applied Resolutions} $
+	
+	\vspace{1em}
+	
+	\noindent $ recall = \dfrac{Applied Resolutions \cap Expected Resolutions}{Expected Resolutions} $
+	\vspace{1em}
+	
+	The $Applied Resolutions$ are those by our approach (from Table \ref{table:ResolutionsCatalog}) and  the $Expected Resolutions$ are the actual manually performed resolutions by developers.  %The precision and recall  %The higher the precision value, the smaller is the set of wrong resolutions that have been proposed (i.e. false positives). The higher the recall value, the smaller is the set of the expected resolutions that have not been proposed (i.e. false negatives).
+	
+	Moreover, to check if the co-evolution impacts the original code behavior~(4), we generate tests for the original and the automatically co-evolved versions. Hence, we observe the behavioral effect of our co-evolution through the tests. To do so, we rely on Evosuite~\cite{fraser2011evosuite}, a popular tool for test cases generation, as it is widely used by researchers and developers. 
+	Gruber et al. \cite{gruber2023automatic} further showed the quality and robustness of the generated tests. It showed that while flakiness is at least as common in generated tests as in developer-written tests, EvoSuite is effective in alleviating this issue giving 71.7\% fewer flaky tests. Thus, EvoSuite is appropriate in our work to generate robust tests in the original code and in the co-evolved code to compare their results, i.e., check behavioral correctness.
+	
+	Furthermore, we compare our approach with the application of quick fixes~(5). For each error, we apply the first quick fix in the list of corresponding proposals, then we compare the precision and recall of quick fixes with the precision and recall of our approach.
+	%
+	Finally, we compare our approach with our prior work~\cite{Khelladi2020} in terms of precision and recall, and general rationale (5).
+	%Note that we studied evolved and original versions to confirm the metamodel changes and code co-evolution from version \emph{1} to version~\emph{2}. 
+	
+	%Based on those changes we run an impact analysis to identify the impacted parts of the code that will be co-evolved. 
+	
+	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% Please add the following required packages to your document preamble:
+	% \usepackage{multirow}
+	
+	\begin{table*}[t]
+	\centering
+	\caption{Details of the metamodels and their evolutions.}
+	\label{CaseStudies_Evolution}
+	\resizebox{16.2cm}{!} {
+		\begin{tabular}{cllll}
+			\toprule
+			Case study                                                                            & \begin{tabular}[c]{@{}l@{}}Evolved \\ metamodels\end{tabular}                 & Versions & %\begin{tabular}[c]{@{}l@{}}Size ($N^{o}$ of\\ elements)\end{tabular} &
+			\multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Atomic changes \\in the metamodel\end{tabular}} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Complex changes \\in the metamodel\end{tabular}} \\ \midrule		
+			
+			%\multirow{6}{*}{\begin{tabular}[c]{@{}l@{}}OCL\end{tabular}} 
+			OCL & \begin{tabular}[c]{@{}l@{}}Pivot.ecore in project\\ocl.examples.pivot\end{tabular}                        &  \begin{tabular}[c]{@{}l@{}}3.2.2 to\\ 3.4.4\end{tabular}        &   %\begin{tabular}[c]{@{}l@{}}Original: 1473 \\Evolved: 1787\end{tabular}  &
+			\begin{tabular}[c]{@{}l@{}} Deletes: 2 classes, 16 properties, 6 super types \\ Renames: 1 class, 5 properties \\ Property changes: 4 types; 2 multiplicities \\ Adds: 25 classes, 121 properties, 36 super types  \end{tabular}                                                         &    \begin{tabular}[c]{@{}l@{}} 1 pull property \\ 2 push properties  \end{tabular}                                                        \\ \midrule %cmidrule{2-5} %midrule		
+			
+			%	& \begin{tabular}[c]{@{}l@{}}Base.ecore in project\\ocl.examples.xtext.base\end{tabular}                         &   \begin{tabular}[c]{@{}l@{}}3.1.0 to\\ 3.4.4\end{tabular}       &  %\begin{tabular}[c]{@{}l@{}}Original: 272 \\Evolved: 357\end{tabular}   &  	\begin{tabular}[c]{@{}l@{}} Deletes: 4 classes, 11 properties, 17 super types \\ Renames: 1 property \\ Property changes: 2 type \\ Adds: 10 classes, 38 properties, 19 super types \\ Total = 102 \end{tabular}                                                       &      \begin{tabular}[c]{@{}l@{}} 5 moves properties \\ 1 push property \\ 2 extract class \\ 2 extract super class\\ Total = 10 \end{tabular}                                                      \\ \midrule
+			%		& \begin{tabular}[c]{@{}l@{}}OCL \\ "EssentialOCL"\end{tabular}                 &          &      &                                                           &                                                            \\ \midrule
+			%		& \begin{tabular}[c]{@{}l@{}}OCL \\ "CompleteOCL"\end{tabular}                  &          &      &                                                           &                                                            \\ \midrule
+			Modisco & \begin{tabular}[c]{@{}l@{}}Benchmark.ecore in project\\modisco.infra.discovery.benchmark\end{tabular}                & \begin{tabular}[c]{@{}l@{}}0.9.0 to\\ 0.13.0\end{tabular}         &   %\begin{tabular}[c]{@{}l@{}}Original: 95 \\Evolved: 106\end{tabular}    &  
+			\begin{tabular}[c]{@{}l@{}} Deletes: 6 classes, 19 properties, 5 super types \\ Renames: 5 properties  \\ Adds: 7 classes, 24 properties, 4 super types  \end{tabular}                                                        &     \begin{tabular}[c]{@{}l@{}} 4 moves property \\ 6 pull property \\ 1 extract class \\ 1 extract super class \end{tabular}                                                       \\ \midrule		
+			
+			%\multirow{4}{*}{\begin{tabular}[c]{@{}l@{}}Papyrus\end{tabular}} 
+			Papyrus & \begin{tabular}[c]{@{}l@{}}ExtendedTypes.ecore in project\\papyrus.infra.extendedtypes\end{tabular}            & \begin{tabular}[c]{@{}l@{}}0.9.0 to\\ 1.1.0\end{tabular}         & %\begin{tabular}[c]{@{}l@{}}Original: 40 \\Evolved: 57\end{tabular}     &   
+			\begin{tabular}[c]{@{}l@{}}Deletes: 10 properties, 2 super types \\ Renames: 3 classes, 2 properties \\ Adds: 8 classes, 9 properties, 8 super types  \end{tabular}                                                      &    \begin{tabular}[c]{@{}l@{}} 2 pull property \\ 1 push property \\ 1 extract super class \end{tabular} \\  \bottomrule %\cmidrule{2-5} %midrule		
+			
+			%& \begin{tabular}[c]{@{}l@{}}Configuration.ecore in project \\ papyrus.infra.queries.core.configuration\end{tabular}            & \begin{tabular}[c]{@{}l@{}}0.9.0 to\\ 1.1.0\end{tabular}         & %\begin{tabular}[c]{@{}l@{}}Original: 24 \\Evolved: 0\end{tabular}     &     		\begin{tabular}[c]{@{}l@{}}Deletes: 6 classes, 7 properties, 4 super types \\ Total = 17 \end{tabular}                                                      &    \begin{tabular}[c]{@{}l@{}} none \end{tabular}	\\ \bottomrule                                         
+		\end{tabular}
+	}
+	\end{table*}
+	
+	
+	
+	\begin{table*}[t]
+	\caption{Details of the projects and their caused direct and indirect errors by the metamodels evolution.}
+	\label{CaseStudies_CoEvolution}
+	\resizebox{18cm}{!} {
+		\begin{tabular}{llcccccc}
+			\toprule
+			\begin{tabular}[c]{@{}l@{}}Evolved \\ metamodels\end{tabular}                 & \begin{tabular}[c]{@{}l@{}}Projects to co-evolve in response to the \\ evolved metamodels \end{tabular} 	& \begin{tabular}[c]{@{}c@{}}$N^{o}$ of \\ packages\end{tabular} & \begin{tabular}[c]{@{}c@{}}$N^{o}$ of \\ classes\end{tabular} & %\begin{tabular}[c]{@{}c@{}}N° of \\ methods\end{tabular} & 
+			\begin{tabular}[c]{@{}c@{}}$N^{o}$ of \\ LOC\end{tabular} & \begin{tabular}[c]{@{}c@{}}$N^{o}$ of Impacted \\ classes\end{tabular} & \begin{tabular}[c]{@{}c@{}}$N^{o}$ of total \\ direct errors \end{tabular}& \begin{tabular}[c]{@{}c@{}}$N^{o}$ of total \\ indirect errors \end{tabular}\\ \midrule		
+			
+			\begin{tabular}[c]{@{}l@{}}OCL \\ Pivot.ecore\end{tabular}                        & \begin{tabular}[c]{@{}l@{}}$[P1]$ ocl.examples.pivot\\ $[P2]$ ocl.examples.xtext.base\end{tabular}      &   \begin{tabular}[c]{@{}l@{}}22\\12 \end{tabular}     & \begin{tabular}[c]{@{}l@{}}439\\181 \end{tabular}                 &                                          %  \begin{tabular}[c]{@{}l@{}}5445\\1984 \end{tabular}              & 
+			\begin{tabular}[c]{@{}l@{}}74002\\17599 \end{tabular} & \begin{tabular}[c]{@{}l@{}} 56\\10 \end{tabular} & \begin{tabular}[c]{@{}l@{}} 489\\27 \end{tabular} & \begin{tabular}[c]{@{}l@{}} 37\\2 \end{tabular} \\ \midrule		
+			
+			%		& \begin{tabular}[c]{@{}l@{}}OCL \\ "EssentialOCL"\end{tabular}                 & \begin{tabular}[c]{@{}l@{}}ocl.examples.xtext.essentialocl\\ ocl.examples.xtext.essentialocl.ui\\ ocl.examples.xtext.completeocl\\ ocl.examples.xtext.console\\ ocl.examples.xtext.oclinecore.ui\\ ocl.examples.xtext.oclinecore\\ ocl.examples.xtext.oclstdlib\end{tabular} &                                                      &                                                           &                                                          &                                                          \\ \midrule
+			%		& \begin{tabular}[c]{@{}l@{}}OCL \\ "CompleteOCL"\end{tabular}                  & \begin{tabular}[c]{@{}l@{}}ocl.examples.xtext.completeocl\\ ocl.examples.xtext.completeocl.ui\end{tabular}                                                                                                                                                                   &                                                      &                                                           &                                                          &                                                          \\ \midrule
+			\begin{tabular}[c]{@{}l@{}}Modisco \\ Benchmark.ecore\end{tabular}                & \begin{tabular}[c]{@{}l@{}} $[P3]$ modisco.infra.discovery.benchmark\\ $[P4]$ gmt.modisco.java.discoverer.benchmark\\ $[P5]$ modisco.java.discoverer.benchmark\\ $[P6]$ modisco.java.discoverer.benchmark.javaBenchmark\end{tabular}   & \begin{tabular}[c]{@{}l@{}}3 \\8 \\10 \\3  \end{tabular} & \begin{tabular}[c]{@{}l@{}}28 \\21 \\28 \\16 \end{tabular} & %\begin{tabular}[c]{@{}l@{}}\\ \\ \\  \end{tabular}  & 
+			\begin{tabular}[c]{@{}l@{}}2333 \\1947 \\2794 \\1654 \end{tabular}  & \begin{tabular}[c]{@{}l@{}}1\\4 \\9 \\9 \end{tabular} & \begin{tabular}[c]{@{}l@{}}6 \\30 \\56 \\58 \end{tabular} & \begin{tabular}[c]{@{}l@{}}0 \\0 \\0 \\15 \end{tabular}  \\ \midrule		
+			
+			\begin{tabular}[c]{@{}l@{}}Papyrus \\ ExtendedTypes.ecore\end{tabular}            & \begin{tabular}[c]{@{}l@{}} $[P7]$ papyrus.infra.extendedtypes\\  $[P8]$ papyrus.infra.extendedtypes.emf\\  $[P9]$ papyrus.uml.tools.extendedtypes\end{tabular}  & \begin{tabular}[c]{@{}l@{}}8 \\7 \\7 \end{tabular} & \begin{tabular}[c]{@{}l@{}}37 \\12 \\15  \end{tabular} & %\begin{tabular}[c]{@{}l@{}}\\  \\  \end{tabular}  & 
+			\begin{tabular}[c]{@{}l@{}}2057 \\374 \\725  \end{tabular}  & \begin{tabular}[c]{@{}l@{}}8 \\7  \\7 \end{tabular} & \begin{tabular}[c]{@{}l@{}} 59\\23\\23 \end{tabular} & \begin{tabular}[c]{@{}l@{}}0\\6 \\6\end{tabular} \\ \bottomrule		
+		\end{tabular}
+	}
+	\end{table*}
+	
+	
+	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	
+	\subsection{Data Set}
+	\begin{comment}
+	
+	
+	\kaouter{The authors do not describe the used dataset, it is necessary to have a better understanding of how it represents real-world needs. OK}
+	\kaouter{
+		
+		(MDE\_Eclipse): Moreover, Eclipse IDE in 2022 was downloaded 1million times/month and Papyrus and OCL are projects actively maintained with frequent releases per year.OK
+	}
+	\end{comment}
+	
+	%\red{//TODO double check} 
+	This section presents the used data set in our evaluation to be found in the attached supplementary material\footnote{\url{https://figshare.com/s/8986914e924300be77da}}.
+	%
+	We chose the EMF case study from the Eclipse platform, which is a popular tool that provides a flexible and extensible platform for creating custom modeling tools and applications. In~2022, Eclipse IDE was downloaded 1 million times per month.
+	
+	First, we aimed at selecting meaningful evolutions that do not consist of only deleting metamodel elements, but rather include complex evolution changes. 
+	\red{}This selection criterion resulted in projects that do not contain unit tests, and this is the main reason behind relying on generated tests to check the behavioral correctness of the co-evolution. %For example, we excluded The second reason is that EMF metamodels with existing unit tests do not evolve much and they are used by other projects that do not have unit tests either.
+	%\red{}
+	Moreover, to make sure that the errors are due only to the evolution of a single metamodel at a time, we selected projects that were dependent on one metamodel and not dependent (directly or transitively) on several metamodels that evolved simultaneously. This gives us more confidence in observing the resulting errors in the code due only to metamodel changes. Thus, mitigating the bias related to the ambiguous cases where errors interact and mask each other~\cite{bohme2013regression}. Handling the scenario code co-evolution due to multiple metamodels evolution is left for future work. 
+	
+	Therefore, we evaluated our approach on nine 9 Java projects from three case studies of three different language implementations in Eclipse, namely OCL~\cite{MDTOCL}, Modisco~\cite{MDTModisco}, and Papyrus~\cite{MDTPapyrus}. 
+	%
+	OCL is a standard language defined by the Object Management Group (OMG) to specify First-order logic constraints. Modisco is an academic initiative to support the development of model-driven tools, reverse engineering, verification, and transformation of existing software systems. 
+	Papyrus is an industrial project led by CEA\footnote{\url{http://www-list.cea.fr/en/}} to support model-based simulation, formal testing, safety analysis, etc.  
+	Thus, the three case studies cover standard, academic, and industrial languages that %We considered original and evolved versions of the case studies, as shown in Table \ref{CaseStudies_Evolution}. 
+	%\footnote{https://git.eclipse.org/c/modisco/org.eclipse.modisco.git/}
+	%https://git.eclipse.org/c/www.eclipse.org/modeling/mdt/ocl.git/
+	%https://git.eclipse.org/c/papyrus/org.eclipse.papyrus.git/
+	%
+	%The three case studies 
+	have evolved several times for more than 10 years of continuous development period. In particular, Papyrus and OCL are open-source projects that are actively maintained with frequent releases per year.
+	%They cover original and co-evolved versions of code in response to three evolved metamodels, as shown in Table \ref{CaseStudies_Evolution}. The total of applied metamodel changes was 330 atomic changes including 19 complex changes in the three metamodels. %477 in the five metamodels. 
+	%
+	%For those three case studies, we collected 9 Java projects that were impacted by those three evolving metamodels and their regenerated code API. We collected the original and evolved Java code of those projects. 
+	
+	
+	Table~\ref{CaseStudies_Evolution} gives details on the selected case studies, in particular about their metamodels and the changes applied during evolution. The total of applied metamodel changes was~330 atomic changes, including~19 complex changes in the three metamodels. 
+	Note that these real-world metamodel evolution changes do not cover all the changes in Table~\ref{table:ResolutionsCatalog}. However, we did not force any other missing resolutions to be able to compute recall and precision relatively to the real manual co-evolved code, and to minimize the bias in results. 
+	Nonetheless, as a sanity check, we did synthetically try all of them during their implementation before the evaluation. We simulated all metamodel changes with all patterns of generated code elements and configuration usages. 
+	
+	
+	For those three case studies, we collect nine Java projects impacted by those three evolving metamodels and their regenerated code API. We collect the \textbf{original} and the \textbf{developers' evolved} Java code for those projects.
+	%As the code co-evolution has been performed manually by developers ground truth to which we compare our performed co-evolution. 
+	%All evolutions in our case studies of the metamodels and code have been performed manually by developers between the different releases that we collected. Thus, we considered the manual code co-evolution as the reference (i.e., ground truth) to which we compare our performed co-evolution. %\red{Those projects were }
+	%
+	%\red{ We used unit tests to check the behavioral correctness of the co-evolution. We relied on generated tests because of two reasons. The first reason is that we had to select metamodels with meaningful changes, thereby excluding metamodels with only deletions or additions and with a low number of changes. Projects including this kind of metamdodels miss manual tests. }
+	Table~\ref{CaseStudies_CoEvolution} gives details on the size of the projects and code of the original versions that we co-evolve.  In addition, it gives the number of direct and indirect errors after the metamodel evolution. Finally, Table~\ref{table:test_results}'s first line gives the total number of tests in the original and the evolved versions of the projects.
+	
+	
+	
+	\subsection{Research Questions}
+	This section sets the research questions (RQs) to assess our work. The research questions are as follows:
+	
+	
+	
+	%\begin{itemize}
+	%\item[RQ1] 
+	\blue{}
+	\textbf{RQ1.}  \emph{Can our automatic co-evolution approach handle the code errors by resolving them after the metamodel evolution?} This aims to assess the ability and applicability of our automatic approach to co-evolve the code due to evolving metamodels.  %This assesses the overall applicability of our co-evolution approach.  
+	
+	
+	%\item[RQ2] 
+	\textbf{RQ2.} \emph{To what extent does our automatic approach correctly co-evolve the erroneous code?} This aims to assess the usefulness and measure the precision and recall of our approach when compared to the manually applied co-evolution for direct code errors. It further assesses the behavioral correctness of the co-evolution by observing the tests' execution before and after the co-evolution. %This assesses its usefulness. 
+	%\DK{\textbf{RQ3.} \emph{To what extent is our automatic co-evolution behaviorally correct ?} This aims to assess ...}
+	
+	
+	\textbf{RQ3.} \emph{How does our automatic approach for code co-evolution compare to the IDE quick fixes as a baseline?} 
+	%\emph{How does our automatic approach for code co-evolution compare to two baseline tools : the semi-automatic metamodel and code coevolution approach \cite{khelladi2020onthepower} and IDE quick fixes ?} 
+	%This aims to assess how our precison and recall compare with the precison and recall of Khelladi et al. approach \cite{Khelladi2020}. Then, 
+	This aims to assess the ability of the IDE quick fixes to correctly co-evolve the code due to evolving metamodels. We measure and compare the precision and recall of our automatic co-evolution approach to the quick fixes.   
+	
+	\textbf{RQ4.} \emph{How does our automatic approach for code co-evolution compare to the state-of-the-art semi-automatic approach as a baseline?} 
+	This aims to assess the ability of the fully automatic co-evolution compared to a semi-automatic co-evolution~\cite{Khelladi2020}. 
+	%This aims to assess how our precison and recall compare with the precison and recall of Khelladi et al. approach \cite{Khelladi2020}.
+	
+	
+	%\end{itemize}
+	
+	\begin{comment}
+	
+	1- Describe the data set \\
+	2-Table about details of metamodel : check values\\
+	3-Describe evaluation process
+	4-Results: in table ( like the 3rd)  with number of errors direct and indrect\\
+	5-Research questions\\
+	6-frequency of applied patterns . resolutions?
+	
+	-Prepare the table of each change with the applied patterns ? think about other info to add
+	\kaouter{remains ocl base pivot and papyrus config data}
+	
+	\end{comment}
+	
+	
+	
+	\subsection{Results}
+	We now discuss the results w.r.t. our research questions.
+	
+	\subsubsection{RQ1}
+	
+	Following the evaluation protocol and after regenerating the code API from the metamodels, we observed 837 errors, among which 771 (92\%) direct and 66 (8\%) indirect errors. 
+	%
+	Regarding the 771 direct errors, 
+	%To co-evolve all code errors, 
+	a total of 631 resolutions were applied.  
+	This shows the applicability of our co-evolution approach which was able to handle 100\% of direct errors in the code caused by the metamodel evolution changes. Regarding indirect errors, 5 quick fixes all of \emph{add the unimplemented methods}  were applied to repair 100\% of the 66 errors.
+	%One occurred in Modisco JavaBenchmark Project \emph{[P6]} and 2 in Pivot project \emph{[P1]}.
+	Thus, after automating completely the co-evolution of the code, the developers are always able to consult the generated report and check the history of co-evolution.
+	%reducing significantly the burden of manual intervention from developers required only in 2 out of 9 projects while covering all co-evolution cases.  
+	%\red{leaving 3 errors that were not matched and with no quick fix}
+	\begin{comment}
+	
+	
+	\kaouter{ To what extent different distributions of the error types given in Table II can potentially change the outcome of the evaluation
+		- The outcome of the evaluation in term of "resolutions' distribution" is impacted by the order of the detected changes ( when deletions precede renamings for example)
+		-It is impacted by the number of changes per type of change
+		- Recall and precision are not impacted neither by the distribution of the changes types,nor the distribution of the applied resolutions
+		
+	}
+	
+	\DK{
+		shall we add it here, or rather in the discussion, i would say in discussion
+	}
+	\end{comment}
+	
+	Moreover, we observed that the number of applied resolutions is less than the initial number of direct errors in the code. In fact, as code co-evolution advances, some resolutions repair multiple other errors as a side effect \cite{cuadrado2018quick,khelladi2019detecting}. 
+	In particular, we observed the case of renaming the type of a declared variable, the resolution $[CR5]$ is applied. As a consequence, all the erroneous usages of this variable were automatically corrected. We also observed the main case of a delete resolution $[CR2]$ of an instruction that contained several errors in its body.
+	For example, if an error occurs in the condition statement of an \texttt{IF} and a \texttt{For} instructions, the whole \texttt{IF}, or a \texttt{For} block is deleted. As a result, all errors in their bodies automatically disappear. However, even if we would have co-evolved the inner errors first, we would have ended up by deleting the \texttt{IF} and \texttt{For} instructions to co-evolve its parent error. Therefore, our automatic co-evolution would have reached the same code state. 
+	%However, note that the pattern matching favors the least deletion when possible. In particular, $[CR1]$, $[CR3]$, or $[CR4]$ over $[CR2]$. 
+	
+	Furthermore, Table \ref{AppliedResolutions} lists the applied resolutions for each co-evolved project. In total, the 631 applied resolutions represented 11 out of the 17 resolutions from our catalog in Table \ref{table:ResolutionsCatalog}. 
+	In particular, $32 \times [CR1], 240 \times [CR2], 73 \times [CR4], 179 \times [CR5], 16 \times [CR7], 20 \times [CR10]$ $, 18 \times [CR11], 7 \times [CR13], 2 \times [CR14], 3 \times [CR16], 13 \times [CR17]$. 
+	%
+	Figure \ref{fig:frequency_resolutions} further illustrates the application frequency of each resolution. Some resolutions were never applied, such as $[CR3], [CR6], [CR15]$. This can be explained by two reasons. The first one is that the corresponding change did never occur in our case studies (Table \ref{table:ResolutionsCatalog}) like $[CR15]$. The second reason is that pattern matching favors the least deletion when possible. In particular, $[CR1]$ over $[CR3]$, or $[CR4]$ over $[CR2]$.
+	
+	
+	Finally, the total co-evolution time per project ranged from a few seconds to almost 10 minutes, respectively, in Modisco  \emph{[P3]} and OCL Pivot \emph{[P1]}. On average, the co-evolution per error took less than half a second. The evaluation was run on a Fedora Linux 35 laptop with a Core i9 2.6 GHz and 16 GB RAM.
+	
+	
+	\begin{tcolorbox}[boxsep=-2pt]
+	\textbf{$\boldsymbol{RQ_1}$ insights:}
+	
+	We can automatically co-evolve all direct errors in the code after metamodel evolution. Indirect errors are repaired with quick fixes. This allows full automation of the co-evolution with possible manual intervention by checking the generated report.
+	%reduces significantly the burden of manual intervention from developers required only in 2 out of 9 projects. 
+	
+	\end{tcolorbox}
+	
+	
+	\begin{table}[t]
+	\centering
+	\caption{Number of applied resolutions in our code co-evolution for each project and per evolved metamodel.}
+	\label{AppliedResolutions}
+	\resizebox{9cm}{!} {
+		\begin{tabular}{llll}
+			\toprule
+			\begin{tabular}[c]{@{}l@{}}Evolved \\ metamodels\end{tabular} & \begin{tabular}[c]{@{}l@{}}Co-evolved \\ projects\end{tabular}  & \begin{tabular}[c]{@{}l@{}} $N^{o}$ of \\patterns  \end{tabular} & \begin{tabular}[c]{@{}l@{}} $N^{o}$ of applied \\resolutions \end{tabular}  \\ \midrule %& \begin{tabular}[c]{@{}l@{}} $N^{o}$ of \\applications \end{tabular}			
+			
+			\multirow{4}{*}{\begin{tabular}[c]{@{}l@{}}OCL \\ Pivot.ecore\end{tabular}} & $[P1]$ & 381 & \begin{tabular}[c]{@{}l@{}} %$\rhd [CR4]$ \\ $\rhd [R6]$ \\ $\rhd [R9]$ 
+				$[CR1]: 12, [CR2]: 176, [CR4]: 50,$\\$ [CR5]: 110,[CR11]: 13,[CR13]: 7$,\\$ [CR14]: 2, [CR16]: 2, [CR17]: 9$	
+			\end{tabular} \\ \cmidrule{2-4}			
+			
+			& $[P2]$ &25 & \begin{tabular}[c]{@{}l@{}} $[CR1]: 1,[CR2]: 7, [CR4]: 7$,\\ $  [CR5]: 5, [CR11]:4,[CR16]:1 $\end{tabular} \\ \midrule			
+			
+			
+			%		& \begin{tabular}[c]{@{}l@{}}OCL \\ "EssentialOCL"\end{tabular}                 & \begin{tabular}[c]{@{}l@{}}ocl.examples.xtext.essentialocl\\ ocl.examples.xtext.essentialocl.ui\\ ocl.examples.xtext.completeocl\\ ocl.examples.xtext.console\\ ocl.examples.xtext.oclinecore.ui\\ ocl.examples.xtext.oclinecore\\ ocl.examples.xtext.oclstdlib\end{tabular} &                                                      &                                                           &                                                          &                                                          \\ \midrule
+			%		& \begin{tabular}[c]{@{}l@{}}OCL \\ "CompleteOCL"\end{tabular}                  & \begin{tabular}[c]{@{}l@{}}ocl.examples.xtext.completeocl\\ ocl.examples.xtext.completeocl.ui\end{tabular}                                                                                                                                                                   &                                                      &                                                           &                                                          &                                                          \\ \midrule
+			\multirow{6}{*}{\begin{tabular}[c]{@{}l@{}}Modisco \\ Benchmark.\\ecore\end{tabular}}  &  $[P3]$&6  & \begin{tabular}[c]{@{}l@{}}  $[CR2]: 6$	\end{tabular}  \\ \cmidrule{2-4}			
+			
+			& $[P4]$ &22 & \begin{tabular}[c]{@{}l@{}} $[CR1]: 5,[CR2]: 13,$ \\$[CR5]: 1, [CR7]:3$\end{tabular}  \\ \cmidrule{2-4}			
+			
+			& $[P5]$ &50& \begin{tabular}[c]{@{}l@{}} $[CR1]: 6,[CR2]: 23, [CR5]: 6,$ \\ $[CR7]: 13, [CR17]: 2$ \end{tabular}  \\ \cmidrule{2-4}			
+			
+			& $[P6]$&62 & \begin{tabular}[c]{@{}l@{}} $[CR1]: 8, [CR2]: 14,[CR4]: 8$ \\ $ [CR5]: 12,[CR10]: 20,[CR17]: 2$ \end{tabular}  \\ \midrule			
+			
+			\multirow{4}{*}{\begin{tabular}[c]{@{}l@{}}Papyrus \\ ExtendedTypes.\\ecore\end{tabular}} &  $[P7]$&55 & \begin{tabular}[c]{@{}l@{}} $[CR2]: 1, [CR4] :8,$\\ $[CR5] :45, [CR11] :1$ \end{tabular}  \\ \cmidrule{2-4}			
+			
+			&  $[P8]$ &15& \begin{tabular}[c]{@{}l@{}} $[CR5]: 15$ \end{tabular}  \\ \cmidrule{2-4}			
+			
+			&  $[P9]$ &15 & \begin{tabular}[c]{@{}l@{}}$[CR5]: 15$ \end{tabular}  \\ \bottomrule			
+			
+			
+			
+			%& CS14:MPRPS                                                                                                           & \begin{tabular}[c]{@{}l@{}} $\rhd [R4]$ \\ $\rhd [R6]$ \\ $\rhd [R9]$ \end{tabular} &   \begin{tabular}[c]{@{}c@{}} 4 \\ 3 \\ 4 \end{tabular}     \\ 			
+		\end{tabular}
+	}
+	%\vspace{-0.5em}
+	\end{table}
+	
+	
+	
+	\begin{figure}
+	\includegraphics[width=0.5\textwidth]{./pics/chapter1pics/FrequencyICSE.png}
+	%\vspace{-1em}
+	\caption{Frequency of applied resolutions overall.}
+	%\vspace{-1.5em}
+	\label{fig:frequency_resolutions}
+	\end{figure}
+	
+	
+	\subsubsection{RQ2}
+	
+	%Our co-evolution approach is fully automatic and not guided by the developers, but rather by the matched patterns and their corresponding resolutions. Thus, \red{we can loose in correctness} in comparison to the  developers' manual co-evolution.
+	To assess and measure the precision and recall of our automatic co-evolution, we first compared it with the manual co-evolution of the code that developers went through. 
+	%To assess to what extent can our approach correctly co-evolve the code errors w.r.t. the manual co-evolution of the code that developers went through, we measured precision and recall.
+	
+	%Figure \ref{fig:correctness} 
+	Table \ref{table:correctness} depicts the reached precision and recall of our automatic co-evolution approach for our nine case studies. We observe that the measured precision and recall varied, respectively from 48\% to 100\%, and from 51\% to 100\% reaching an average of, respectively 82\% precision and 81\% recall. 
+	%
+	%91,92+82,6+100+80,9+60,4+46,6+95,2+86,6+86,6 /9 = 81;20
+	%91.92+82.6+100+80.9+60.4+46.6+95.2+86.6+86.6
+	%
+	%This means that our applied resolutions for the matched pattern usages for the code errors were correct w.r.t. the expected resolutions by the developers in \red{81\%}. 
+	This shows the usefulness of the considered resolutions in Table \ref{table:ResolutionsCatalog} for the automatic co-evolution of the direct code errors in our case studies. %while meeting the developer's co-evolution needs. 
+	
+	\begin{table}[t]
+	\caption{Measured precision and recall of our projects.}
+	\label{table:correctness}
+	%
+	%\small
+	%\hspace*{-1em}
+	\resizebox{8.5cm}{!}{
+		\begin{tabular}{
+				@{\hskip3pt}l@{\hskip3pt}l@{\hskip3pt}l@{\hskip3pt}l@{\hskip3pt}l@{\hskip3pt}l@{\hskip3pt}l@{\hskip3pt}l@{\hskip3pt}l@{\hskip3pt}l@{\hskip3pt}}
+			\toprule 
+			Projects & P1 & P2 & P3 & P4 & P5 & P6 & P7 & P8 & P9 \\ \midrule%{2-10}
+			precision & 90\%  & 80\%   & 100\%    & 81\%   & 58\%   & 48\%   & 98\%   & 93\%   & 93\% \\ \midrule
+			recall & 66\%  & 83\%   & 100\%    & 75\%   & 58\%   & 51\%   & 94\%   & 100\%   & 100\% \\
+			\bottomrule
+		\end{tabular}
+	}
+	\end{table}
+	
+	%\begin{figure}
+	%	\includegraphics[width=0.6\textwidth]{pics/correctness.png}
+	%\caption{Measured correctness of our projects.}
+	%    \label{fig:correctness}
+	%\end{figure}
+	
+	
+	We further investigated the cause of lowering precision and recall, i.e., the cases where our automatic co-evolution did not match the expected resolutions. 
+	The main observation is that several errors that could have been co-evolved by maintaining them were deleted by the developers in the manually evolved version of the code. Rather than to delete the erroneous code, our approach was able to successfully co-evolve and maintain it. 
+	%
+	For example, in the project \emph{P5}, we observed errors in the code due to moves of the properties \emph{maxUsedMemoryInBytes} and \emph{totalExecutionTimeInSeconds} and its rename to \emph{discoveryTimeInSeconds}. 
+	%
+	Our approach automatically co-evolved them and maintained the erroneous code, by renaming the setter and extending its path. Whereas, the developers' manual co-evolution consisted of deleting the impacted code. This may hint at a lack of automated co-evolution support that would have easily maintained the code in the new version rather than deleting it.  \red{Thus, our co-evolutions here are valid alternatives even if it did not match the correct manual co-evolution.}
+	
+	\begin{comment}
+	
+	\setulcolor{red}
+	%,xleftmargin=0.2cm,,xrightmargin=-0cm,framexleftmargin=+6pt,frame=single
+	\begin{lstlisting}[language=Java,breaklines=true,mathescape,literate={\-}{}{0\discretionary{-}{}{}},caption=Excerpt of the error in the code of the project P5.\label{lis:P5_V1}]
+		//in the class Repport.java
+		...
+		discovery.(*\ul{setMaxUsedMemoryInBytes}*)(maxUsedMemory);
+		discovery.(*\ul{setTotalExecutionTimeInSeconds}*)(...);
+		...
+	\end{lstlisting}
+	
+	\setulcolor{green}
+	%,xleftmargin=0.2cm,,xrightmargin=-0cm,framexleftmargin=+6pt,frame=single
+	\begin{lstlisting}[language=Java,breaklines=true,mathescape,literate={\-}{}{0\discretionary{-}{}{}},caption=Excerpt of the co-evolved error in the code of the project P5.\label{lis:P5_V2}]
+		//in the class Report.java
+		...
+		discovery.(*\ul{getIterations().get(0).}*)  
+		(*\ul{setMaxUsedMemoryInBytes}*)(maxUsedMemory);
+		discovery.(*\ul{getIterations().get(0).}*) 
+		(*\ul{getDiscoveryTimeInSeconds}*)(...);
+		...
+		
+	\end{lstlisting}
+	
+	\end{comment}
+	
+	\red{It is worth noting that the order of the resolutions’ application is following the order of the treated metamodel changes. It may affect the number of iterations of Algorithm~\ref{algo :overallalgo} but it will neither affect the value of recall and precision nor the final result of the co-evolved code.}
+	
+	Finally, to check the behavioral effect of the co-evolution, we observed the tests' execution that we generated for the original and co-evolved code. %In total, respectively for the original and co-evolved versions. %, \red{xyz} and \red{xyz} test case were generated for the the nine projects, with \red{xyz} and \red{xyz} passing test, \red{xyz} and \red{xyz} failing tests, and \red{xyz} and \red{xyz} crashed tests due to an error. 
+	Table \ref{table:test_results} depicts the test execution results. In \emph{[P1, P5, P6, P8, and P9]} similar tests were generated for the original and co-evolved versions. Whereas in \emph{[P2, P3, P7]} there were common tests as well as different generated tests, while we could also not generate tests for \emph{[P4]}. In most cases, we observe that the percentages of passing, failing, and erroneous tests were the same with no significant changes after the co-evolution. 
+	Therefore, it suggests that our automatic co-evolution is behaviorally correct by not altering the code behavior of the original projects. 
+	
+	
+	\begin{table*}[t]
+	%\begin{wraptable*}{r}{5.5cm}
+	\centering
+	\caption{Observed test before and after co-evolution. [Legend: Before (V1) -- After (V2) ]}
+	\label{table:test_results}
+	%
+	%\small
+	%\hspace*{-2em}
+	\resizebox{17.5cm}{!}{
+		\begin{tabular}{
+				@{\hskip3pt}c@{\hskip3pt}|c@{\hskip3pt}|c@{\hskip3pt}|c@{\hskip3pt}|c@{\hskip3pt}|c@{\hskip3pt}|c@{\hskip3pt}|c@{\hskip3pt}|c@{\hskip3pt}}
+			\toprule 
+			Projects & P1 & P2 & P3 & P5 & P6 & P7 & P8 & P9 \\ \midrule%{2-10}
+			\begin{tabular}[c]{@{}l@{}}$N^{o}$ \\ tests\end{tabular} &  1987 -- 1987 & 2261 -- 2073  &  475 -- 555   & 67 -- 67  &  427 -- 427  &  142 -- 251  &  105 -- 105  &  75 -- 75 \\ \midrule
+			\begin{tabular}[c]{@{}l@{}}$N^{o}$ \\ pass\end{tabular} & \begin{tabular}[c]{@{}l@{}} 826 -- 826 \\(41\% -- 41\%)\end{tabular} & \begin{tabular}[c]{@{}l@{}}  1221 -- 1161 \\ (54\% -- 56\%)\end{tabular} &\begin{tabular}[c]{@{}l@{}}  349 -- 417  \\ (73\% -- 75\%)\end{tabular}  & \begin{tabular}[c]{@{}l@{}}32 -- 32 \\ (47\% -- 47\%)\end{tabular}  &  \begin{tabular}[c]{@{}l@{}} 2 -- 2 \\(0.4\% -- 0.4\%)\end{tabular}    & \begin{tabular}[c]{@{}l@{}} 18 -- 103\\(12\% -- 41\%) \end{tabular}  &\begin{tabular}[c]{@{}l@{}}  16 -- 16\\(18\% -- 17\%) \end{tabular} & \begin{tabular}[c]{@{}l@{}} 14 -- 13 \\(15\% -- 15\%)\end{tabular}  \\ \midrule
+			\begin{tabular}[c]{@{}l@{}}$N^{o}$\\ fail\end{tabular} &\begin{tabular}[c]{@{}l@{}} 14 -- 14\\ (0.7\%--0.7\%) \end{tabular}  & \begin{tabular}[c]{@{}l@{}} 36 -- 16 \\ (1,6\% -- 0,8\%)\end{tabular}  & \begin{tabular}[c]{@{}l@{}} 3 -- 3  \\(0.6\% -- 0,5\%)\end{tabular} & \begin{tabular}[c]{@{}l@{}}  2 -- 2  \\(2.9\% -- 2.9\%)\end{tabular} & \begin{tabular}[c]{@{}l@{}} 0 -- 0 \\(0\% -- 0\%)\end{tabular} & \begin{tabular}[c]{@{}l@{}}3 -- 4 \\(2.1\% -- 1.5\%)\end{tabular}  & \begin{tabular}[c]{@{}l@{}} 3 -- 3 \\(2.8\% -- 2.8\%)\end{tabular}  & \begin{tabular}[c]{@{}l@{}} 1 -- 1  \\(1.3\% -- 1.3\%)\end{tabular}\\ \midrule
+			\begin{tabular}[c]{@{}l@{}}$N^{o}$\\ error\end{tabular} &\begin{tabular}[c]{@{}l@{}} 1147 -- 1147\\ (57\%--57\%) \end{tabular}&  \begin{tabular}[c]{@{}l@{}} 1004 -- 896 \\ (44\% -- 43\%)\end{tabular}  &  \begin{tabular}[c]{@{}l@{}}123 -- 135 \\(25.8\% -- 24.3\%)\end{tabular}  & \begin{tabular}[c]{@{}l@{}}33 -- 33\\(49.2\% -- 49.2\%)\end{tabular}  & \begin{tabular}[c]{@{}l@{}} 425 -- 425 \\(99.5\% -- 99.5\%)\end{tabular} &  \begin{tabular}[c]{@{}l@{}}121 -- 144 \\(85.2\% -- 57.3\%)\end{tabular} & \begin{tabular}[c]{@{}l@{}} 86 -- 86 \\(81.9\% -- 81.9\%)\end{tabular} & \begin{tabular}[c]{@{}l@{}} 60 -- 61\\(80\% -- 81.3\%)\end{tabular}\\ 
+			\bottomrule
+		\end{tabular}
+	}
+	%\end{wraptable*} 
+	\end{table*}
+	
+	\begin{tcolorbox}[boxsep=-2pt]
+	\textbf{$\boldsymbol{RQ_2}$ insights:}
+	
+	Our automatic co-evolution reached an average of an 82\% precision and 81\% recall.
+	It was able to co-evolve and maintain erroneous code that developers unnecessarily deleted. 
+	Generated tests for original and co-evolved code further showed that our co-evolution is not impacting the original code behavior w.r.t. the generated tests. 
+	\end{tcolorbox}
+	
+	
+	\begin{comment}
+	
+	
+	\kaouter{ Discussion :1million
+		1-The high-level intuition behind our approach is that
+		we apply a targeted co-evolution by propagating the impacting metamodel changes only to the code errors directly, rather than browsing all code elements statically to fetch the possible impacts.
+		Our automatic coevolution approach tries to mimic the developers' behavior with known resolutions when co-evolving the code errors in an “iterative way”. After the application of each resolution, the compilation unit is refreshed to get the list of the new compilation errors for the next iteration.
+		
+		2- the applied resolutions are related to the distribution of the impacting metamodel changes (see \ref{table:ResolutionsCatalog} ). However, there is no relation between the distribution of the applied resolution and the recall and precision that rather depends on “if” the automatic resolutions match "or not" the manual developer’s expected resolutions. Moreover, we did not randomly and synthetically choose the metamodel changes and their types in the evaluation. Rather, we took the realistic developers' evolutions of the metamodels in our selected real-world software projects.
+		3- there are similarities with API migration approaches \cite{henkel2005catchup,andersen2010generic} on resolving errors in the client code, approaches do not handle all the equivalents of the impacting metamodel changes we do (\ref{table:ResolutionsCatalog}) and that occurred in our case studies. Therefore, we did not consider them as a baseline because we know apriori that too many changes would not be treated, hence, the comparison would be unfair and biased
+		4-.Moreover, EMF is used for the implementation and evaluation, but our approach conceptually remains valid for other abstracted models that affect a Java code, such as in JHipster or OpenAPI.
+		
+	}
+	
+	
+	%\DK{yes, i think this goes to discussion section 4.5}
+	\subsection{Discussion}
+	We now discuses our approach and the obtained results. 
+	\end{comment}
+	
+	
+	\subsubsection{RQ3}
+	
+	%\paragraph{Comparison with Quick Fixes}
+	
+	
+	\begin{table*}[t]
+	\centering
+	\caption{Number of applied Quick Fixes for each project and per evolved metamodel.}
+	\label{AppliedQF}
+	\resizebox{16cm}{!} {
+		\begin{tabular}{lllll}
+			\toprule
+			\begin{tabular}[c]{@{}l@{}}Evolved \\ metamodels\end{tabular} & \begin{tabular}[c]{@{}l@{}}Co-evolved \\ projects\end{tabular}  & \begin{tabular}[c]{@{}l@{}} \% of  \\eliminated \\ errors  \end{tabular} & \begin{tabular}[c]{@{}l@{}} $N^{o}$ of applied \\ Quick Fixes \end{tabular}  & Total
+			\\ \midrule %& \begin{tabular}[c]{@{}l@{}} $N^{o}$ of \\applications \end{tabular}			
+			
+			\multirow{4}{*}{\begin{tabular}[c]{@{}l@{}}OCL \\ Pivot.ecore\end{tabular}} & $[P1]$ & 82\% 
+			& \begin{tabular}[c]{@{}l@{}} 
+				$  [$Create Class X$] $: 3, $ [$Create method m $] $: 27 , 
+				\\  $[$Change m to m' $] $: 60,$[ $Add cast $] $: 59,
+				\\  $[ $Change type (of variable or return type of method) $] $: 17,
+				\\  $[ $Add unimplemented methods $] $: 43,
+				\\ $[ $Create constants $] $: 15,  $[ $Remove argument $] $: 1.
+			\end{tabular}  & 225\\ \cmidrule{2-5}			
+			
+			& $[P2]$ & 41\% 
+			&\begin{tabular}[c]{@{}l@{}}
+				$ [ $Create method $] $: 4,$[ $Change to m' $] $:11,\\
+				$ [ $change type of var or return type $] $: 1,\\
+				$ [ $Add unimplemented methods $] $: 2,
+				
+			\end{tabular}  & 18\\ \midrule			
+			\multirow{6}{*}{\begin{tabular}[c]{@{}l@{}}Modisco \\ Benchmark.\\ecore\end{tabular}}  &  $[P3]$& 100\%
+			& \begin{tabular}[c]{@{}l@{}}  
+				%  $[ $  $] $
+				$[ $ Create Class X  $] $: 6,  $[ $ Add unimplemented methods  $] $: 1
+			\end{tabular}  & 7\\ \cmidrule{2-5}			
+			
+			& $[P4]$ &100\% 
+			& \begin{tabular}[c]{@{}l@{}} 
+				$[ $ Create Class X $] $: 2,$[ $  Create method $] $: 8,\\ $[ $ Change m to m' $] $; 5, $[ $ Remove argument $] $: 1,\\ $[ $ Add cast $] $ : 6
+			\end{tabular}  & 22\\ \cmidrule{2-5}			
+			
+			& $[P5]$ &83\%
+			& \begin{tabular}[c]{@{}l@{}}
+				$[ $  Create Method $] $: 17,  $[ $ Change method m to m' $] $: 16, \\ $[ $ Remove argument $] $: 2,  $[ $ Change type of var or return type $] $: 1,\\  $[ $ Add Cast$] $: 16.
+				
+			\end{tabular}& 52  \\ \cmidrule{2-5}			
+			
+			& $[P6]$&67\% 
+			& \begin{tabular}[c]{@{}l@{}}
+				$[ $ Change method m to m' $] $: 4, $[ $ Add unimplemented methods  $] $: 2,\\ $[ $ Create Constant$] $:9, $[ $ change type $] $ : 2,\\$[ $ Add Cast  $] $: 6
+				
+			\end{tabular}& 23  \\ \midrule			
+			
+			\multirow{4}{*}{\begin{tabular}[c]{@{}l@{}}Papyrus \\ ExtendedTypes.\\ecore\end{tabular}} &  $[P7]$&69\%
+			& \begin{tabular}[c]{@{}l@{}} 
+				$[ $ Create Class X $] $: 3,  $[ $ Create method m $] $: 9,\\  $[ $ Change method m to m' $] $: 13,  $[ $Change type of var or return type  $] $: 5, \\$[ $ Add Cast $] $: 4,  $[ $Add unimplemented methods$] $: 2.
+				
+			\end{tabular} & 36 \\ \cmidrule{2-5}			
+			
+			&  $[P8]$ &93\%
+			& \begin{tabular}[c]{@{}l@{}}
+				$[ $ Create Class X $] $: 1,  $[ $ Create method $] $ : 14,\\ $[ $ Create Const $] $ :3,  $[ $ Add Cast$] $: 2,\\  $[ $ Change method m to m' $] $:3.
+			\end{tabular} & 23 \\ \cmidrule{2-5}			
+			
+			&  $[P9]$ &93\% &
+			
+			\begin{tabular}[c]{@{}l@{}}
+				$[ $ Create Class X $] $: 1,  $[ $ Create method $] $ : 14,\\ $[ $ Create Constant $] $ :3,  $[ $ Add Cast$] $: 2,\\  $[ $ Change method m to m' $] $:3.
+			\end{tabular} & 23 \\ \midrule			
+			Total &&&& 429 \\ \bottomrule
+			
+			
+			%	& CS14:MPRPS                                                                                                           & \begin{tabular}[c]{@{}l@{}} $\rhd [R4]$ \\ $\rhd [R6]$ \\ $\rhd [R9]$ \end{tabular} &   \begin{tabular}[c]{@{}c@{}} 4 \\ 3 \\ 4 \end{tabular}     \\ 			
+		\end{tabular}  
+		
+	}
+	%\vspace{-0.5em}
+	\end{table*}
+	
+	The first baseline we compare to is the quick fixes available in the IDE since they are widely used by developers to repair code errors%yu2012maintaining QF are used by developers usually to resolve compiling errors.
+	%
+	~\cite{10.1145/2384616.2384665}, and more importantly, they have not been compared to code co-evolution approaches before. 
+	To compare with the quick fixes as a baseline, we implemented the automatic application of quick fixes as an option in our plugin. It is a variant of our Algorithm \ref{algo :overallalgo} that only applies the quick fixes on the errors. 
+	The algorithm browses the errors of each compilation unit and applies the first proposed quick fix, since by default Eclipse IDE\footnote{See \emph{org.eclipse.jdt.ui.text.java.CompletionProposalComparator}} order the quick fixes by \emph{relevance}. Note that all executions herein terminated normally without any infinite loop.
+	%The selection of the first quick in the list of proposals is due to the strategy of proposals ordering of eclipse. \texttt{CompletionProposalComparator} of eclipse proposes two criteria: by relevance and alphabetic order. Eclipse default settings opt for ordering by relevance.
+	
+	%It stops in two cases: 1) when only errors without any quick fix proposal remain, or 2) when the application of a quick fix causes an infinite loop \cite{cuadrado2018quick,khelladi2019detecting}, i.e., a cycle of applying a quick fix that causes a previously fixed error (A $\mapsto$ B $\mapsto$ A $\mapsto$ B $\mapsto$ ...).   
+	%(Error A quick fixed, error B appears \textless--\textgreater 
+	% Error B quick fixed, error A appears), infinite side-effect cycle. 
+	
+	
+	
+	In Table~\ref{AppliedQF}, we present the percentage of errors that quick fixes eliminated for each project, and the frequencies of each type of applied quick fixes. 
+	%we give the number of quick fixes applied per type, 
+	%\red{to help us to analyse the quick fixes' reaction to the different types of changes.}\todo{what ?} 
+	
+	While the quick fixes eliminated from 41\% to 100\% errors, we found that the precision and recall of automatic quick fixes are equal to 0, because no correction was applied as expected to the manual developers' resolutions. That is why we refer to the errors are eliminated by the quick fixes and not corrected or co-evolved. 
+	For example, concerning errors caused by class or property deletion from the metamodel, renaming a class or an attribute, moving, pushing, or pulling attributes or methods from a class to another, the quick fixes proposed to create them back in their old containers. This is in contradiction of the applied metamodel changes.  
+	%for some errors, the usage of the metamodel class in the code is super %interface, and when applying the first quick fix, it will create a class %and not an interface
+	%duplicate case
+	For errors caused by changing a variable's type, the quick fixes always suggested adding a cast with a wrong type. 
+	
+	%Adding a declaration or an implementation of missing or renamed method causes a major problem of polymorphism on which metamodeling is based on. In the case of adding a method declaration in an interface, all classes that implement this interface will ask to "add unimplemented method", and by applying this quick fix, an empty methods will be added. These corrections do not meet the specifications of the metamodel changes. 
+	
+	Unlike our approach, quick fixes do not take in consideration the context of the impacted code and the information contained in its causing metamodel changes. For example, the quick fix \texttt{create the missing method \emph{m()}} is applied no matter the metamodel change (i.e., deletion, moving, pulling, or pushing changes) or the impacted code location (i.e., statement, variable declaration, parameter, etc.). %this invocation is located in a complex statement, in a variable declaration, or in any other position in the code AST. 
+	Our approach takes into account the context of the impacted code and the causing change thanks to the use of pattern matching (see Section~\ref{pattern_matching}). 
+	% either the pattern MoveProperty\_UpperBoundSingle or the pattern MoveProperty Upper\_BoundMultiple is detected then
+	
+	
+	For instance, after a move property change, the resolution $[CR7]$ or $[CR8]$ is applied, respectively. Thus, taking into consideration the embedded information in the causing metamodel change, namely the origin class, the target class, and the multiplicity of the reference between them.
+	
+	
+	
+	\begin{tcolorbox}[boxsep=-2pt]
+	\textbf{$\boldsymbol{RQ_3}$ insights:}
+	The automatic application of quick fixes leads to a faulty evolved code. The same type of quick fixes is applied regardless of the context of the impacted code. With 0 precision and recall, we can conclude the inability of Eclipse quick fixes to co-evolve correctly the code with the evolution of the metamodel. 
+	\red{}
+	
+	\end{tcolorbox}
+	
+	
+	
+	\subsubsection{RQ4}
+	%\paragraph{Comparison with State of the art co-evolution}
+	
+	%%%%%%%%%%%%%%%%%%%%Comparaison with prior work %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%Table recall and precision per project %%%%
+	\begin{table*}[t]
+	%\begin{wraptable*}{r}{5.5cm}
+	\centering
+	\caption{Comparison between our automatic co-evolution approach and the semi-automatic co-evolution approach. [Legend: Precision(P) -- Recall(R) ]}
+	\label{table:comparison_AC_vs_SC}
+	%
+	\normalsize
+	%\hspace*{-2em}
+	\resizebox{17cm}{!}{
+		\begin{tabular}{
+				@{\hskip3pt}c@{\hskip3pt}|c@{\hskip3pt}|c@{\hskip3pt}|c@{\hskip3pt}|c@{\hskip3pt}|c@{\hskip3pt}|c@{\hskip3pt}|c@{\hskip3pt}|c@{\hskip3pt}|c@{\hskip3pt}|c@{\hskip3pt}}
+			\toprule 
+			Projects & P1 & P2 & P3& P4 & P5 & P6 & P7 & P8 & P9& Total \\ \midrule%{2-10}
+			\begin{tabular}[c]{@{}l@{}} Our automatic approach\end{tabular} & \begin{tabular}[c]{@{}l@{}} 90\%(P)\\ 66\%(R)\end{tabular} & \begin{tabular}[c]{@{}l@{}} 80\%(P)\\ 83\%(R)\end{tabular} &  \begin{tabular}[c]{@{}l@{}} 100\%(P) \\ 100\%(R) \end{tabular} & \begin{tabular}[c]{@{}l@{}}81\%(P) \\ 75\%(R)\end{tabular} & \begin{tabular}[c]{@{}l@{}} 58\%(P) \\ 58\%(R)\end{tabular} & \begin{tabular}[c]{@{}l@{}} 48\%(P) \\ 51\%(R)\end{tabular} & \begin{tabular}[c]{@{}l@{}} 98\%(P) \\ 94\%(R)\end{tabular} & \begin{tabular}[c]{@{}l@{}}  93\%(P) \\ 100\%(R)\end{tabular} & \begin{tabular}[c]{@{}l@{}} 93\%(P) \\ 100\%(R)\end{tabular}
+			& \begin{tabular}[c]{@{}l@{}} 82\%(P) \\ 81\%(R)\end{tabular}
+			\\ \midrule
+			
+			\begin{tabular}[c]{@{}l@{}} \textbf{Semi-automatic approach \cite{Khelladi2020}}\end{tabular} & \begin{tabular}[c]{@{}l@{}}92\%(P) \\ 92\%(R)\end{tabular} & \begin{tabular}[c]{@{}l@{}} 93\%(P) \\ 86\%(R)\end{tabular} &\begin{tabular}[c]{@{}l@{}} 100\%(P) \\ 100\%\end{tabular}  & \begin{tabular}[c]{@{}l@{}}100\%(P) \\ 100\%(R) \end{tabular}  &  \begin{tabular}[c]{@{}l@{}}100\%(P) \\ 100\%(R)\end{tabular}    & \begin{tabular}[c]{@{}l@{}} 48\%(P) \\ 48\%(R)\end{tabular}  &\begin{tabular}[c]{@{}l@{}} 100\%(P) \\ 100\%(R)\end{tabular} & \begin{tabular}[c]{@{}l@{}}100\%(P) \\ 100\%(R)\end{tabular} & \begin{tabular}[c]{@{}l@{}}100\%(P) \\ 100\%(R)\end{tabular}   & \begin{tabular}[c]{@{}l@{}}92\%(P) \\ 91\%(R)\end{tabular}  \\
+			\bottomrule
+			
+		\end{tabular}
+	}
+	
+	%\end{wraptable*} 
+	\end{table*}
+	
+	%%%% Text about comparison AC vs SC
+	% we treat more changes. the impact analysis is not the same.
+	
+	
+	
+	We now compare our approach to the state of the art of metamodel and code co-evolution, namely our previous work \cite{Khelladi2020}. It runs an impact analysis to trace the impacts in the code, while we rely on the compilation errors after regenerating the code API from the evolved metamodel. 
+	We also consider an additional change of Pull property and add a new resolution for it ($CR14$). 
+	We further distinguish with our previous work by checking behavioral correctness with tests (before/after co-evolution) and by comparing to two baselines. 
+	Yet, the main difference is it being semi-automatic requiring intervention to decide between alternative resolutions to co-evolve the code, while we fully automate this decision based on our pattern matching process. Thus, intuitively, it will likely perform better than a fully automatic co-evolution. RQ4 aims to measure this difference.  
+	
+	%The semi-automatic approach of code co-evolution of Khelladi et al. \cite{Khelladi2020} starts by change detection and an impact analysis. This approach takes into account the types of changes listed in Table \ref{mmchanges}, except for the "Pull property" change type. While the impacted parts in code, in our approach, consist of compiling errors, Khelladi et al. \cite{Khelladi2020} proceed by a static analysis without compilation. Each evolved metamodel is traced through the AST of the generated code elements and their usages in the AST of the additional code. The impacted nodes are then coevolved using the catalog of resolutions \ref{table:ResolutionsCatalog} ( that does not include $CR14$). 
+	%Our approach is 100\% automatic thanks to the pattern matching process \ref{pattern_matching}. In the case of an impact that supports more than one resolution, Khelladi et al. give the developer the choice to select one of the possible resolutions.
+	%This semi-automatic approach is evaluated on the nine projects described in Table \ref{CaseStudies_CoEvolution}. Unlike our evaluation, Khelladi et al. used only precision and recall metrics in their evaluation process, without any other checking of the behavioral correctness of their semi-automatic co-evolution approach. 
+	Table \ref{table:comparison_AC_vs_SC} shows precision and recall values of our approach and the semi-automatic co-evolution approach~\cite{Khelladi2020}. 
+	We notice that the semi-automatic co-evolution approach~\cite{Khelladi2020} outperforms our automatic co-evolution approach by a small margin in terms of precision and recall. % ( 92\% over 82\%) and recall(91\% over 81\%). However, the margin between the values remains small. 
+	On average, we had 82\% precision and 81\% recall in full automatic co-evolution compared to 92\% precision and 91\% recall in semi-automatic co-evolution. 
+	This is due to the fact that our approach favors the least deletion when possible $[CR1]$ over $[CR3]$, or $[CR4]$ over $[CR2]$, while the semi-automatic approach favors integral deletions $[CR3]$ over $[CR1]$, or $[CR2]$ over $[CR4]$. %, and this integral deletion matches the developers' co-evolved version.
+	Overall, we observe that the trade-off between full and semi-automatic co-evolution leads to only a reduction of -10\% in precision and recall while still maintaining them at a high level ($>$ 81\%). This small reduction in performance provides a bigger benefit of speeding up the co-evolution and removing the burden of manual intervention from developers on every code error. Indeed, rather than spending time in guiding the co-evolution at every error, developers can automatically perform it in couples of minutes, in particular, if thousands of errors must be co-evolved after metamodel evolution.
+	
+	
+	\begin{tcolorbox}[boxsep=-2pt]
+	\textbf{$\boldsymbol{RQ_4}$ insights:}
+	Fully automating metamodel and code co-evolution performs less than a semi-automatic co-evolution, but still gives a high precision and recall of ($>$ 81\%) while removing the burden of manual intervention from developers on every code error to co-evolve. 
+	\end{tcolorbox}
+	
+	% Tests for correctness checking
+	% Precision, Recall
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	% describe the approach
+	\subsection{Discussion and limitations}
+	This section discusses the approach and the observed results. 
+	
+	The high-level intuition behind our approach is that we apply a targeted co-evolution by propagating the impacting metamodel changes only to the code errors directly, rather than browsing all code elements statically to fetch the possible impacts.
+	Our automatic co-evolution approach tries to mimic the developers' behavior with known resolutions when co-evolving the code errors in an “iterative way”. After the application of each resolution, the list of errors %compilation unit 
+	is refreshed to get the list of the new compilation errors for the next iteration.
+	% relation betsween the input and the output of the evaluation
+	
+	Moreover, Table \ref{AppliedResolutions} shows the distribution of applied resolutions. It is related to the distribution of the impacting metamodel changes (see Table\ref{table:ResolutionsCatalog}) since for a given impacting change, a specific set of resolutions can be applied. 
+	However, there is no relation between the distribution of the applied resolution and the recall and precision, which depends more on 'if' the automatic resolutions match "or not" the manual developer’s expected resolutions. Moreover, we did not randomly and synthetically choose metamodel changes and their types in the evaluation. Rather, we took the realistic developers' evolutions of the metamodels in our selected real-world software projects. Thus, we did not influence the applied resolutions, which correspond only to the metamodel changes. Of course, having a different distribution of metamodel changes would result in a different distribution of applied resolutions. 
+	
+	Finally, we handled the evolution of one metamodel at once to co-evolve its impacts. Handling multiple metamodels is an interesting case, but is out-of-scope in this paper. Nonetheless, the first favorable scenario we can currently handle is to treat the multiple metamodels in sequence when they are independent of each other. The main limitation is in a second scenario where there are dependencies between the multiple metamodels. For example, a change "set type to T" in a metamodel A referencing a change "add T" in a metamodel B. Herein, the solution would be to find the order of metamodels in which to handle the co-evolution in sequence. This is left as future work. 
+	
+	\section{Threats to Validity}\label{threat}
+	\noindent This section discusses threats to validity \cite{wohlin2012experimentation}.
+	
+	\subsection{Internal Validity.} To provoke the code errors, we had to replace the original metamodel evolution and to regenerate the code API. To reduce any bias in the source of errors, we decided to evolve one metamodel at a time. This increases the confidence in the source of the errors, and hence, their co-evolution. Dealing with conflicting errors that can mask each other due to the simultaneous evolution of several metamodels is left for future work.  
+	Moreover, to measure the correctness, we analyzed the developers' manual co-evolution.
+	To reduce the risk of misidentifying an expected resolution, for each impacted part of the code, we investigated the entire co-evolved class. If we did not find it, we further searched in other classes in case the original impacted part of the code was moved into another class. Thus, our objective was to reduce the risk of missing any correspondence between an error in the original code and its evolved version. Moreover, as our co-evolution relies on the quality of detected metamodel changes, we analyzed each detected change and checked whether it occurred between the original and evolved metamodels. This alleviates the risk of relying on an incorrect metamodel change that would degrade the pattern matching. 
+	Note that the order of changes taken as input does not influence our co-evolution, but the order of errors we treat may affect the distribution of the applied resolutions. However, we took the order in which the errors were detected. 
+	Finally, besides the manual checking of the co-evolved code, we used Evosuite as a test suites generation tool that has shown its efficiency in
+	test generation as a state-of-the-art tool~\cite{DANGLOT2019110398,https://doi.org/10.1002/stvr.1601}. The main reason is that our projects did not have manually written tests. However, automatic test
+	generation can even be more advantageous herein. Indeed, it generates tests for all
+	public methods, whereas developers tend to manually write few tests for only some targeted methods. Thus, if relying only on manually written tests, there is a high risk of not assessing the behavioral correctness of many cases of code co-evolutions that are not covered by test cases. Despite the fact that generated tests can be better for our approach and its results allow us to measure the behavioral correctness of the co-evolution, %it is still not sufficient as it cannot replace the manual written tests. Further studies are needed here}.
+it still can be combined with manual written tests.
+
+
+\subsection{External Validity.} We implemented and evaluated our approach for EMF and Ecore metamodels and Java code. %As EMF metamodels rely on MOF \cite{MOF241} and object-oriented elements that can 
+%Other object-oriented languages use different syntax but conceptually use the same constructions as in Java, such as C\# or C++.
+Although co-evolution could theoretically be applicable for other languages, such as C\# or C++, we cannot generalize our results. Further experimentation on other languages is necessary. However, the only requirement to apply our approach to other languages is to parse the ASTs of the erroneous code and to adapt our resolutions to the new ASTs' structure.  
+
+Furthermore, the evaluation was carried out on Eclipse projects in three languages. Thus, we cannot generalize our findings to other software languages and their implementations. However, our approach could be used to co-evolve Java code added on top of a generated code from a domain model, \eg from a UML class diagram or an entity model. %, such as JHipster that generates a complete and modern Web app or microservice architecture based on a domain model and a set of architectural choices. 
+Nonetheless, more evaluations are still necessary. %\footnote{https://www.jhipster.tech/}
+
+\subsection{Conclusion Validity.} Our evaluation showed promising results with an automatic code co-evolution that is fast and useful, with an average of~82\% precision and~81\% recall varying from~48\% to~100\%. The results also showed the usefulness of our approach and the resolutions proposed in our catalog in Table \ref{table:ResolutionsCatalog}. However, even though we evaluated it on nine projects with complex metamodel evolution, we plan to further evaluate on more case studies to have more insights and statistical evidence.  %further evaluation is needed on more case studies.
+\begin{comment}
+	
+\end{comment}
+
+
+\section{Conclusion}\label{conclusion}
+
+In this paper, we presented an approach to automatically co-evolve code when metamodels evolve. It relies on a pattern matching algorithm to match the different pattern usages of the metamodel generated code elements in the additional erroneous code. Once a direct error in the code is matched with a pattern usage, we can co-evolve it with its corresponding resolution. 
+For indirect errors that cannot be matched, we apply the available quick fix to repair them. 
+%
+Our code co-evolution was evaluated on nine projects and three metamodels from three Eclipse EMF implementations. After re-generating the code API from the evolved version of the metamodel, hence, causing 837 errors in the additional code.
+For the 771 direct errors, our automatic co-evolution approach was able to match 631 pattern usages and to apply 631 resolutions. It showed to be efficient and useful in co-evolving all direct errors in the code with an average of82\% precision and 81\% recall varying from~48\% to~100\%. All 66 indirect errors were resolved by calling 5 quick fixes. Moreover, we checked the behavioral correctness of our approach by using test suites before and after code co-evolution. We observed that the percentage of passing, failing, and erroneous tests remained stable with insignificant variations in some projects. Thus, suggesting the behavioral correctness of the co-evolution. Finally, we found that the quick fixes are not able to correctly co-evolve the code. This is because they cannot exploit the context of the impacted code and relate it to the changes of the metamodel. 
+\red{We also found that fully automating metamodel and code co-evolution performs less than a semi-automatic co- evolution, but still gives a high precision and recall of ($>$ 81\%) while removing the burden of manual intervention from developers on every code error to co-evolve.}
+
+
+In summary, our work presents the following contributions :
+1/ A fully automatic code co-evolution approach due to Ecore metamodel evolution based on pattern matching. 
+2/ A prototype implementation of an Eclipse plugin to show the efficiency of our approach. % available publicly\footnote{\url{https://figshare.com/s/8986914e924300be77da}}.
+3/ An evaluation based on four actions: 1) Measuring the co-evolution correctness. 2) Verifying the behavioral correctness using unit tests running before and after automatic code co-evolution. 3) Comparison with the state-of-the art semi-automatic co-evolution approach~\cite{Khelladi2020}. 4) Comparison with Quick Fixes popular tool.
+
+
+
+As future work, we first plan to explore ordering the errors in the code before co-evolving them. In fact, we co-evolve the errors in the same order they are retrieved by the JDT. Thus, we will investigate whether it could reach better correctness with faster co-evolution or not. 
+%
+Finally, we plan to extend our resolutions with a replace resolution, based on distance metrics to find element replacements to co-evolve the code. \red{After that, we can rely on our approach to extend it with a search-based heuristics, such as genetic algorithms to explore different paths of co-evolution, in contrast to a single path that we compute in this paper. In particular, to explore the different alternative resolutions of $CR1-CR4$.}  
+
+%
+%a\kaouter{}
+%\DK{either we put it as future work, maybe even in discussion above 4.5, and then refer to it here and say future work.}
+%
+%Finally, we will evaluate our approach on more case studies and on the case of simultaneous multiple metamodel evolution. 
+%\section*{Acknowledgments.} The research leading to these results has received funding from the \emph{RENNES METROPOLE} under grant \emph{AIS no. 19C0330} and from \emph{ANR} agency under grant \emph{ANR JCJC MC-EVO$^{2}$ 204687}.
+
+%\newpage

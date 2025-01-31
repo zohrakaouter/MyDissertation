@@ -1,3 +1,167 @@
+As I explained in section ?? of the background and section ?? of the state of the art, LLMs are widely explored in Model-Driven Engineering and Software Engineering, but no existing study evaluated the LLMs capabilities 
+to support developers in the problem of metamodels and code co-evolution. 
+In this chapter, I present a novel approach to mitigate the challenge of metamodel evolution impacts on the code using LLMs. 
+%Chatgpt as LLM 
+Our approach is based on prompt engineering, where we design and generate natural language prompts to best co-evolve the impacted code due to the metamodel evolution. I first explain how a prompt template is structured, then how I investigated the usefulness of this template structure. 
+
+  Section 2 presents a motivating example to illustrate the problem of metamodels and code co-evolution. Section 3 presents our approach for generating prompts and details the prototype implementation.  Section 4 details our followed methodology in this empirical study. This section assesses the usefulness of my approach and compares ot to IDE quick fixes as a baseline. Section 5 reports on the obtained results and discusses threats to validity.Finally, Section 7 concludes this chapter. 
+
+\section{Motivating example}
+\label{example}
+
+
+%To have an overview of the challenge we work on, 
+To illustrate the adressed challenge, let us have an example. 
+Figure \ref{fig: BMM} shows an excerpt of the  version ~0.9.0 of "Modisco Discovery Benchmark" metamodel. %\footnote{\url{https://git.eclipse.org/r/plugins/gitiles/modisco/org.eclipse.modisco/+/refs/tags/0.12.1/org.eclipse.modisco.infra.discovery.benchmark/model/benchmark.ecore}}.
+Modisco is an academic initiative project implemented in the Eclipse platform that has evolved numerous times in the past to support the development of model-driven tools, reverse engineering, verification, and transformation of existing software systems \cite{bruneliere2010modisco,bruneliere2014modisco}.
+%consisting of 10 classes in the version of~0.9.0.
+Figure \ref{fig: BMM} illustrates  some of the domain concepts \textbf{Discovery}, \textbf{Project}, and \textbf{ProjectDiscovery}  used for the discovery and reverse engineering of an existing software system. 
+From these metaclasses, a first code API is generated, containing Java interfaces and their implementation classes, a factory, a package, etc. %(details of created files in table \ref{table: locationofMMelemen}). 
+Listing \ref{lis:Modisco_Code_API_V1} shows a snippet of the generated Java interfaces and classes from the metamodel in Figure \ref{fig: BMM}. 
+
+The generated code API is further enriched by the developers with additional code functionalities in the "Modisco Discovery Benchmark" project and its dependent projects as well.
+For instance, by implementing the methods defined in metaclasses and advanced functionalities in new classes.
+% (\eg language services, tooling, \dots).
+Listing \ref{lis:Modisco_Code_External_V1} shows the two classes \texttt{Report} and \texttt{JavaBenchmarkDiscoverer} of the additional code ({\small\boxed{Line~4,8}} in the same project "Modisco Discovery Benchmark" and in another dependent project, namely the "Modisco Java Discoverer Benchmark" project).
+%, namely the classes \texttt{CDOProjectDiscoveryImpl} and \texttt{JavaBenchmarkPackageImpl}. 
+%
+%One of the dependent projects on the Modisco discovery benchmark metamodel is Java Benchmark Discoverer. From this project, as an example, we select 3 classes shown in Listing \ref{lis:Modisco_Code_External_V1}. 
+%
+%In particular, the classes \texttt{CDOProjectDiscoveryImpl} and \texttt{JavaBenchmarkPackageImpl}, and \texttt{JavaDiscoveredProjectImpl}, which handles information and statistics about CDO and Java project. 
+%
+%the class \textit{CDOProjectDiscoveryImpl} gives information and statistics about CDO project Discovery. 
+%Another dependent class \textit{JavaBenchmarkPackageImpl} that creates and initializes the package' methods %for Package models
+%( or Benchmark models ? non). The last class is
+%\textit{JavaDiscoveredProjectImpl} that contains different information and statistics about java discovered project. 
+%The method \textit{initializePackageContents} (line 12) retrieves a \textit{ProjectDiscovery} instance to initialize the classes of the Java Benchmark Package. The method \textit{eBaseStructuralFeatureID} (line 24) returns the structural identifier of the feature relying on the type of its class.  
+%
+%From version 0.9.0 to 0.11.0, 
+In version~0.11.0, the "Modisco Discovery Benchmark" metamodel evolved with several significant changes, among which the following impacting changes: \emph{1)} Renaming the property \texttt{DicoveryDate} of the class  \texttt{JavaBenchmarkDiscoverer} to \texttt{DiscoveryDate}, and \emph{2)} Moving the property \emph{discoveryTimeInSeconds} from metaclass \texttt{Discovery} to \texttt{DiscoveryIteration}.
+
+%To analyze the consequences of the metamodel evolution on the additional code, we track the impacts of the following metamodel changes:
+%\begin{enumerate}%[noitemsep,nolistsep]
+
+
+
+%\item Pulled the reference \textit{discoveries} from metaclass \texttt{DiscoveredProject} to \texttt{Benchmark}.
+\begin{comment}
+	
+	
+	\begin{itemize}
+		\item \emph{1)} Renaming the property \texttt{DicoveryDate} of the class  \texttt{JavaBenchmarkDiscoverer} to \texttt{DiscoveryDate}. % and \texttt{DiscoveredProject}.
+		
+		\item \emph{2)} Moving the property \emph{discoveryTimeInSeconds} from metaclass \texttt{Discovery} to \texttt{DiscoveryIteration}. 
+	\end{itemize} %\DK{maybe choose another rename and move ? averageSaveTimeInSeconds ?}
+\end{comment}
+
+\begin{figure}
+	
+	\centering
+	\includegraphics[width=0.45\textwidth]{./pics/chapter3pics/example.PNG}
+	\caption{Excerpt of Modisco Benchmark metamodel in version 0.9.0.}
+	\label{fig: BMM}
+	%\vspace{-5mm}
+\end{figure}
+
+
+
+After applying these modifications, the code of Listing \ref{lis:Modisco_Code_API_V1} is re-generated from the evolved version of the metamodel, which impacts the existing additional code depicted in Listings \ref{lis:Modisco_Code_External_V1}. 
+
+\begin{lstlisting}[language=Java,breaklines=true,mathescape,literate={\-}{}{0\discretionary{-}{}{}},caption=Excerpt of the generated code in org.eclipse.modisco.infra.discovery.benchmark.,label={lis:Modisco_Code_API_V1}]
+	//Discovery Interface
+	public interface Discovery extends EObject {
+		double getTotalExecutionTimeInSeconds();
+		void setTotalExecutionTimeInSeconds(double value);
+		...
+	}
+	//Project Interface
+	public interface ProjectDiscovery extends Discovery {...}
+	//DiscoveryImpl Class
+	public class DiscoveryImpl extends EObjectImpl implements Discovery {
+		public double getTotalExecutionTimeInSeconds() {...}
+		public void setTotalExecutionTimeInSeconds(double totalExecTime) {...}
+		...
+	}
+\end{lstlisting}
+%xleftmargin=0.2cm,xrightmargin=0cm,framexleftmargin=+6pt,frame=single,
+\begin{lstlisting}[language=Java,breaklines=true,mathescape,literate={\-}{}{0\discretionary{-}{}{}},caption=Excerpt of the additional code V1.,label={lis:Modisco_Code_External_V1}]
+	
+	public class Report {
+		...
+		discovery.(*\ul{setDiscoveryTimeInSeconds}*)(...);
+	}
+	
+	public class JavaBenchmarkDiscoverer extends AbstractModelDiscoverer<IFile> {
+		...
+		discovery.(*\ul{setDicoveryDate}*)(new Date());
+		...
+	} 
+\end{lstlisting}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                   Now the evolved code                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setulcolor{green} 
+%\setstcolor{green}
+%\setstcolor{green}
+%,xleftmargin=0.2cm,,xrightmargin=-0cm,framexleftmargin=+6pt,frame=single
+\begin{lstlisting}[language=Java,breaklines=true,mathescape,literate={\-}{}{0\discretionary{-}{}{}},caption=Excerpt of the additional code V2.,label={lis:Modisco_Code_External_V2}]
+	
+	public class Report {
+		...
+		discovery.(*\ul{getIterations().get(0).}*) 
+		(*\ul{setDiscoveryTimeInSeconds}*)(...);
+		...
+	}
+	
+	public class JavaBenchmarkDiscoverer extends AbstractModelDiscoverer<IFile> {
+		...
+		discovery.(*\ul{setDiscoveryDate}*)(new Date());
+		...
+	}
+\end{lstlisting}
+
+
+
+
+The resulting errors in the original code in version 0.9.0 are underlined in red in Listing \ref{lis:Modisco_Code_External_V1}. Listing \ref{lis:Modisco_Code_External_V2} presents the final result of the manual developer's co-evolution in version 0.11.0. The co-evolved code is underlined in green. 
+% Expected co-evolution ?
+The changes \textit{rename} of the property \textit{ DicoveryDate} and the \textit{move} of the property \emph{discoveryTimeInSeconds} impact their usages ({\small\boxed{Line~4,8}} in Listing~\ref{lis:Modisco_Code_External_V1}). The impact of renaming \textit{ DicoveryDate} is co-evolved by replacing \textit{setDicoveryDate} by \textit{setDiscoveryDate}. The impact of moving the property \emph{discoveryTimeInSeconds} is co-evolved by extending the call path of the method \emph{setDiscoveryTimeInSeconds} through the reference \textit{iterations} by calling the method \textit{getIterations} and getting the first element of the returned list of DiscoveryIteration objects.
+
+%The above examples show the importance of correctly matching the different code usages of the generated code with the metamodel evolution changes to co-evolve them with the appropriate resolutions.  
+Developers unfortunately manually co-evolve the code, which is tedious, error-prone, and time-consuming. 
+One help developers get is from the IDE and the provided quick fixes. For example, when using Eclipse quick fixes to co-evolve these errors, it suggests creating the method \texttt{setDiscoveryTimeInSeconds} in the class \texttt{Discovery}, which does not meet the required co-evolutions shown in Listing~\ref{lis:Modisco_Code_External_V2}.
+
+With the ever-growing popularity and promising results of LLMs, a developer can prompt an LLM to suggest a co-evolution. 
+For example, 
+%To motivate more our work, 
+we asked ChatGPT to co-evolve the error resulted from moving the property \emph{discoveryTimeInSeconds} by giving the erroneous code ({\small\boxed{Line~4}} in Listing~\ref{lis:Modisco_Code_External_V1})  with the message of the error taken from eclipse Problems window. This is the first intuition when using ChatGPT because the developer does not know necessarily the metamodel change causing the error and finding it due to the abstraction gap is a tedious and error-prone task. Figure \ref{fig: chatgptanswer} shows that ChatGPT proposes to create a method named \emph{setDiscoveryTimeInSeconds} in the class \emph{Discovery}, which is totally wrong because it does not fit the causing change. 
+
+Our Hypothesis is that the LLM fails because our problem is more complex than simply repairing a code error. It must understand the original impacting metamodel change traced to the code error, as well as the abstraction gap between the two artefacts of metamodels and code. After improving the prompt, \LLM succeeded to give the right resolution as show in Figure \ref{fig: chatgptimprovedanswer}.
+Our vision is that this contextual rich information must be injected in the prompt.
+Thus, the quality of the prompt is a key for the LLM to solve this problem of metamodels and code co-evolution. %Indeed, it is a hard problem due to the abstraction gap between the two artefacts of metamodels and code. This context should be part of the prompt as well as the impacting metamodle change that must be traced to the code error. 
+
+%by giving only the errouneous ({\small\boxed{Line~4}} in Listing~\ref{lis:Modisco_Code_External_V1}). Chatgpt answer in this case was totaly wrong. Thus, we injected the change information in the request and asked Chatgpt to coevolve the same error. Figure \ref{fig: chatgptanswer} shows that even adding the change information did not help chatgpt to find the right resolution.
+%
+The next section presents our contribution for a contextualized information rich prompts-based co-evolution of metamodel and code using LLMs.  
+
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.48\textwidth]{./pics/chapter3pics/chatgptprimitiveanswer.png}
+	\caption{ChatGPT primitive answer to the naive prompt.}
+	\label{fig: chatgptanswer}
+	%\vspace{-5mm}
+\end{figure}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.48\textwidth]{./pics/chapter3pics/chatgptimprivedanswer.png}
+	\caption{\LLM improved answer with the enriched prompt with contextual information.}
+	\label{fig: chatgptimprovedanswer}
+	\vspace{-5mm}
+\end{figure}
 \section{Prompt-Based Approach}
 \label{appraoch}
 This section introduces our approach to generate the prompts needed for the code co-evolution. 
@@ -266,3 +430,192 @@ Figure~\ref{fig:promptexample} shows an example of the generated prompt for the 
 We implemented our solution as an eclipse Java plugin handling Ecore/EMF metamodels and their Java code. To retrieve the list of errors, we used JDT eclipse plugin \footnote{Eclipse Java development tools (JDT): \url{https://www.eclipse.org/jdt/core/}}. To launch our tool, we added a command to the context menu when selecting a java project. Generated prompts are sent to \LLM (see next section \ref{selectedLLM}), more specifically, its OpenAI API endpoint "https://api.openai.com/v1/chat/completions". We used Java JSON package to send our prompts and to receive \LLM responses. The error location, the corresponding generated prompt and \LLM responses are parsed in CSV file to have a visible results and to keep the history of proposed the co-evolutions.
 Moreover, quick fixes (our baseline) are called using 
 \textit{org.eclipse.jdt.ui.text.java.IQuickAssistProcessor} and \textit{org.eclipse.jdt.ui.text.java.IJavaCompletionProposal}.
+
+\section{Methodology}
+\label{evaluation}
+
+This section describes our methodology for empirically assessing the capabilities of \LLM in addressing the problem of metamodel and code co-evolution. 
+It first describes the selected LLM and the followed evaluation process.
+Then, it presents our research questions and the data set.
+
+\subsection{Selected LLM}\label{selectedLLM}
+%\red(GPT-3.5, 4.0 ?)
+% Motivate the use of chatgpt
+% Motivate the use of gpt-3.5-turbo, chat mode
+
+We chose to use \LLM \emph{GPT-3.5-turbo} in chat mode. It currently points to \emph{gpt-3.5-turbo-0613} released in June 2023. We opted for this model because of four factors. The first one is that prompt content is only textual, we don't need to inject audio or image content. The second one is its capacity to generate good answers for requests about code and models generation \cite{nathalia2023artificial,yeticstiren2023evaluating,guo2023exploring,fu2023chatgpt,kabir2023empirical,chaaben2023towards,camara2023assessment}. The third factor is that it was the latest API version that is accessible, \emph{gpt-4} API still not accessible for us. The last one is related to the high popularity of \LLM as a tool. It has more than 100 million users, and its website saw more than 1.7 billion visitors in the last three months, with Software and Software Development as visitors' top category\footnote{\url{https://www.similarweb.com/fr/website/chat.openai.com/\#demographics}}. 
+
+
+\subsection{Evaluation Process}
+
+
+First, as we aim to query \LLM to co-evolve the erroneous code due to metamodel evolution, we need to provoke the errors in the code. To do so, we replace the original metamodel by the evolved metamodel. Then, we regenerate the code API with EMF. This will cause errors in the additional code that must co-evolve. 
+%
+After that, we must map the errors with the causing metamodel change before to generate a prompt with all appropriate information to be able to co-evolve the code errors. We then rely on the OpenAI API to query \LLM before to analyze its results. 
+%
+%\todo{explain how we measure correctness ?}
+%
+Finally, we measure the correctness of \LLM co-evolution by comparing its co-evolution with the manually co-evolved version by developers. \red{Note that the comparison is processed manually by authors}. This allows us to measure the \emph{correctness} reached by \LLM. %We distinguish between \emph{syntactically} and \emph{semantically} correct co-evolution. The former is when \LLM gives the exact expected co-evolution that is also , whereas the latter is syntactically different but behave the same as the expected co-evolution, hence, semantically correct. 
+%We consider a solution to be correct if it matches 
+Correctness varies from~0 to~1, i.e., 0\% to 100\% and is defined as follows:
+%alternative to terminology of syntactically, semantically
+\vspace{0.5em}
+
+\noindent $ Correctness = \dfrac{LLM Coevolutions \cap Manual Coevolutions}{Manual Coevolutions} $
+
+\vspace{0.5em}
+
+We chose the structure shown in Figure \ref{fig:promptstructure} since it contains the contextual information needed for our problem of metamodels and code co-evolution. \red{This structure was built after few manual naive attempts with \LLM, starting from a minimum context (as shown in the Motivating Example of Figure~\ref{fig: chatgptanswer} that failed) and by enriching the structure with more context information}. However, we do not claim its completeness in terms of needed information or if it is the best structure. Other variants can lead to different results. 
+%for generated prompts after several manual attempts with Chatgpt. 
+To investigate more this choice, we generated three more variations of this structure to observe its effect on the results. Table \ref{table: op variations} contains each variation and its corresponding explanation. Since our prompt contains three parts, we can change the order of these parts (Order Change operator) and the size of the erroneous code we put in the prompt (Minimal Code operator). Finally, rather than asking for a single co-evolution solution, we ask for alternative ones (Alternative Answers operator) in the prompt prefix. \red{To stress out our evaluation, we conducted 5 runs separated by almost a day, the time we needed for one run to check manually the results of each project, which means that each generated prompt is proposed to \LLM five times. This aims to check whether \LLM gives a same or different answer, hence, assess its robustness. 
+	Finally, we compare \LLM to a baseline, namely the IDE quick fixes that are provided to repair the code errors. Note that we do not take as a baseline \LLM with prompts that only contain the code error, since as shown in Section \ref{example} and Figure \ref{fig: chatgptanswer}, it does not work. 
+}
+
+
+\subsection{Research Questions}
+
+To assess the capabilities of \LLM in the co-evolution of code, we set the following research questions. 
+
+\begin{itemize}
+	\item[RQ1] %\subsubsection{RQ1} 
+	%Can our code and metamodel coevolution appraoch using LLMs coevolve the code correctly? 
+	To what extent can \LLM co-evolve the code with evolved metamodels? 
+	This aims to assess the ability of \LLM to give correct resolutions to co-evolve the code according to the metamodel changes.
+	
+	\item[RQ2] %\subsubsection{RQ2}
+	How does varying the temperature hyperparameter affect the output of the co-evolution? %How does our coevolution approach react to the variation of the prompt? 
+	The temperature hyperparameter controls the creativity of the language model. 
+	This question aims to assess the capability of \LLM to co-evolve the erroneous code when given less or more creativity in the generation of the solution. 
+	
+	
+	\item[RQ3] %\subsubsection{RQ2}
+	How does varying the prompt structure affect the output of the co-evolution? %How does our coevolution approach react to the variation of the prompt? 
+	This aims to assess the quality improvement of the co-evolutions due to the prompts' variations.
+	
+	
+	\item[RQ4] %\subsubsection{RQ3} 
+	How does \LLM proposed co-evolution compare to the quick fix baseline? 
+	As quick fixes are provided by default in an IDE to repair the code errors, this question aims to assess which method outperforms the other in the task of code co-evolution with evolving metamodels. %We measure its precision and recall and compare it with precision and recall of our automatic co-evolution approach.
+	
+	
+\end{itemize}
+
+
+
+\begin{table*}[t]
+	\centering
+	\caption{Variation operators of our original prompt (OP).}
+	\label{table: op variations}
+	\resizebox{14cm}{!} {
+		\begin{tabular}{ll}
+			\toprule
+			Variation Operators       & Explanation                               \\ \midrule
+			Order Change (OC)         & \begin{tabular}[c]{@{}l@{}}We change the order between the three structured parts of the prompt. \\  We start by describing  the metamodel change before the abstraction gap.\end{tabular} \\ \midrule
+			Minimal Code (MC)         & \begin{tabular}[c]{@{}l@{}}Instead of giving the whole method that contains the code error to co-evolve, \\ we only give the instruction of code error.\end{tabular}     \\ \midrule
+			Alternative Answers (AA)  & \begin{tabular}[c]{@{}l@{}}Instead of asking the LLM to give one solution of co-evolution, \\ we specifically ask for alternative ways to co-evolve the code error.\end{tabular}           \\
+			\bottomrule
+			
+		\end{tabular}
+	}
+\end{table*}
+
+
+\begin{table*}[t]
+	\centering
+	\caption{Details of the metamodels and their evolutions.}
+	\label{CaseStudies_Evolution}
+	\resizebox{16.5cm}{!} {
+		\begin{tabular}{cllll}
+			\toprule
+			Case study                                                                            & \begin{tabular}[c]{@{}l@{}}Evolved \\ metamodels\end{tabular}                 & Versions & 
+			\multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Atomic changes \\in the metamodel\end{tabular}} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Complex changes \\in the metamodel\end{tabular}} \\ \midrule		
+			
+			
+			OCL & \begin{tabular}[c]{@{}l@{}}Pivot.ecore in project\\ocl.examples.pivot\end{tabular}                        &  \begin{tabular}[c]{@{}l@{}}3.2.2 to\\ 3.4.4\end{tabular}        &   
+			\begin{tabular}[c]{@{}l@{}} Deletes: 2 classes, 16 properties, 6 super types \\ Renames: 1 class, 5 properties \\ Property changes: 4 types; 2 multiplicities \\ Adds: 25 classes, 121 properties, 36 super types  \end{tabular}                                                         &    \begin{tabular}[c]{@{}l@{}} 1 pull property \\ 2 push properties  \end{tabular}                                                        \\ \midrule 
+			Modisco & \begin{tabular}[c]{@{}l@{}}Benchmark.ecore in project\\modisco.infra.discovery.benchmark\end{tabular}                & \begin{tabular}[c]{@{}l@{}}0.9.0 to\\ 0.13.0\end{tabular}         &     
+			\begin{tabular}[c]{@{}l@{}} Deletes: 6 classes, 19 properties, 5 super types \\ Renames: 5 properties  \\ Adds: 7 classes, 24 properties, 4 super types  \end{tabular}                                                        &     \begin{tabular}[c]{@{}l@{}} 4 moves property \\ 6 pull property \\ 1 extract class \\ 1 extract super class \end{tabular}                                                       \\ \midrule		
+			
+			
+			Papyrus & \begin{tabular}[c]{@{}l@{}}ExtendedTypes.ecore in project\\papyrus.infra.extendedtypes\end{tabular}            & \begin{tabular}[c]{@{}l@{}}0.9.0 to\\ 1.1.0\end{tabular}         &   
+			\begin{tabular}[c]{@{}l@{}}Deletes: 10 properties, 2 super types \\ Renames: 3 classes, 2 properies \\ Adds: 8 classes, 9 properties, 8 super types  \end{tabular}                                                      &    \begin{tabular}[c]{@{}l@{}} 2 pull property \\ 1 push property \\ 1 extract super class \end{tabular} \\  \bottomrule 		
+		\end{tabular}
+	}
+\end{table*}
+
+
+
+\begin{table*}[t]
+	\caption{Details of the projects and their caused errors by the metamodels' evolution.}
+	\label{CaseStudies_CoEvolution}
+	\resizebox{18.5cm}{!} {
+		\begin{tabular}{llcccccc}
+			\toprule
+			\begin{tabular}[c]{@{}l@{}}Evolved \\ metamodels\end{tabular}                 & \begin{tabular}[c]{@{}l@{}}Projects to co-evolve in response to the \\ evolved metamodels \end{tabular} 	& \begin{tabular}[c]{@{}c@{}}$N^{o}$ of \\ packages\end{tabular} & \begin{tabular}[c]{@{}c@{}}$N^{o}$ of \\ classes\end{tabular} & 
+			\begin{tabular}[c]{@{}c@{}}$N^{o}$ of \\ LOC\end{tabular} & \begin{tabular}[c]{@{}c@{}}$N^{o}$ of Impacted \\ classes\end{tabular} & \begin{tabular}[c]{@{}c@{}}$N^{o}$ of total \\ errors \end{tabular}\\ \midrule		
+			
+			\begin{tabular}[c]{@{}l@{}}OCL  Pivot.ecore\end{tabular}                     
+			& \begin{tabular}[c]{@{}l@{}} $[P1]$ ocl.examples.xtext.base \\ \end{tabular}   
+			&   \begin{tabular}[c]{@{}l@{}}12 \end{tabular}    
+			& \begin{tabular}[c]{@{}l@{}}181 \end{tabular}                 
+			& 	\begin{tabular}[c]{@{}l@{}}17599 \end{tabular} 
+			& \begin{tabular}[c]{@{}l@{}} 10 \end{tabular} 
+			& \begin{tabular}[c]{@{}l@{}} 29 \end{tabular}
+			\\ \midrule	
+			\begin{tabular}[c]{@{}l@{}}Modisco \\ Benchmark.ecore\end{tabular}            
+			& \begin{tabular}[c]{@{}l@{}} $[P2]$ modisco.infra.discovery.benchmark\\ $[P3]$ gmt.modisco.java.discoverer.benchmark\\ $[P4]$ modisco.java.discoverer.benchmark\\ $[P5]$ modisco.java.discoverer.benchmark.javaBenchmark\end{tabular}  
+			& \begin{tabular}[c]{@{}l@{}}3 \\8 \\10 \\3  \end{tabular}
+			& \begin{tabular}[c]{@{}l@{}}28 \\21 \\28 \\16 \end{tabular} 
+			& \begin{tabular}[c]{@{}l@{}}2333 \\1947 \\2794 \\1654 \end{tabular} 
+			& \begin{tabular}[c]{@{}l@{}}1\\4 \\9 \\9 \end{tabular} 
+			& \begin{tabular}[c]{@{}l@{}}6 \\30 \\56 \\73 \end{tabular} 
+			\\ \midrule		
+			\begin{tabular}[c]{@{}l@{}}Papyrus \\ ExtendedTypes.ecore\end{tabular}          
+			& \begin{tabular}[c]{@{}l@{}} $[P6]$ papyrus.infra.extendedtypes\\   $[P7]$ papyrus.uml.tools.extendedtypes\end{tabular}  & \begin{tabular}[c]{@{}l@{}}8 \\7 \end{tabular}
+			& \begin{tabular}[c]{@{}l@{}}37 \\15  \end{tabular} 
+			&\begin{tabular}[c]{@{}l@{}}2057  \\725  \end{tabular} 
+			& \begin{tabular}[c]{@{}l@{}}8 \\7   \end{tabular}
+			& \begin{tabular}[c]{@{}l@{}} 44\\28 \end{tabular} 
+			\\ \bottomrule		
+		\end{tabular}
+	}
+\end{table*}
+
+
+
+
+\subsection{Data set}
+\label{dataset}
+This section presents the used data set in our empirical study, to be found in the attached supplementary material\footnote{\url{https://figshare.com/s/bf35039892799c0e6f34}}. 
+
+We chose \red{Eclipse Modeling Framework (EMF) platform as technological space}, which allows us to build modeling tools and applications based on Ecore metamodels \cite{steinberg2008emf}. %This open source tool, is also adopted in industry, for instance, in SAP company\footnote{\url{https://help.sap.com/docs/SAP_POWERDESIGNER/1cc460ad80f446e6a9d19303919ee269/c7f1d7456e1b1014b1f5de4946b14e20.html?version=16.7.05}} thanks to its architecture and the tools it offers. It is actively updated, the last release was in November, 2023\footnote{\url{https://download.eclipse.org/modeling/emf/emf/builds/release/latest/index.html}}.    % \cite{ref?}. %In 2022, Eclipse IDE was downloaded 1 million times per month.
+%
+First, we aimed at selecting metamodels with meaningful \red{real} evolutions that do not consist in only deleting metamodel elements, but rather including complex evolution changes (see subsection \ref{mmchanges}). 
+
+%By complex changes, we mean ....
+
+This selection criterion resulted in seven Java projects from three case studies of three different language implementations in Eclipse, namely OCL~\cite{MDTOCL}, Papyrus \cite{MDTPapyrus}, and Modisco~\cite{MDTModisco} \red{with their versions that was manually co-evolved by developers, that represent our ground of truth}.
+%
+OCL is a standard language defined by the Object Management Group (OMG) to specify First-order logic constraints. Papyrus is an industrial project led by CEA\footnote{\url{http://www-list.cea.fr/en/}} to support model-based simulation, formal testing, safety analysis, etc. Modisco is an academic initiative to support development of model-driven tools, reverse engineering, verification, and transformation of existing software systems. 
+%Papyrus is an industrial project led by CEA\footnote{\url{http://www-list.cea.fr/en/}} to support model-based simulation, formal testing, safety analysis, etc.  
+Thus, the case studies cover standard, industrial, and academic languages that have evolved several times for more than 10 years of continuous development period.
+%In particular, Papyrus and OCL are open source projects are actively maintained with frequent releases per year.
+
+Table~\ref{CaseStudies_Evolution} presents the details on the selected case studies, in particular about their metamodels and the occurred changes during evolution. The total of applied metamodel changes was~330 atomic changes, including~19 complex changes in the three metamodels. 
+%
+Table~\ref{CaseStudies_CoEvolution} presents the details on the size of the seven projects and code of the original versions that we co-evolve in addition to the number of errors after the metamodels evolution. 
+
+\section{Conclusion}
+\label{conclu}
+%write conclu here later \todo{Djamel}
+Co-evolving the impact of metamodel evolution on the code is costly and yet challenging. In this paper, we proposed a prompt-based approach for metamodel and code co-evolution. This approach relies on designing and generating a rich contextual information that we inject in the prompts, namely the abstraction gap knowledge, the metamodel changes information and  the impacted code to be co-evolved.
+We evaluated our approach on seven EMF projects and three evolved metamodels from three different Eclipse EMF implementations of OCL, Modisco and Papyrus, with a total of~5320 generated prompts. Results show that on average \LLM has successfully proposed~88.7\% of correct co-evolutions with our original generated prompts. We evaluated then the impact of the temperature variation on the proposed co-evolutions. We found that \LLM gives better responses with lower temperature values of~0 and~0.2. 
+Moreover, when experimenting other variations of the structure of generated prompts, we observed that there was improvement in two variations. 
+%The first one is changing the order of the contextual information in the prompt, and the second one is requiring alternative answers for the co-evolution. Varying the prompt by giving only a minimum code to co-evolve degraded the quality of the proposed co-evolutions. 
+The first one is giving the minimum impacted code to co-evolve in the prompt, and the second one is requiring alternative answers for the co-evolution. However, varying the prompt by changing the order of the contextual information degraded a little the quality of the proposed co-evolutions. 
+Finally, we compared our approach with the quick fixes of the IDE as a baseline. Results show that our approach significantly outperforms the quick fixes that do not take into account the context of the abstraction gap and the metamodel changes.
+
+As future work, we intend to evaluate or approach in other technological spaces than EMF, such as OpenAPI and the challenge of the API evolution impact on clients' code. After that, we plan to transform our approach into a DSL-based approach with a graphical user interface for the output report instead of a CSV file. To facilitate prompt generation and enhance the option of prompt variation, a DSL would be a viable solution. We also plan to replicate our empirical study with other LLMs and other contexts of co-evolution (e.g., between code and test \cite{le2021untangling}).  Another actionable element is to investigate the mining of contextual information from Software Engineering tasks to enrich the prompts, and then improve baseline results
+Finally,\red{ since our contributions focus on empirically studying the use of \LLM in metamodel and code co-evolution, we plan to implement an alternative of the quick fix engine in the Eclipse IDE based on our generated prompt structure. Integrating our prompt-based metamodel and code co-evolution in the IDE will have a direct impact in helping MDE developers and language engineers}. 
+
+

@@ -660,3 +660,9 @@
 \end{minipage}
 \end{center}
 }
+\usepackage{tcolorbox}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+		T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\usepackage{rotating}
