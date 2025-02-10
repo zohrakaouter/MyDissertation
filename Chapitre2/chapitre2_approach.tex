@@ -1,32 +1,27 @@
 
-Whether developers co-evolve their code either manually or automatically, they cannot ensure that the code co-evolution is behaviorally correct, i.e., without altering the behavior of their impacted code. Especially, when there is other alternative co-evolutions for the same impacted code. 
+Whether developers co-evolve their code either manually or automatically, they cannot ensure that the code co-evolution is behaviorally correct, i.e., without altering the behavior of their impacted code. Especially, when there is other alternative co-evolutions for the same impacted code (challenge \Circled{\hyperref[C2]{C2}}). 
 One way to check this is to re-run all the tests after each code co-evolution, which is expensive and time-consuming. It is also tedious and error-prone when the developer checks the output of the tests' execution and manually maps them between the original and evolved versions.
 % Whereas several existing approaches automate the metamodels and code co-evolution  refs 
 
-This chapter presents a new fully automatic approach to check the behavioral correctness of the code co-evolution between different releases of a language when its metamodel evolves. This approach leverages the test suites of the original and evolved versions of the language, and hence, its metamodels and code. Test suites are usually used to check the code is behaviorally correct. 
+This chapter presents a new fully automatic approach to check the behavioral correctness of the code co-evolution between different releases of a language when its metamodel evolves. This approach leverages the test suites of the original and evolved versions of the language, and hence, its metamodels and code. 
+%Test suites are usually used to check the code is behaviorally correct. 
 
 Section~\ref{sec_background} presents the key concepts as a background followed by a motivation example. 
-In section~\ref{sec_approach}, I detail the approach for testing metamodel and code co-evolution and how I use unit test suites before and after code co-evolution to check that the co-evolution did not alter the behavior of the code. while Section~\ref{sec_evaluation} evaluates it. The evaluation section presents first our user study experiment to gain evidence on the difficulty or not of the manual task of tracing impacted tests after metamodel evolution and co-evolution. Then, I measured the efficiency of this approach and the gains observed compared to using the whole test suite as a baseline.
+In section~\ref{sec_approach}, I detail the approach for testing metamodel and code co-evolution and how I use unit test suites before and after code co-evolution to check that the co-evolution did not alter the behavior of the code, while Section~\ref{sec_evaluation} evaluates it. The evaluation section presents first our user study experiment to gain evidence on the difficulty or not of the manual task of tracing impacted tests after metamodel evolution and co-evolution. Then, I measured the efficiency of this approach and the gains observed compared to using the whole test suite as a baseline.
 Sections~\ref{threat} discusses internal and external threats to validity. 
-Finally, Section~\ref{sec_conclusion} concludes the paper and discusses future work plan. 
+Finally, Section~\ref{sec_conclusion} concludes the chapter. 
 %In this approach, I use unit test suites before and after code co-evolution to check that the co-evolution did not alter the behavior of the code. % 
 %The approach first takes as input the metamodel evolution changes and then parses the code to compute the code call graph (CCG). With the changes and the CCG, \red{we first locate all usages of the metamodel elements in the generated code. For example, a getter/setter of a metamodel attribute/reference, interface, the class implementation, etc. 
-%	After that, we recursively trace the code usages of the metamodel elements in the CCG throughout the methods calls in the additional code until reaching the test methods.}
+%	After that, we recursively trace the code usages of the metamodel elements in the CCG throughout the methods calls in the addition8813263al code until reaching the test methods.}
 %Thus, we end up matching the metamodel changes with impacted code methods and their corresponding tests. We perform this step on both releases corresponding to the original and evolved metamodels and code to be able to check the behavioral correctness of the code before and after co-evolution.  
 %
-We implemented our approach in an Eclipse plugin that allows to trace the tests, map them with state-of-the-art solution GumTree \cite{falleri2014fine} and execute them. Then, we report them back in a form of diagnostic to the developers for an easier in-depth analysis of the effect of metamodel evolution rather than re-running and analysing the whole test suite.
+%We implemented our approach in an Eclipse plugin that allows to trace the tests, map them with state-of-the-art solution GumTree \cite{falleri2014fine} and execute them. Then, we report them back in a form of diagnostic to the developers for an easier in-depth analysis of the effect of metamodel evolution rather than re-running and analyzing the whole test suite.
 
 
 %A first part of the evaluation consisted of an user study experiment to gain evidence on the difficulty or not of the manual task of tracing impacted tests after metamodel evolution and co-evolution. We found that tracing manually the tests impacted by the evolution of the metamodel is a hard and error-prone task. Not only the participants could not trace all tests, but they even wrongly traced non-impacted tests. The post-questionnaire results after a demonstration of our automatic approach suggest its high usefulness and adoption likelihood. 
 %
 %We then evaluated our approach on 18 Eclipse projects from OCL, Modisco, Papyrus, and EMF over several evolved versions of metamodels.  
-For four projects we had manually written tests. 
-For the 14 projects without manual tests, we generated a test suite for each release with the best available state-of-the-art tool EvoSuite \cite{fraser2011evosuite}
 
-This paper significantly extends our previous vision paper~\cite{Kebaili2023towards} where we laid out the base for the test tracing. In addition to a more detailed approach, we extend this work by additional core contributions of 1) the mapping of impacted tests between original and evolved versions, 2) executing them programmatically, and 3) reporting the result of the mapped tests and the causing metamodel changes in a GUI to the user. 
-Moreover, the preliminary evaluation of the vision paper~\cite{Kebaili2023towards} was extensively improved both 1) in research questions with three added structured questions, 2) in the number of case studies that was extended from 4 projects to 18 projects with both manually written tests and automatically generated tests, and 3) a user study experiment with 8 participants. 
-
- 
 %Section 1 presents ...
 
 
@@ -68,11 +63,11 @@ Finally, a test suite is added on top of the generated and the additional code t
 \red{}However, the generated code, additional code and tests hold for a single version of the metamodel. 
 \red{With metamodel evolution comes the challenges of co-evolution and its correctness.
 	For example, when a metamodel evolves, model instances must be co-evolved. One way to check the models' correctness is to rely on the OCL constraints to verify the static semantic of the models \cite{cabot2012object,richters2000validating}. Thus, one can compare the constraints before and after the models' co-evolution.
-	In our case, when the metamodel evolves}, the API code can be re-generated again. As a consequence, the additional code manually integrated by developers must be co-evolved accordingly as well. 
+	In our case, when the metamodel evolves}, the API code can be re-generated again. As a consequence, the additional code manually integrated by developers must be co-evolved accllmordingly as well. 
 Unfortunately, there is also no guarantee that the code co-evolution is correct. 
 Usually, the test suite is used to identify possible bugs in the new evolved version of the code. In this work, similarly to the practice of regression testing, we leverage the test suites in both the original and evolved versions of the code to check particularly the behavioral correctness of the co-evolution.
 
-\red{Indeed, in regression testing, the goal is to re-run tests after any code changes to ensure that the software still works as intended \cite{leung1989insights,yoo2012regression,wong1997study}. In this paper, we intend to follow a similar methodology by tracing the impacted tests that must be re-run to compare their results before and after code co-evolution.}  
+\red{Indeed, in regression testing, the goal is to re-run tests after any code changes to ensure that the software still works as intended \cite{leung1989insights,yoo2012regression,wong1997study}. In this contribution, we intend to follow a similar methodology by tracing the impacted tests that must be re-run to compare their results before and after code co-evolution.}  
 %The next section illustrates these challenges on a real-world use case.  
 
 
@@ -205,13 +200,13 @@ After that, we run the impact and the test tracing analysis to link the metamode
 \subsection{Detection of metamodel Changes}\label{sec:changes}
 
 
-Software artifacts continuously evolve over time~\cite{mens2008introduction}.
-As any artifact, metamodels evolve as well.  
-Two types of changes are known and considered in the literature for metamodel evolution: \emph{atomic} and \emph{complex} changes \cite{Herrmannsdoerfer2011}. 
-Atomic changes are additions, removals, and updates of a metamodel element. Complex changes consist of a sequence of atomic changes combined together~\cite{vermolen_reconstructing_2012,khelladi2015detecting}. For example, move property is a complex change where a property is moved from a source class to a target class. This is composed of two atomic changes: delete a property and add a property \cite{Herrmannsdoerfer2011}. 
-Several existing approaches allow to automatically detect metamodel changes between two versions, such as \cite{Alter2015, williams2012searching,cicchetti_managing_2009,langer_posteriori_2013,vermolen_reconstructing_2012,Khelladi2016}.
+%Software artifacts continuously evolve over time~\cite{mens2008introduction}.
+%As any artifact, metamodels evolve as well.  
+%Two types of changes are known and considered in the literature for metamodel evolution: \emph{atomic} and \emph{complex} changes \cite{Herrmannsdoerfer2011}. 
+%Atomic changes are additions, removals, and updates of a metamodel element. Complex changes consist of a sequence of atomic changes combined together~\cite{vermolen_reconstructing_2012,khelladi2015detecting}. For example, move property is a complex change where a property is moved from a source class to a target class. This is composed of two atomic changes: delete a property and add a property \cite{Herrmannsdoerfer2011}. 
+%Several existing approaches allow to automatically detect metamodel changes between two versions, such as \cite{Alter2015, williams2012searching,cicchetti_managing_2009,langer_posteriori_2013,vermolen_reconstructing_2012,Khelladi2016}.
 
-In this work, we use an interface specification of changes {\small\boxed{1}} that is a connection layer to our test tracing approach with the existing change detection approaches. It basically defines each metamodel change as a class with its necessary information. Therefore, in practice, any detection approach \cite{Alter2015, williams2012searching,cicchetti_managing_2009,langer_posteriori_2013,vermolen_reconstructing_2012,Khelladi2016} can be integrated by bridging its changes to our interface and the rest of our approach can be performed independently. 
+As described in Chapter \ref{mmchanges}, we use an interface specification of changes {\small\boxed{1}} that is a connection layer to our test tracing approach with the existing change detection approaches~\cite{Alter2015, williams2012searching,cicchetti_managing_2009,langer_posteriori_2013,vermolen_reconstructing_2012,Khelladi2016}.
 
 \begin{table*}[t]
 	\caption{List of metamodel changes and how they are traced up to the tests in the original and evolved versions. }
@@ -909,27 +904,27 @@ However, even though we evaluated our approach on 18 projects of metamodel evolu
 
 \section{Conclusion}
 \label{sec_conclusion}
-This paper proposes an automated tracing of the impacted tests due to metamodel evolution. Thus, by tracing the tests before and after code co-evolution, we check its behavioral correctness. 
+This chapter proposes an automated tracing of the impacted tests due to metamodel evolution. Thus, by tracing the tests before and after code co-evolution, we check its behavioral correctness. 
 Our approach takes as input the metamodel changes and then finds the different pattern usages of each metamodel element in the code. 
 After that, we recursively search for its usages in the code call graph until reaching the tests. Thus, we end up matching metamodel changes with impacted code methods and their corresponding tests. 
 %
 We further implemented our approach in an Eclipse plugin that allows to trace the tests, map them with state-of-the-art solution GumTree and execute them. We then report them back as a diagnostic to the developers for an easier in-depth analysis of the effect of metamodel evolutions rather than re-running and analyzing the whole test suite.
 
-\red{The user study experiment we conducted showed that tracing manually the tests impacted by the evolution of the metamodel is a hard and error-prone task. Not only the participants could not trace all tests, but they even wrongly traced non-impacted tests.  
+The user study experiment we conducted showed that tracing manually the tests impacted by the evolution of the metamodel is a hard and error-prone task. Not only the participants could not trace all tests, but they even wrongly traced non-impacted tests.  
 	We then evaluated our approach on 18 Eclipse projects from OCL, Modisco, Papyrus, and EMF over several evolved versions of metamodels. Four projects had manually written tests and we generate tests for the other 14 projects. 
 	The results show that we successfully traced the impacted tests automatically by selecting 1608 out of 34612 tests due to 473 metamodel changes. 
 	
 	%We evaluated our approach on three implementations of OCL, Modisco and Papyrus in Eclipse on 14 projects from over several evolved versions of metamodels, and with generated tests with EvoSuite. Results show that we automatically traced 1408 out of 33840 tests based on the 466 metamodel changes. %928 and 480 impacted tests 
 	%
-	When running the traced tests before and after co-evolution, we observed two cases indicating possibly both behaviorally incorrect and correct code co-evolution. Thus, helping the developers to locate the code co-evolution to investigate in more detail. Furthermore, our approach provided gains that represent, on average, a reduction of 88\% in number of tests and \red{84\%} in execution time. No significant difference was observed between projects with manually written tests and automatically generated ones.}   
+	When running the traced tests before and after co-evolution, we observed two cases indicating possibly both behaviorally incorrect and correct code co-evolution. Thus, helping the developers to locate the code co-evolution to investigate in more detail. Furthermore, our approach provided gains that represent, on average, a reduction of 88\% in number of tests and \red{84\%} in execution time. No significant difference was observed between projects with manually written tests and automatically generated ones.   
 
-As future work, we first plan to improve the performance of our implementation with optimization of the tests' tracing.  %first evaluate on more case studies that could have manually written test. 
+%As future work, we first plan to improve the performance of our implementation with optimization of the tests' tracing.  %first evaluate on more case studies that could have manually written test. 
 %we will 
-We also plan to extend our approach to projects that use an equivalent form of metamodels in other technological space than Eclipse, such as JHipster and OpenAPI that both generate code from a model specification similar to a metamodel. Thus, we can have alternative case studies. 
+%We also plan to extend our approach to projects that use an equivalent form of metamodels in other technological space than Eclipse, such as JHipster and OpenAPI that both generate code from a model specification similar to a metamodel. Thus, we can have alternative case studies. 
 
-After that, we plan to investigate the techniques of test amplification on the selected tests we traced from the metamodel changes. Indeed, once we select a subset of tests, we could amplify them by generating more similar tests, yet, with different assertions to cover more corner cases. This would amplify the behavioral check of the code co-evolution. 
+%After that, we plan to investigate the techniques of test amplification on the selected tests we traced from the metamodel changes. Indeed, once we select a subset of tests, we could amplify them by generating more similar tests, yet, with different assertions to cover more corner cases. This would amplify the behavioral check of the code co-evolution. 
 
-Finally, we will also explore another type of amplification, which is the interchange of the tests between the original and evolved versions. In other words, we aim to co-evolve the tests of the original and evolved versions, respectively forward and backward to the evolved and original versions, while removing duplicates. 
+%Finally, we will also explore another type of amplification, which is the interchange of the tests between the original and evolved versions. In other words, we aim to co-evolve the tests of the original and evolved versions, respectively forward and backward to the evolved and original versions, while removing duplicates. 
 
 %%Moreover, the knowledge about the generated code elements from the metamodel elements (e.g., getter/setter for EAttribute, class/interface for EClass, etc.) is so far hard-coded in the implementation. The mappings must be provided for our approach to be able to trace the tests. We could express these mappings in a generic way as a configuration file taken as input in our approach. Thus, we could reuse our approach more easily in other scenarios than EMF Eclipse (e.g., jHipster), given their corresponding mappings as input. This is left as future work to generalize our approach.
 

@@ -22,6 +22,7 @@ For instance, UML\footnote{\url{https://www.eclipse.org/modeling/mdt/downloads/?
 %\addcontentsline{toc}{section}{Challenges}
 %In this specific context, we identified the following challenges to be our probelem scope:
 \subsection*{C1: Resolve the impact of the metamodel evolution on the code automatically}
+\label{C1}
 One of the foremost challenges to deal with in MDE is the impact of the evolution of metamodels on its dependent artifacts. We focus on the impact of metamodels' evolution on the code. 
 Indeed, when a metamodel evolves and the code API is regenerated again, the additional code implemented by developers can be impacted.
 	As a consequence, this additional code must be co-evolved accordingly.% by executing a resolution for each impacted part of the code.
@@ -39,7 +40,7 @@ Other works \cite{yu2012maintaining,Khelladi2020} proposed to co-evolve the code
  
 
 \subsection*{C2: Behavioral correctness of the metamodel and code co-evolution}
-
+\label{C2}
 In literature, when the problem of metamodel and code co-evolution is addressed, the challenge of checking that the co-evolution impacted or not the behavioral correctness of the code is not handled. In any Model-Driven Engineered system, the elements of the metamodel are used in the code. The evolution of the metamodel will be propagated in the code that is co-evolved and its behavior may be altered. Hence, the importance of checking the correctness of the co-evolution. In a larger scope, only few works were dedicated to check the correctness of a code evolution in general. %wether it is refactoring or co-evolution
 %our approach can be categorized along the incremental test selection approaches, such as 
  Ge et al. \cite{10.1145/2568225.2568280} propose to verify the correctness of refactoring.
@@ -50,6 +51,7 @@ Out of the scope of testing code evolution, we find the incremental test selecti
 %Research questions
 %Summary of contributions
 \subsection*{C3: How to draw benefit from LLMs for the metamodel and code co-evolution}
+\label{C3}
 In the MDE ecosystem, we can consider that metamodel and code co-evolution is one of many other MDE tasks. For example Model generation and code generation. Since their appearance, LLMs have been applied in different domains of scientific research, such as Software Engineering and Model-Driven Engineering (MDE), however, to the best of our knowledge, the challenge of exploring LLMs in the task of metamodel and code co-evolution has not yet been addressed. In Software Engineering side, Fu et al. \cite{fu2023chatgpt} evaluated ChatGPT ability to detect, classify, and repair vulnerable code. Kabir et al. \cite{kabir2023empirical} evaluated ability of ChatGPT to generate code and to maintain it by improving it based on a new feature description to add in the code. Zhang et al. \cite{zhang2023multilingual} proposed Codeditor, an LLM based tool for code co-evolution between different programming languages. It learns code evolutions as edit sequences and then uses LLMs for multilingual translation.
 Moreover, other studies focused on evaluating LLMs in MDE activities. 
 Chen et al. \cite{10344012} and Camara et al. \cite{camara2023assessment} used ChatGPT to generate models.

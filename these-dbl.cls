@@ -423,6 +423,7 @@
           ]{./Couverture-these/logos-etablissements/\vlogoetablissementB}%
         }}$
       }}%
+  
     }%
   };
   \end{tikzpicture}
@@ -608,7 +609,7 @@
 \renewcommand{\chaptermark}[1]{\markboth{\chaptername~\thechapter~--\ \textit{#1}}{}}
 \fancyhead[LE,RO]{\small\thepage}
     \fancyhead[RO]{\small\rightmark}   % \rightmark = section courante
-    \fancyhead[LE]{\small Partie~\thepart, \leftmark} % \leftmark = chapitre courant
+    \fancyhead[LE]{\small \thepart \leftmark} % \leftmark = chapitre courant
     \fancyfoot[C]{\thepage}               % marque la page au centre
 }     
 
@@ -666,3 +667,6 @@
 		T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
 \usepackage{rotating}
+%\usepackage{slopp}
+%\usepackage{sloppypar} not found
+\usepackage{microtype}

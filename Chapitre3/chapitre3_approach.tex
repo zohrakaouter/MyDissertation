@@ -1,13 +1,13 @@
-As I explained in section ?? of the background and section ?? of the state of the art, LLMs are widely explored in Model-Driven Engineering and Software Engineering, but no existing study evaluated the LLMs capabilities 
+As I explained in Section~\ref{llm} of the background and Section~\ref{llmsforcoevolution} of the state of the art, LLMs are widely explored in Model-Driven Engineering and Software Engineering, but no existing study evaluated the LLMs capabilities 
 to support developers in the problem of metamodels and code co-evolution. 
-In this chapter, I present a novel approach to mitigate the challenge of metamodel evolution impacts on the code using LLMs. 
+In this chapter, I present a novel approach to mitigate the challenge of metamodel evolution impacts on the code using LLMs (Challenge \Circled{\hyperref[C3]{C3}}). 
 %Chatgpt as LLM 
 Our approach is based on prompt engineering, where we design and generate natural language prompts to best co-evolve the impacted code due to the metamodel evolution. I first explain how a prompt template is structured, then how I investigated the usefulness of this template structure. 
 
-  Section 2 presents a motivating example to illustrate the problem of metamodels and code co-evolution. Section 3 presents our approach for generating prompts and details the prototype implementation.  Section 4 details our followed methodology in this empirical study. This section assesses the usefulness of my approach and compares ot to IDE quick fixes as a baseline. Section 5 reports on the obtained results and discusses threats to validity.Finally, Section 7 concludes this chapter. 
+  Section \ref{ch3_example} presents a motivating example to illustrate the problem of metamodels and code co-evolution. Section \ref{ch3_appraoch} presents our approach for generating prompts and details the prototype implementation.  Section \ref{ch3_evaluation} details our followed methodology in this empirical study. This section assesses the usefulness of my approach and compares ot to IDE quick fixes as a baseline. Section \ref{ch3__results} reports on the obtained results and discusses threats to validity. Finally, Section \ref{ch3_conclu} concludes this chapter. 
 
 \section{Motivating example}
-\label{example}
+\label{ch3_example}
 
 
 %To have an overview of the challenge we work on, 
@@ -57,7 +57,7 @@ In version~0.11.0, the "Modisco Discovery Benchmark" metamodel evolved with seve
 \begin{figure}
 	
 	\centering
-	\includegraphics[width=0.45\textwidth]{./pics/chapter3pics/example.PNG}
+	\includegraphics[width=0.55\textwidth]{./pics/chapter3pics/example.PNG}
 	\caption{Excerpt of Modisco Benchmark metamodel in version 0.9.0.}
 	\label{fig: BMM}
 	%\vspace{-5mm}
@@ -163,14 +163,14 @@ The next section presents our contribution for a contextualized information rich
 	\vspace{-5mm}
 \end{figure}
 \section{Prompt-Based Approach}
-\label{appraoch}
+\label{ch3_appraoch}
 This section introduces our approach to generate the prompts needed for the code co-evolution. 
 It first gives an overview of the approach. Then details the structure of the generated prompts, before to detail each part of it and how it is generated. Finally, it describes our prototype implementation.  
 
 \begin{figure}
 	\centering
 	\hspace*{-0.8cm}
-	\includegraphics[width=0.55\textwidth]{./pics/chapter3pics/approach.png}
+	\includegraphics[width=0.7\textwidth]{./pics/chapter3pics/approach.png}
 	\caption{Overall Approach for Prompt-based co-evolution.}
 	\label{fig: approach}
 	%\vspace{-5mm}
@@ -218,7 +218,7 @@ Each generated prompt is used to request ChatGPT to give a correction for the co
 \begin{figure}[t]
 	\centering
 	%\hspace*{-1cm}
-	\includegraphics[width=0.5\textwidth]{./pics/chapter3pics/promptTemplate.png}
+	\includegraphics[width=0.65\textwidth]{./pics/chapter3pics/promptTemplate.png}
 	\caption{Generated Prompt Structure.}
 	\label{fig:promptstructure}
 	\vspace{-5mm}
@@ -231,7 +231,7 @@ Figure \ref{fig:promptstructure} shows the overall structure of the envisioned p
 One main distinction from simply repairing code errors is the interplay between the metamodels and the additional code through the generated code from the metamodels. This is due to the gap in abstraction in between metamodels and generated code. In fact, for each metamodel various code elements are generated for each metamodel element and with different patterns.
 Table~\ref{table:locationofMMelemen} classifies and provides illustrative examples for the different generated code elements from each metamodel element, namely metaclass, attribute/reference, and method.  %It shows that various code elements are generated for each metamodel element type and with different patterns. 
 %%mapping between the different metamodel elements and their corresponding generated code elements with illustrative examples. 
-For example, take the case of a metaclass\footnote{For simplicity, we refer to a metaclass by simply a class in the remaining of the paper.}. EMF generates a corresponding interface and a class implementation, a \emph{createClass()} method in the factory class, three literals (\ie constants) for the class and an accessor method in the package class, and a corresponding to create adapter method. For the attribute case, EMF generates the signature and implementation of a getter and a setter, an accessor, and a literal. 
+For example, take the case of a metaclass\footnote{For simplicity, we refer to a metaclass by simply a class in the remaining of the chapter.}. EMF generates a corresponding interface and a class implementation, a \emph{createClass()} method in the factory class, three literals (\ie constants) for the class and an accessor method in the package class, and a corresponding to create adapter method. For the attribute case, EMF generates the signature and implementation of a getter and a setter, an accessor, and a literal. 
 %This classification is essential to match the different errors with their corresponding pattern usages in the code, before to co-evolve them with the appropriate resolution strategy. 
 This classification is essential to match the different errors with the right used generated code elements to explicit the abstraction gap. \red{If a class is changed, all its generated elements are impacted and their usages will be erroneous. For example, if a class is renamed, every invocation of the method "get+className" will be erroneous and must be co-evolved}. Thus, we consider the abstraction gap as the first contextual information we inject in the prompts for the LLM to co-evolve the code errors. 
 
@@ -240,18 +240,22 @@ This classification is essential to match the different errors with the right us
 
 
 \subsection{Metamodel Evolution Changes}
-\label{mmchanges}
-A metamodel represents a high abstraction level of a domain.
-Like any software artefact, metamodels evolve to meet domain changing requirements \cite{mens2008introduction}.
-Herrmannsdoerfer et al. \cite{Herrmannsdoerfer2011} distinguish two types of metamodel changes: \emph{atomic} and \emph{complex}. Atomic changes are additions, removals, and updates of a metamodel element. Complex changes consist of a combination of atomic changes ~\cite{vermolen2011reconstructing,khelladi2015detecting}. 
-%
-For example, push property is a complex change where a property is pushed from a parent class to an inheriting child class. This is composed of two atomic changes: delete a property and add a property~\cite{Herrmannsdoerfer2011}. 
-Many approaches in the literature~\cite{Alter2015, williams2012searching,cicchetti2009managing,langer2013posteriori,vermolen2011reconstructing,Khelladi2016,bettini2022executable} exist to detect metamodel changes between two versions. 
-\red{Particularly in our work, we use \cite{Khelladi2016,khelladi2016ad} to extract the changes between two metamodel versions. }
+%\label{mmchanges}
+The metamodel changes that we consider as the second contextual information, are injected in the prompts for the LLM to co-evolve the code errors. 
 
-In practice, we focus on the impacting metamodel changes that will require co-evolution of the code and not on the non-impacting changes. For example, an add change of a class does not require co-evolution. However, a delete change or a change of type will impact the code that must be co-evolved. 
+As a reminder, we use in this thesis a connection layer to our prompt generation approach.  This layer represents an interface specification of changes {\small\boxed{1}} bridging our prompt generator with the existing change detection approaches~\cite{Alter2015, williams2012searching,cicchetti_managing_2009,langer_posteriori_2013,vermolen_reconstructing_2012,Khelladi2016}.
+Accordingly, we detail the changes that we consider in Table \ref{tab:changes}. 
+%A metamodel represents a high abstraction level of a domain.
+%Like any software artefact, metamodels evolve to meet domain changing requirements \cite{mens2008introduction}.
+%Herrmannsdoerfer et al.~\cite{Herrmannsdoerfer2011} distinguish two types of metamodel changes: \emph{atomic} and \emph{complex}. Atomic changes are additions, removals, and updates of a metamodel element. Complex changes consist of a combination of atomic changes0~\cite{vermolen2011reconstructing,khelladi2015detecting}. 
+%
+%For example, push property is a complex change where a property is pushed from a parent class to an inheriting child class. This is composed of two atomic changes: delete a property and add a property~\cite{Herrmannsdoerfer2011}. 
+%Many approaches in the literature~\cite{Alter2015, williams2012searching,cicchetti2009managing,langer2013posteriori,vermolen2011reconstructing,Khelladi2016,bettini2022executable} exist to detect metamodel changes between two versions. 
+%\red{Particularly in our work, we use \cite{Khelladi2016,khelladi2016ad} to extract the changes between two metamodel versions. }
+
+%In practice, we focus on the impacting metamodel changes that will require co-evolution of the code and not on the non-impacting changes. For example, an add change of a class does not require co-evolution. However, a delete change or a change of type will impact the code that must be co-evolved. 
 %Table \ref{xyz} gives 
-The list of impacting metamodel changes \cite{iovino2012impact,cicchetti2009managing} we consider in the prompts is as follows: \emph{1)} Delete property\footnote{Property refers to Attribute, Reference, and Method.} \emph{p} in a class \texttt{C}, \emph{2)} Delete class \texttt{C}, \emph{3)} Rename element \emph{e} in a class \texttt{C}, \emph{4)} Generalize property \emph{p} multiplicity from a single value to multiple values in a class \texttt{C},  \emph{5)} Move property \emph{p} from class \texttt{Source} to \texttt{Target} through a reference \emph{ref},  \emph{6)} Extract class of properties $p_{1},...,p_{n}$ from \texttt{Source} to \texttt{Target} through a reference \emph{ref},  \emph{7)} Push property \emph{p} from super class \texttt{Super} to sub classes \texttt{Sub$_{1}$},...,\texttt{Sub$_{n}$}, \emph{8)} Inline class \texttt{Source} to \texttt{Target} with properties $p_{1},...,p_{n}$, and \emph{9)} Change property \emph{p} type from \texttt{S} to \texttt{T} in a class \texttt{C}. 
+%The list of impacting metamodel changes \cite{iovino2012impact,cicchetti2009managing} we consider in the prompts is as follows: \emph{1)} Delete property\footnote{Property refers to Attribute, Reference, and Method.} \emph{p} in a class \texttt{C}, \emph{2)} Delete class \texttt{C}, \emph{3)} Rename element \emph{e} in a class \texttt{C}, \emph{4)} Generalize property \emph{p} multiplicity from a single value to multiple values in a class \texttt{C},  \emph{5)} Move property \emph{p} from class \texttt{Source} to \texttt{Target} through a reference \emph{ref},  \emph{6)} Extract class of properties $p_{1},...,p_{n}$ from \texttt{Source} to \texttt{Target} through a reference \emph{ref},  \emph{7)} Push property \emph{p} from super class \texttt{Super} to sub classes \texttt{Sub$_{1}$},...,\texttt{Sub$_{n}$}, \emph{8)} Inline class \texttt{Source} to \texttt{Target} with properties $p_{1},...,p_{n}$, and \emph{9)} Change property \emph{p} type from \texttt{S} to \texttt{T} in a class \texttt{C}. 
 
 \begin{comment}
 	\item \emph{1)} Delete property\footnote{Property refers to Attribute, Reference, and Method.} \emph{p} in a class \texttt{C}. 
@@ -272,8 +276,6 @@ The list of impacting metamodel changes \cite{iovino2012impact,cicchetti2009mana
 	
 	\item \emph{9)} Change property \emph{p} type from \texttt{S} to \texttt{T} in a class \texttt{C}. 
 \end{comment}
-
-Thus, we consider these definitions of metamodel changes as the second contextual information we inject in the prompts for the LLM to co-evolve the code errors. 
 
 %\emph{1)} Delete property \emph{p} in a class \texttt{C}. \emph{2)} Delete class \texttt{C}.\emph{3)} Rename element \emph{e} in a class \texttt{C}. \emph{4)} Generalize property \emph{p} multiplicity from a single value to multiple values in a class \texttt{C}. \emph{5)} Move property \emph{p} from class \texttt{S} to \texttt{T} through a reference \emph{ref}. \emph{6)} Extract class of properties $p_{1},...,p_{n}$ from \texttt{S} to \texttt{T} through a reference \emph{ref}. \emph{7)} Push property \emph{p} from super class \texttt{Sup} to sub classes \texttt{Sub$_{1}$},...,\texttt{Sub$_{n}$}. \emph{8)} Inline class \texttt{S} to \texttt{T} with properties $p_{1},...,p_{n}$. \emph{9)} Change property \emph{p} type from \texttt{S} to \texttt{T} in a class \texttt{C}.
 
@@ -432,7 +434,7 @@ Moreover, quick fixes (our baseline) are called using
 \textit{org.eclipse.jdt.ui.text.java.IQuickAssistProcessor} and \textit{org.eclipse.jdt.ui.text.java.IJavaCompletionProposal}.
 
 \section{Methodology}
-\label{evaluation}
+\label{ch3_evaluation}
 
 This section describes our methodology for empirically assessing the capabilities of \LLM in addressing the problem of metamodel and code co-evolution. 
 It first describes the selected LLM and the followed evaluation process.
@@ -468,7 +470,7 @@ Correctness varies from~0 to~1, i.e., 0\% to 100\% and is defined as follows:
 We chose the structure shown in Figure \ref{fig:promptstructure} since it contains the contextual information needed for our problem of metamodels and code co-evolution. \red{This structure was built after few manual naive attempts with \LLM, starting from a minimum context (as shown in the Motivating Example of Figure~\ref{fig: chatgptanswer} that failed) and by enriching the structure with more context information}. However, we do not claim its completeness in terms of needed information or if it is the best structure. Other variants can lead to different results. 
 %for generated prompts after several manual attempts with Chatgpt. 
 To investigate more this choice, we generated three more variations of this structure to observe its effect on the results. Table \ref{table: op variations} contains each variation and its corresponding explanation. Since our prompt contains three parts, we can change the order of these parts (Order Change operator) and the size of the erroneous code we put in the prompt (Minimal Code operator). Finally, rather than asking for a single co-evolution solution, we ask for alternative ones (Alternative Answers operator) in the prompt prefix. \red{To stress out our evaluation, we conducted 5 runs separated by almost a day, the time we needed for one run to check manually the results of each project, which means that each generated prompt is proposed to \LLM five times. This aims to check whether \LLM gives a same or different answer, hence, assess its robustness. 
-	Finally, we compare \LLM to a baseline, namely the IDE quick fixes that are provided to repair the code errors. Note that we do not take as a baseline \LLM with prompts that only contain the code error, since as shown in Section \ref{example} and Figure \ref{fig: chatgptanswer}, it does not work. 
+	Finally, we compare \LLM to a baseline, namely the IDE quick fixes that are provided to repair the code errors. Note that we do not take as a baseline \LLM with prompts that only contain the code error, since as shown in Section \ref{ch3_example} and Figure \ref{fig: chatgptanswer}, it does not work. 
 }
 
 
@@ -605,17 +607,317 @@ Table~\ref{CaseStudies_Evolution} presents the details on the selected case stud
 %
 Table~\ref{CaseStudies_CoEvolution} presents the details on the size of the seven projects and code of the original versions that we co-evolve in addition to the number of errors after the metamodels evolution. 
 
+\section{Results}
+\label{ch3__results}
+This section now presents our results answering each RQ. 
+
+\subsection{RQ1: Assessing the ability of \LLM to give correct code co-evolutions }
+
+%execute with temp 0.2, single result, with whole method having the error, on many projects, 
+
+%To what extent can \LLM co-evolve the code with metamodels? This aims 
+To assess the ability of \LLM to give correct code co-evolutions, % the code according to the metamodel changes. 
+%To answer this question, 
+we ran over the errors caused by the metamodel changes and generated 266 prompts that we submitted to \LLM. 
+Note that we ran our original prompts asking for a single co-evolution of the code error. We further set a fixed temperature hyperparameter to~0.2. A value of 0 restricts the generation of a solution towards a more deterministic one and the more it is higher the more creative the model gets in generating a different solution. Thus, we chose 0.2 to allow only little creativity while restricting the model to not get a different answer for the same prompts in different executions, since we ask for a single solution. 
+%
+Among the~266 generated prompts, \LLM gave, on average, a correct code co-evolution in~88.7\% of the time, varying from~75\% to 100\%. 
+% \red{75\%} to \red{100\%}. 
+\red{When taking only on complex changes into consideration, correctness improves on average from~88.7\% to~95.2\%, \ie \LLM performs better for complex changes.}
+Results show a promising ability of \LLM to actually co-evolve code with evolving metamodels when given the right contextual information in the prompts, rather than simply the errors and their messages. 
+
+
+
+\begin{table}
+	\centering
+	\caption{Measured correctness rate per temperature.}
+	\label{table:correctnesspertemp}
+	%\hspace*{-0.5cm}
+	\resizebox{0.9\textwidth}{!} {
+		\begin{tabular}{lllllllll}
+			\toprule
+			\centering
+			& \multicolumn{6}{l}{\hspace{10.5em}\bfseries Projects}                                \\ %\cmidrule{3-7} 
+			\multirow{3}{*}{\begin{turn}{-90}\bfseries Temperature\end{turn}} & \multicolumn{1}{l|}{}  & \multicolumn{1}{l|}{P1}       & \multicolumn{1}{l|}{P2}      &\multicolumn{1}{l|}{P3} & \multicolumn{1}{l|}{P4}   & \multicolumn{1}{l|}{P5}  & \multicolumn{1}{l|}{P6} & P7 \\ \cmidrule{2-9}
+			
+			& \multicolumn{1}{l|}{0.0} & \multicolumn{1}{l|}{76\%} & \multicolumn{1}{l|}{62.5\%}& \multicolumn{1}{l|}{100\%}& \multicolumn{1}{l|}{80\%}&\multicolumn{1}{l|}{86\%}&\multicolumn{1}{l|}{93.7\%}& 92.8\% \\ \cmidrule{2-9} 
+			
+			& \multicolumn{1}{l|}{0.2} & \multicolumn{1}{l|}{\cellcolor{green!35}\textbf{84\%}}& \multicolumn{1}{l|}{\cellcolor{green!35}\textbf{75\%}}& \multicolumn{1}{l|}{\cellcolor{green!35}\textbf{100\%}}& \multicolumn{1}{l|}{\cellcolor{green!35}\textbf{82\%}} &\multicolumn{1}{l|}{\cellcolor{green!35}\textbf{88\%}} &\multicolumn{1}{l|}{\cellcolor{green!35}\textbf{95.8\%}} & \cellcolor{green!35}\textbf{96.4\%} \\ \cmidrule{2-9} 
+			
+			& \multicolumn{1}{l|}{0.5} & \multicolumn{1}{l|}{57\%}& \multicolumn{1}{l|}{50\%}& \multicolumn{1}{l|}{100\%}& \multicolumn{1}{l|}{58\%} &\multicolumn{1}{l|}{68\%} &\multicolumn{1}{l|}{87.5\%} & 89.2\% \\ \cmidrule{2-9} 
+			
+			& \multicolumn{1}{l|}{0.8} & \multicolumn{1}{l|}{50\%}& \multicolumn{1}{l|}{37\%}& \multicolumn{1}{l|}{0\%}& \multicolumn{1}{l|}{32\%} &\multicolumn{1}{l|}{46\%} &\multicolumn{1}{l|}{62.5\%} & 85.7\% \\ \cmidrule{2-9} 
+			
+			& \multicolumn{1}{l|}{1.0} & \multicolumn{1}{l|}{30\%}& \multicolumn{1}{l|}{29\%}& \multicolumn{1}{l|}{0\%}& \multicolumn{1}{l|}{26\%} &\multicolumn{1}{l|}{40\%} &\multicolumn{1}{l|}{68.7\%} & 78.5\% \\ \bottomrule%\cmidrule{2-9} %
+		\end{tabular}
+	}
+\end{table}
+
+
+\begin{tcolorbox}[boxsep=-2pt]
+	\textbf{$\boldsymbol{RQ_1}$ insights:}
+	Results confirm that \LLM is able at 88.7\% to correctly co-evolve code due to metamodel evolution thanks to the information on the abstraction gap and the impacting metamodel change. It also performs better on complex changes.  
+\end{tcolorbox}
+
+
+\subsection{RQ2: Studying the impact of temperature variation on the output co-evolutions}
+%execute with temp 0, 0.5, 0.8, 1.0
+
+The temperature hyperparameter controls the creativity of the language model. The temperature hyperparameter in \LLM can be set between~0 and~2. Yet, it is suggested to only set it between~0 and~1 in the documentation\footnote{\url{https://platform.openai.com/docs/api-reference/chat}}. Thus, to assess the effect of the temperature in co-evolving the code, we will vary it on~0,~0.2,~0.5,~0.8,~and~1.0. 
+Table \ref{table:correctnesspertemp} shows the obtained results. 
+
+%How does varying the temperature hyperparameter affect the output of the co-evolution? %How does our coevolution approach react to the variation of the prompt? 
+
+%This question aims to assess the capability of \LLM to co-evolve the erroneous code when given less or more creativity in the generation of the solution. 
+%we observe that the more we increase the temperature, the less correct are the code co-evolutions that are suggested by
+Overall, we observe that as the temperature increases, the correctness of code co-evolutions suggested by \LLM decreases. Notably, the correctness improves when the temperature is increased from~0 to~0.2. However, it subsequently degrades with the further increase in temperature, up to~1. At temperatures~0.8 and~1, we observed the worst decrease in correctness. % does not exceed~50\% and~40\%, respectively. 
+The best performance of \LLM is obtained at the temperature~0.2. Note that even with a temperature set to~0, which implies no creativity, \LLM yields results that are nearly as satisfactory as those obtained with a temperature of~0.2.
+
+\red{Moreover, when we repeated the same prompt for each temerature for 5 times, the five answers of \LLM were similar. \LLM gives almost the same proposition of co-evolution, sometimes it uses different terms to comment its answer. For example: \textit{"// Remove the following line since DiscoveredProject is removed"} and \textit{" // Code using DiscoveredProject should be removed"}. However, they are the same co-evolutions. Sometimes \LLM also uses intermediate variables to give the same co-evolution, for example:\textit{ "return aReport.generate()"} and \textit{benchmarkModel=aReport.generate() return benchmarkModel"}. 
+	We believe that this result of obtaining the same co-evolutions over 5 runs shows the efficiency of the prompt template in Figure~\ref{fig:promptstructure}. 
+	By including the necessary information (i.e., abstraction gap, causing change information, and code error), it allows \LLM to narrow the scope of possibilities and to propose similar answer for each unique prompt in each run.}
+
+\begin{tcolorbox}[boxsep=-2pt]
+	\textbf{$\boldsymbol{RQ_2}$ insights:}
+	Results show that lower temperature of~0 and~0.2 give better co-evolutions from \LLM with~0.2 being the best we observed. 
+	Interestingly, we obtained the same results over 5 different runs, which suggests the efficiency our prompt structure in narrowing the scope of possibilities of \LLM's answers. 
+\end{tcolorbox}
+
+
+\subsection{RQ3: Studying the impact of prompt structure variation on the output co-evolutions}
+%Execute prompts starting by the gap information followed by the change information then 
+
+%by starting by the change followed by the gap
+
+%execute prompt with minimal code (instruction)
+
+%??? execute prompt with less code (surrounding instruction) ???
+%??? execute prompt without abstraction gap ???
+
+%execute prompt while asking for many alternative solutions
+
+%How does varying the prompt affect the output of the co-evolution? %How does our coevolution approach react to the variation of the prompt? 
+In our approach, we propose a possible structure for the generated prompts (cf. Subsection \ref{promptgeneration}). However, there is no assurance that this represents the best proposition. Therefore, we varied the structure that we proposed in three different ways, as shown in Table \ref{table: op variations}.  Then we ran the three variations of the original prompts in order to assess the fluctuation and effect on the correctness of the proposed co-evolutions. Here we set the temperature to 0.2 based on results of RQ2. % due to the variation of the prompt. 
+
+%we can of course vary them, which in turn can affect the correctness of the proposed co-evolutions. 
+%To assess the quality improvement of the proposed resolutions due to the variation of the prompt. We ran the experiments with three additional variations of our original prompts, as shown in Table \ref{table: op variations}. 
+
+%\red{Table \ref{x} shows xyz relevant prompt variations in our context of metamodels and code co-evolution that we will assess.}
+
+
+\begin{table}
+	\centering
+	\caption{Measured correctness rate for different prompt variations. [$\nearrow$ and  $\searrow$ are increase and decrease in correctness.]}
+	\label{table:correctnessVariation}
+	\hspace*{-0.5cm}
+	\resizebox{0.7\textwidth}{!}{ 
+		
+		\begin{tabular}{lllllllll}
+			\toprule
+			\centering
+			& \multicolumn{8}{l}{\hspace{15.5em}\bfseries Projects}                                \\ %\cmidrule{3-7}
+			\multirow{3}{*}{\begin{turn}{-90}\bfseries Variations\end{turn}} & \multicolumn{1}{l|}{}  & \multicolumn{1}{l|}{P1}       & \multicolumn{1}{l|}{P2}      &\multicolumn{1}{l|}{P3} & \multicolumn{1}{l|}{P4}  &\multicolumn{1}{l|}{P5}  &\multicolumn{1}{l|}{P6}  & P7 \\ \cmidrule{2-9}
+			
+			%& \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}Original \\ Prompt (OP)\end{tabular}} & \multicolumn{1}{l|}{84\%} & \multicolumn{1}{l|}{75\%}& \multicolumn{1}{l|}{100\%}& \multicolumn{1}{l|}{82\%}& \multicolumn{1}{l|}{88\%}& \multicolumn{1}{l|}{95.8\%}& 96.4\% \\
+			%\cmidrule{2-9} 
+			
+			& \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}Original \\ Prompt (OP)\end{tabular}} & \multicolumn{1}{l|}{\textbf{84\%}}& \multicolumn{1}{l|}{\textbf{75\%}}& \multicolumn{1}{l|}{\textbf{100\%}}& \multicolumn{1}{l|}{\textbf{82\%}} &\multicolumn{1}{l|}{\textbf{88\%}} &\multicolumn{1}{l|}{\textbf{95.8\%}} & \textbf{96.4\%} \\ \cmidrule{2-9} 
+			
+			& \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}Order \\ change (OC)\end{tabular}} & \multicolumn{1}{l|}{84\%}& \multicolumn{1}{l|}{\cellcolor{red!15}66\%$\searrow$}& \multicolumn{1}{l|}{100\%}& \multicolumn{1}{l|}{\cellcolor{red!15}74\%$\searrow$} &\multicolumn{1}{l|}{\cellcolor{red!15}86\%$\searrow$} &\multicolumn{1}{l|}{95.8\%} & 96.4\% \\
+			\cmidrule{2-9} 
+			
+			& \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}Minimal \\ Code (MC)\end{tabular}} & \multicolumn{1}{l|}{\cellcolor{green!35}88.4\%$\nearrow$}& \multicolumn{1}{l|}{\cellcolor{green!35}87.5\%$\nearrow$}& \multicolumn{1}{l|}{100\%}& \multicolumn{1}{l|}{\cellcolor{green!25}86\%$\nearrow$} & \multicolumn{1}{l|}{\cellcolor{green!35}96\%$\nearrow$} & \multicolumn{1}{l|}{\cellcolor{green!25}97.9\%$\nearrow$} & 96.4\% \\
+			\cmidrule{2-9} 
+			
+			& \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}Alternative \\ Answers (AA)\end{tabular}} & \multicolumn{1}{l|}{84\%}& \multicolumn{1}{l|}{\cellcolor{green!25}79\%$\nearrow$}& \multicolumn{1}{l|}{100\%}& \multicolumn{1}{l|}{\cellcolor{green!35}92\%$\nearrow$} & \multicolumn{1}{l|}{\cellcolor{green!25}92\%$\nearrow$} &\multicolumn{1}{l|}{95.8\%} &96.4\%\\ \bottomrule %\cmidrule{2-7} %
+			%\cellcolor{green!35}$\searrow$
+			%\textcolor{red}{$\searrow$} \textcolor{green}{$\nearrow$}
+			
+		\end{tabular}
+	}
+\end{table}
+
+
+Table \ref{table:correctnessVariation} shows the obtained results. Overall, we observe slight increase and decrease compared to the original Prompts structure~(\textbf{OP}). 
+We observe that changing the order in the prompt by first describing the metamodel change (\textbf{OC}) decreases the correctness of the proposed \LLM co-evolutions. It decreased by~-9\% in P2,~-8\% in P4 and by~-2\% in P5. We observed that in particular when describing the abstraction gap with the generated elements for the metamodel deleted classes, % information in the case of deletions, 
+\LLM assumes that the code classes still exist in the code and were not deleted. Thereby, altering sometimes the correctness of its proposed co-evolutions. 
+
+However, the two other prompt variations of giving a minimal code containing the error and asking for alternative solutions delivered better overall results. 
+Surprisingly, on the one hand, giving only the code instruction containing the error (\textbf{MC}) gave the best results. It improved by~+4.4\% in P1,~+12.5\% in P2,~+4\% in P4, ~+8\% in P5, and ~+2.1\% in P6. 
+Our observation is that this improvement is sometimes due to the inability of \LLM to find the impacted code element and co-evolve it within complex and long methods. 
+On the other hand, when asking for alternatives, it improved only by~+4\% in P2,~+10\% in P4, and~+4\% in P5. We observed that when \LLM is unable to find the correct resolution with (\textbf{OP}) prompts, it is unlikely to find the right one when asking for alternatives (\textbf{AA}). Only in few cases it could find the correct co-evolutions.  %We noticed also that 
+The generation of prompts and saving the results took on average from about~10 seconds per prompt for the Original Prompts to~84 seconds per prompt in the case of Alternative Answers (AA) variation prompts.
+\red{Finally, when focusing only on complex changes, correctness improves on average from 88.7\% to 97.6\% for \textbf{(MC)} and \textbf{(AA)}. This implies that, overall, \LLM also performs better for complex changes when varying the prompts. This can be explained by the fact that complex changes provide much more context information that guide better \LLM to give better responses.} 
+%on  the variation operator
+
+
+
+\begin{tcolorbox}[boxsep=-2pt]
+	\textbf{$\boldsymbol{RQ_3}$ insights:}
+	Results show an improvement with two variants out of the three we explored. However, gains are not significant compared to our original structure of the prompt. 
+	Variants also perform better on complex changes. 
+\end{tcolorbox}
+
+\subsection{RQ4: Comparison with quick fixes as baseline}
+%230441
+%compare with quick fixes
+
+%How does \LLM proposed co-evolution compare to the quick fix baseline? 
+%As quick fixes are provided by default in an IDE to repairs the code errors, this question aims to assess which method outperform in the task of code co-evolution with evolving metamodels.
+
+To compare to a baseline the obtained results of proposed co-evolutions with our generated prompts, we checked what is the best quick fix an IDE proposes for each error. Algorithm~\ref{algo :quickfixes} shows the followed steps to run the quick fixes on our projects automatically. 
+It iterates over the java classes and for each error, we  automatically apply the top quick fix suggested by the IDE. 
+It stops when all the errors disappear or if the remaining errors have no possible quick fixes purposed by the IDE. 
+%It stops in three cases : 1) if all the errors disappear, or 2) if the remaining errors have no possible quick fixes, or 3) the application of a quick fix causes an infinite loop \cite{cuadrado2018quick,khelladi2019detecting}, i.e., a cycle of applying a quick fix that causes a previously fixed error~(~A $\mapsto$ ~B $\mapsto$ ~A $\mapsto$ ~B $\mapsto$ ...). 
+
+In Table~\ref{AppliedQF}, we present the percentage of errors that quick fixes eliminated for each project. %, and the frequencies of each type of applied quick fixes. 
+%
+While the quick fixes eliminated from~41\% to~100\% errors. We use the term eliminated instead of correct co-evolution because no quick fix was applied as expected to the manual developers' co-evolutions. In other words, the correctness rate of automatic quick fixes are equal to 0 and are not suited for the task of metamodels and code co-evolution.
+For example, concerning errors caused by class or property deletion from the metamodel, renaming a class or an attribute, moving, pushing or pulling attributes or methods from a class to another, the quick fixes proposed to create them back in their old containers. This is in contradiction of the applied metamodel changes and the code co-evolution.  
+
+For errors caused by changing a variable's type, the quick fixes always proposed to add a cast with a wrong type. 
+
+Similarly, as naive prompts with only the code errors and their messages, quick fixes do not take in consideration the knowledge of the abstraction gap and the information contained in its causing metamodel changes. For example, the quick fix \texttt{create the missing method \emph{m()}} is applied no matter the metamodel change (i.e., deletion, moving, pulling, or pushing changes) and no matter the metamodel element it was generated from.
+Our approach of generated prompts takes into account the context of the impacted code, the abstraction gap, and the causing metamodel change thanks to the prompt template that we designed (cf. Table \ref{fig:promptstructure}).
+
+\begin{tcolorbox}[boxsep=-2pt]
+	\textbf{$\boldsymbol{RQ_4}$ insights:}
+	Results show that \LLM with our generated prompts completely outperforms the quick fixes in correctly co-evolving the code. 
+\end{tcolorbox}
+
+
+
+
+\begin{algorithm2e}[t]
+	% \algsetup{linenosize=\tiny}
+	\small
+	\SetAlgoLined
+	\KwData{EcoreModelingProject}
+	javaClasses $\leftarrow$ Parse(EcoreModelingProject)
+	
+	\For {( jc $\in$ javaClasses)}
+	{
+		errorsList $\leftarrow $ getErrors(jc)
+		
+		\While{(!errorsList.isEmpty() \& hasQuickFix)}
+		{
+			error  $\leftarrow$ errorsList.next()
+			
+			\uIf {error.hasQuickickFix() }
+			
+			{
+				useQuickFixes(error) %\COMMENT{Eclipse quick fix}
+			}
+			
+			
+			refreshJavaClass(jc) 
+			
+			refreshErrorsList(jc, errorsList)
+		}
+		
+	}
+	
+	\caption{Quick fixes for coevolution}
+	\label{algo :quickfixes}
+\end{algorithm2e}
+
+
+
+\begin{table}[t]
+	\centering
+	\caption{Number of applied Quick Fixes for each project and per evolved metamodel.}
+	\label{AppliedQF}
+	\resizebox{0.7\textwidth}{!} {
+		\begin{tabular}{lll}%ll}
+		\toprule
+		\begin{tabular}[c]{@{}l@{}}Evolved \\ metamodels\end{tabular} & \begin{tabular}[c]{@{}l@{}}Co-evolved \\ projects\end{tabular}  & \begin{tabular}[c]{@{}l@{}} \% of eliminated \\ errors  \end{tabular} %& \begin{tabular}[c]{@{}l@{}} $N^{o}$ of applied \\ Quick Fixes \end{tabular}  & Total
+		\\ \midrule 
+		\begin{tabular}[c]{@{}l@{}}OCL Pivot.ecore\end{tabular}
+		
+		& $[P1]$ & 41\% 
+		%&\begin{tabular}[c]{@{}l@{}} $ [ $Create method $] $: 4,$[ $Change to m' $] $:11,\\     $ [ $change type of var or return type $] $: 1,\\     $ [ $Add unimplemented methods $] $: 2,     \end{tabular}  & 18
+		\\ \midrule			
+		\multirow{4}{*}{\begin{tabular}[c]{@{}l@{}}Modisco \\ Benchmark.ecore\end{tabular}}  &  $[P2]$& 100\%
+		%& \begin{tabular}[c]{@{}l@{}}  
+		%  $[ $  $] $     $[ $ Create Class X  $] $: 6,  $[ $ Add unimplemented methods  $] $: 1    \end{tabular}  & 7
+	\\ \cmidrule{2-3}			
+	
+	& $[P3]$ &100\% 
+	%& \begin{tabular}[c]{@{}l@{}}    $[ $ Create Class X $] $: 2,$[ $  Create method $] $: 8,\\ $[ $ Change m to m' $] $; 5, $[ $ Remove argument $] $: 1,\\ $[ $ Add cast $] $ : 6   \end{tabular}  & 22
+	\\ \cmidrule{2-3}			
+	
+	& $[P4]$ &83\%
+	%& \begin{tabular}[c]{@{}l@{}}     $[ $  Create Method $] $: 17,  $[ $ Change method m to m' $] $: 16, \\ $[ $ Remove argument $] $: 2,  $[ $ Change type of var or return type $] $: 1,\\  $[ $ Add Cast$] $: 16.    \end{tabular}& 52 
+	\\ \cmidrule{2-3}			
+	
+	& $[P5]$&67\% 
+	%& \begin{tabular}[c]{@{}l@{}} $[ $ Change method m to m' $] $: 4, $[ $ Add unimplemented methods  $] $: 2,\\ $[ $ Create Constant$] $:9, $[ $ change type $] $ : 2,\\$[ $ Add Cast  $] $: 6    \end{tabular}& 23  
+	\\ \midrule			
+	
+	\multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}Papyrus \\ ExtendedTypes.ecore\end{tabular}} &  $[P6]$&69\%
+	%& \begin{tabular}[c]{@{}l@{}}     $[ $ Create Class X $] $: 3,  $[ $ Create method m $] $: 9,\\  $[ $ Change method m to m' $] $: 13,  $[ $Change type of var or return type  $] $: 5, \\$[ $ Add Cast $] $: 4,  $[ $Add unimplemented methods$] $: 2.   \end{tabular} & 36
+	\\ \cmidrule{2-3}			
+	
+	
+	&  $[P7]$ &93\% 
+	
+	%\begin{tabular}[c]{@{}l@{}}     $[ $ Create Class X $] $: 1,  $[ $ Create method $] $ : 14,\\ $[ $ Create Constant $] $ :3,  $[ $ Add Cast$] $: 2,\\  $[ $ Change method m to m' $] $:3.   \end{tabular} & 23
+	\\ %\midrule			
+	%Total &&&& 429 \\ 
+	\bottomrule
+	
+	
+\end{tabular}  
+
+}
+%\hspace{1em}
+\end{table}
+
+\subsection{Threats to Validity}
+This section discusses threats to validity w.r.t. Wohlin et al. \cite{wohlin2012experimentation}.
+
+\subsubsection{Internal Validity.} 
+%internal => prompt engineering?? only vary temperature, choice of API Mode completion (our choice) vs Chat
+
+A first internal threat is that we only varied the temperature hyperparameter over \LLM API. The documentation suggests not to modify top\_p and temperature at the same time, so we chose to let the default value of top\_p =~1. 
+Moreover, to measure the correctness, we analyzed the developers' manual co-evolution.
+To mitigate the risk of misidentifying a manual co-evolution, for each impacted code error, we mapped it in the co-evolved class version. If we did not find it, we further searched in other classes in case the original impacted part of the code was moved into another class. Thus, our objective was to reduce the risk of missing any mappings between an error in the original code and its co-evolved version. Moreover, as our co-evolution relies on the quality of detected metamodel changes. We also validated each detected change by checking whether it occurred between the original and evolved metamodels. This alleviates the risk of relying on an incorrect metamodel change that would degrade the generated prompts and lead to wrong co-evolution from \LLM. 
+%Note that the order of changes taken as input does not influence our co-evolution, but the order of errors we treat may affect the distribution of the applied resolutions. However, we took the order in which the errors were detected. 
+%\red{Finally, to reduce risk of getting random answers from \LLM, we ran 5 times the evaluation and the prompts. It showed that our results are robust and that the capability of \LLM in co-evolving code is not due to randomness.} 
+
+\subsubsection{External Validity.}
+%external => cannot generalize to other LLMs such as Lamma, => future work to replicate
+
+We implemented and ran the empirical study for EMF and Ecore metamodels and Java code. Note that \red{the choice of Java is imposed by EMF and no other languages are supported. Thus, we naturally do not generalize to other languages.} 
+We also relied only on \LLM and GPT-3.5-turbo released in june~2023. 
+Therefore, we cannot generalize our approach to other LLMs and other future versions of \LLM. It is also unclear how our findings would transfer to other benchmarks other than EMF Ecore metamodels and java code. Further experiments are necessary in future to get more insights and- before any generalization claims.  
+
+
+\subsubsection{Conclusion Validity.}
+%conclusion => do we have significant results 
+
+Our empirical study show promising results with \LLM being able to generate correct code co-evolution when given the necessary contextual information. It showed to be useful, with an average of~88.7\% correctness (from~75\% to~100\%). The results also show the benefit over relying on quick fixes. Nonetheless, even though we evaluated it on real evolved projects, we must evaluate it on more case studies to have more insights and statistical evidence.  %further evaluation is needed on more case studies.
+
+\subsection{Discussion and Limitations}
+The rationale behind the prompt structure, which an important part in our empirical study, is that our problem concerns the use of the code generated from the metamodels and their changes and not only error repair. Moreover, our results show that \LLM can co-evolve the code correctly by setting lower temperature, especially in case of complex metamodel changes. Furthermore, repeating the experimentation five time has led to the same results shown in Table \ref{table:correctnesspertemp} and Table \ref{table:correctnessVariation}, which confirms the robustness of \LLM in the code co-evolution task and that his capability is not due to randomness.
+Finally, we handled a single metamodel with changes that are independent between them. Treating the case of multiple metamodel and the case of interdependent changes would need setting an order of priority between them, which we left for a future work.
+%Overall, our findings contribute to a deeper understanding of \LLM ability in the metamodel and code co-evolution context
+%say it works well, remind bets results,  => it could replace quick fixes
+
+%then discuss limitation 1) des LLMs for co-evolution  2) of our prompts 
+
+
 \section{Conclusion}
-\label{conclu}
+\label{ch3_conclu}
 %write conclu here later \todo{Djamel}
-Co-evolving the impact of metamodel evolution on the code is costly and yet challenging. In this paper, we proposed a prompt-based approach for metamodel and code co-evolution. This approach relies on designing and generating a rich contextual information that we inject in the prompts, namely the abstraction gap knowledge, the metamodel changes information and  the impacted code to be co-evolved.
+Co-evolving the impact of metamodel evolution on the code is costly and yet challenging. In this chapter, we propose a prompt-based approach for metamodel and code co-evolution. This approach relies on designing and generating a rich contextual information that we inject in the prompts, namely the abstraction gap knowledge, the metamodel changes information and  the impacted code to be co-evolved.
 We evaluated our approach on seven EMF projects and three evolved metamodels from three different Eclipse EMF implementations of OCL, Modisco and Papyrus, with a total of~5320 generated prompts. Results show that on average \LLM has successfully proposed~88.7\% of correct co-evolutions with our original generated prompts. We evaluated then the impact of the temperature variation on the proposed co-evolutions. We found that \LLM gives better responses with lower temperature values of~0 and~0.2. 
 Moreover, when experimenting other variations of the structure of generated prompts, we observed that there was improvement in two variations. 
 %The first one is changing the order of the contextual information in the prompt, and the second one is requiring alternative answers for the co-evolution. Varying the prompt by giving only a minimum code to co-evolve degraded the quality of the proposed co-evolutions. 
 The first one is giving the minimum impacted code to co-evolve in the prompt, and the second one is requiring alternative answers for the co-evolution. However, varying the prompt by changing the order of the contextual information degraded a little the quality of the proposed co-evolutions. 
 Finally, we compared our approach with the quick fixes of the IDE as a baseline. Results show that our approach significantly outperforms the quick fixes that do not take into account the context of the abstraction gap and the metamodel changes.
 
-As future work, we intend to evaluate or approach in other technological spaces than EMF, such as OpenAPI and the challenge of the API evolution impact on clients' code. After that, we plan to transform our approach into a DSL-based approach with a graphical user interface for the output report instead of a CSV file. To facilitate prompt generation and enhance the option of prompt variation, a DSL would be a viable solution. We also plan to replicate our empirical study with other LLMs and other contexts of co-evolution (e.g., between code and test \cite{le2021untangling}).  Another actionable element is to investigate the mining of contextual information from Software Engineering tasks to enrich the prompts, and then improve baseline results
-Finally,\red{ since our contributions focus on empirically studying the use of \LLM in metamodel and code co-evolution, we plan to implement an alternative of the quick fix engine in the Eclipse IDE based on our generated prompt structure. Integrating our prompt-based metamodel and code co-evolution in the IDE will have a direct impact in helping MDE developers and language engineers}. 
+%As future work, we intend to evaluate or approach in other technological spaces than EMF, such as OpenAPI and the challenge of the API evolution impact on clients' code. After that, we plan to transform our approach into a DSL-based approach with a graphical user interface for the output report instead of a CSV file. To facilitate prompt generation and enhance the option of prompt variation, a DSL would be a viable solution. We also plan to replicate our empirical study with other LLMs and other contexts of co-evolution (e.g., between code and test \cite{le2021untangling}).  Another actionable element is to investigate the mining of contextual information from Software Engineering tasks to enrich the prompts, and then improve baseline results
+%Finally,\red{ since our contributions focus on empirically studying the use of \LLM in metamodel and code co-evolution, we plan to implement an alternative of the quick fix engine in the Eclipse IDE based on our generated prompt structure. Integrating our prompt-based metamodel and code co-evolution in the IDE will have a direct impact in helping MDE developers and language engineers}. 
 
 

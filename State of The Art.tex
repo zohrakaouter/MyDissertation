@@ -1,5 +1,6 @@
 \clearemptydoublepage
 \chapter{Background}
+\label{background}
 
 \chaptermark{Background}
 %What is model driven engineering
@@ -183,7 +184,8 @@ The term \textit{Evolution} can be refined as the literature presents various re
 \end{figure}
 
 \section{Large Language Models}
-In this section, I outline the fundamental concepts related to Large Language Models, namely Transformer models and prompt engineering. I give a short historical view to understand the added value of using LLMs in my third contribution (cf. Chapter ?).
+\label{llm}
+In this section, I outline the fundamental concepts related to Large Language Models, namely Transformer models and prompt engineering. I give a short historical view to understand the added value of using LLMs in my third contribution (cf. Chapter \ref{chapitre3}).
 
 \subsection{From Transformer Models to Large Language Models}
 
@@ -287,10 +289,10 @@ In this chapter, I provided the essential background for Model-Driven Engineerin
 
 %definition
 \chapter{State Of The Art}
-
+\label{sota}
 \chaptermark{State Of The Art}
 %offline and online process
-In this chapter, I present an overview of what has been done in the field of Model-Driven Engineering in the context of code co-evolution. I split this overview into five  parts. In section \ref{changedetection}, I present the metamodel change detection approaches. Section \ref{coevolutionartifacts} presents the co-evolution of model, transformations, constraints with evolving metamodel. In section \ref{coevolutioncode}, I discuss code co-evolution and relevant literature about API-client evolution, and language evolution. In Section \ref{behavioralcorrectness}, I browse related work to checking the behavioral correctness of code co-evolution. Section \ref{llmsforcoevolution}, presents an overview of the use of LLMs in related MDE and SLE tasks. I finish this chapter with a discussion focused on limitations and research gap.
+In this chapter, I present an overview of what has been done in the field of Model-Driven Engineering in the context of code co-evolution. I split this overview into five  parts. In section~\ref{changedetection}, I present the metamodel change detection approaches. Section~\ref{coevolutionartifacts} presents the co-evolution of model, transformations, constraints with evolving metamodel. In section~\ref{coevolutioncode}, I discuss code co-evolution and relevant literature about API-client evolution, and language evolution. In Section~\ref{behavioralcorrectness}, I browse related work to checking the behavioral correctness of code co-evolution. Section~\ref{llmsforcoevolution}, presents an overview of the use of LLMs in related MDE and SLE tasks. I finish this chapter with a discussion focused on limitations and research gap in Section~\ref{sotadiscuss}.
  \section{Metamodel change detection}
  \label{changedetection}
  One of the intrinsic properties of software artifacts is its continuous evolution~\cite{mens2008introduction}. Like any software artifact, metamodels are meant to evolve to meet the represented domain. %one key sentence of the context
@@ -409,7 +411,7 @@ In contrast, other approaches \cite{williams2012searching,10.1145/2000410.200041
 
 
 Regarding to the automation degree of the approaches, Herrmannsdoerfer et al. \cite{herrmannsdoerfer2009cope} and
-Williams et al. \cite{williams2012searching} are manual methos. Di Ruscio et al. \cite{10.1145/2000410.2000416}, Vermolen et al. \cite{vermolen_reconstructing_2012}, and Khelladi et al. \cite{khelladi2016detecting} are all semi-automatic that require user decision to select final output changes.
+Williams et al. \cite{williams2012searching} are manual methods. Di Ruscio et al. \cite{10.1145/2000410.2000416}, Vermolen et al. \cite{vermolen_reconstructing_2012}, and Khelladi et al. \cite{khelladi2016detecting} are all semi-automatic that require user decision to select final output changes.
 Demuth et al. \cite{demuth2015constraint}; Levendovszky \cite{levendovszky2014semi},Cicchetti et al. \cite{cicchetti_managing_2009}, Garces et al. \cite{garces2009managing}, Langer et al.~\cite{langer_posteriori_2013}, Garcia \cite{garcia2012model}, Xing  et al. \cite{xing2006refactoring}, Moghadam et al. \cite{moghadam2012automated} are full automatic approaches.
 
 
@@ -427,7 +429,7 @@ All these approaches propose structural changes detection: additions, deletions,
 After studying the literature change detection approaches of metamodel, relatively to the challenges that I discussed in the challenges section \ref{challenges}, I found that Khelladi et al. \cite{khelladi2016detecting} handle a large set of changes. Furthermore, their approach handle all the issues that I mentioned. 
 It is a semi-automatic approach but this adds a trust value to the approach because automatic approach may have order or overlap issues.
 
-Another reason to choose Khelladi et al. \cite{khelladi2016detecting} approach is their output representation and vocabulary. It required a minimum effort of adaptation because I use the same changes representation (more detail in Section \ref{??}).
+Another reason to choose Khelladi et al. \cite{khelladi2016detecting} approach is their output representation and vocabulary. It required a minimum effort of adaptation because I use the same changes representation (more detail in Section \ref{mmchanges}).
 
 %The usage of Khelladi et al. \cite{khelladi2016detecting} in my work is explained in section??
 
@@ -760,7 +762,7 @@ In literature, different approaches exist for code translation from a programmin
   \section{LLMs for co-evolution }
   \label{llmsforcoevolution}
   %browsing works that show efficiency of chatgpt
-  Since their appearance in 2022 \footnote{texthttps://www.dataversity.net/a-brief-history-of-large-language-models/}, Large Language Models transformed the computer science industry and the industry of the world, as computer science is concretely used everywhere. In this thesis, that started before this revolution, I found that it is important to investigate the path of LLMs and its intersection with the scope of our work. Thousands of scientific papers are produced in many domains to treat thousands of topics. In this section, I present the most related work to code co-evolution.
+  Since their appearance in 2022 \footnote{https://www.dataversity.net/a-brief-history-of-large-language-models/}, Large Language Models transformed the computer science industry and the industry of the world, as computer science is concretely used everywhere. In this thesis, that started before this revolution, I found that it is important to investigate the path of LLMs and its intersection with the scope of our work. Thousands of scientific papers are produced in many domains to treat thousands of topics. In this section, I present the most related work to code co-evolution.
   
   Early studies on Copilot focus on the exploration of the security of the generated code~\cite{pearce2022asleep}, comparison of the performances of Copilot with mutation-based code generation techniques~\cite{sobania2022choose}, and  the impact on productivity and the usefulness of Copilot for developers~\cite{ziegler2022productivity,vaithilingam2022expectation}.
   Nguyen et al.~\cite{nguyen2022empirical} performed an early empirical study on the performance and understandability of Copilot generated code on~34 problems from Leetcode. 
@@ -804,6 +806,7 @@ Sridhara et al. \cite{sridhara2023chatgpt} explore how ChatGPT can be used in de
  finally, Zhang et al. \cite{zhang2023multilingual} proposed Codeditor, an LLM based tool for code co-evolution between different programming languages. It learns code evolutions as edit sequences and then uses LLMs for multilingual translation.
   \section{Summary and Discussion}
   %Summary of the works cited above.
+ \label{sotadiscuss}
   After having reviewed the current landscape of metamodel and code co-evolution, this section synthesizes the key findings. It focuses on distilling insights from~1) the co-evolution of metamodels with models, constraints, and transformations, and code,~2) in addition to checking behavioral correctness of code evolution approaches, alongside~3) leveraging LLMs in code co-evolution. This synthesis also highlights the link to the challenges that I mentioned in the introduction \ref{introduction}.
   
   The factors of discussion when talking about the co-evolution of metamodels with models, constraints, and transformations, and code, are:~1) the degree of automation,~2) the impact analysis processing,~3) assessing the behavioral correctness of the co-evolution.
@@ -819,7 +822,7 @@ Sridhara et al. \cite{sridhara2023chatgpt} explore how ChatGPT can be used in de
   While evolving metamodels implies structural and possible semantic impact on different artifacts, the main focus is given to structural correctness. After browsing a large amount of papers, I find that only Kusel et al.~\cite{kusel2015systematic} used Pamomo~\cite{10.1007/s10515-012-0102-y} for semantic correctness verification when evolving OCL expressions.
   %Metamodel and model co-evolution :The point is that for metamodel and model co-evolution; predefined approaches exist, full automatic approaches exist
   
-  Regarding the related work addressed in Section \ref{coevolutioncode} about code co-evolution, I selected the main related work and established a detailed comparison with it in Table~\ref{table:relatedWorkTable}. My contribution in Chapter \ref{??} distinguishes from these approaches by considering and reasoning on the changes at the metamodel level to match the different pattern usages of the generated code elements (details in Section ??). This is possible thanks to the abstraction offered by the metamodels. 
+  Regarding the related work addressed in Section \ref{coevolutioncode} about code co-evolution, I selected the main related work and established a detailed comparison with it in Table~\ref{table:relatedWorkTable}. My contribution in Chapter \ref{autocoevol} distinguishes from these approaches by considering and reasoning on the changes at the metamodel level to match the different pattern usages of the generated code elements (details in Section \ref{pattern_matching}). This is possible thanks to the abstraction offered by the metamodels. 
   I compare them with the following criteria: %selected the comparison features as follows : 
   
   \begin{enumerate}
@@ -832,19 +835,21 @@ Sridhara et al. \cite{sridhara2023chatgpt} explore how ChatGPT can be used in de
   
   \end{enumerate}
   
- % I observe that only two existing approaches are fully automatic \cite{\cite{10.1145/3387905.3388608,10.1145/3597503.3639084,8813263}} and all the rest are semi-automatic \cite{9079197,10.5555/2486788.2486855,6062100,dagenais2011recommending,5070565,henkel2005catchup,10.1145/1932682.1869486,10.1145/3194793.3194798,Khelladi2020}. Only four approaches are standalone without requiring a pre-learning phase before the co-evolution.
-   My approach \ref{??} is fully automatic and standalone. Moreover, several different set of changes are handled by each approach, varying from low AST changes to high level composed (refactoring likes) changes as in Table~\ref{table:ResolutionsCatalog} in my work. 
-   %Finally, only Fazzini et al.~\cite{10.1145/3387905.3388608} proposed to validate the co-evolved android applications with a similar methodology as in my work based on tests' execution \ref{??}. 
+  I observe that only three existing approaches are fully automatic {\cite{10.1145/3387905.3388608,10.1145/3597503.3639084,8813263} and all the rest are semi-automatic \cite{9079197,10.5555/2486788.2486855,6062100,dagenais2011recommending,5070565,henkel2005catchup,10.1145/1932682.1869486,10.1145/3194793.3194798,Khelladi2020}. Only four approaches are standalone without requiring a pre-learning phase before the co-evolution.
+   My approach (Chapter~\ref{autocoevol}) is fully automatic and standalone. Moreover, several different set of changes are handled by each approach, varying from low AST changes to high level composed (refactoring likes) changes as in Table~\ref{table:ResolutionsCatalog} in my work. 
+   
+    Only Fazzini et al.~\cite{10.1145/3387905.3388608} proposed to validate the co-evolved android applications with a similar methodology as in my work based on tests' execution Chapter~\ref{chapitre2}). 
   
-  Regarding different approaches that I browse about code evolution, I find that just few works dedicated a space to check behavioral correctness~\cite{10.1145/3387905.3388608,correa2007refactoring, kusel2015systematic}. Particularly, I noticed a considerable gap in assessing the behavioral correctness of metamodel and code co-evolution.
+ % Regarding different approaches that I browse about code evolution, I find that just few works dedicated a space to check behavioral correctness~\cite{10.1145/3387905.3388608,correa2007refactoring, kusel2015systematic}. Particularly, I noticed a considerable gap in assessing the behavioral correctness of metamodel and code co-evolution.
+ Regarding different approaches that I browse about code evolution, I find that just Fazzini et al.~ ~\cite{10.1145/3387905.3388608} dedicated a space to check behavioral correctness of the code in Android API migration category. Particularly, I noticed a considerable gap in assessing the behavioral correctness of metamodel and code co-evolution.
   %TODO reformulate 
   
   Finally, studies focused on either evaluating the ability of LLMs to generate qualitative code, refining it, repairing it if vulnerable, or augmenting it. However, none of them specifically explored the task of code co-evolution.
   %MDE
-  Other studies also focused on the ability of LLMs to generate MDE artifacts, such as models and constraints, but not on their co-evolution. However, no study investigated the ability of LLMs in the MDE problem of code co-evolution when metamodels evolve. I empirically evaluated how effective is Chagpt in solving this co-evolution problem in Chapter ?? \ref{??} .
+  Other studies also focused on the ability of LLMs to generate MDE artifacts, such as models and constraints, but not on their co-evolution. However, no study investigated the ability of LLMs in the MDE problem of code co-evolution when metamodels evolve. I empirically evaluated how effective is Chagpt in solving this co-evolution problem in Chapter \ref{chapitre3}.
   \input{./Chapitre1/RelatedWorkTable}
   \section{Conclusion}
-  To conclude, this chapter has provided a comprehensive overview of existing research in the field of code co-evolution. I started with an exploration of metamodel change detection approaches. I included this section because I find that it is essential to understand the output of these approaches that is used later in the impact analysis of this output on the code. This exploration allowed me to select the approach of Khelladi et al.~\cite{khe}. Following this, the chapter examined the co-evolution of models, transformations, and constraints in response to evolving metamodels.
+  To conclude, this chapter has provided a comprehensive overview of existing research in the field of code co-evolution. I started with an exploration of metamodel change detection approaches. I included this section because I find that it is essential to understand the output of these approaches that is used later in the impact analysis of this output on the code. This exploration allowed me to select the approach of Khelladi et al.~\cite{khelladi2015detecting}. Following this, the chapter examined the co-evolution of models, transformations, and constraints in response to evolving metamodels.
   
   The discussion then extended to code co-evolution, covering relevant literature on API-client evolution and language evolution. The chapter also reviewed studies on checking the behavioral correctness of code co-evolution, addressing the challenges of ensuring that modifications do not introduce unintended side effects. Additionally, an overview of the application of Large Language Models (LLMs) in MDE and SLE tasks was presented, showcasing their potential in automating and improving the co-evolution process.
   
