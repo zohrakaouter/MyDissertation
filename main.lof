@@ -3,29 +3,31 @@
 \babel@toc {english}{}\relax 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces MDA’s Modeling Level Hierarchy\relax }}{21}{figure.caption.4}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces MDE Ecosystem\relax }}{21}{figure.caption.5}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces software artifacts\relax }}{24}{figure.caption.6}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Evolution related terminology\relax }}{26}{figure.caption.7}%
-\contentsline {figure}{\numberline {2.5}{\ignorespaces Few-shot vs Chain-of thought example \relax }}{28}{figure.caption.9}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces MDA’s Modeling Level Hierarchy\relax }}{25}{figure.caption.4}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces MDE Ecosystem\relax }}{25}{figure.caption.5}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces software artifacts\relax }}{28}{figure.caption.6}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Evolution related terminology\relax }}{29}{figure.caption.7}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Few-shot vs Chain-of thought example \relax }}{32}{figure.caption.9}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Overall approach for metamodel and code co-evolution\relax }}{52}{figure.caption.12}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Excerpt of Modisco Benchmark metamodel in version 0.9.0.\relax }}{53}{figure.caption.13}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Schema for mapping between the metamodel and code.\relax }}{60}{figure.caption.16}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Frequency of applied resolutions overall.\relax }}{68}{figure.caption.24}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Excerpt of Modisco Benchmark metamodel in version 0.9.0.\relax }}{57}{figure.caption.12}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Overall approach for metamodel and code co-evolution\relax }}{60}{figure.caption.13}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Schema for mapping between the metamodel and code.\relax }}{63}{figure.caption.15}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Frequency of applied resolutions overall.\relax }}{75}{figure.caption.22}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Evolution of metamodels and related artifacts of a software language\relax }}{81}{figure.caption.32}%
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Excerpt of Modisco Benchmark metamodel in version 0.9.0.\relax }}{83}{figure.caption.33}%
-\contentsline {figure}{\numberline {5.3}{\ignorespaces Overall approach\relax }}{85}{figure.caption.34}%
-\contentsline {figure}{\numberline {5.4}{\ignorespaces A snippet of the diagnostic report view to visualize and analyze the traced impacted tests.\relax }}{90}{figure.caption.36}%
-\contentsline {figure}{\numberline {5.5}{\ignorespaces {Traced tests due to metamodel evolution in each project.}\relax }}{97}{figure.caption.44}%
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Evolution of metamodels and related artifacts of a software language\relax }}{85}{figure.caption.30}%
+\contentsline {figure}{\numberline {6.2}{\ignorespaces Excerpt of Modisco Benchmark metamodel in version 0.9.0.\relax }}{87}{figure.caption.31}%
+\contentsline {figure}{\numberline {6.3}{\ignorespaces Overall approach\relax }}{89}{figure.caption.32}%
+\contentsline {figure}{\numberline {6.4}{\ignorespaces A snippet of the diagnostic report view to visualize and analyze the traced impacted tests.\relax }}{94}{figure.caption.34}%
+\contentsline {figure}{\numberline {6.5}{\ignorespaces {Traced tests due to metamodel evolution in each project.}\relax }}{101}{figure.caption.42}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {6.1}{\ignorespaces Excerpt of Modisco Benchmark metamodel in version 0.9.0.\relax }}{106}{figure.caption.49}%
-\contentsline {figure}{\numberline {6.2}{\ignorespaces ChatGPT primitive answer to the naive prompt.\relax }}{109}{figure.caption.50}%
-\contentsline {figure}{\numberline {6.3}{\ignorespaces ChatGPTimproved answer with the enriched prompt with contextual information.\relax }}{109}{figure.caption.51}%
-\contentsline {figure}{\numberline {6.4}{\ignorespaces Overall Approach for Prompt-based co-evolution.\relax }}{110}{figure.caption.52}%
-\contentsline {figure}{\numberline {6.5}{\ignorespaces Generated Prompt Structure.\relax }}{111}{figure.caption.54}%
-\contentsline {figure}{\numberline {6.6}{\ignorespaces Move attribute prompt example.\relax }}{113}{figure.caption.56}%
+\contentsline {figure}{\numberline {7.1}{\ignorespaces Excerpt of Modisco Benchmark metamodel in version 0.9.0.\relax }}{110}{figure.caption.47}%
+\contentsline {figure}{\numberline {7.2}{\ignorespaces ChatGPT primitive answer to the naive prompt.\relax }}{113}{figure.caption.48}%
+\contentsline {figure}{\numberline {7.3}{\ignorespaces ChatGPT~improved answer with the enriched prompt with contextual information.\relax }}{113}{figure.caption.49}%
+\contentsline {figure}{\numberline {7.4}{\ignorespaces Overall Approach for Prompt-based co-evolution.\relax }}{114}{figure.caption.50}%
+\contentsline {figure}{\numberline {7.5}{\ignorespaces Generated Prompt Structure.\relax }}{115}{figure.caption.52}%
+\contentsline {figure}{\numberline {7.6}{\ignorespaces Move attribute prompt example.\relax }}{117}{figure.caption.54}%
+\addvspace {10\p@ }
 \babel@toc {french}{}\relax 
 \babel@toc {english}{}\relax 

@@ -138,7 +138,7 @@ For example,
 %To motivate more our work, 
 we asked ChatGPT to co-evolve the error resulted from moving the property \emph{discoveryTimeInSeconds} by giving the erroneous code ({\small\boxed{Line~4}} in Listing~\ref{lis:Modisco_Code_External_V1})  with the message of the error taken from eclipse Problems window. This is the first intuition when using ChatGPT because the developer does not know necessarily the metamodel change causing the error and finding it due to the abstraction gap is a tedious and error-prone task. Figure \ref{fig: chatgptanswer} shows that ChatGPT proposes to create a method named \emph{setDiscoveryTimeInSeconds} in the class \emph{Discovery}, which is totally wrong because it does not fit the causing change. 
 
-Our Hypothesis is that the LLM fails because our problem is more complex than simply repairing a code error. It must understand the original impacting metamodel change traced to the code error, as well as the abstraction gap between the two artefacts of metamodels and code. After improving the prompt, \LLM succeeded to give the right resolution as show in Figure \ref{fig: chatgptimprovedanswer}.
+Our Hypothesis is that the LLM fails because our problem is more complex than simply repairing a code error. It must understand the original impacting metamodel change traced to the code error, as well as the abstraction gap between the two artefacts of metamodels and code. After improving the prompt, \LLM~succeeded to give the right resolution as show in Figure \ref{fig: chatgptimprovedanswer}.
 Our vision is that this contextual rich information must be injected in the prompt.
 Thus, the quality of the prompt is a key for the LLM to solve this problem of metamodels and code co-evolution. %Indeed, it is a hard problem due to the abstraction gap between the two artefacts of metamodels and code. This context should be part of the prompt as well as the impacting metamodle change that must be traced to the code error. 
 
@@ -149,7 +149,7 @@ The next section presents our contribution for a contextualized information rich
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=0.48\textwidth]{./pics/chapter3pics/chatgptprimitiveanswer.png}
+	\includegraphics[width=0.65\textwidth]{./pics/chapter3pics/chatgptprimitiveanswer.png}
 	\caption{ChatGPT primitive answer to the naive prompt.}
 	\label{fig: chatgptanswer}
 	%\vspace{-5mm}
@@ -157,8 +157,8 @@ The next section presents our contribution for a contextualized information rich
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=0.48\textwidth]{./pics/chapter3pics/chatgptimprivedanswer.png}
-	\caption{\LLM improved answer with the enriched prompt with contextual information.}
+	\includegraphics[width=0.6\textwidth]{./pics/chapter3pics/chatgptimprivedanswer.png}
+	\caption{\LLM~improved answer with the enriched prompt with contextual information.}
 	\label{fig: chatgptimprovedanswer}
 	\vspace{-5mm}
 \end{figure}
@@ -209,7 +209,7 @@ Each generated prompt is used to request ChatGPT to give a correction for the co
 	}
 	
 	
-	\caption{\LLM Co-evolution}
+	\caption{\LLM~Co-evolution}
 	\label{algo:overallalgo}
 \end{algorithm2e}
 
@@ -224,7 +224,7 @@ Each generated prompt is used to request ChatGPT to give a correction for the co
 	\vspace{-5mm}
 \end{figure}
 
-Figure \ref{fig:promptstructure} shows the overall structure of the envisioned prompts we will generate in order to co-evolve the code errors. In fact, the rationale behind the prompt structure is that our problem does not only concern the code errors to repair, but it is also related to the use of the code generated from the metamodels and their changes. Therefore, to contextualize our problem, we must explain :~1) what is the code generated from the metamodels,~2) what is the impacting metamodel change, and~3) what is the impacted code error to co-evolve.  Concerning the prompt prefix we use "Co-evolve this code" to ask \LLM for one co-evolution. Next subsections detail the different parts of the prompt structure. 
+Figure \ref{fig:promptstructure} shows the overall structure of the envisioned prompts we will generate in order to co-evolve the code errors. In fact, the rationale behind the prompt structure is that our problem does not only concern the code errors to repair, but it is also related to the use of the code generated from the metamodels and their changes. Therefore, to contextualize our problem, we must explain :~1) what is the code generated from the metamodels,~2) what is the impacting metamodel change, and~3) what is the impacted code error to co-evolve.  Concerning the prompt prefix we use "Co-evolve this code" to ask \LLM~for one co-evolution. Next subsections detail the different parts of the prompt structure. 
 
 \subsection{Abstraction Gap Between Metamodels and Code}
 
@@ -312,7 +312,7 @@ Figure~\ref{fig:promptexample} shows an example of the generated prompt for the 
 \begin{figure}[t]
 	\centering
 	%\hspace*{-1cm}
-	\includegraphics[width=0.5\textwidth]{./pics/chapter3pics/PromptStructure.png}
+	\includegraphics[width=0.75\textwidth]{./pics/chapter3pics/PromptStructure.png}
 	\caption{Move attribute prompt example.}
 	\label{fig:promptexample}
 	\vspace{-5mm}
@@ -429,14 +429,14 @@ Figure~\ref{fig:promptexample} shows an example of the generated prompt for the 
 %\subsection{Prototype Implementation}
 
 \subsection{Prototype Implementation}
-We implemented our solution as an eclipse Java plugin handling Ecore/EMF metamodels and their Java code. To retrieve the list of errors, we used JDT eclipse plugin \footnote{Eclipse Java development tools (JDT): \url{https://www.eclipse.org/jdt/core/}}. To launch our tool, we added a command to the context menu when selecting a java project. Generated prompts are sent to \LLM (see next section \ref{selectedLLM}), more specifically, its OpenAI API endpoint "https://api.openai.com/v1/chat/completions". We used Java JSON package to send our prompts and to receive \LLM responses. The error location, the corresponding generated prompt and \LLM responses are parsed in CSV file to have a visible results and to keep the history of proposed the co-evolutions.
+We implemented our solution as an eclipse Java plugin handling Ecore/EMF metamodels and their Java code. To retrieve the list of errors, we used JDT eclipse plugin \footnote{Eclipse Java development tools (JDT): \url{https://www.eclipse.org/jdt/core/}}. To launch our tool, we added a command to the context menu when selecting a java project. Generated prompts are sent to \LLM~(see next section \ref{selectedLLM}), more specifically, its OpenAI API endpoint "https://api.openai.com/v1/chat/completions". We used Java JSON package to send our prompts and to receive \LLM~responses. The error location, the corresponding generated prompt and \LLM~responses are parsed in CSV file to have a visible results and to keep the history of proposed the co-evolutions.
 Moreover, quick fixes (our baseline) are called using 
 \textit{org.eclipse.jdt.ui.text.java.IQuickAssistProcessor} and \textit{org.eclipse.jdt.ui.text.java.IJavaCompletionProposal}.
 
 \section{Methodology}
 \label{ch3_evaluation}
 
-This section describes our methodology for empirically assessing the capabilities of \LLM in addressing the problem of metamodel and code co-evolution. 
+This section describes our methodology for empirically assessing the capabilities of \LLM~in addressing the problem of metamodel and code co-evolution. 
 It first describes the selected LLM and the followed evaluation process.
 Then, it presents our research questions and the data set.
 
@@ -445,19 +445,19 @@ Then, it presents our research questions and the data set.
 % Motivate the use of chatgpt
 % Motivate the use of gpt-3.5-turbo, chat mode
 
-We chose to use \LLM \emph{GPT-3.5-turbo} in chat mode. It currently points to \emph{gpt-3.5-turbo-0613} released in June 2023. We opted for this model because of four factors. The first one is that prompt content is only textual, we don't need to inject audio or image content. The second one is its capacity to generate good answers for requests about code and models generation \cite{nathalia2023artificial,yeticstiren2023evaluating,guo2023exploring,fu2023chatgpt,kabir2023empirical,chaaben2023towards,camara2023assessment}. The third factor is that it was the latest API version that is accessible, \emph{gpt-4} API still not accessible for us. The last one is related to the high popularity of \LLM as a tool. It has more than 100 million users, and its website saw more than 1.7 billion visitors in the last three months, with Software and Software Development as visitors' top category\footnote{\url{https://www.similarweb.com/fr/website/chat.openai.com/\#demographics}}. 
+We chose to use \LLM~\emph{GPT-3.5-turbo} in chat mode. It currently points to \emph{gpt-3.5-turbo-0613} released in June 2023. We opted for this model because of four factors. The first one is that prompt content is only textual, we don't need to inject audio or image content. The second one is its capacity to generate good answers for requests about code and models generation \cite{nathalia2023artificial,yeticstiren2023evaluating,guo2023exploring,fu2023chatgpt,kabir2023empirical,chaaben2023towards,camara2023assessment}. The third factor is that it was the latest API version that is accessible, \emph{gpt-4} API still not accessible for us. The last one is related to the high popularity of \LLM~as a tool. It has more than 100 million users, and its website saw more than 1.7 billion visitors in the last three months, with Software and Software Development as visitors' top category\footnote{\url{https://www.similarweb.com/fr/website/chat.openai.com/\#demographics}}. 
 
 
 \subsection{Evaluation Process}
 
 
-First, as we aim to query \LLM to co-evolve the erroneous code due to metamodel evolution, we need to provoke the errors in the code. To do so, we replace the original metamodel by the evolved metamodel. Then, we regenerate the code API with EMF. This will cause errors in the additional code that must co-evolve. 
+First, as we aim to query \LLM~to co-evolve the erroneous code due to metamodel evolution, we need to provoke the errors in the code. To do so, we replace the original metamodel by the evolved metamodel. Then, we regenerate the code API with EMF. This will cause errors in the additional code that must co-evolve. 
 %
-After that, we must map the errors with the causing metamodel change before to generate a prompt with all appropriate information to be able to co-evolve the code errors. We then rely on the OpenAI API to query \LLM before to analyze its results. 
+After that, we must map the errors with the causing metamodel change before to generate a prompt with all appropriate information to be able to co-evolve the code errors. We then rely on the OpenAI API to query \LLM~before to analyze its results. 
 %
 %\todo{explain how we measure correctness ?}
 %
-Finally, we measure the correctness of \LLM co-evolution by comparing its co-evolution with the manually co-evolved version by developers. \red{Note that the comparison is processed manually by authors}. This allows us to measure the \emph{correctness} reached by \LLM. %We distinguish between \emph{syntactically} and \emph{semantically} correct co-evolution. The former is when \LLM gives the exact expected co-evolution that is also , whereas the latter is syntactically different but behave the same as the expected co-evolution, hence, semantically correct. 
+Finally, we measure the correctness of \LLM~co-evolution by comparing its co-evolution with the manually co-evolved version by developers. Note that the comparison is processed manually by authors. This allows us to measure the \emph{correctness} reached by~\LLM. %We distinguish between \emph{syntactically} and \emph{semantically} correct co-evolution. The former is when \LLM gives the exact expected co-evolution that is also , whereas the latter is syntactically different but behave the same as the expected co-evolution, hence, semantically correct. 
 %We consider a solution to be correct if it matches 
 Correctness varies from~0 to~1, i.e., 0\% to 100\% and is defined as follows:
 %alternative to terminology of syntactically, semantically
@@ -469,38 +469,38 @@ Correctness varies from~0 to~1, i.e., 0\% to 100\% and is defined as follows:
 
 We chose the structure shown in Figure \ref{fig:promptstructure} since it contains the contextual information needed for our problem of metamodels and code co-evolution. \red{This structure was built after few manual naive attempts with \LLM, starting from a minimum context (as shown in the Motivating Example of Figure~\ref{fig: chatgptanswer} that failed) and by enriching the structure with more context information}. However, we do not claim its completeness in terms of needed information or if it is the best structure. Other variants can lead to different results. 
 %for generated prompts after several manual attempts with Chatgpt. 
-To investigate more this choice, we generated three more variations of this structure to observe its effect on the results. Table \ref{table: op variations} contains each variation and its corresponding explanation. Since our prompt contains three parts, we can change the order of these parts (Order Change operator) and the size of the erroneous code we put in the prompt (Minimal Code operator). Finally, rather than asking for a single co-evolution solution, we ask for alternative ones (Alternative Answers operator) in the prompt prefix. \red{To stress out our evaluation, we conducted 5 runs separated by almost a day, the time we needed for one run to check manually the results of each project, which means that each generated prompt is proposed to \LLM five times. This aims to check whether \LLM gives a same or different answer, hence, assess its robustness. 
-	Finally, we compare \LLM to a baseline, namely the IDE quick fixes that are provided to repair the code errors. Note that we do not take as a baseline \LLM with prompts that only contain the code error, since as shown in Section \ref{ch3_example} and Figure \ref{fig: chatgptanswer}, it does not work. 
+To investigate more this choice, we generated three more variations of this structure to observe its effect on the results. Table \ref{table: op variations} contains each variation and its corresponding explanation. Since our prompt contains three parts, we can change the order of these parts (Order Change operator) and the size of the erroneous code we put in the prompt (Minimal Code operator). Finally, rather than asking for a single co-evolution solution, we ask for alternative ones (Alternative Answers operator) in the prompt prefix. \red{To stress out our evaluation, we conducted 5 runs separated by almost a day, the time we needed for one run to check manually the results of each project, which means that each generated prompt is proposed to \LLM~five times. This aims to check whether~\LLM gives a same or different answer, hence, assess its robustness. 
+	Finally, we compare~\LLM to a baseline, namely the IDE quick fixes that are provided to repair the code errors. Note that we do not take as a baseline~\LLM with prompts that only contain the code error, since as shown in Section \ref{ch3_example} and Figure \ref{fig: chatgptanswer}, it does not work. 
 }
 
 
 \subsection{Research Questions}
 
-To assess the capabilities of \LLM in the co-evolution of code, we set the following research questions. 
+To assess the capabilities of~\LLM in the co-evolution of code, we set the following research questions. 
 
-\begin{itemize}
-	\item[RQ1] %\subsubsection{RQ1} 
+%\begin{itemize}
+%	\item[RQ1] %\subsubsection{RQ1} 
 	%Can our code and metamodel coevolution appraoch using LLMs coevolve the code correctly? 
-	To what extent can \LLM co-evolve the code with evolved metamodels? 
-	This aims to assess the ability of \LLM to give correct resolutions to co-evolve the code according to the metamodel changes.
+\textbf{\emph{RQ1.}} \emph{	To what extent can~\LLM~co-evolve the code with evolved metamodels? }
+	This aims to assess the ability of \LLM~to give correct resolutions to co-evolve the code according to the metamodel changes.
 	
-	\item[RQ2] %\subsubsection{RQ2}
-	How does varying the temperature hyperparameter affect the output of the co-evolution? %How does our coevolution approach react to the variation of the prompt? 
+	%\item[RQ2] %\subsubsection{RQ2}
+\textbf{\emph{RQ2.}} \emph{	How does varying the temperature hyperparameter affect the output of the co-evolution?} %How does our coevolution approach react to the variation of the prompt? 
 	The temperature hyperparameter controls the creativity of the language model. 
-	This question aims to assess the capability of \LLM to co-evolve the erroneous code when given less or more creativity in the generation of the solution. 
+	This question aims to assess the capability of \LLM~to co-evolve the erroneous code when given less or more creativity in the generation of the solution. 
 	
 	
-	\item[RQ3] %\subsubsection{RQ2}
-	How does varying the prompt structure affect the output of the co-evolution? %How does our coevolution approach react to the variation of the prompt? 
+%	\item[RQ3] %\subsubsection{RQ2}
+\textbf{\emph{RQ3.}} \emph{	How does varying the prompt structure affect the output of the co-evolution? }%How does our coevolution approach react to the variation of the prompt? 
 	This aims to assess the quality improvement of the co-evolutions due to the prompts' variations.
 	
 	
-	\item[RQ4] %\subsubsection{RQ3} 
-	How does \LLM proposed co-evolution compare to the quick fix baseline? 
+%	\item[RQ4] %\subsubsection{RQ3} 
+	\textbf{\emph{RQ4.}} \emph{How does \LLM~proposed co-evolution compare to the quick fix baseline? }
 	As quick fixes are provided by default in an IDE to repair the code errors, this question aims to assess which method outperforms the other in the task of code co-evolution with evolving metamodels. %We measure its precision and recall and compare it with precision and recall of our automatic co-evolution approach.
 	
 	
-\end{itemize}
+%\end{itemize}
 
 
 
@@ -607,24 +607,24 @@ Table~\ref{CaseStudies_Evolution} presents the details on the selected case stud
 %
 Table~\ref{CaseStudies_CoEvolution} presents the details on the size of the seven projects and code of the original versions that we co-evolve in addition to the number of errors after the metamodels evolution. 
 
-\section{Results}
+\subsection{Results}
 \label{ch3__results}
 This section now presents our results answering each RQ. 
 
-\subsection{RQ1: Assessing the ability of \LLM to give correct code co-evolutions }
+\subsubsection{RQ1: Assessing the ability of \LLM~to give correct code co-evolutions }
 
 %execute with temp 0.2, single result, with whole method having the error, on many projects, 
 
 %To what extent can \LLM co-evolve the code with metamodels? This aims 
-To assess the ability of \LLM to give correct code co-evolutions, % the code according to the metamodel changes. 
+To assess the ability of \LLM~to give correct code co-evolutions, % the code according to the metamodel changes. 
 %To answer this question, 
 we ran over the errors caused by the metamodel changes and generated 266 prompts that we submitted to \LLM. 
 Note that we ran our original prompts asking for a single co-evolution of the code error. We further set a fixed temperature hyperparameter to~0.2. A value of 0 restricts the generation of a solution towards a more deterministic one and the more it is higher the more creative the model gets in generating a different solution. Thus, we chose 0.2 to allow only little creativity while restricting the model to not get a different answer for the same prompts in different executions, since we ask for a single solution. 
 %
-Among the~266 generated prompts, \LLM gave, on average, a correct code co-evolution in~88.7\% of the time, varying from~75\% to 100\%. 
+Among the~266 generated prompts, \LLM~gave, on average, a correct code co-evolution in~88.7\% of the time, varying from~75\% to 100\%. 
 % \red{75\%} to \red{100\%}. 
-\red{When taking only on complex changes into consideration, correctness improves on average from~88.7\% to~95.2\%, \ie \LLM performs better for complex changes.}
-Results show a promising ability of \LLM to actually co-evolve code with evolving metamodels when given the right contextual information in the prompts, rather than simply the errors and their messages. 
+\red{When taking only on complex changes into consideration, correctness improves on average from~88.7\% to~95.2\%, \ie \LLM~performs better for complex changes.}
+Results show a promising ability of \LLM~to actually co-evolve code with evolving metamodels when given the right contextual information in the prompts, rather than simply the errors and their messages. 
 
 
 
@@ -633,7 +633,7 @@ Results show a promising ability of \LLM to actually co-evolve code with evolvin
 	\caption{Measured correctness rate per temperature.}
 	\label{table:correctnesspertemp}
 	%\hspace*{-0.5cm}
-	\resizebox{0.9\textwidth}{!} {
+	\resizebox{0.65\textwidth}{!} {
 		\begin{tabular}{lllllllll}
 			\toprule
 			\centering
@@ -656,35 +656,35 @@ Results show a promising ability of \LLM to actually co-evolve code with evolvin
 
 \begin{tcolorbox}[boxsep=-2pt]
 	\textbf{$\boldsymbol{RQ_1}$ insights:}
-	Results confirm that \LLM is able at 88.7\% to correctly co-evolve code due to metamodel evolution thanks to the information on the abstraction gap and the impacting metamodel change. It also performs better on complex changes.  
+	Results confirm that \LLM~is able at 88.7\% to correctly co-evolve code due to metamodel evolution thanks to the information on the abstraction gap and the impacting metamodel change. It also performs better on complex changes.  
 \end{tcolorbox}
 
 
-\subsection{RQ2: Studying the impact of temperature variation on the output co-evolutions}
+\subsubsection{RQ2: Studying the impact of temperature variation on the output co-evolutions}
 %execute with temp 0, 0.5, 0.8, 1.0
 
-The temperature hyperparameter controls the creativity of the language model. The temperature hyperparameter in \LLM can be set between~0 and~2. Yet, it is suggested to only set it between~0 and~1 in the documentation\footnote{\url{https://platform.openai.com/docs/api-reference/chat}}. Thus, to assess the effect of the temperature in co-evolving the code, we will vary it on~0,~0.2,~0.5,~0.8,~and~1.0. 
+The temperature hyperparameter controls the creativity of the language model. The temperature hyperparameter in \LLM~can be set between~0 and~2. Yet, it is suggested to only set it between~0 and~1 in the documentation\footnote{\url{https://platform.openai.com/docs/api-reference/chat}}. Thus, to assess the effect of the temperature in co-evolving the code, we will vary it on~0,~0.2,~0.5,~0.8,~and~1.0. 
 Table \ref{table:correctnesspertemp} shows the obtained results. 
 
 %How does varying the temperature hyperparameter affect the output of the co-evolution? %How does our coevolution approach react to the variation of the prompt? 
 
 %This question aims to assess the capability of \LLM to co-evolve the erroneous code when given less or more creativity in the generation of the solution. 
 %we observe that the more we increase the temperature, the less correct are the code co-evolutions that are suggested by
-Overall, we observe that as the temperature increases, the correctness of code co-evolutions suggested by \LLM decreases. Notably, the correctness improves when the temperature is increased from~0 to~0.2. However, it subsequently degrades with the further increase in temperature, up to~1. At temperatures~0.8 and~1, we observed the worst decrease in correctness. % does not exceed~50\% and~40\%, respectively. 
-The best performance of \LLM is obtained at the temperature~0.2. Note that even with a temperature set to~0, which implies no creativity, \LLM yields results that are nearly as satisfactory as those obtained with a temperature of~0.2.
+Overall, we observe that as the temperature increases, the correctness of code co-evolutions suggested by \LLM~decreases. Notably, the correctness improves when the temperature is increased from~0 to~0.2. However, it subsequently degrades with the further increase in temperature, up to~1. At temperatures~0.8 and~1, we observed the worst decrease in correctness. % does not exceed~50\% and~40\%, respectively. 
+The best performance of \LLM~is obtained at the temperature~0.2. Note that even with a temperature set to~0, which implies no creativity, \LLM~yields results that are nearly as satisfactory as those obtained with a temperature of~0.2.
 
-\red{Moreover, when we repeated the same prompt for each temerature for 5 times, the five answers of \LLM were similar. \LLM gives almost the same proposition of co-evolution, sometimes it uses different terms to comment its answer. For example: \textit{"// Remove the following line since DiscoveredProject is removed"} and \textit{" // Code using DiscoveredProject should be removed"}. However, they are the same co-evolutions. Sometimes \LLM also uses intermediate variables to give the same co-evolution, for example:\textit{ "return aReport.generate()"} and \textit{benchmarkModel=aReport.generate() return benchmarkModel"}. 
+\red{Moreover, when we repeated the same prompt for each temerature for 5 times, the five answers of \LLM~were similar. \LLM~gives almost the same proposition of co-evolution, sometimes it uses different terms to comment its answer. For example: \textit{"// Remove the following line since DiscoveredProject is removed"} and \textit{" // Code using DiscoveredProject should be removed"}. However, they are the same co-evolutions. Sometimes \LLM~also uses intermediate variables to give the same co-evolution, for example:\textit{ "return aReport.generate()"} and \textit{benchmarkModel=aReport.generate() return benchmarkModel"}. 
 	We believe that this result of obtaining the same co-evolutions over 5 runs shows the efficiency of the prompt template in Figure~\ref{fig:promptstructure}. 
-	By including the necessary information (i.e., abstraction gap, causing change information, and code error), it allows \LLM to narrow the scope of possibilities and to propose similar answer for each unique prompt in each run.}
+	By including the necessary information (i.e., abstraction gap, causing change information, and code error), it allows \LLM~to narrow the scope of possibilities and to propose similar answer for each unique prompt in each run.}
 
 \begin{tcolorbox}[boxsep=-2pt]
 	\textbf{$\boldsymbol{RQ_2}$ insights:}
-	Results show that lower temperature of~0 and~0.2 give better co-evolutions from \LLM with~0.2 being the best we observed. 
+	Results show that lower temperature of~0 and~0.2 give better co-evolutions from \LLM~with~0.2 being the best we observed. 
 	Interestingly, we obtained the same results over 5 different runs, which suggests the efficiency our prompt structure in narrowing the scope of possibilities of \LLM's answers. 
 \end{tcolorbox}
 
 
-\subsection{RQ3: Studying the impact of prompt structure variation on the output co-evolutions}
+\subsubsection{RQ3: Studying the impact of prompt structure variation on the output co-evolutions}
 %Execute prompts starting by the gap information followed by the change information then 
 
 %by starting by the change followed by the gap
@@ -739,15 +739,15 @@ In our approach, we propose a possible structure for the generated prompts (cf. 
 
 
 Table \ref{table:correctnessVariation} shows the obtained results. Overall, we observe slight increase and decrease compared to the original Prompts structure~(\textbf{OP}). 
-We observe that changing the order in the prompt by first describing the metamodel change (\textbf{OC}) decreases the correctness of the proposed \LLM co-evolutions. It decreased by~-9\% in P2,~-8\% in P4 and by~-2\% in P5. We observed that in particular when describing the abstraction gap with the generated elements for the metamodel deleted classes, % information in the case of deletions, 
-\LLM assumes that the code classes still exist in the code and were not deleted. Thereby, altering sometimes the correctness of its proposed co-evolutions. 
+We observe that changing the order in the prompt by first describing the metamodel change (\textbf{OC}) decreases the correctness of the proposed \LLM~co-evolutions. It decreased by~-9\% in P2,~-8\% in P4 and by~-2\% in P5. We observed that in particular when describing the abstraction gap with the generated elements for the metamodel deleted classes, % information in the case of deletions, 
+\LLM~assumes that the code classes still exist in the code and were not deleted. Thereby, altering sometimes the correctness of its proposed co-evolutions. 
 
 However, the two other prompt variations of giving a minimal code containing the error and asking for alternative solutions delivered better overall results. 
 Surprisingly, on the one hand, giving only the code instruction containing the error (\textbf{MC}) gave the best results. It improved by~+4.4\% in P1,~+12.5\% in P2,~+4\% in P4, ~+8\% in P5, and ~+2.1\% in P6. 
-Our observation is that this improvement is sometimes due to the inability of \LLM to find the impacted code element and co-evolve it within complex and long methods. 
-On the other hand, when asking for alternatives, it improved only by~+4\% in P2,~+10\% in P4, and~+4\% in P5. We observed that when \LLM is unable to find the correct resolution with (\textbf{OP}) prompts, it is unlikely to find the right one when asking for alternatives (\textbf{AA}). Only in few cases it could find the correct co-evolutions.  %We noticed also that 
+Our observation is that this improvement is sometimes due to the inability of \LLM~to find the impacted code element and co-evolve it within complex and long methods. 
+On the other hand, when asking for alternatives, it improved only by~+4\% in P2,~+10\% in P4, and~+4\% in P5. We observed that when \LLM~is unable to find the correct resolution with (\textbf{OP}) prompts, it is unlikely to find the right one when asking for alternatives (\textbf{AA}). Only in few cases it could find the correct co-evolutions.  %We noticed also that 
 The generation of prompts and saving the results took on average from about~10 seconds per prompt for the Original Prompts to~84 seconds per prompt in the case of Alternative Answers (AA) variation prompts.
-\red{Finally, when focusing only on complex changes, correctness improves on average from 88.7\% to 97.6\% for \textbf{(MC)} and \textbf{(AA)}. This implies that, overall, \LLM also performs better for complex changes when varying the prompts. This can be explained by the fact that complex changes provide much more context information that guide better \LLM to give better responses.} 
+\red{Finally, when focusing only on complex changes, correctness improves on average from 88.7\% to 97.6\% for \textbf{(MC)} and \textbf{(AA)}. This implies that, overall, \LLM~also performs better for complex changes when varying the prompts. This can be explained by the fact that complex changes provide much more context information that guide better \LLM~to give better responses.} 
 %on  the variation operator
 
 
@@ -758,7 +758,7 @@ The generation of prompts and saving the results took on average from about~10 s
 	Variants also perform better on complex changes. 
 \end{tcolorbox}
 
-\subsection{RQ4: Comparison with quick fixes as baseline}
+\subsubsection{RQ4: Comparison with quick fixes as baseline}
 %230441
 %compare with quick fixes
 
@@ -782,7 +782,7 @@ Our approach of generated prompts takes into account the context of the impacted
 
 \begin{tcolorbox}[boxsep=-2pt]
 	\textbf{$\boldsymbol{RQ_4}$ insights:}
-	Results show that \LLM with our generated prompts completely outperforms the quick fixes in correctly co-evolving the code. 
+	Results show that \LLM~with our generated prompts completely outperforms the quick fixes in correctly co-evolving the code. 
 \end{tcolorbox}
 
 
@@ -873,33 +873,33 @@ Our approach of generated prompts takes into account the context of the impacted
 %\hspace{1em}
 \end{table}
 
-\subsection{Threats to Validity}
+\section{Threats to Validity}
 This section discusses threats to validity w.r.t. Wohlin et al. \cite{wohlin2012experimentation}.
 
-\subsubsection{Internal Validity.} 
+\subsection{Internal Validity.} 
 %internal => prompt engineering?? only vary temperature, choice of API Mode completion (our choice) vs Chat
 
-A first internal threat is that we only varied the temperature hyperparameter over \LLM API. The documentation suggests not to modify top\_p and temperature at the same time, so we chose to let the default value of top\_p =~1. 
+A first internal threat is that we only varied the temperature hyperparameter over \LLM~API. The documentation suggests not to modify top\_p and temperature at the same time, so we chose to let the default value of top\_p =~1. 
 Moreover, to measure the correctness, we analyzed the developers' manual co-evolution.
 To mitigate the risk of misidentifying a manual co-evolution, for each impacted code error, we mapped it in the co-evolved class version. If we did not find it, we further searched in other classes in case the original impacted part of the code was moved into another class. Thus, our objective was to reduce the risk of missing any mappings between an error in the original code and its co-evolved version. Moreover, as our co-evolution relies on the quality of detected metamodel changes. We also validated each detected change by checking whether it occurred between the original and evolved metamodels. This alleviates the risk of relying on an incorrect metamodel change that would degrade the generated prompts and lead to wrong co-evolution from \LLM. 
 %Note that the order of changes taken as input does not influence our co-evolution, but the order of errors we treat may affect the distribution of the applied resolutions. However, we took the order in which the errors were detected. 
 %\red{Finally, to reduce risk of getting random answers from \LLM, we ran 5 times the evaluation and the prompts. It showed that our results are robust and that the capability of \LLM in co-evolving code is not due to randomness.} 
 
-\subsubsection{External Validity.}
+\subsection{External Validity.}
 %external => cannot generalize to other LLMs such as Lamma, => future work to replicate
 
 We implemented and ran the empirical study for EMF and Ecore metamodels and Java code. Note that \red{the choice of Java is imposed by EMF and no other languages are supported. Thus, we naturally do not generalize to other languages.} 
-We also relied only on \LLM and GPT-3.5-turbo released in june~2023. 
+We also relied only on \LLM~and GPT-3.5-turbo released in june~2023. 
 Therefore, we cannot generalize our approach to other LLMs and other future versions of \LLM. It is also unclear how our findings would transfer to other benchmarks other than EMF Ecore metamodels and java code. Further experiments are necessary in future to get more insights and- before any generalization claims.  
 
 
-\subsubsection{Conclusion Validity.}
+\subsection{Conclusion Validity.}
 %conclusion => do we have significant results 
 
-Our empirical study show promising results with \LLM being able to generate correct code co-evolution when given the necessary contextual information. It showed to be useful, with an average of~88.7\% correctness (from~75\% to~100\%). The results also show the benefit over relying on quick fixes. Nonetheless, even though we evaluated it on real evolved projects, we must evaluate it on more case studies to have more insights and statistical evidence.  %further evaluation is needed on more case studies.
+Our empirical study show promising results with \LLM~being able to generate correct code co-evolution when given the necessary contextual information. It showed to be useful, with an average of~88.7\% correctness (from~75\% to~100\%). The results also show the benefit over relying on quick fixes. Nonetheless, even though we evaluated it on real evolved projects, we must evaluate it on more case studies to have more insights and statistical evidence.  %further evaluation is needed on more case studies.
 
 \subsection{Discussion and Limitations}
-The rationale behind the prompt structure, which an important part in our empirical study, is that our problem concerns the use of the code generated from the metamodels and their changes and not only error repair. Moreover, our results show that \LLM can co-evolve the code correctly by setting lower temperature, especially in case of complex metamodel changes. Furthermore, repeating the experimentation five time has led to the same results shown in Table \ref{table:correctnesspertemp} and Table \ref{table:correctnessVariation}, which confirms the robustness of \LLM in the code co-evolution task and that his capability is not due to randomness.
+The rationale behind the prompt structure, which an important part in our empirical study, is that our problem concerns the use of the code generated from the metamodels and their changes and not only error repair. Moreover, our results show that \LLM~can co-evolve the code correctly by setting lower temperature, especially in case of complex metamodel changes. Furthermore, repeating the experimentation five time has led to the same results shown in Table \ref{table:correctnesspertemp} and Table \ref{table:correctnessVariation}, which confirms the robustness of \LLM~in the code co-evolution task and that his capability is not due to randomness.
 Finally, we handled a single metamodel with changes that are independent between them. Treating the case of multiple metamodel and the case of interdependent changes would need setting an order of priority between them, which we left for a future work.
 %Overall, our findings contribute to a deeper understanding of \LLM ability in the metamodel and code co-evolution context
 %say it works well, remind bets results,  => it could replace quick fixes
@@ -911,7 +911,7 @@ Finally, we handled a single metamodel with changes that are independent between
 \label{ch3_conclu}
 %write conclu here later \todo{Djamel}
 Co-evolving the impact of metamodel evolution on the code is costly and yet challenging. In this chapter, we propose a prompt-based approach for metamodel and code co-evolution. This approach relies on designing and generating a rich contextual information that we inject in the prompts, namely the abstraction gap knowledge, the metamodel changes information and  the impacted code to be co-evolved.
-We evaluated our approach on seven EMF projects and three evolved metamodels from three different Eclipse EMF implementations of OCL, Modisco and Papyrus, with a total of~5320 generated prompts. Results show that on average \LLM has successfully proposed~88.7\% of correct co-evolutions with our original generated prompts. We evaluated then the impact of the temperature variation on the proposed co-evolutions. We found that \LLM gives better responses with lower temperature values of~0 and~0.2. 
+We evaluated our approach on seven EMF projects and three evolved metamodels from three different Eclipse EMF implementations of OCL, Modisco and Papyrus, with a total of~5320 generated prompts. Results show that on average \LLM~has successfully proposed~88.7\% of correct co-evolutions with our original generated prompts. We evaluated then the impact of the temperature variation on the proposed co-evolutions. We found that \LLM~gives better responses with lower temperature values of~0 and~0.2. 
 Moreover, when experimenting other variations of the structure of generated prompts, we observed that there was improvement in two variations. 
 %The first one is changing the order of the contextual information in the prompt, and the second one is requiring alternative answers for the co-evolution. Varying the prompt by giving only a minimum code to co-evolve degraded the quality of the proposed co-evolutions. 
 The first one is giving the minimum impacted code to co-evolve in the prompt, and the second one is requiring alternative answers for the co-evolution. However, varying the prompt by changing the order of the contextual information degraded a little the quality of the proposed co-evolutions. 

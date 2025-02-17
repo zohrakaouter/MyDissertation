@@ -155,6 +155,14 @@ The term \textit{Evolution} can be refined as the literature presents various re
 %examples?
 %TODO Add defs references
 
+\begin{figure}[t]
+	\begin{center}
+		\includegraphics[width=0.6\linewidth]{./pics/soaPics/evolutiontypes.png}
+	\end{center}
+	\caption{Evolution related terminology}
+	%	{\footnotesize Titre plus long avec des explications.}
+	\label{fig:evolutiontypes}
+\end{figure}
 \textbf{Evolution}: any adaptation that occurs in the software in response to new requirements. These requirements are the consequence of the past experience of the users that feeds the developers' learning. \cite{bennett2000software}. 
 
 \textbf{Maintenance}: It is modifying a software product after delivery to correct faults, to improve performance, or to adapt the product to a changing environment \cite{schneidewind1987state}.
@@ -174,24 +182,17 @@ The term \textit{Evolution} can be refined as the literature presents various re
 
 
 
-\begin{figure}[t]
-	\begin{center}
-		\includegraphics[width=0.6\linewidth]{./pics/soaPics/evolutiontypes.png}
-	\end{center}
-	\caption{Evolution related terminology}
-	%	{\footnotesize Titre plus long avec des explications.}
-	\label{fig:evolutiontypes}
-\end{figure}
 
 \section{Large Language Models}
 \label{llm}
 In this section, I outline the fundamental concepts related to Large Language Models, namely Transformer models and prompt engineering. I give a short historical view to understand the added value of using LLMs in my third contribution (cf. Chapter \ref{chapitre3}).
 
+
 \subsection{From Transformer Models to Large Language Models}
 
 %Rule-based and hand-crafted solutions are rigid and hard to scale.
 Machine learning field introduced statistical models that learn from input data. As an improvement of traditional machine learning approaches, neural networks brought breakthroughs in image and speech recognition, inspiring their application to Natural Language Processing (NLP). A markup point in the history of machine learning is The Attention Mechanism \cite{10.5555/3295222.3295349}. It allows models to focus on relevant parts of input sequences, significantly enhancing translation and comprehension tasks.
-This mechanism allows the model to weigh the importance of all words in a sequence simultaneously, leading to: 1) Parallel processing for a faster computation, and 2) Better handling of long-range dependencies. After neural networks and Attention mechanism application in NLP, the transformer models appearance first in 2018, marked by the emergence of BERT and its variations \cite{DBLP:journals/corr/abs-2302-09419}.
+This mechanism allows the model to weigh the importance of all words in a sequence simultaneously, leading to:~1) Parallel processing for a faster computation, and~2) Better handling of long-range dependencies. After neural networks and Attention mechanism application in NLP, the transformer models appearance first in~2018, marked by the emergence of BERT and its variations \cite{DBLP:journals/corr/abs-2302-09419}.
 
 
 %Bert def and caract vs traditional models)
@@ -207,38 +208,40 @@ In 2018, OpenAPI has launched another large scale pre-trained transformer model:
 
 Note that in the field of LLM, new approaches are being developed at a rapid pace. Thus, rather then latest models, I selected models that have marked a turning point in the history of LLMs: BERT, BART, and GPT to include in this short LLM background. No global and detailed comparison between GPT, BERT, and BART is established. However, some works have conducted targeted comparisons in specific context. For example, Yokoyama et al. compare between Chatgpt and BERT in security bug identification topic \cite{10685583}. Table \ref{table:bertvsbartvsgpt3} summarizes the key differences between BERT, BART, and GPT-3 depending on: their architecture, learning data, number of parameters, performance speed, application domain in which the model is most efficient, and the respective organizations that created them~\cite{DBLP:journals/corr/abs-2302-09419,lewis2019bartdenoisingsequencetosequencepretraining}.
 %https://scholar.google.fr/scholar?as_q=comparison+BERT+chatgpt&as_epq=&as_oq=&as_eq=&as_occt=title&as_sauthors=&as_publication=&as_ylo=&as_yhi=&hl=fr&as_sdt=0%2C5
-
+\begin{table}[t]
+	%\centering
+	\footnotesize
+	
+	%	\vspace{-1.2cm}
+	\caption{Comparison of BERT, BART, and GPT-3} 
+	\label{table:bertvsbartvsgpt3}
+	\hspace{-2cm}
+	\begin{tabular}{ | m{2.5cm}| m{4cm}| m{4.5cm} |m{5.5cm} |  } 
+		
+		\hline
+		\textbf{Functionality}& \textbf{BERT} & \textbf{BART} &\textbf{GPT-3} \\ 
+		\hline\hline
+		\textbf{Architecture} & Bidirectional encoder-only model that considers both left and right contexts when making predictions. &  Encoder-decoder model, Bidirectional encoder with left-to-right autoregressive decoder it considers both left and right contexts when making predictions. &The autoregressive model generates text by predicting the next word in a sequence based on the preceding words. \\ 
+		\hline
+		\textbf{Data} & Learning on data from sources such as English Wikipedia and BookCorpus 11038 books). & Learning from a combination of books and Wikipedia data. &  extremely large corpus of English text data extracted from millions of web pages and then fine-tuned using Reinforcement Learning from Human Feedback (RLHF). \\ 
+		\hline
+		\textbf{Number of parameters }& $BERT_{base}$ 110 m parameters  $BERT_{large}$ 340 million parameters, a relatively smaller number than GPT-3. & $BART_{base}$ contains 139 million parameters and $BART_{large}$ contains around 400 million parameters.&175 billion parameters, far more than any other language model.\\
+		\hline
+		\textbf{Performance speed?}& faster than BART and GPT-3
+		.& Decoding step and the number of parameters make it slower than BERT.& the slowest one, because of the number of parameters, size of data, and the complex architecture.\\
+		\hline
+		\textbf{Application (domain)}&Top performance on a range of tasks, including text classification.
+		Requires further fine-tuning and learning to adapt to new domains and tasks.&particularly effective when fine-tuned for downstream NLP tasks, especially text generation.&It has shown remarkable performance on a wide range of natural language processing tasks.
+		Can be generalized to new domains thanks to learning in a few steps, and adapted to new tasks thanks to transfer learning.\\
+		\hline
+		
+		\textbf{Origin organisation}&Google AI&Facebook AI& OpenAI\\
+		\hline		
+	\end{tabular}
+\end{table}
 
 
 %Add the comparative table with BART column : https://updf.com/fr/chatgpt/bert-vs-gpt/
-\begin{table}[h]
-	\vspace{-1.2cm}
-	\caption{Comparison BERT, BART, and GPT-3} 
-	\label{table:bertvsbartvsgpt3}
-\hspace{-2cm}
-\begin{tabular}{ | m{2.5cm}| m{4cm}| m{4.5cm} |m{5.5cm} |  } 
-
-	\hline
-	\textbf{Functionality}& \textbf{BERT} & \textbf{BART} &\textbf{GPT-3} \\ 
-	\hline\hline
-	\textbf{Architecture} & Bidirectional encoder-only model that considers both left and right contexts when making predictions. &  Encoder-decoder model, Bidirectional encoder with left-to-right autoregressive decoder it considers both left and right contexts when making predictions. &The autoregressive model generates text by predicting the next word in a sequence based on the preceding words \\ 
-	\hline
-		\textbf{Data} & Learning on data from sources such as English Wikipedia and BookCorpus 11038 books). & Learning from a combination of books and Wikipedia data &  extremely large corpus of English text data extracted from millions of web pages and then fine-tuned using Reinforcement Learning from Human Feedback (RLHF) \\ 
-	\hline
-		\textbf{Number of parameters }& $BERT_{base}$ 110 m parameters  $BERT_{large}$ 340 million parameters, a relatively smaller number than GPT-3. & $BART_{base}$ contains 139 million parameters and $BART_{large}$ contains around 400 million parameters&175 billion parameters, far more than any other language model.\\
-		\hline
-			\textbf{Performance speed?}& faster than BART and GPT-3
-			.& Decoding step and the number of parameters make it slower than BERT& the slowest one, because of the number of parameters, size of data, and the complex architecture.\\
-		\hline
-			\textbf{Application (domain)}&Top performance on a range of tasks, including text classification.
-			Requires further fine-tuning and learning to adapt to new domains and tasks.&particularly effective when fine-tuned for downstream NLP tasks, especially text generation&It has shown remarkable performance on a wide range of natural language processing tasks.
-			Can be generalized to new domains thanks to learning in a few steps, and adapted to new tasks thanks to transfer learning.\\
-			\hline
-
-\textbf{Origin organisation}&Google AI&Facebook AI& OpenAI\\
-\hline		
-\end{tabular}
-	\end{table}
 %Large scale pre-training, high scalability.
 
 
@@ -293,6 +296,7 @@ In this chapter, I provided the essential background for Model-Driven Engineerin
 \chaptermark{State Of The Art}
 %offline and online process
 In this chapter, I present an overview of what has been done in the field of Model-Driven Engineering in the context of code co-evolution. I split this overview into five  parts. In section~\ref{changedetection}, I present the metamodel change detection approaches. Section~\ref{coevolutionartifacts} presents the co-evolution of model, transformations, constraints with evolving metamodel. In section~\ref{coevolutioncode}, I discuss code co-evolution and relevant literature about API-client evolution, and language evolution. In Section~\ref{behavioralcorrectness}, I browse related work to checking the behavioral correctness of code co-evolution. Section~\ref{llmsforcoevolution}, presents an overview of the use of LLMs in related MDE and SLE tasks. I finish this chapter with a discussion focused on limitations and research gap in Section~\ref{sotadiscuss}.
+
  \section{Metamodel change detection}
  \label{changedetection}
  One of the intrinsic properties of software artifacts is its continuous evolution~\cite{mens2008introduction}. Like any software artifact, metamodels are meant to evolve to meet the represented domain. %one key sentence of the context
@@ -301,55 +305,55 @@ In this chapter, I present an overview of what has been done in the field of Mod
  A lot of work has been done on metamodel diffing.
  Detection approaches can be classified into two main categories: online\footnote{Offline approaches perform detection after the metamodel has been evolved.} detection approaches, and offline\footnote{Online approaches perform instant detection for each change during the metamodel evolution} detection approaches. This classification can be refined using some factors as detailed by Hebig et al.~\cite{hebig2016approaches}: automation degree, types of detected changes, considered issues (overlap, indefinite length, hidden changes, order of changes, and undo operations)~\cite{hebig2016approaches}.
  	
- \begin{table}[p]
- 	\centering
- 	
- 	\resizebox{16cm}{!} {
- 		{\small
- 			\begin{tabular}{l|c|c}%|l|l|l|l|l|l|l|}
- 			%\hline
- 			\toprule 
- 			Type & group  & Change name  \\ \midrule
- 			
- 			\multicolumn{1}{l|}{ Atomic changes}
- 			& \multirow{2}{*}{ \begin{tabular}[c]{@{}l@{}} Structural \\ Primitives\end{tabular} } 
- 			&  \begin{tabular}[c]{@{}l@{}} Create Package, Delete Package, Create Class,\\Delete Class, Create Attribute, Create Reference,\\ Delete Feature,change type, Create Opposite Ref.,\\Delete Opposite Ref., Create Data Type, \\Delete Data Type, Create Enum, Delete Enum, \\Create Literal,Merge Literal  \end{tabular}
- 			\\  \cmidrule{2-3} 
- 			& \multirow{2}{*}{ \begin{tabular}[c]{@{}l@{}} Non Structural \\ primitives\end{tabular}} 
- 			&  \begin{tabular}[c]{@{}l@{}} Rename, Change Package,Make Class\\ Abstract, Drop Class Abstract,\\ Add Super Type, Remove \\Super Type, Make Attr. Identifier,\\ Drop Attr. Identifier, Make Ref. Composite, \\Switch Ref. Composite, Make Ref. Opposite,\\ Drop Ref. Opposite  \end{tabular}
- 			\\   \cmidrule{1-3} 
- 			\multicolumn{1}{l|}{ Complex changes}
- 			& \multirow{2}{*}{ \begin{tabular}[c]{@{}l@{}} Specialization / \\Generalization Operators\end{tabular} } 
- 			&  \begin{tabular}[c]{@{}l@{}} Generalize Attribute, Specialize \\ Attribute, Generalize Reference, \\Specialize Reference, Specialize\\ Composite Ref. Generalize Super Type,\\ Specialize Super Type \end{tabular}
- 			\\  \cmidrule{2-3} 
- 			& \multirow{2}{*}{ \begin{tabular}[c]{@{}l@{}} Inheritance \\Operators
- 			\end{tabular}} 
- 			&  \begin{tabular}[c]{@{}l@{}}  Pull up Feature, Push down Feature,\\ Extract Super Class, Inline Super Class, \\Fold Super Class, Unfold Super Class,\\ Extract Sub Classn Inline Sub Class \end{tabular}
- 			\\  \cmidrule{2-3} 
- 			& \multirow{2}{*}{ \begin{tabular}[c]{@{}l@{}} Delegation\\ Operators\end{tabular}} 
- 			&  \begin{tabular}[c]{@{}l@{}} Extract Class, Inline Class, Fold Class,\\ Unfold Class, Move Feature over Ref.,\\ Collect Feature over Ref.  \end{tabular}
- 			
- 			\\  \cmidrule{2-3} 
- 			& \multirow{2}{*}{ \begin{tabular}[c]{@{}l@{}} Replacement\\ Operators\end{tabular}} 
- 			&  \begin{tabular}[c]{@{}l@{}} Subclasses to Enum., Enum. to Subclasses,\\ Reference to Class, Class to Reference, \\Inheritance to Delegation, Delegation to Inheritance,\\ Reference to Identifier, Identifier to Reference \end{tabular}
- 			\\  \cmidrule{2-3} 
- 			& \multirow{2}{*}{ \begin{tabular}[c]{@{}l@{}}Merge /\\ Split Operators Merge\end{tabular}} 
- 			&  \begin{tabular}[c]{@{}l@{}} Merge Features, Split Reference by Type,\\ Merge Classes, Split Class, Merge Enumerations\\\end{tabular}
- 	\\
- 	\\
- 			\bottomrule
- 			
- 			% &  \cellcolor{CellColor1} \CIRCLE & \cellcolor{CellColor1}  &  \cellcolor{CellColor1}\CIRCLE & \cellcolor{CellColor1}\CIRCLE \\ \bottomrule
- 		\end{tabular}
- 	}
- }
- \caption{Catalog of model operators} 
- \label{table:changesCatalog}
- \end{table}
+ 
  %breaking not breaking?
  
   Furthermore, many of them classified the detected changes based on their impact on the treated artifact (e.g., models, constraint, transformation, and code). In Table~\ref{table:changesCatalog}, I put the largest set of changes types that I found in literature~\cite{herrmannsdoerfer_extensive_2011}. Later in Section \ref{sec: ap1_changedetection}, I specify the treated subset of these changes. 
-  
+  \begin{table}[H]
+  	\centering
+  	
+  	\resizebox{16cm}{!} {
+  		{\small
+  			\begin{tabular}{l|c|c}%|l|l|l|l|l|l|l|}
+  			%\hline
+  			\toprule 
+  			Type & group  & Change name  \\ \midrule
+  			
+  			\multicolumn{1}{l|}{ Atomic changes}
+  			& \multirow{2}{*}{ \begin{tabular}[c]{@{}l@{}} Structural \\ Primitives\end{tabular} } 
+  			&  \begin{tabular}[c]{@{}l@{}} Create Package, Delete Package, Create Class,\\Delete Class, Create Attribute, Create Reference,\\ Delete Feature,change type, Create Opposite Ref.,\\Delete Opposite Ref., Create Data Type, \\Delete Data Type, Create Enum, Delete Enum, \\Create Literal,Merge Literal  \end{tabular}
+  			\\  \cmidrule{2-3} 
+  			& \multirow{2}{*}{ \begin{tabular}[c]{@{}l@{}} Non Structural \\ primitives\end{tabular}} 
+  			&  \begin{tabular}[c]{@{}l@{}} Rename, Change Package,Make Class\\ Abstract, Drop Class Abstract,\\ Add Super Type, Remove \\Super Type, Make Attr. Identifier,\\ Drop Attr. Identifier, Make Ref. Composite, \\Switch Ref. Composite, Make Ref. Opposite,\\ Drop Ref. Opposite  \end{tabular}
+  			\\   \cmidrule{1-3} 
+  			\multicolumn{1}{l|}{ Complex changes}
+  			& \multirow{2}{*}{ \begin{tabular}[c]{@{}l@{}} Specialization / \\Generalization Operators\end{tabular} } 
+  			&  \begin{tabular}[c]{@{}l@{}} Generalize Attribute, Specialize \\ Attribute, Generalize Reference, \\Specialize Reference, Specialize\\ Composite Ref. Generalize Super Type,\\ Specialize Super Type \end{tabular}
+  			\\  \cmidrule{2-3} 
+  			& \multirow{2}{*}{ \begin{tabular}[c]{@{}l@{}} Inheritance \\Operators
+  			\end{tabular}} 
+  			&  \begin{tabular}[c]{@{}l@{}}  Pull up Feature, Push down Feature,\\ Extract Super Class, Inline Super Class, \\Fold Super Class, Unfold Super Class,\\ Extract Sub Classn Inline Sub Class \end{tabular}
+  			\\  \cmidrule{2-3} 
+  			& \multirow{2}{*}{ \begin{tabular}[c]{@{}l@{}} Delegation\\ Operators\end{tabular}} 
+  			&  \begin{tabular}[c]{@{}l@{}} Extract Class, Inline Class, Fold Class,\\ Unfold Class, Move Feature over Ref.,\\ Collect Feature over Ref.  \end{tabular}
+  			
+  			\\  \cmidrule{2-3} 
+  			& \multirow{2}{*}{ \begin{tabular}[c]{@{}l@{}} Replacement\\ Operators\end{tabular}} 
+  			&  \begin{tabular}[c]{@{}l@{}} Subclasses to Enum., Enum. to Subclasses,\\ Reference to Class, Class to Reference, \\Inheritance to Delegation, Delegation to Inheritance,\\ Reference to Identifier, Identifier to Reference \end{tabular}
+  			\\  \cmidrule{2-3} 
+  			& \multirow{2}{*}{ \begin{tabular}[c]{@{}l@{}}Merge /\\ Split Operators Merge\end{tabular}} 
+  			&  \begin{tabular}[c]{@{}l@{}} Merge Features, Split Reference by Type,\\ Merge Classes, Split Class, Merge Enumerations\\\end{tabular}
+  			\\
+  			\\
+  			\bottomrule
+  			
+  			% &  \cellcolor{CellColor1} \CIRCLE & \cellcolor{CellColor1}  &  \cellcolor{CellColor1}\CIRCLE & \cellcolor{CellColor1}\CIRCLE \\ \bottomrule
+  		\end{tabular}
+  	}
+  }
+  \caption{Catalog of model operators} 
+  \label{table:changesCatalog}
+  \end{table}
   %with their possible impact on the code.
   In Model-Driven Engineering, depending on their impact on model instances, metamodel changes can be divided into three categories \cite{gruschko2007towards}:
  \begin{itemize}
@@ -804,6 +808,7 @@ Sridhara et al. \cite{sridhara2023chatgpt} explore how ChatGPT can be used in de
  Jiang et al. \cite{jiang2023selfevolve} proposed self-augmented code generation framework based on LLMs called SelfEvolve. SelfEvolve allows generating code and keep correcting it iteratively with the LLM. % to have better generated code. % but does not treat the metamodel and code coevolution problem.
  %
  finally, Zhang et al. \cite{zhang2023multilingual} proposed Codeditor, an LLM based tool for code co-evolution between different programming languages. It learns code evolutions as edit sequences and then uses LLMs for multilingual translation.
+  \input{./Chapitre1/RelatedWorkTable}
   \section{Summary and Discussion}
   %Summary of the works cited above.
  \label{sotadiscuss}
@@ -847,7 +852,7 @@ Sridhara et al. \cite{sridhara2023chatgpt} explore how ChatGPT can be used in de
   Finally, studies focused on either evaluating the ability of LLMs to generate qualitative code, refining it, repairing it if vulnerable, or augmenting it. However, none of them specifically explored the task of code co-evolution.
   %MDE
   Other studies also focused on the ability of LLMs to generate MDE artifacts, such as models and constraints, but not on their co-evolution. However, no study investigated the ability of LLMs in the MDE problem of code co-evolution when metamodels evolve. I empirically evaluated how effective is Chagpt in solving this co-evolution problem in Chapter \ref{chapitre3}.
-  \input{./Chapitre1/RelatedWorkTable}
+ 
   \section{Conclusion}
   To conclude, this chapter has provided a comprehensive overview of existing research in the field of code co-evolution. I started with an exploration of metamodel change detection approaches. I included this section because I find that it is essential to understand the output of these approaches that is used later in the impact analysis of this output on the code. This exploration allowed me to select the approach of Khelladi et al.~\cite{khelladi2015detecting}. Following this, the chapter examined the co-evolution of models, transformations, and constraints in response to evolving metamodels.
   

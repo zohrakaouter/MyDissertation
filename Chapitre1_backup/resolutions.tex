@@ -1,0 +1,102 @@
+
+\begin{table*}[t]
+	%\vspace{-1.5em}
+	\centering
+	%\hspace{-2.5cm}
+	\caption{Catalog of resolutions used for the code co-evolution of direct errors due to the metamodel changes.}
+	\label{table:ResolutionsCatalog}
+	\resizebox{18cm}{!} {
+		\begin{tabular}{ll}
+			\toprule
+			\begin{tabular}[c]{@{}l@{}}Impacting Metamodel Changes\end{tabular}  & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Proposed Code Resolutions\end{tabular}} \\ \midrule
+			
+			
+			
+			%			* 0 to delete the instruction where the deleted method is used, 
+			%			* 1 delete the direct element only 
+			%			* 2 delete the direct expression (all call path) using this deleted property 
+			%			* 3 replace the direct expression (all call path) with a default value
+			%			* 4 replace it with another element (like rename)
+			
+			$\diamond$ Delete property \emph{p}  &  
+			\begin{tabular}[c]{@{}l@{}}$\rhd [CR1]$ Remove the direct use of \emph{p} \red{}(e.g., label = s.name + s.m1().p.m2() $\rightarrow$ label = s.name + ( (Type\_Of\_P) s.m1() ).m2())\\
+				$\rhd [CR2]$ Remove the statement using \emph{p} (i.e., if, loop, assignment, etc.) \\
+				$\rhd [CR3]$ Remove the whole call path of \emph{p} (e.g., label = s.name + s.m1().m2().p $\rightarrow$ label = s.name) \\
+				$\rhd [CR4]$ Replace the whole call path of \emph{p} with a default value (e.g., id = s.id + s.m1().m2().p $\rightarrow$ id = s.id + 0) 
+				
+			\end{tabular}    \\ \midrule
+			
+			$\diamond$ Delete class \texttt{C} & \begin{tabular}[c]{@{}l@{}}$\rhd [CR1]$ Remove the direct use of the type \texttt{c} (e.g., extending/implementing \texttt{c}, in method argument/returned \\ type and not the whole method declaration. Calls to the updated methods are subsequently updated) \\%\textcolor{white}{-----------}
+				$\rhd [CR2]$ Remove the statements using the type \texttt{C} (e.g., import, variable declaration, method argument/returned type, \\ method declaration,  type instantiation, etc. Calls to the deleted variables and methods are subsequently removed)\\%\textcolor{white}{-----------}
+				
+			\end{tabular} 	  \\ \midrule
+			
+			$\diamond$ Rename element \emph{e}	& \begin{tabular}[c]{@{}l@{}} $\rhd [CR5]$ Rename \emph{e} in the code	
+			\end{tabular}
+			\\
+			\midrule
+			
+			\begin{tabular}[c]{@{}l@{}}$\diamond$ Generalize multiplicity of property \\ \emph{p}  from a single to multiple values\end{tabular} & 
+			\begin{tabular}[c]{@{}l@{}}
+				$\rhd [CR6]$ Retrieve the first value of a collection (e.g., value = \emph{lng.p}  $\rightarrow$ value = \emph{lng.p.toArray()[0]} or \emph{lng.p.get(0)} )\\
+				
+			\end{tabular}   \\ \midrule
+			
+			%			* 0 extend navigation path
+			%			* 1 reduce navigation path
+			%			* 2 extend a navigation path and add a loop
+			%			* 3 extend a navigation path and get the first/last/i^th element
+			%			* 4 replace reference in path call x.y.z.prop to x.y.w.prop
+			
+			\begin{tabular}[c]{@{}l@{}}$\diamond$ Move property $p_{i}$ from \\ class \texttt{S} to \texttt{T} through \emph{ref}\\
+				%$\diamond$ Extract class \texttt{S} to \texttt{T} \\with properties $p_{1},...,p_{n}$ \\ \red{through \emph{ref}}\\
+				$\diamond$ Extract class of properties $p_{1},$\\$...,p_{n}$ from \texttt{S} to \texttt{T} through \emph{ref}\end{tabular} & 
+			\begin{tabular}[c]{@{}l@{}}$\rhd [CR7]$ Extend navigation path of $p_{i}$ (e.g., \emph{lng.$p_{i}$}  $\rightarrow$ \emph{lng.ref.$p_{i}$})\\
+				
+				$\rhd [CR8]$ Extend navigation path of $p_{i}$ and add a for loop (e.g., \emph{lng.$p_{i}$}  $\rightarrow$ \emph{for(v in lng.ref) \{v.$p_{i}$\}})\\
+				$\rhd [CR9]$ Reduce navigation path of $p_{i}$ (e.g., \emph{lng.ref.$p_{i}$}  $\rightarrow$ \emph{lng.$p_{i}$})\\
+				$\rhd [CR10]$ Replace S by T\_REF  in Literal values (e.g., \emph{MetamodelPackage.S\_\_$p_{i}$}  $\rightarrow$ \emph{MetamodelPackage.T\_\_$p_{i}$})
+			\end{tabular}   \\ \midrule
+			
+			\begin{tabular}[c]{@{}l@{}}$\diamond$ Push property \emph{p} from \\class \texttt{Sup} to \texttt{Sub$_{1}$},...,\texttt{Sub$_{n}$}\end{tabular} & 
+			\begin{tabular}[c]{@{}l@{}}$\rhd [CR11]$ Introduce a type test with an If statement (e.g., \emph{t.name = s.p.name} $\rightarrow$ \\$if(s.p.istypeof(Sub_{1})$) \{t.name = (Sub$_{1}$ s).p.name\} $...$ $else$ $if(s.p.istypeof(Sub_{n})$ \{t.name = (Sub$_{n}$ s).p.name\})\\
+				$\rhd [CR12]$ Cast \emph{p} to one specific sub class $Sub_{i}$ (e.g., \emph{t.name = s.p.name} $\rightarrow$ \emph{t.name = (($Sub_{i}$)s).p.name})\\
+				$\rhd [CR13]$ Duplicate the statement using the literal for each subclass and replace Sup by $Sub_{i}$ (e.g., \emph{add(Package.Sup\_\_P)} \\ $\rightarrow$ \emph{ add(Package.$Sub_{0}$\_\_P)}, ... , \emph{add(Package.$Sub_{n}$\_\_P)})
+				%Create much Literals as subclasses and replace Sup by $Sub_{i}$ in each one(e.g., \emph{MetamodelPackage.Sup\_\_P}  $\rightarrow$ \emph{lng.$Sub_{0}$\_\_P} ,...,\emph{lng.$Sub_{n}$\_\_P})
+			\end{tabular}   \\ \midrule
+			\begin{tabular}[c]{@{}l@{}}$\diamond$ Pull property \emph{p} from \\classes \texttt{Sub$_{1}$},...,\texttt{Sub$_{n}$}
+				to \texttt{Sup}  \end{tabular} & 
+			\begin{tabular}[c]{@{}l@{}}
+				%$\rhd [CR12]$ Cast \emph{p} to sup  (e.g., \emph{t.name = s.p.name} $\rightarrow$ \emph{t.name = ((Sup)s).p.name})\\
+				$\rhd [CR14]$ Replace $Sub_{i}$  by Sup in Literal values (e.g., \emph{MetamodelPackage.$Sub_{i}$\_\_P}  $\rightarrow$ \emph{MetamodelPackage.Sup\_\_P})
+				
+			\end{tabular}   \\ \midrule
+			
+			%			\begin{tabular}[c]{@{}l@{}}$\diamond$ Extract class \texttt{S} to \texttt{T} \\with properties $p_{1},...,p_{n}$\end{tabular} & 
+			%			\begin{tabular}[c]{@{}l@{}}$\rhd [CR10]$ Extend navigation path of $p_{i}$ (e.g., \emph{lng.$p_{i}$}  $\rightarrow$ \emph{lng.path.$p_{i}$})\\
+				%				$\rhd [CR11]$ Reduce navigation path of $p_{i}$ (e.g., \emph{lng.path.$p_{i}$}  $\rightarrow$ \emph{lng.$p_{i}$}) \end{tabular}   \\ \midrule
+			
+			%			
+			
+			
+			\begin{tabular}[c]{@{}l@{}}$\diamond$ Inline class \texttt{S} to \texttt{T} \\with properties $p_{1},...,p_{n}$\end{tabular} & 
+			%delete rule or change its source/target type from B to A
+			\begin{tabular}[c]{@{}l@{}}
+				$\rhd [CR9]$ Reduce navigation path of $p_{i}$ (e.g., \emph{lng.ref.$p_{i}$}  $\rightarrow$ \emph{lng.$p_{i}$})\\
+				$\rhd [CR15]$ Change the class type from \texttt{S} to \texttt{T} \red{}(e.g., List$<$S$>$ l = ...; $\rightarrow$ List$<$T$>$ l = ...; ) \\
+			\end{tabular} \\ \midrule
+			
+			%			\begin{tabular}[c]{@{}l@{}}$\diamond$ Flatten hierarchy from \\class \texttt{Sup} to \texttt{Sub$_{1}$},...,\texttt{Sub$_{n}$}\\with properties $p_{1},...,p_{n}$\end{tabular} & 
+			%			%delete rule of change its source/target type from A to B1 ... Bn
+			%			\begin{tabular}[c]{@{}l@{}}$\rhd [R15]$ Duplicate the transformation rule while changing the source or target class type from \texttt{Sup} to \texttt{Sub$_{i}$} ($i \in [1...n] $)  \\
+				%				$\rhd [CR3]$ Remove the whole transformation rule \\ \end{tabular}  \\ 
+			\begin{tabular}[c]{@{}l@{}}$\diamond$ Change property \emph{p} type \\from \texttt{S} to \texttt{T}\end{tabular} & 
+			\begin{tabular}[c]{@{}l@{}}$\rhd [CR16]$ Change variable declaration type initialized with \emph{p} from \texttt{S} to \texttt{T} (e.g., S var = s.p; $\rightarrow$ T var = s.p;) \\ $\rhd [CR17]$ Add a cast of \emph{p} 
+			\end{tabular}   \\ %\midrule
+			\bottomrule                  
+		\end{tabular}
+		
+		%.03	
+	}	
+	
+\end{table*}

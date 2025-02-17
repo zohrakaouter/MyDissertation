@@ -47,20 +47,19 @@ This section gives a background on how metamodels play a significant role when b
 
 \subsection{Key Concepts}
 
-\red{Metamodels are a cornerstone in MDE. It serves to create model instances, constraints, or transformations. 
-	In our work, we focus on the relation between metamodels and code.
-}
-Figure \ref{fig:SL_useage} depicts a software language structure and its usage as in practice in the Eclipse platform.  
+%\red{Metamodels are a cornerstone in MDE. It serves to create model instances, constraints, or transformations. 
+%	In our work, we focus on the relation between metamodels and code.
+%}  
 %
 %Metamodels are cornerstones when building a software language and its toolings \cite{van2000domain,gronback2009eclipse}. 
 %Metamodels define the aspects of a business domain, i.e. the main concepts, their properties, and relationships between them \cite{cabot2012object}.  
-Once the metamodels are carefully defined and validated in a given version. The core API code is generated \cite{steinberg2008emf} consisting of the class implementations of the metamodel classes, a factory and package classes, etc. All this generated code allows parsing the AST of the metamodels' models instances, navigate in it and modify it. 
-The generated code is enriched with additional code to offer more advanced functionalities. For instance, methods defined in classes in the metamodel are generated without their bodies, which developers must implement. %This part consists of enriching the generated core API. 
-Developers also integrate additional classes to implement advanced functionalities, such as language services like validation and language tooling like an execution engine. %This code is built on top of the generated core API. 
+%Once the metamodels are carefully defined and validated in a given version. The core API code is generated \cite{steinberg2008emf} consisting of the class implementations of the metamodel classes, a factory and package classes, etc. All this generated code allows parsing the AST of the metamodels' models instances, navigate in it and modify it. 
+%The generated code is enriched with additional code to offer more advanced functionalities. For instance, methods defined in classes in the metamodel are generated without their bodies, which developers must implement. %This part consists of enriching the generated core API. 
+%Developers also integrate additional classes to implement advanced functionalities, such as language services like validation and language tooling like an execution engine. %This code is built on top of the generated core API. 
 %
-Finally, a test suite is added on top of the generated and the additional code to test the implemented functionalities. This can be done manually or with the existing techniques for automated test generation \cite{fraser2011evosuite,mcminn2004search,beyer2022advances}. 
+As I already explained in Section~\ref{introcontext}, once metamodels are defined and validated, core API code is generated, developers aim to enrich it by implementing method bodies and adding advanced functionalities, such as validation services and execution engines. After that, a test suite is added on top of the generated and the additional code to test the implemented functionalities, as illustrated in Figure \ref{fig:SL_useage}. This can be done manually or with the existing techniques for automated test generation \cite{fraser2011evosuite,mcminn2004search,beyer2022advances}. 
 
-\red{}However, the generated code, additional code and tests hold for a single version of the metamodel. 
+However, the generated code, additional code and tests hold for a single version of the metamodel. 
 \red{With metamodel evolution comes the challenges of co-evolution and its correctness.
 	For example, when a metamodel evolves, model instances must be co-evolved. One way to check the models' correctness is to rely on the OCL constraints to verify the static semantic of the models \cite{cabot2012object,richters2000validating}. Thus, one can compare the constraints before and after the models' co-evolution.
 	In our case, when the metamodel evolves}, the API code can be re-generated again. As a consequence, the additional code manually integrated by developers must be co-evolved accllmordingly as well. 
@@ -212,7 +211,7 @@ As described in Chapter \ref{mmchanges}, we use an interface specification of ch
 	\caption{List of metamodel changes and how they are traced up to the tests in the original and evolved versions. }
 	\label{tab:changes}
 	\centering
-	\resizebox{14cm}{!} {
+	\resizebox{14.5cm}{!} {
 		\hspace*{-3em}
 		\begin{tabular}{lcc}
 			\toprule
@@ -384,8 +383,8 @@ First, we present the data set and the evaluation process. Then, we set the rese
 	
 	\caption{Details of the metamodels and their evolutions.}
 	\label{CaseStudies_Evolution}
-	\hspace*{-2em}
-	\resizebox{14.5cm}{!} {
+%	\hspace*{-1em}
+	\resizebox{16cm}{!} {
 		\hspace*{-2em}
 		\begin{tabular}{llll}
 			\toprule
@@ -602,7 +601,7 @@ We now discuss the results w.r.t. our research questions.
 \red{
 	
 	
-	\subsubsection{RQ0}
+	\subsubsection{RQ0. To what extent can developers manually trace the tests impacted by the evolution of the metamodel?}
 	The first goal of our evaluation is to gain evidence on the difficulty or not of the manual task of tracing impacted tests. Thus, we designed and ran a user study experiment. 
 	
 	\paragraph{RQ0 Set Up} We first describe our user study experiment.
@@ -647,7 +646,7 @@ We now discuss the results w.r.t. our research questions.
 	
 }
 
-\subsubsection{RQ1}
+\subsubsection{RQ1. To what extent does our automatic approach trace the impact of the metamodel evolution to the tests?}
 
 Following the evaluation protocol, we executed our approach on our case studies in Table \ref{CaseStudies_CoEvolution}. Figure \ref{fig:tracedTests} depicts the number of traced tests due to the impacting metamodel changes in Table \ref{CaseStudies_Evolution}. We first observe that we can trace tests successfully. We traced a total of \red{1608 out of 34612 tests due to 473 metamodel changes, distributed in 1106 and 502 tests} in the original and evolved versions. Thus, we can isolate for the developers the tests that must be executed and looked at to check the behavioral correctness of the co-evolution. 
 
@@ -663,7 +662,7 @@ Moreover, as several deletions of classes and properties occurred in the evoluti
 \begin{figure}[t]
 	\centering
 	%\hspace*{-0.5cm}
-	\includegraphics[width=0.7\textwidth]{./pics/chapter2pics/tracedTests1.png}
+	\includegraphics[width=0.75\textwidth]{./pics/chapter2pics/tracedTests1.png}
 	%\vspace{-1em}
 	\caption{\red{Traced tests due to metamodel evolution in each project.}}
 	\label{fig:tracedTests}
@@ -675,7 +674,7 @@ Moreover, as several deletions of classes and properties occurred in the evoluti
 	We could successfully trace the tests that must be executed before and after the co-evolution regardless of whether they are manually or automatically written. This would help developers to immediately check the code co-evolution by executing the subset of relevant traced tests among the whole test suite. 
 \end{tcolorbox}
 
-\subsubsection{RQ2}
+\subsubsection{RQ2. What is the observed behavioral correctness level of the code co-evolution?}
 
 After tracing the tests, we could execute them to observe their effect before and after co-evolution of the code. Table \ref{table:tracedTests} depicts the results for the original and evolved projects' versions. The second line gives the number of traced class tests and the rest of the lines categorizes the tests. \red{We overall observe no significant difference between projects with automatically generated tests and projects with manually tests.} 
 
@@ -752,7 +751,7 @@ Our traced tests could hint in two projects that the co-evolution may not be ent
 
 
 
-\subsubsection{RQ3}
+\subsubsection{RQ3. What are the observed gains (w.r.t. test case reduction and execution time) obtained from our approach of tracing impacted tests by metamodel evolution ?}
 With the traced tests due to the metamodel evolution, we can assess the gains in terms of test reduction and execution time compared to the whole test suite as a baseline. 
 Indeed, rather than re-running the whole test suite both in the original and evolved versions, or worse, not considering the tests at all. We provide developers with a zoomed view of traced impacted tests by the metamodel evolution, hence, focusing on assessing the code co-evolution.  
 
@@ -777,7 +776,7 @@ Column 7 depicts the gains in execution time of the traced tests compared to the
 \caption{Reduction gains of the number of traced tests and their execution time.}
 \label{CaseStudies_CoEvolution_result}
 %\hspace*{-4em}
-%\resizebox{15cm}{!} {
+\resizebox{22cm}{!} {
 	\begin{tabular}{lcccccc}
 		\toprule
 		\begin{tabular}[c]{@{}l@{}}Projects co-evolved in response to the evolved \\ metamodels \end{tabular} 
@@ -836,7 +835,7 @@ Column 7 depicts the gains in execution time of the traced tests compared to the
 		\bottomrule		
 	\end{tabular}
 	%}
-
+}
 %\end{table*}
 \end{sidewaystable}
 \begin{comment}

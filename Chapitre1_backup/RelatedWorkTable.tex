@@ -1,0 +1,95 @@
+
+
+\begin{table*}[t]
+\centering
+\caption{Related work comparison (to position )} 
+\label{table:relatedWorkTable}
+	\resizebox{16cm}{!} 
+{\normalsize
+\begin{tabular}{l|l|l|c|c|c|c}%|l|l|l|l|l|l|l|}
+%\hline
+\toprule 
+ Approaches &Category & Approach & Automation & \begin{tabular}[c]{@{}c@{}}Requires \\ pre-learning\end{tabular}& Change types & Validation  \\ \midrule
+ 
+\multicolumn{1}{l|}{ \textbf{Lamothe et al. \cite{9079197}}} & \multirow{2}{*}{} & \multirow{3}{*}{} &Semi-automatic &Yes $\checkmark$  &  \begin{tabular}[c]{@{}l@{}} Encapsulate, Move method,Remove parameter,\\Rename, Consolidate, expose implementation,\\ add contextual data,change type,\\ Replaced by exeternal API  \end{tabular}  & No $\times$  \\ \cmidrule{1-1} \cmidrule{4-7} 
+
+\multicolumn{1}{l|}{\textbf{Fazzini et al. \cite{10.1145/3387905.3388608}} } &   \begin{tabular}[c]{@{}l@{}}Android api \\migration\end{tabular} &    \begin{tabular}[c]{@{}l@{}} Identifying migration patterns and \\rank them to select the most context-similar  \end{tabular}    & Fully-automatic& Yes $\checkmark$    &\begin{tabular}[c]{@{}l@{}}Any change in AST level\\ ( Insert/Move/Update/Delete)\end{tabular} &Yes $\checkmark$  \\ \cmidrule{1-2} \cmidrule{4-7} 
+
+\multicolumn{1}{l|}{\textbf{Meng et al. \cite{10.5555/2486788.2486855}}} &   \begin{tabular}[c]{@{}l@{}}Bug fix \\context \end{tabular}              &          &  Semi-automatic& Yes $\checkmark$   & \begin{tabular}[c]{@{}l@{}}Any change in AST level\\ ( Insert/Move/Update/Delete)\end{tabular}& No $\times$ \\ \midrule
+
+\multicolumn{1}{l|}{ \textbf{ Wu et al. \cite{6062100}}} & \multirow{4}{*}{} &    \begin{tabular}[c]{@{}l@{}} Hybrid approach using call \\ dependency graph and textual similarity   \end{tabular}                 
+& Semi-automatic
+&No $\times$ 
+&\begin{tabular}[c]{@{}l@{}} change rules  :\\ One-to-One, One-to-Many \\ Many-to-One, Simple-Deleted  \end{tabular}      
+& No $\times$ \\ \cmidrule{1-1} \cmidrule{3-7} 
+
+\multicolumn{1}{l|}{\textbf{ Dagenais et al. \cite{dagenais2011recommending,5070565}}} 
+&                   
+&  \begin{tabular}[c]{@{}l@{}}     Recommendation approach for \\ compilation errors' correction     \end{tabular}            
+& Semi-automatic
+& Yes $\checkmark$ 
+& Deleted or deprecated methods 
+& No $\times$ \\ \cmidrule{1-1} \cmidrule{3-7} 
+
+\multicolumn{1}{l|}{\textbf{ Henkel et al. \cite{henkel2005catchup}}} 
+&      \begin{tabular}[c]{@{}l@{}} Java library \\evolution  \end{tabular}        
+&   \begin{tabular}[c]{@{}l@{}}  Catch refactoring operations during \\ the API revolution the API user can replay \\ these operations later \end{tabular}     
+& Semi-automatic
+& Yes $\checkmark$
+& \begin{tabular}[c]{@{}l@{}}     Refactoring operations: Rename Type, \\Moving Java Elements, Move static member,\\ Change Method Signature, \\ Rename non-virtual method,\\ Rename non-virtual method,\\ Rename virtual method,\\change type, rename field,\\ Use super-type where possible,\\ Introduce factory  \end{tabular}   
+&  No $\times$ \\ \cmidrule{1-1} \cmidrule{3-7} 
+
+\multicolumn{1}{l|}{\textbf{ N. Guyen et al. \cite{10.1145/1932682.1869486}}} 
+&                  
+&  \begin{tabular}[c]{@{}l@{}}    Recommendation approach for API \\ usage adaptation in client      \end{tabular}        
+& Semi-automatic
+& Yes $\checkmark$ 
+& \begin{tabular}[c]{@{}l@{}}Any change in AST level\\ ( Insert/Move/Update/Delete)\end{tabular} 
+&   No $\times$\\ \cmidrule{1-1} \cmidrule{3-7} 
+
+\multicolumn{1}{l|}{\textbf{ Zhong et al. \cite{10.1145/3597503.3639084}}} 
+&                  
+&  \begin{tabular}[c]{@{}l@{}}    Compiler-directed tool for\\ migrating API callsite of client code     \end{tabular}        
+& Fully-automatic
+& No $\checkmark$ 
+& \begin{tabular}[c]{@{}l@{}} N/a \end{tabular} 
+&   No $\times$\\ \midrule
+     
+         
+\multicolumn{1}{l|}{\textbf{Gerasimou et al. \cite{10.1145/3194793.3194798}}} 
+&  \begin{tabular}[c]{@{}l@{}}  Other library \\Evolution  \end{tabular}  
+&  \begin{tabular}[c]{@{}l@{}}   Code-based transformation to \\update client code          \end{tabular}          
+&  Semi-automatic
+& No $\times$
+& A set of mapping rule
+& No $\times$ \\ \cmidrule{1-1} \cmidrule{3-7}
+
+
+\multicolumn{1}{l|}{\textbf{ Xu et al. \cite{8813263}}} 
+&    \multirow{-2}{*}{}     
+&  \begin{tabular}[c]{@{}l@{}}    Mining stored database edits to select \\ applicable edits  to  be reviewed        \end{tabular}                  
+& Fully-automatic
+& Yes $\checkmark$ 
+& \begin{tabular}[c]{@{}l@{}}Any change in AST level\\ ( Insert/Move/Update/Delete) \\ classified into 3 categories : \\Single statement, Block of statements,\\ MultiBlock of statements\end{tabular} 
+&   No $\times$\\ \midrule
+
+%\multicolumn{1}{l|}{\textbf{Ochoa et al. \cite{10.1145/3510455.3512783}}}&          Maven libraries        &  \begin{tabular}[c]{@{}l@{}}     Breaking changes analysis followed \\by Impact analysis in the client*         \end{tabular}              &  & &  \CIRCLE& \\ \midrule
+
+\multicolumn{1}{l|}{\textbf{Khelladi et al. \cite{Khelladi2020}}} 
+& \multirow{2}{*}{\cellcolor{CellColor1} Model-centric} 
+&                 Impact propagation approach  
+&   Semi-automatic
+&   No $\times$
+& See Table  \ref{table:ResolutionsCatalog}
+& No $\times$  \\ %\cmidrule{1-1} \cmidrule{3-7} 
+
+\hhline{=|~|=====}
+
+
+\multicolumn{1}{l|}{\cellcolor{CellColor1} Our approach   } & \cellcolor{CellColor1}   evolution              &  \cellcolor{CellColor1}    \begin{tabular}[c]{@{}l@{}}Code co-evolution guided by Metamodel \\changes pattern matching    \end{tabular}    &  \cellcolor{CellColor1} Fully-automatic  & \cellcolor{CellColor1} No $\times$  &  \cellcolor{CellColor1} See Table \ref{table:ResolutionsCatalog} & \cellcolor{CellColor1}Yes $\checkmark$ \\ \bottomrule
+
+% &  \cellcolor{CellColor1} \CIRCLE & \cellcolor{CellColor1}  &  \cellcolor{CellColor1}\CIRCLE & \cellcolor{CellColor1}\CIRCLE \\ \bottomrule
+\end{tabular}
+}
+
+\end{table*}

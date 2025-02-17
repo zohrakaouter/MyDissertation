@@ -3,35 +3,37 @@
 \babel@toc {english}{}\relax 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {2.1}{\ignorespaces Comparison BERT, BART, and GPT-3\relax }}{29}{table.caption.8}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces Catalog of model operators\relax }}{31}{table.caption.10}%
-\contentsline {table}{\numberline {3.2}{\ignorespaces Related work comparison (to position )\relax }}{49}{table.caption.11}%
+\contentsline {table}{\numberline {3.1}{\ignorespaces Comparison of BERT, BART, and GPT-3\relax }}{31}{table.caption.8}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Catalog of resolutions used for the code co-evolution of direct errors due to the metamodel changes.\relax }}{58}{table.caption.14}%
-\contentsline {table}{\numberline {4.2}{\ignorespaces Classification of the different patterns of the generated code element from the metamodel elements.\relax }}{59}{table.caption.15}%
-\contentsline {table}{\numberline {4.3}{\ignorespaces Excerpt from the traced report of Modisco Java Discoverer Benchmark project\relax }}{76}{table.caption.19}%
-\contentsline {table}{\numberline {4.4}{\ignorespaces Details of the metamodels and their evolutions.\relax }}{76}{table.caption.20}%
-\contentsline {table}{\numberline {4.5}{\ignorespaces Details of the projects and their caused direct and indirect errors by the metamodels evolution.\relax }}{77}{table.caption.21}%
-\contentsline {table}{\numberline {4.6}{\ignorespaces Number of applied resolutions in our code co-evolution for each project and per evolved metamodel.\relax }}{77}{table.caption.23}%
-\contentsline {table}{\numberline {4.7}{\ignorespaces Measured precision and recall of our projects.\relax }}{77}{table.caption.26}%
-\contentsline {table}{\numberline {4.8}{\ignorespaces Observed test before and after co-evolution. [Legend: Before (V1) -- After (V2) ]\relax }}{78}{table.caption.27}%
-\contentsline {table}{\numberline {4.9}{\ignorespaces Number of applied Quick Fixes for each project and per evolved metamodel.\relax }}{78}{table.caption.29}%
-\contentsline {table}{\numberline {4.10}{\ignorespaces Comparison between our automatic co-evolution approach and the semi-automatic co-evolution approach. [Legend: Precision(P) -- Recall(R) ]\relax }}{79}{table.caption.31}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces Catalog of model operators\relax }}{35}{table.caption.10}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Related work comparison\relax }}{51}{table.caption.11}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces List of metamodel changes and how they are traced up to the tests in the original and evolved versions. \relax }}{86}{table.caption.35}%
-\contentsline {table}{\numberline {5.2}{\ignorespaces Details of the metamodels and their evolutions.\relax }}{91}{table.caption.37}%
-\contentsline {table}{\numberline {5.3}{\ignorespaces Details of the projects and their tests.\relax }}{93}{table.caption.38}%
-\contentsline {table}{\numberline {5.4}{\ignorespaces Coverage metric of each evaluation project.\relax }}{93}{table.caption.39}%
-\contentsline {table}{\numberline {5.5}{\ignorespaces Selected tests before and after code co-evolution.\relax }}{98}{table.caption.46}%
-\contentsline {table}{\numberline {5.6}{\ignorespaces Reduction gains of the number of traced tests and their execution time.\relax }}{100}{table.caption.48}%
+\contentsline {table}{\numberline {5.1}{\ignorespaces Catalog of resolutions used for the code co-evolution of direct errors due to the metamodel changes.\relax }}{62}{table.caption.14}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Classification of the different patterns of the generated code element from the metamodel elements.\relax }}{64}{table.caption.16}%
+\contentsline {table}{\numberline {5.3}{\ignorespaces Excerpt from the traced report of Modisco Java Discoverer Benchmark project\relax }}{68}{table.caption.17}%
+\contentsline {table}{\numberline {5.4}{\ignorespaces Details of the metamodels and their evolutions.\relax }}{72}{table.caption.18}%
+\contentsline {table}{\numberline {5.5}{\ignorespaces Details of the projects and their caused direct and indirect errors by the metamodels evolution.\relax }}{72}{table.caption.19}%
+\contentsline {table}{\numberline {5.6}{\ignorespaces Number of applied resolutions in our code co-evolution for each project and per evolved metamodel.\relax }}{75}{table.caption.21}%
+\contentsline {table}{\numberline {5.7}{\ignorespaces Measured precision and recall of our projects.\relax }}{76}{table.caption.24}%
+\contentsline {table}{\numberline {5.8}{\ignorespaces Observed test before and after co-evolution. [Legend: Before (V1) -- After (V2)]\relax }}{77}{table.caption.25}%
+\contentsline {table}{\numberline {5.9}{\ignorespaces Number of applied Quick Fixes for each project and per evolved metamodel.\relax }}{78}{table.caption.27}%
+\contentsline {table}{\numberline {5.10}{\ignorespaces Comparison between our automatic co-evolution approach and the semi-automatic co-evolution approach. [Legend: Precision(P) -- Recall(R) ]\relax }}{79}{table.caption.29}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {6.1}{\ignorespaces Classification of the different patterns of the generated code element from the metamodel elements. \hspace {3em} [Examples illustrated for a metaclass \emph {Rule}, property \emph {Status}, and method \emph {Execute()}]\relax }}{112}{table.caption.55}%
-\contentsline {table}{\numberline {6.2}{\ignorespaces Variation operators of our original prompt (OP).\relax }}{116}{table.caption.58}%
-\contentsline {table}{\numberline {6.3}{\ignorespaces Details of the metamodels and their evolutions.\relax }}{117}{table.caption.59}%
-\contentsline {table}{\numberline {6.4}{\ignorespaces Details of the projects and their caused errors by the metamodels' evolution.\relax }}{117}{table.caption.60}%
-\contentsline {table}{\numberline {6.5}{\ignorespaces Measured correctness rate per temperature.\relax }}{119}{table.caption.61}%
-\contentsline {table}{\numberline {6.6}{\ignorespaces Measured correctness rate for different prompt variations. [$\nearrow $ and $\searrow $ are increase and decrease in correctness.]\relax }}{120}{table.caption.62}%
-\contentsline {table}{\numberline {6.7}{\ignorespaces Number of applied Quick Fixes for each project and per evolved metamodel.\relax }}{124}{table.caption.64}%
+\contentsline {table}{\numberline {6.1}{\ignorespaces List of metamodel changes and how they are traced up to the tests in the original and evolved versions. \relax }}{90}{table.caption.33}%
+\contentsline {table}{\numberline {6.2}{\ignorespaces Details of the metamodels and their evolutions.\relax }}{95}{table.caption.35}%
+\contentsline {table}{\numberline {6.3}{\ignorespaces Details of the projects and their tests.\relax }}{97}{table.caption.36}%
+\contentsline {table}{\numberline {6.4}{\ignorespaces Coverage metric of each evaluation project.\relax }}{97}{table.caption.37}%
+\contentsline {table}{\numberline {6.5}{\ignorespaces Selected tests before and after code co-evolution.\relax }}{102}{table.caption.44}%
+\contentsline {table}{\numberline {6.6}{\ignorespaces Reduction gains of the number of traced tests and their execution time.\relax }}{104}{table.caption.46}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {7.1}{\ignorespaces Classification of the different patterns of the generated code element from the metamodel elements. \hspace {3em} [Examples illustrated for a metaclass \emph {Rule}, property \emph {Status}, and method \emph {Execute()}]\relax }}{116}{table.caption.53}%
+\contentsline {table}{\numberline {7.2}{\ignorespaces Variation operators of our original prompt (OP).\relax }}{120}{table.caption.56}%
+\contentsline {table}{\numberline {7.3}{\ignorespaces Details of the metamodels and their evolutions.\relax }}{121}{table.caption.57}%
+\contentsline {table}{\numberline {7.4}{\ignorespaces Details of the projects and their caused errors by the metamodels' evolution.\relax }}{121}{table.caption.58}%
+\contentsline {table}{\numberline {7.5}{\ignorespaces Measured correctness rate per temperature.\relax }}{123}{table.caption.60}%
+\contentsline {table}{\numberline {7.6}{\ignorespaces Measured correctness rate for different prompt variations. [$\nearrow $ and $\searrow $ are increase and decrease in correctness.]\relax }}{124}{table.caption.63}%
+\contentsline {table}{\numberline {7.7}{\ignorespaces Number of applied Quick Fixes for each project and per evolved metamodel.\relax }}{127}{table.caption.66}%
+\addvspace {10\p@ }
 \babel@toc {french}{}\relax 
 \babel@toc {english}{}\relax 
