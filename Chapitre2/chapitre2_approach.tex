@@ -76,10 +76,10 @@ Usually, the test suite is used to identify possible bugs in the new evolved ver
 	This section introduces a motivating example to illustrate the challenge of metamodel and code co-evolution and testing it. 
 	% Let us take as an example Ecore project (ref),...
 	
-	Figure \ref{fig:excerptmodisco} shows an excerpt of the "Modisco Discovery Benchmark" metamodel\footnote{\url{https://git.eclipse.org/r/plugins/gitiles/modisco/org.eclipse.modisco/+/refs/tags/0.12.1/org.eclipse.modisco.infra.discovery.benchmark/model/benchmark.ecore}} consisting of 10 classes in version~0.9.0.
+	Figure \ref{fig: BMMV2},Page~\pageref{fig: BMMV2} shows an excerpt of the "Modisco Discovery Benchmark" metamodel\footnote{\url{https://git.eclipse.org/r/plugins/gitiles/modisco/org.eclipse.modisco/+/refs/tags/0.12.1/org.eclipse.modisco.infra.discovery.benchmark/model/benchmark.ecore}} consisting of 10 classes in version~0.9.0.
 	It illustrates some of the domain concepts \texttt{Discovery}, \texttt{Project}, and \texttt{ProjectDiscovery}  used for the discovery and reverse engineering of an existing software system. 
 	From these metaclasses, a first code API is generated, containing Java interfaces and their implementation classes, a factory, a package, etc. In version 0.11.0, the Modisco  metamodel evolved with several significant changes, among which we find: 1) Renaming the property \emph{totalExecutionTimeInSeconds} to
-	\emph{discoveryTimeInSeconds} in metaclass \texttt{Discovery}, followed by 2) Moving the property \emph{discoveryTimeInSeconds} (after its renaming) from metaclass \texttt{Discovery} to \texttt{DiscoveryIteration}
+	\emph{discoveryTimeInSeconds} in metaclass \texttt{Discovery}, followed by 2) Moving the property \emph{discoveryTimeInSeconds} (after its renaming) from metaclass \texttt{Discovery} to \texttt{DiscoveryIteration} as illustrated in Figure~\ref{fig: BMMV2}, Page~\pageref{fig: BMMV2}.
 	
 	%Listing \ref{lis:Modisco_impactedtest_V1} and 
 	Listing \ref{lis:Modisco_impactedtest_V2} shows a directly impacted test from the class \texttt{DiscoveryImpl\_ESTest} after the evolution of Modisco metamodel. It tests directly the evolved method. 
@@ -94,20 +94,20 @@ Usually, the test suite is used to identify possible bugs in the new evolved ver
 
 %shows a snippet of the generated Java interfaces and classes from the metamodel in Figure \ref{fig:excerptmodisco}. 
 
-\begin{figure*}[tb]
-	\centering
+%\begin{figure*}[tb]
+%	\centering
 	%\hspace*{-1em}
 	%\vspace{-5mm}
-	\includegraphics[width=0.7\textwidth]{./pics/chapter2pics/excerptmodisco.png}
+%	\includegraphics[width=0.7\textwidth]{./pics/chapter2pics/excerptmodisco.png}
 	
-	\caption{Excerpt of Modisco Benchmark metamodel in version 0.9.0.}
-	\label{fig:excerptmodisco}
+%	\caption{Excerpt of Modisco Benchmark metamodel in version 0.9.0.}
+%	\label{fig:excerptmodisco}
 	%\vspace{-5mm}
-\end{figure*}
+%\end{figure*}
 
 \setulcolor{green} 
 
-
+%Page~\pageref{fig: BMMV2}
 
 %\setulcolor{green} 
 

@@ -1,0 +1,20 @@
+%Context:
+Software systems are becoming increasingly complex, leading to high maintenance costs that often exceed initial development expenses. Model-Driven Engineering (MDE) has emerged as a key approach to streamline development and improve productivity. It relies on the use of metamodels to generate various artifacts, including code, which developers later enhance with additional code to build the necessary language tooling, e.g.,editor, checker, compiler, data access layers, etc. Frameworks like Eclipse Modeling Framework (EMF) illustrate this approach, generating Java APIs that are further extended for validation, debugging, and simulation.
+
+%Problem Statement:
+
+One of the major challenges in MDE is Metamodel evolution and its impact on the related artifacts.
+In this thesis, we focus on code artifact and its co-evolution with evolving metamodel.
+This thesis tackles three related challenges: 1) Resolving the impact of the metamodel evolution on the code automatically, 2) Checking the behavioral correctness of the metamodel and code co-evolution, 3) Leveraging LLMs for the metamodel and code co-evolution.
+
+
+This Thesis addresses these challenges by: 1) proposing a new fully automated co-evolution approach of metamodels and code. this approach is based on the pattern matching of compiling errors to select suitable resolutions, then 2) proposing an automatic approach to check the behavioral correctness of the code co-evolution between different releases of a language when its
+metamodel evolves. This approach leverages the test suites of the original and evolved versions
+of code , finally 3) exploring LLMs' ability in proposing correct co-evolutions of the code when the metamodel evolves. This approach is based on prompt engineering, where we design and generate natural language prompts to best co-evolve the impacted code due to the metamodel evolution. 
+
+ 
+
+%requiring co-evolution to maintain consistency. Manual adaptation is time-consuming and error-prone, prompting research into automation. Existing approaches either focus solely on API updates, lack validation mechanisms, or require developer intervention.
+%Ensuring the correctness of co-evolved code is crucial, as changes in metamodels propagate through the API and additional code, potentially altering behavior. While some research has explored correctness verification for code evolution, it remains underexplored in MDE.
+%Large Language Models (LLMs) have demonstrated capabilities in software engineering but have yet to be applied to metamodel-code co-evolution.
+%Cont

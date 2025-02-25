@@ -1,4 +1,4 @@
-\chapter{Résumé en Français}
+\chapter*{Résumé en Français}
 \textbf{Contexte:} Les systèmes logiciels deviennent de plus en plus complexes, ce qui engendre une charge importante en matière de maintenance, souvent accompagnée de coûts élevés pouvant même dépasser ceux liés au développement initial \cite{https://doi.org/10.1049/sfw2.12075}.
  En 2001, le groupe Object Management Group (OMG) a introduit une approche l’Ingénierie Dirigée par les Modèles (IDM) \cite{brambilla2017model}. Depuis, cette méthode s’est largement répandue dans le développement et la maintenance des systèmes de grande envergure ainsi que des logiciels embarqués. Elle permet également d’optimiser la productivité des concepteurs.
  Son adoption permet également aux entreprises de réduire les délais (tant pour la conception que pour la mise sur le marché), de diminuer les dépenses (liées au développement, à l’intégration et à l’adaptation) et d’améliorer la durabilité ainsi que la compétitivité à l’échelle internationale.
@@ -22,14 +22,10 @@ Dans le domaine de l’Ingénierie Logicielle, Fu et al. \cite{fu2023chatgpt} on
 
 Par ailleurs, d’autres travaux ont évalué l’usage des LLMs dans les activités de IDM. Chen et al. \cite{10344012} et Camara et al. \cite{camara2023assessment} ont exploré l’utilisation de ChatGPT pour la génération de modèles. Chaaben et al. \cite{chaaben2023towards} ont démontré que l’apprentissage par quelques exemples (few-shot learning) avec le modèle GPT-3 pouvait être efficace pour la complétion de modèles et d’autres activités de modélisation.
 
-\textbf{Contributions:} Pour répondre à ces problème, je propose les contributions suivantes:\right) 
+\textbf{Contributions:} Pour répondre à ces problème, je propose les contributions suivantes:
 1) Tout d’abord, je propose une approche entièrement automatisée de co-évolution du code en réponse à l’évolution des métamodèles. Cette approche est guidée par le compilateur. Elle est basée sur la correction des erreurs de compilation causées par l'évolution du métamodèle. Les erreurs sont analysées afin de les associer à des patrons d'utilisation des éléments du métamodèle qui ont évolué. Suite à cela, on arrive à sélectionner une ou plusieurs résolutions à appliquer pour chaque erreur ( dépendamment du nombre du changements du métamodèle impactants), et donc co-évoluer les erreurs du code automatiquement. 
 
-L'évaluation de cette approche a été réalisée sur neuf projets Eclipse issus d'OCL, Modisco et Papyrus, selon quatre axes :
-1) Évaluation de la correction de la co-évolution à l’aide de tests unitaires générés automatiquement.
-2) Vérification de la correction comportementale en exécutant des tests unitaires avant et après la co-évolution automatique du code.
-3) Comparaison avec l’approche de co-évolution semi-automatique de référence~\cite{Khelladi2020}.
-4) Comparaison avec l’outil populaire de corrections rapides (Quick Fixes).
+L'évaluation de cette approche a été réalisée sur neuf projets Eclipse issus d'OCL, Modisco et Papyrus, selon quatre axes :~1) Évaluation de la correction de la co-évolution à l’aide de tests unitaires générés automatiquement.~2) Vérification de la correction comportementale en exécutant des tests unitaires avant et après la co-évolution automatique du code.~3) Comparaison avec l’approche de co-évolution semi-automatique de référence~\cite{Khelladi2020}.~4) Comparaison avec l’outil populaire de corrections rapides (Quick Fixes).
 Un prototype sous forme de plugin Eclipse a été mis en ligne (lien). Les résultats obtenus montrent que notre approche atteint une précision moyenne de 82\% et un rappel moyen de 81\%, avec des variations allant de 48\% à 100\% pour la précision et le rappel.
 %TODO CHeck results for all the 4 axes
 2) Ma seconde contribution est une approche visant à aider les développeurs à vérifier l'exactitude de la co-evolution, autrement dit, que la co-évolution n'a pas altéré le comportement du code. Mon approche exploite les tests unitaires avant et après la co-évolution et génère un rapport visuel indiquant les tests réussis, échoués et erronés avant et après l’évolution du code. Ce rapport permet d’obtenir une meilleure compréhension de la co-évolution et de son impact sur le code.

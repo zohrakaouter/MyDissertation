@@ -19,7 +19,7 @@ It illustrates some of the domain concepts \textbf{Discovery}, \textbf{Project},
 From these metaclasses, a first code API is generated, containing Java interfaces and their implementation classes, a factory, a package, etc. Listing \ref{lis:Modisco_Code_API_V1} shows a snippet of the generated Java interfaces and classes from the metamodel in Figure~\ref{fig: BMM}. 
 
 The generated code API is further enriched by the developers with additional code functionalities in the "Modisco Discovery Benchmark" project and its dependent projects as well.
-For instance, by implementing the methods defined in metaclasses and advanced functionalities in new classes. Listing \ref{lis:Modisco_Code_External_V1} shows the two classes \texttt{Report} and \texttt{CDOProjectDiscoveryImpl} of the additional code in the same project "Modisco Dsicovery Benchmark" and in another dependent project, namely the "Modisco Java Discoverer Benchmark" project. 
+For instance, by implementing the methods defined in metaclasses and advanced functionalities in new classes. Listing \ref{lis:ap1_Modisco_Code_External_V1} shows the two classes \texttt{Report} and \texttt{CDOProjectDiscoveryImpl} of the additional code in the same project "Modisco Dsicovery Benchmark" and in another dependent project, namely the "Modisco Java Discoverer Benchmark" project. 
 In version~0.11.0, the "Modisco Discovery Benchmark" metamodel evolved with several significant changes, among which the following impacting changes:
 
 \begin{enumerate}%[noitemsep,nolistsep]
@@ -33,7 +33,7 @@ In version~0.11.0, the "Modisco Discovery Benchmark" metamodel evolved with seve
 \end{enumerate} 
 
 
-\begin{figure}
+\begin{figure}[t]
 	
 	\centering
 	\includegraphics[width=0.55\textwidth]{./pics/chapter1pics/example.PNG}
@@ -41,20 +41,27 @@ In version~0.11.0, the "Modisco Discovery Benchmark" metamodel evolved with seve
 	\label{fig: BMM}
 	\vspace{-5mm}
 \end{figure}
+\begin{figure}[t]
+	
+	\centering
+	\includegraphics[width=0.65\textwidth]{./pics/chapter1pics/ExcerptModiscoV2.PNG}
+	\caption{Excerpt of Modisco Benchmark metamodel in version 0.11.0.}
+	\label{fig: BMMV2}
+	\vspace{-5mm}
+\end{figure}
+After applying these metamodel changes as illustrated in Figure~\ref{fig: BMMV2}, naturally, the code of Listing \ref{lis:ap1_Modisco_Code_API_V1} is regenerated from the evolved version of the metamodel, which in turn impacts the existing additional code depicted in Listings \ref{lis:ap1_Modisco_Code_External_V1}. 
+The resulting errors in the original code in version 0.9.0 are underlined in red in Listing \ref{lis:ap1_Modisco_Code_External_V1}. 
+Listing \ref{lis:ap1_Modisco_Code_External_V2} presents the final result of the co-evolution process in version 0.11.0. The co-evolved code is underlined in green. 
+For example, in response to the \textit{delete} of the metaclass \texttt{ProjectDiscovery}, its import statement {\small\boxed{Line~1}} in Listing \ref{lis:ap1_Modisco_Code_External_V1}, and any usage of it or its methods are impacted. The import statement is completely removed. The same can be applied to the usages of the class and its methods. Alternatively, they could also be replaced by a default value rather than removing the whole instruction. The intention is to maintain the developers' code with minimal removal co-evolution. 
 
-After applying these metamodel changes, naturally, the code of Listing \ref{lis:Modisco_Code_API_V1} is regenerated from the evolved version of the metamodel, which in turn impacts the existing additional code depicted in Listings \ref{lis:Modisco_Code_External_V1}. 
-The resulting errors in the original code in version 0.9.0 are underlined in red in Listing \ref{lis:Modisco_Code_External_V1}. 
-Listing \ref{lis:Modisco_Code_External_V2} presents the final result of the co-evolution process in version 0.11.0. The co-evolved code is underlined in green. 
-For example, in response to the \textit{delete} of the metaclass \texttt{ProjectDiscovery}, its import statement {\small\boxed{Line~1}} in Listing \ref{lis:Modisco_Code_External_V1}, and any usage of it or its methods are impacted. The import statement is completely removed. The same can be applied to the usages of the class and its methods. Alternatively, they could also be replaced by a default value rather than removing the whole instruction. The intention is to maintain the developers' code with minimal removal co-evolution. 
-
-Furthermore, the same changes \textit{rename} and \textit{move} of the property \emph{totalExecutionTimeInSeconds} impact two usages that are co-evolved differently. First, the call of \texttt{setTotalExecutionTimeInSeconds} ({\small\boxed{Line~4}} in Listing~\ref{lis:Modisco_Code_External_V1}) that is co-evolved by renaming it to \texttt{setDiscoveryTimeInSeconds}, then extending the path with \texttt{getIterations()}. The second impact is the use of the generated literal \texttt{BenchmarkPackage.}\emph{\footnotesize{DISCOVERY\_\_TOTAL\_EXECUTION\_TIME\_IN\_SECONDS}}. It is successively co-evolved by renaming it to \texttt{BenchmarkPackage.}\emph{\footnotesize{DISCOVERY\_\_DISCOVERY\_TIME\_IN\_SECONDS}} before replacing its source class \texttt{DISCOVERY} by \texttt{DISCOVERY\_ITERATION}. 
-Note that when using the IDE quick fixes to co-evolve these errors, it suggests to create the method \texttt{setTotalExecutionTimeInSeconds} in the class \texttt{Discovery} and the literal \emph{\footnotesize{DISCOVERY\_\_TOTAL\_EXECUTION\_TIME\_IN\_SECONDS}} in the class \texttt{BenchmarkPackage}, which does not meet the required co-evolutions shown in Listing~\ref{lis:Modisco_Code_External_V2}.
+Furthermore, the same changes \textit{rename} and \textit{move} of the property \emph{totalExecutionTimeInSeconds} impact two usages that are co-evolved differently. First, the call of \texttt{setTotalExecutionTimeInSeconds} ({\small\boxed{Line~4}} in Listing~\ref{lis:ap1_Modisco_Code_External_V1}) that is co-evolved by renaming it to \texttt{setDiscoveryTimeInSeconds}, then extending the path with \texttt{getIterations()}. The second impact is the use of the generated literal \texttt{BenchmarkPackage.}\emph{\footnotesize{DISCOVERY\_\_TOTAL\_EXECUTION\_TIME\_IN\_SECONDS}}. It is successively co-evolved by renaming it to \texttt{BenchmarkPackage.}\emph{\footnotesize{DISCOVERY\_\_DISCOVERY\_TIME\_IN\_SECONDS}} before replacing its source class \texttt{DISCOVERY} by \texttt{DISCOVERY\_ITERATION}. 
+Note that when using the IDE quick fixes to co-evolve these errors, it suggests to create the method \texttt{setTotalExecutionTimeInSeconds} in the class \texttt{Discovery} and the literal \emph{\footnotesize{DISCOVERY\_\_TOTAL\_EXECUTION\_TIME\_IN\_SECONDS}} in the class \texttt{BenchmarkPackage}, which does not meet the required co-evolutions shown in Listing~\ref{lis:ap1_Modisco_Code_External_V2}.
 
 The above examples show the importance of correctly matching the different code usages and patterns of the generated code elements with the metamodel evolution changes to co-evolve them with the appropriate resolutions. 
 
 The next section presents our contribution for a fully automatic co-evolution of metamodel and code.  
 
-\begin{lstlisting}[language=Java,breaklines=true,mathescape,literate={\-}{}{0\discretionary{-}{}{}},caption=excertprpt of the generated code in org.eclipse.modisco.infra.discovery.benchmark.\label{lis:Modisco_Code_API_V1}]
+\begin{lstlisting}[language=Java,breaklines=true,mathescape,literate={\-}{}{0\discretionary{-}{}{}},caption=Excerpt of the generated code in org.eclipse.modisco.infra.discovery.benchmark.\label{lis:ap1_Modisco_Code_API_V1}]
 	//Discovery Interface
 	public interface Discovery extends EObject {
 		double getTotalExecutionTimeInSeconds();
@@ -71,7 +78,7 @@ The next section presents our contribution for a fully automatic co-evolution of
 	}
 \end{lstlisting}
 %xleftmargin=0.2cm,xrightmargin=0cm,framexleftmargin=+6pt,frame=single,
-\begin{lstlisting}[language=Java,breaklines=true,mathescape,literate={\-}{}{0\discretionary{-}{}{}},caption=Excerpt of the additional code V1.\label{lis:Modisco_Code_External_V1}]
+\begin{lstlisting}[language=Java,breaklines=true,mathescape,literate={\-}{}{0\discretionary{-}{}{}},caption=Excerpt of the additional code V1.\label{lis:ap1_Modisco_Code_External_V1}]
 	import (*{\scriptsize org.eclipse.modisco.infra.discovery.benchmark}*).(*\ul{\scriptsize ProjectDiscovery}*);
 	public class Report {
 		...
@@ -108,7 +115,7 @@ The next section presents our contribution for a fully automatic co-evolution of
 \setstcolor{green}
 %\setstcolor{green}
 %,xleftmargin=0.2cm,,xrightmargin=-0cm,framexleftmargin=+6pt,frame=single
-\begin{lstlisting}[language=Java,breaklines=true,mathescape,literate={\-}{}{0\discretionary{-}{}{}},caption=Excerpt of the additional code V2.\label{lis:Modisco_Code_External_V2}]
+\begin{lstlisting}[language=Java,breaklines=true,mathescape,literate={\-}{}{0\discretionary{-}{}{}},caption=Excerpt of the additional code V2.\label{lis:ap1_Modisco_Code_External_V2}]
 	(*{\st{import }}*)(*{\scriptsize \st{ org.eclipse.modisco.infra.discovery.benchmark. ProjectDiscovery}}*);
 	public class Report {
 		...
@@ -267,14 +274,14 @@ Given a Java class, an error, and a list of metamodel changes, Algorithm~\ref{al
 %When the algorithm finds the causing change, it starts to find the 
 Depending on the detected configuration, the appropriate pre-selected resolution is added to the output set~{\small\boxed{Line~10,13,19,26,35}}.
 Finally, the selected resolutions set is returned for further processing in the automatic co-evolution~{\small\boxed{Line~41}}. 
-Let us take the example of \texttt{"Change property type from S to T"} (last change type in Table \ref{table:ResolutionsCatalog}). It has two possible resolutions, CR16 and CR17. Assuming that we have a code error that must be co-evolved. Our pattern matching process first identifies the pattern of the corresponding $GCE_i$ from Table~\ref{table:locationofMMelemen} (Line 7), then the configuration of the $GCE_i$ usage (Lines 8). 
+Let us take the example of \texttt{"Change property type from S to T"} (last change type in Table \ref{table:ResolutionsCatalog}). It has two possible resolutions, CR16 and CR17. Assuming that we have a code error that must be co-evolved. Our pattern matching process first identifies the pattern of the corresponding $GCE_i$ from Table~\ref{table:locationofMMelemen} (Line 7), then the configuration of the $GCE_i$ usage (Line~8). 
 \definecolor{circlegreen}{HTML}{7ed321}
 
 Algorithm \ref{algo :ErrorPatternalgo} starts by parsing the error to find the pattern of the corresponding $GCE_i$, which will help to find the causing change. The next step is to define the configuration of the $GCE_i$ which means the type of the $GCE_i$ usage. 
 If it is a variable declaration (line 9), the resolution $CR16$ is returned. If any other configuration is detected, the pattern matching process returns $CR17$ as an appropriate resolution.
 
 Note that an error can be matched with more than one resolution because a metamodel element $ME$ can be impacted by more than one change, in other terms interdependent changes. 
-For example, \red{Algorithm~\ref{algo :ErrorPatternalgo} allows matching the error in~{\small\boxed{Line 17}} (rename property) and ~{\small\boxed{Line 31}} (move property) with two metamodel changes of the property \emph{totalExecutionTimeInSeconds} in Listing~\ref{lis:Modisco_Code_External_V1}.} The generated literal, which is our generated code element $GCE_i$, is used here in the configuration of a literal static field access 
+For example, \red{Algorithm~\ref{algo :ErrorPatternalgo} allows matching the error in~{\small\boxed{Line 17}} (rename property) and ~{\small\boxed{Line 31}} (move property) with two metamodel changes of the property \emph{totalExecutionTimeInSeconds} in Listing~\ref{lis:ap1_Modisco_Code_External_V1}.} The generated literal, which is our generated code element $GCE_i$, is used here in the configuration of a literal static field access 
 \emph{\footnotesize{BenchmarkPackage.DISCOVERY\_\_TOTAL\_EXECUTION\_TIME\_IN\_SECONDS}}. The returned resolutions are $CR5$ and $CR10$~{\small\boxed{Line 19,35}}, \red{to be executed in the order of detection of their causing metamodel changes.}%\red{Empirically, we observe only the case of interdependency between a rename and move/pull/push changes.}
 
 %Note that several patterns can be matched for a given error caused by multiple changes.
@@ -288,109 +295,8 @@ For the sake of readability, Algorithm \ref{algo :ErrorPatternalgo} does not sho
 %
 Finally, in our implementation, for the case of a "Delete Class" and "Delete Property", we favor the least deletion when possible. In particular, depending on the configuration usage, we select the resolution that deletes the least possible among $CR1$, $CR2$, $CR3$, $CR4$. For example, for an error in a parameter of a method call, we select the resolution $CR4$ rather than $CR1$ or $CR2$. 
 
-\begin{algorithm2e}[H]
-	% \algsetup{linenosize=\tiny}
-	%	\small
-	\footnotesize
-	\SetAlgoLined
-	\KwData{javaClass, error, changesList}
-	
-	resolution\_s $\leftarrow \phi$ 
-	
-	%\While{(!usage.hasPatterns())}
-	%{
-		errorNode $\leftarrow$ findErrorAstNode(javaClass, error)
-		
-		configuration $\leftarrow$ getConfiguration(javaClass,errornode)
-		
-		%change $\leftarrow$ changesList.next()
-		
-		\For {(change  $\in$ changesList)}
-		{
-			\Switch{change}{
-				\Case{ChangePropertyType}{
-					\uIf{(match(patternGCE,change)}
-					{
-						
-						\Switch{configuration}{
-							
-							\Case{VariableDeclaration}{
-								
-								resolution\_s.add("CR16")
-							}
-							
-							\Other{
-								
-								resolution\_s.add("CR17")
-							}
-							
-							
-							
-						}
-					}
-					
-					
-				}
-				
-				\Case{RenameProperty}{
-					\uIf{(match(patternGCE,change)}
-					{
-						%configuration $\leftarrow$ getConfiguration(javaClass,errornode)
-						
-						resolution\_s.add("CR5")
-						
-					}
-					
-				}
-				
-				
-				\Case{DeleteClass}{
-					\uIf{(match(patternGCE,change)}
-					{
-						
-						\Switch{configuration}{
-							
-							\Case{ImportDeclaration}{
-								
-								resolution\_s.add("CR2")
-							}
-							
-							...  \emph{\textcolor{circlegreen}{/*Other configurations*/}}
-							
-						}
-					}
-				}
-				
-				\Case{MoveProperty}{
-					\uIf{(match(patternGCE,change)}
-					{
-						
-						\Switch{configuration}{
-							
-							\Case{LiteralStaticField}{
-								
-								resolution\_s.add("CR10")
-							}
-							...  \emph{\textcolor{circlegreen}{/*Other configurations*/}}    
-						}
-					}
-					
-					
-				}
-				\Case{... \emph{\textcolor{circlegreen}{/*Other changes*/}} }{ ... } 
-				
-			} 
-			
-			
-		}
-		\textbf{return} resolution\_s
-		
-		
-		\caption{Pattern matching algorithm}
-		\label{algo :ErrorPatternalgo}
-	\end{algorithm2e}
 
-In Listing \ref{lis:Modisco_Code_External_V1}, Algorithm \ref{algo :ErrorPatternalgo} matches the error in the import declaration (\textbf{Configuration}), with the deletion of the metaclass \textit{ProjectDiscovery} (\textbf{pattern}), which allows to select the resolution $CR2$.
+In Listing \ref{lis:ap1_Modisco_Code_External_V1}, Algorithm \ref{algo :ErrorPatternalgo} matches the error in the import declaration (\textbf{Configuration}), with the deletion of the metaclass \textit{ProjectDiscovery} (\textbf{pattern}), which allows to select the resolution $CR2$.
 
 
 %However, this is an implementaion strategy and could  
@@ -594,6 +500,107 @@ xtit{\texttt{familyName}}. The detected error has a \textit{\texttt{SimpleName}}
 
 
 \end{comment}
+\begin{algorithm2e}[H]
+	% \algsetup{linenosize=\tiny}
+	%	\small
+	\footnotesize
+	\SetAlgoLined
+	\KwData{javaClass, error, changesList}
+	
+	resolution\_s $\leftarrow \phi$ 
+	
+	%\While{(!usage.hasPatterns())}
+	%{
+		errorNode $\leftarrow$ findErrorAstNode(javaClass, error)
+		
+		configuration $\leftarrow$ getConfiguration(javaClass,errornode)
+		
+		%change $\leftarrow$ changesList.next()
+		
+		\For {(change  $\in$ changesList)}
+		{
+			\Switch{change}{
+				\Case{ChangePropertyType}{
+					\uIf{(match(patternGCE,change)}
+					{
+						
+						\Switch{configuration}{
+							
+							\Case{VariableDeclaration}{
+								
+								resolution\_s.add("CR16")
+							}
+							
+							\Other{
+								
+								resolution\_s.add("CR17")
+							}
+							
+							
+							
+						}
+					}
+					
+					
+				}
+				
+				\Case{RenameProperty}{
+					\uIf{(match(patternGCE,change)}
+					{
+						%configuration $\leftarrow$ getConfiguration(javaClass,errornode)
+						
+						resolution\_s.add("CR5")
+						
+					}
+					
+				}
+				
+				
+				\Case{DeleteClass}{
+					\uIf{(match(patternGCE,change)}
+					{
+						
+						\Switch{configuration}{
+							
+							\Case{ImportDeclaration}{
+								
+								resolution\_s.add("CR2")
+							}
+							
+							...  \emph{\textcolor{circlegreen}{/*Other configurations*/}}
+							
+						}
+					}
+				}
+				
+				\Case{MoveProperty}{
+					\uIf{(match(patternGCE,change)}
+					{
+						
+						\Switch{configuration}{
+							
+							\Case{LiteralStaticField}{
+								
+								resolution\_s.add("CR10")
+							}
+							...  \emph{\textcolor{circlegreen}{/*Other configurations*/}}    
+						}
+					}
+					
+					
+				}
+				\Case{... \emph{\textcolor{circlegreen}{/*Other changes*/}} }{ ... } 
+				
+			} 
+			
+			
+		}
+		\textbf{return} resolution\_s
+		
+		
+		\caption{Pattern matching algorithm}
+		\label{algo :ErrorPatternalgo}
+	\end{algorithm2e}
 
 \subsection{Repair mechanism for the code co-evolution}
 

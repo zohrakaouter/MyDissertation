@@ -668,6 +668,7 @@
 
 \usepackage[figuresright]{rotating}
 \usepackage{adjustbox}
+\sloppy
 %\usepackage{slopp}
 %\usepackage{sloppypar} not found
 \usepackage{microtype}

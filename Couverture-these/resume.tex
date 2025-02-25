@@ -22,15 +22,25 @@ Hae duae provinciae bello quondam piratico catervis mixtae praedonum.}
 
 
 
-\titleEN{titre (en anglais)..............}
+\titleEN{Automatic metamodel and code co-evolution}
 
-\keywordsEN{de 3 \`{a} 6 mots clefs}
+\keywordsEN{code, evolution, tests, LLM}
 
-\abstractEN{Eius populus ab incunabulis primis ad usque pueritiae tempus extremum, quod annis circumcluditur fere trecentis, circummurana pertulit bella, deinde aetatem ingressus adultam post multiplices bellorum aerumnas Alpes transcendit et fretum, in iuvenem erectus et virum ex omni plaga quam orbis ambit inmensus, reportavit laureas et triumphos, iamque vergens in senium et nomine solo aliquotiens vincens ad tranquilliora vitae discessit.
-Hoc inmaturo interitu ipse quoque sui pertaesus excessit e vita aetatis nono anno atque vicensimo cum quadriennio imperasset. natus apud Tuscos in Massa Veternensi, patre Constantio Constantini fratre imperatoris, matreque Galla.
-Thalassius vero ea tempestate praefectus praetorio praesens ipse quoque adrogantis ingenii, considerans incitationem eius ad multorum augeri discrimina, non maturitate vel consiliis mitigabat, ut aliquotiens celsae potestates iras principum molliverunt, sed adversando iurgandoque cum parum congrueret, eum ad rabiem potius evibrabat, Augustum actus eius exaggerando creberrime
-docens, idque, incertum qua mente, ne lateret adfectans. quibus mox Caesar acrius efferatus, velut contumaciae quoddam vexillum altius erigens, sine respectu salutis alienae vel suae ad vertenda opposita instar rapidi fluminis irrevocabili impetu ferebatur.
-Hae duae provinciae bello quondam piratico catervis mixtae praedonum.}
+\abstractEN{
+%Context:
+Software systems are becoming increasingly complex, leading to high maintenance costs that often exceed initial development expenses. Model-Driven Engineering (MDE) has emerged as a key approach to streamline development and improve productivity. It relies on the use of metamodels to generate various artifacts, including code, which developers later enhance with additional code to build the necessary language tooling, e.g.,editor, checker, compiler, data access layers, etc. Frameworks like Eclipse Modeling Framework (EMF) illustrate this workflow, generating Java APIs that are further extended for validation, debugging, and simulation.
+%Problem:
+One of the major challenges in MDE is the metamodel evolution and its impact on the related artifacts.
+In this thesis, we focus on the code artifact and its co-evolution with evolving metamodel. Moreover, we aim to check the behavioral correctness of the metamodel and code co-evolution. Finally, with the emerbence of LLMs, we explore their usefulness for the metamodel and code co-evolution problem.
+%Contributions
+This thesis addresses these challenges by: 1) proposing a new fully automated co-evolution approach of metamodels and code. this approach is based on the pattern matching of compiling errors to select suitable resolutions, then 2) proposing an automatic approach to check the behavioral correctness of the code co-evolution between different releases of a language when its
+metamodel evolves. This approach leverages the test suites of the original and evolved versions
+of code. 3) the last contribution is about exploring LLMs' ability in proposing correct co-evolutions of the code when the metamodel evolves. This approach is based on prompt engineering, where we design and generate natural language prompts to best co-evolve the impacted code due to the metamodel evolution. 
+
+The three contributions were evaluated on EMF projects from OCL, Modisco, and papyrus. The evaluation shows that our automatic code co-evolution approach resolves~100\% of errors, with~82\% precision and~81\% recall, significantly reducing manual effort.
+Furthermore, our second contribution for behavioral correctness checking can successfully trace the impacted tests due to metamodel changes representing 5\% of the tests suit, thus isolating the relevant tests. Then, after the execution of the traced tests, the fluctuation in the number of passing, failing, or erroneous tests indicates whether the code co-evolution is correct or not.Using this approach allowed us to gain 88\% in the number of tests and 84\% in the execution time. Lastly, when evaluating the capacity of Chatgpt in code co-evolution, we variated the value of hyperparameter of temperature, and the structure of given prompts. We found that lower temperatures give better results with 88.7\% of correctness rate. Regarding the structure of the prompt, including the abstraction gap information of the error and asking for alternative answers improves the correctness of the proposed co-evolutions.
+
+}
 
 }
 
