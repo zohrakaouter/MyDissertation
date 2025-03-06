@@ -10,19 +10,31 @@
 % Switch font style to back cover style
 \selectfontbackcover{ % Font style change is limited to this page using braces, just in case
 
-\titleFR{titre (en fran\c cais)..............}
+\titleFR{Support de co-évolution du métamodèle et du code}
 
-\keywordsFR{de 3 \`{a} 6 mots clefs}
+\keywordsFR{code, evolution, tests, les modèles de langage de grande taille}
 
-\abstractFR{Eius populus ab incunabulis primis ad usque pueritiae tempus extremum, quod annis circumcluditur fere trecentis, circummurana pertulit bella, deinde aetatem ingressus adultam post multiplices bellorum aerumnas Alpes transcendit et fretum, in iuvenem erectus et virum ex omni plaga quam orbis ambit inmensus, reportavit laureas et triumphos, iamque vergens in senium et nomine solo aliquotiens vincens ad tranquilliora vitae discessit.
-Hoc inmaturo interitu ipse quoque sui pertaesus excessit e vita aetatis nono anno atque vicensimo cum quadriennio imperasset. natus apud Tuscos in Massa Veternensi, patre Constantio Constantini fratre imperatoris, matreque Galla.
-Thalassius vero ea tempestate praefectus praetorio praesens ipse quoque adrogantis ingenii, considerans incitationem eius ad multorum augeri discrimina, non maturitate vel consiliis mitigabat, ut aliquotiens celsae potestates iras principum molliverunt, sed adversando iurgandoque cum parum congrueret, eum ad rabiem potius evibrabat, Augustum actus eius exaggerando creberrime
-docens, idque, incertum qua mente, ne lateret adfectans. quibus mox Caesar acrius efferatus, velut contumaciae quoddam vexillum altius erigens, sine respectu salutis alienae vel suae ad vertenda opposita instar rapidi fluminis irrevocabili impetu ferebatur.
-Hae duae provinciae bello quondam piratico catervis mixtae praedonum.}
+\abstractFR{
+	
+	Les systèmes logiciels tendent à devenir de plus en plus complexes, ce qui engendre des coûts de maintenance élevés qui dépassent souvent les coûts de développement initiaux. L'ingénierie dirigée par les modèles (IDM) s'est imposée comme une approche incontournable pour simplifier le développement et accroître la productivité. Elle repose sur l'utilisation de métamodèles pour générer divers artefacts, y compris du code, que les développeurs améliorent ensuite avec du code additionnel pour développer les differents outils guistique nécessaire pour un langage logiciel, par exemple un éditeur, un vérificateur, un compilateur, des couches d'accès aux données, etc. Des infrastructures logicielles tels que Eclipse Modeling Framework (EMF) illustrent ce flux de travail, en générant des API Java qui sont ensuite enrichies à des fins de validation, de débogage et de simulation.
+	
+	L'un des principaux enjeux de l'EDM est l'évolution du métamodèle et son impact sur les artefacts connexes.
+	Dans cette thèse, nous nous concentrons sur l'artefact du code et sa co-évolution avec le métamodèle en évolution. En outre, nous visons à vérifier l'exactitude comportementale de la co-évolution du métamodèle et du code. Enfin, avec l'émergence des LLM, nous explorons leur utilité pour le problème de co-évolution du métamodèle et du code.
+	
+	Cette thèse répond à ces problèmes en : 1) en proposant une nouvelle approche de co-évolution entièrement automatisée des métamodèles et du code. Cette approche associe les erreurs de compilation à des patrons d'utilisation des éléments du métamodèle afin de sélectionner des résolutions appropriées, puis 2) en proposant une approche automatique pour vérifier que la co-évolution du code entre différentes versions n'a pas impacté son comportement lorsque son métamodèle évolue.
+	métamodèle évolue. Cette approche s'appuie sur l'isolations d'un sous ensembles des tests impactés avant et après la co-évolution.
+	du code. 
+	3) La dernière contribution concerne l'exploration de la capacité des LLM à proposer des co-évolutions correctes du code lorsque le métamodèle évolue. Cette approche est basée sur l'ingénierie des prompts, où nous concevons et générons des prompts en langage naturel pour faire co-évoluer au mieux le code impacté par l'évolution du métamodèle. 
+	
+	Les trois contributions ont été évaluées sur des projets EMF d'OCL, Modisco et Papyrus. L'évaluation montre que notre approche automatique de co-évolution du code résout~100\% des erreurs, avec~82\% de précision et~81\% de rappel, réduisant de manière significative l'effort manuel.
+	De plus, notre deuxième contribution pour la vérification de la correction comportementale peut tracer et isoler avec succès les tests impactés par les changements de métamodèle représentant 5\% des tests. Ensuite, après l'exécution des tests tracés, la fluctuation du nombre de tests réussis, échoués ou erronés indique si la co-évolution du code est correcte ou non. L'utilisation de cette approche nous a permis de gagner 88\% sur le nombre de tests total et 84\% sur le temps d'exécution. Enfin, lors de l'évaluation de la capacité de Chatgpt dans la co-évolution de code, nous avons varié la valeur de la température, et la structure des prompts données. Nous avons constaté que des températures plus basses donnent de meilleurs résultats avec un taux de correction de 88,7\%. En ce qui concerne la structure de prompts, le fait d'inclure de l'information sur lien d'abstraction de l'erreur et la réclamer des réponses alternatives améliorent les co-évolutions proposées.
+	
+	
+}
 
 
 
-\titleEN{Automatic metamodel and code co-evolution}
+\titleEN{Supporting metamodel and code co-evolution}
 
 \keywordsEN{code, evolution, tests, LLM}
 
@@ -38,7 +50,7 @@ metamodel evolves. This approach leverages the test suites of the original and e
 of code. 3) the last contribution is about exploring LLMs' ability in proposing correct co-evolutions of the code when the metamodel evolves. This approach is based on prompt engineering, where we design and generate natural language prompts to best co-evolve the impacted code due to the metamodel evolution. 
 
 The three contributions were evaluated on EMF projects from OCL, Modisco, and papyrus. The evaluation shows that our automatic code co-evolution approach resolves~100\% of errors, with~82\% precision and~81\% recall, significantly reducing manual effort.
-Furthermore, our second contribution for behavioral correctness checking can successfully trace the impacted tests due to metamodel changes representing 5\% of the tests suit, thus isolating the relevant tests. Then, after the execution of the traced tests, the fluctuation in the number of passing, failing, or erroneous tests indicates whether the code co-evolution is correct or not.Using this approach allowed us to gain 88\% in the number of tests and 84\% in the execution time. Lastly, when evaluating the capacity of Chatgpt in code co-evolution, we variated the value of hyperparameter of temperature, and the structure of given prompts. We found that lower temperatures give better results with 88.7\% of correctness rate. Regarding the structure of the prompt, including the abstraction gap information of the error and asking for alternative answers improves the correctness of the proposed co-evolutions.
+Furthermore, our second contribution for behavioral correctness checking can successfully trace the impacted tests due to metamodel changes representing~5\% of the tests suit, thus isolating the relevant tests. Then, after the execution of the traced tests, the fluctuation in the number of passing, failing, or erroneous tests indicates whether the code co-evolution is correct or not.Using this approach allowed us to gain 88\% in the number of tests and 84\% in the execution time. Lastly, when evaluating the capacity of Chatgpt in code co-evolution, we variated the value of hyperparameter of temperature, and the structure of given prompts. We found that lower temperatures give better results with 88.7\% of correctness rate. Regarding the structure of the prompt, including the abstraction gap information of the error and asking for alternative answers improves the correctness of the proposed co-evolutions.
 
 }
 

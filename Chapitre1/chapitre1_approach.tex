@@ -1,14 +1,14 @@
-One of the key findings of the state of the art chapter \ref{sota}, is the gap that exists in tackling the problem of metamodel and code co-evolution. Most of the existing literature about evolution in Model-Driven Engineering, concerns the artifacts of models, constraints, and transformations, but rarely code. In this chapter, I present my contribution to address the challenge \Circled{\hyperref[C1]{C1}} about resolving the impact of the metamodel evolution on the code automatically. 
+One of the key findings of the state of the art chapter \ref{sota} is the gap that exists in tackling the problem of metamodel and code co-evolution. Most of the existing literature about evolution in MDE, concerns the artifacts of models, constraints, and transformations, but rarely code. In this chapter, I present my contribution to address the challenge \Circled{\hyperref[C1]{C1}} about resolving the impact of the metamodel evolution on the code automatically. 
 This chapter is structured as follows. Section \ref{example} introduces a motivating example showing the breaking impact of the metamodel evolution on the code. 
-In section~\ref{approach}, I present the overall automatic co-evolution approach. This approach starts by using the output changes of the metamodel, then it retrieves the errors that are caused by these changes. Thanks to the pattern matching, for each error a resolution is selected and executed. I first give a brief reminder about metamodel changes' detection and why we selected the approach of Khelladi et al.~\cite{khelladi2016detecting}, and how its output is used in the approach. After that, I explain the error retrieval process, followed by a short subsection about the resolution catalog that I use. In the next subsections, I detail the pattern matching phase and the repair mechanism. The overall approach ends with a presentation of the prototype implementation.
-Section~\ref{eval} details our evaluation that includes four research questions. These research questions aim to 1) assess the applicability of the approach, 2) to measure its efficiency and its behavioral correctness 3) to compare it with IDE quick fixes as a first baseline, and 4) to compare it with the approach of Khelladi et al.~\cite{Khelladi2020} as a second baseline. This section ends with the evaluation results, followed by threats to validity in Section \ref{ch1_threat}. Finally, Section~ \ref{ch1_conclusion} concludes the chapter with a summary and highlights the approach main contributions. %reflects on future work.
+In section~\ref{approach}, I present the overall automatic co-evolution approach. This approach starts by using the output changes of the metamodel, then it retrieves the errors that are caused by these changes. Thanks to the pattern matching, for each error a resolution is selected and executed. I first give a brief reminder about metamodel changes' detection and why I selected the approach of Khelladi et al.~\cite{khelladi2016detecting}, and how its output is used in the approach. After that, I explain the error retrieval process, followed by a short subsection about the resolution catalog that I use. In the next subsections, I detail the pattern matching phase and the repair mechanism. The overall approach ends with a presentation of the prototype implementation.
+Section~\ref{eval} details the evaluation that includes four research questions. These research questions aim to 1) assess the applicability of the approach, 2) to measure its efficiency and its behavioral correctness 3) to compare it with IDE quick fixes as a first baseline, and 4) to compare it with the approach of Khelladi et al.~\cite{Khelladi2020} as a second baseline. This section ends with the evaluation results, followed by threats to validity in Section \ref{ch1_threat}. Finally, Section~ \ref{ch1_conclusion} concludes the chapter with a summary and highlights the approach main contributions. %reflects on future work.
 %\begin{wrapfigure}[0.5]{R}{0.5\textwidth}
 
 %\end{wrapfigure}
 %\section{Change detection}
 \label{sec: ap1_changedetection}
 
-\section{Motivating Example}\label{example}
+\section{Motivating example}\label{example}
 
 This section introduces a motivating example to illustrate the challenge of metamodel and code co-evolution. 
 Let us take as an example the Modisco project \cite{MDTModisco}, which has evolved numerous times in the past. Modisco is an academic initiative project implemented in the Eclipse platform to support the development of model-driven tools, reverse engineering, verification, and transformation of existing software systems \cite{bruneliere2010modisco,bruneliere2014modisco}.
@@ -16,10 +16,10 @@ Let us take as an example the Modisco project \cite{MDTModisco}, which has evolv
 
 Figure \ref{fig: BMM} shows an excerpt of the "Modisco Discovery Benchmark" metamodel\footnote{\url{https://git.eclipse.org/r/plugins/gitiles/modisco/org.eclipse.modisco/+/refs/tags/0.12.1/org.eclipse.modisco.infra.discovery.benchmark/model/benchmark.ecore}} consisting of 10 classes in version~0.9.0.
 It illustrates some of the domain concepts \textbf{Discovery}, \textbf{Project}, and \textbf{ProjectDiscovery}  used for the discovery and reverse engineering of an existing software system. 
-From these metaclasses, a first code API is generated, containing Java interfaces and their implementation classes, a factory, a package, etc. Listing \ref{lis:Modisco_Code_API_V1} shows a snippet of the generated Java interfaces and classes from the metamodel in Figure~\ref{fig: BMM}. 
+From these metaclasses, a first code API is generated, containing Java interfaces and their implementation classes, a factory, a package, etc.~Listing \ref{lis:ap1_Modisco_Code_API_V1} shows a snippet of the generated Java interfaces and classes from the metamodel in Figure~\ref{fig: BMM}. 
 
 The generated code API is further enriched by the developers with additional code functionalities in the "Modisco Discovery Benchmark" project and its dependent projects as well.
-For instance, by implementing the methods defined in metaclasses and advanced functionalities in new classes. Listing \ref{lis:ap1_Modisco_Code_External_V1} shows the two classes \texttt{Report} and \texttt{CDOProjectDiscoveryImpl} of the additional code in the same project "Modisco Dsicovery Benchmark" and in another dependent project, namely the "Modisco Java Discoverer Benchmark" project. 
+For instance, by implementing the methods defined in metaclasses and advanced functionalities in new classes. Listing~\ref{lis:ap1_Modisco_Code_External_V1} shows the two classes \texttt{Report} and \texttt{CDOProjectDiscoveryImpl} of the additional code in the same project "Modisco Dsicovery Benchmark" and in another dependent project, namely the "Modisco Java Discoverer Benchmark" project. 
 In version~0.11.0, the "Modisco Discovery Benchmark" metamodel evolved with several significant changes, among which the following impacting changes:
 
 \begin{enumerate}%[noitemsep,nolistsep]
@@ -59,9 +59,9 @@ Note that when using the IDE quick fixes to co-evolve these errors, it suggests 
 
 The above examples show the importance of correctly matching the different code usages and patterns of the generated code elements with the metamodel evolution changes to co-evolve them with the appropriate resolutions. 
 
-The next section presents our contribution for a fully automatic co-evolution of metamodel and code.  
-
-\begin{lstlisting}[language=Java,breaklines=true,mathescape,literate={\-}{}{0\discretionary{-}{}{}},caption=Excerpt of the generated code in org.eclipse.modisco.infra.discovery.benchmark.\label{lis:ap1_Modisco_Code_API_V1}]
+The next section presents my contribution for a fully automatic co-evolution of metamodel and code.  
+\vspace{0.5cm}
+\begin{lstlisting}[language=Java,breaklines=true,mathescape,literate={\-}{}{0\discretionary{-}{}{}},caption=Excerpt of the generated code in org.eclipse.modisco.infra.discovery.benchmark.,label={lis:ap1_Modisco_Code_API_V1},captionpos=b]
 	//Discovery Interface
 	public interface Discovery extends EObject {
 		double getTotalExecutionTimeInSeconds();
@@ -78,7 +78,7 @@ The next section presents our contribution for a fully automatic co-evolution of
 	}
 \end{lstlisting}
 %xleftmargin=0.2cm,xrightmargin=0cm,framexleftmargin=+6pt,frame=single,
-\begin{lstlisting}[language=Java,breaklines=true,mathescape,literate={\-}{}{0\discretionary{-}{}{}},caption=Excerpt of the additional code V1.\label{lis:ap1_Modisco_Code_External_V1}]
+\begin{lstlisting}[language=Java,breaklines=true,mathescape,literate={\-}{}{0\discretionary{-}{}{}},caption=Excerpt of the additional code V1.,label={lis:ap1_Modisco_Code_External_V1},captionpos=b]
 	import (*{\scriptsize org.eclipse.modisco.infra.discovery.benchmark}*).(*\ul{\scriptsize ProjectDiscovery}*);
 	public class Report {
 		...
@@ -88,7 +88,9 @@ The next section presents our contribution for a fully automatic co-evolution of
 	public class CDOProjectDiscoveryImpl extends AbstractCDODiscoveryImpl implements CDOProjectDiscovery {
 		...
 		case JavaBenchmarkPackage.
-		CDO_PROJECT_DISCOVERY__TOTAL_EXECUTION_TIME_IN_SECONDS: return BenchmarkPackage.
+		CDO_PROJECT_DISCOVERY__TOTAL_EXECUTION_TIME_IN_SECONDS:
+		
+		 return BenchmarkPackage.
 		(*\ul{DISCOVERY\_\_TOTAL\_EXECUTION\_TIME\_IN\_SECONDS}*);
 		...
 	}
@@ -115,7 +117,7 @@ The next section presents our contribution for a fully automatic co-evolution of
 \setstcolor{green}
 %\setstcolor{green}
 %,xleftmargin=0.2cm,,xrightmargin=-0cm,framexleftmargin=+6pt,frame=single
-\begin{lstlisting}[language=Java,breaklines=true,mathescape,literate={\-}{}{0\discretionary{-}{}{}},caption=Excerpt of the additional code V2.\label{lis:ap1_Modisco_Code_External_V2}]
+\begin{lstlisting}[language=Java,breaklines=true,mathescape,literate={\-}{}{0\discretionary{-}{}{}},caption=Excerpt of the additional code V2.,label={lis:ap1_Modisco_Code_External_V2},captionpos=b]
 	(*{\st{import }}*)(*{\scriptsize \st{ org.eclipse.modisco.infra.discovery.benchmark. ProjectDiscovery}}*);
 	public class Report {
 		...
@@ -153,21 +155,21 @@ public class JavaDiscoveredProjectImpl extends AbstractJavaProjectImpl implement
 
 \section{Approach}\label{approach}
 
-This section presents the overall approach of our automated co-evolution of code with evolving metamodels,  instantiating on the Ecore technological space. First, we give an overview of the approach and specify the metamodel evolution changes we consider. 
+This section presents the overall approach of my automated co-evolution of code with evolving metamodels,  instantiating on the Ecore technological space. First, I give an overview of the approach and specify the metamodel evolution changes I consider. 
 %
-Then, we present how we retrieve the resulting errors due to metamodel evolution, followed by the regeneration of the code API. 
-After that, we present the pattern matching process, which is an important part of our fully automatic co-evolution approach, before discussing the resolutions of the code errors. 
+Then, I present how I retrieve the resulting errors due to metamodel evolution, followed by the regeneration of the code API. 
+After that, I present the pattern matching process, which is an important part of this fully automatic co-evolution approach, before discussing the resolutions of the code errors. 
 
 \subsection{Overview}
 \label{Overview}
 
 Figure~\ref{fig:overallapproach} depicts the overall steps for the automatic co-evolution of the metamodel and code, with horizontally separated parts defining chronological order from the top to the bottom.
 %\\
-After the generation step (the upper part of Figure~\ref{fig:overallapproach}), the evolution of the Ecore metamodel will cause errors in the additional Java code that depends on the API of the newly generated code (the middle part of Figure~\ref{fig:overallapproach}). We take as input the evolution changes of the metamodel between the two versions of this metamodel {\small\boxed{1}}. Then, we parse the additional code  {\small\boxed{2}} to retrieve the list of errors. 
-After that, we get to the bottom part of Figure~\ref{fig:overallapproach}, both the list of metamodel changes and the list of errors are used as inputs for the \red{pattern matching step {\small\boxed{3}}. It analyzes the structure of the error to match it with its impacting metamodel change and decides which resolution  {\small\boxed{4}} to apply for the error co-evolution {\small\boxed{5}}. The metamodel changes provide the ingredients and necessary information that are used for the co-evolution.  
-At the end of the automatic co-evolution, we obtain a new co-evolved additional code {\small\boxed{6}} along a generated report on the applied resolutions.} 
-In addition to the automatic co-evolution, we generate test cases before and after co-evolution to highlight its possible effect. In fact, many research papers rely on the use of tests to check the behavior of the code during its evolution. For example, Godefroid et al.~\cite{10.1145/3395363.3397374} uses tests to find regressions in different versions of REST APIs. In particular, Lamothe et al.~\cite{9079197},~\cite{10.1145/3387905.3388608} use tests to validate the evolution of the client code after Android API migration. We apply a similar method to check the effect of the co-evolution. 
-Finally, during the co-evolution process, we generate a report linking the applied resolutions for each code error with its impacting metamodel change. If needed, this can help developers in understanding the performed co-evolution, since we fully automate it.
+After the generation step (the upper part of Figure~\ref{fig:overallapproach}), the evolution of the Ecore metamodel will cause errors in the additional Java code that depends on the API of the newly generated code (the middle part of Figure~\ref{fig:overallapproach}). I take as input the evolution changes of the metamodel between the two versions of this metamodel {\small\boxed{1}}. Then, I parse the additional code  {\small\boxed{2}} to retrieve the list of errors. 
+After that, I get to the bottom part of Figure~\ref{fig:overallapproach}, both the list of metamodel changes and the list of errors are used as inputs for the \red{pattern matching step {\small\boxed{3}}. It analyzes the structure of the error to match it with its impacting metamodel change and decides which resolution  {\small\boxed{4}} to apply for the error co-evolution {\small\boxed{5}}. The metamodel changes provide the ingredients and necessary information that are used for the co-evolution.  
+At the end of the automatic co-evolution, I obtain a new co-evolved additional code {\small\boxed{6}} along a generated report on the applied resolutions.} 
+In addition to the automatic co-evolution, I generate test cases before and after co-evolution to highlight its possible effect. In fact, many research papers rely on the use of tests to check the behavior of the code during its evolution. For example, Godefroid et al.~\cite{10.1145/3395363.3397374} uses tests to find regressions in different versions of REST APIs. In particular, Lamothe et al.~\cite{9079197},~\cite{10.1145/3387905.3388608} use tests to validate the evolution of the client code after Android API migration. I apply a similar method to check the effect of the co-evolution. 
+Finally, during the co-evolution process, I generate a report linking the applied resolutions for each code error with its impacting metamodel change. If needed, this can help developers in understanding the performed co-evolution, since I fully automate it.
 %\todo{refs behavioral check et papier android : to check}
 %\DK{we see later if we add the story of generated tests after co-evolution}
 \begin{figure*}[t]\centering%
@@ -181,35 +183,35 @@ Finally, during the co-evolution process, we generate a report linking the appli
 	%\vspace{-1em}
 	\vspace{-1em}
 \end{figure*}
-\subsection{Metamodel Evolution Changes}
+\subsection{Metamodel evolution changes}
 \label{mmchanges}
 
 One of the intrinsic properties of software artifacts is its continuous evolution~\cite{mens2008introduction}. Metamodels are no different and are meant to evolve. 
 Two types of evolution changes are considered when evolving a metamodel: \emph{atomic} and \emph{complex} changes~\cite{Herrmannsdoerfer2011}. 
 Atomic changes are additions, removals, and updates of a metamodel element. Complex changes consist of a sequence of atomic changes combined together~\cite{vermolen_reconstructing_2012},~\cite{khelladi2015detecting}. For example, move property is a complex change where a property is moved from a source class to a target class. This is composed of two atomic changes: delete property and add property~\cite{Herrmannsdoerfer2011}. 
 Many approaches in the literature~\cite{Alter2015, williams2012searching,cicchetti_managing_2009,langer_posteriori_2013,vermolen_reconstructing_2012,Khelladi2016,bettini2022executable} exist to detect metamodel changes between two versions. Note that the detected list of complex changes does not include the list of the detected atomic changes, i.e., no overlap in between. 
-\red{Moreover, the detection approaches must order the changes in a consistent way. This is fundamentally a problem that change detection approaches must deal with, and hence, is out of scope for our problem of code co-evolution. Nonetheless, it is important and expect a consistent order of changes to not hinder the quality of the co-evolution.}
+\red{Moreover, the detection approaches must order the changes in a consistent way. This is fundamentally a problem that change detection approaches must deal with, and hence, is out of scope for my problem of code co-evolution. Nonetheless, it is important and expect a consistent order of changes to not hinder the quality of the co-evolution.}
 
-For the purpose of modularity and extensibility, we use a specification layer for the changes~{\small\boxed{1}} that is simply a connection layer to our co-evolution approach with existing change detection approaches. This connection layer specifies our own representation of a metamodel change that can be mapped later with any change representation. \red{It simply specifies the needed information for each change in the form of its attributes. In the left column of Table \ref{table:ResolutionsCatalog}, we precise the impacting changes that we consider in our work. For each change, we precise in the second column the attributes that represent and compose each change. When using a state-of-the Art detection approach, we analyze in white box the detected changes to extract their attributes and map them to our internal change layer.
+For the purpose of modularity and extensibility, I use a specification layer for the changes~{\small\boxed{1}} that is simply a connection layer to my co-evolution approach with existing change detection approaches. This connection layer specifies my own representation of a metamodel change that can be mapped later with any change representation. \red{It simply specifies the needed information for each change in the form of its attributes. In the left column of Table \ref{table:ResolutionsCatalog}, I precise the impacting changes that I consider in my work. For each change, I precise in the second column the attributes that represent and compose each change. When using a state-of-the Art detection approach, I analyze in white box the detected changes to extract their attributes and map them to my internal change layer.
 %the attributes of each change are mapped with the corresponding detected change. In order to map the output changes of the used detection approach, we analyze in white box their results to retrieve their different attributes and map them with our change layer.
 } 
-For example, a rename property change includes information regarding its old name, new name, and its class container. Therefore, in practice, any detection approach~\cite{Alter2015, williams2012searching,cicchetti_managing_2009,langer_posteriori_2013,vermolen_reconstructing_2012,Khelladi2016,bettini2022executable} can be integrated by bridging its changes' representation to our change layer and the rest of co-evolution can be performed independently.
-In this chapter, we chose to reuse our previous work \cite{khelladi2016ad,Khelladi2016}, a heuristic-based approach to actually detect atomic and complex changes between two versions of a metamodel.
-In the rest of the chapter, we focus on the code co-evolution since it is our main contribution. 
+For example, a rename property change includes information regarding its old name, new name, and its class container. Therefore, in practice, any detection approach~\cite{Alter2015, williams2012searching,cicchetti_managing_2009,langer_posteriori_2013,vermolen_reconstructing_2012,Khelladi2016,bettini2022executable} can be integrated by bridging its changes' representation to my change layer and the rest of co-evolution can be performed independently.
+In this chapter, I chose to reuse a state-of-the-art work~\cite{khelladi2016ad,Khelladi2016}, a heuristic-based approach to actually detect atomic and complex changes between two versions of a metamodel.
+In the rest of the chapter, I focus on the code co-evolution since it is my main contribution. 
 
-\subsection{Error Retrieval}
+\subsection{Error retrieval}
 \label{errorretrieving}
 
-After the metamodel is evolved and the code API is re-generated, errors will appear in the additional code that must be co-evolved. Unlike code migration context~\cite{9079197},~\cite{henkel2005catchup}, these errors represent the delimited impact of the metamodel evolution. Thus, rather than an impact analysis on the original version to trace the impact of a metamodel change in the code, our approach relies on the compilation result of the code to retrieve its errors. 
-This is necessary and useful in our approach, as we will need to keep updating the list of code errors after co-evolving each given error, hence, iteratively co-evolving the code. We detail this process in the following subsections.
+After the metamodel is evolved and the code API is re-generated, errors will appear in the additional code that must be co-evolved. Unlike code migration context~\cite{9079197},~\cite{henkel2005catchup}, these errors represent the delimited impact of the metamodel evolution. Thus, rather than an impact analysis on the original version to trace the impact of a metamodel change in the code, my approach relies on the compilation result of the code to retrieve its errors. 
+This is necessary and useful in my approach, as I will need to keep updating the list of code errors after co-evolving each given error, hence, iteratively co-evolving the code. I detail this process in the following subsections.
 
-To retrieve those errors, we start by parsing the code of each Java class, called a \emph{compilation unit}, to access the Abstract Syntax Trees (ASTs). An error in a Java code is called a \emph{Marker} that contains the information regarding the detected error. It contains the necessary information to locate the exact impacted AST node in the parsed global AST (\ie char start and end) and  to process it (\ie message).
-In the remaining part of the chapter, instead of Markers, compilation units, and additional code, we respectively refer only to errors, Java classes, and code for the sake of simplicity.  
+To retrieve those errors, I start by parsing the code of each Java class, called a \emph{compilation unit}, to access the Abstract Syntax Trees (ASTs). An error in a Java code is called a \emph{Marker} that contains the information regarding the detected error. It contains the necessary information to locate the exact impacted AST node in the parsed global AST (\ie char start and end) and  to process it (\ie message).
+In the remaining part of the chapter, instead of Markers, compilation units, and additional code, I respectively refer only to errors, Java classes, and code for the sake of simplicity.  
 \input{resolutions}
-\subsection{Resolution Catalog}
+\subsection{Resolution catalog}
 
-Now that we have a list of code errors, we need a set of resolutions to co-evolve them.
-\blue{Our co-evolution approach relies on the resolutions shown in Table \ref{table:ResolutionsCatalog}. 
+Now that I have a list of code errors, I need a set of resolutions to co-evolve them.
+\blue{my co-evolution approach relies on the resolutions shown in Table \ref{table:ResolutionsCatalog}. 
 %
 %Table \ref{table:ResolutionsCatalog} 
 It depicts the resolutions associated with metamodel changes that are known to have an impact on code \cite{iovino2012impact}.
@@ -219,13 +221,13 @@ where they showed to be efficient and useful in co-evolving code \cite{Khelladi2
 For example, resolutions $[CR8,CR9, CR10, CR11]$   aim to co-evolve the different code errors of a move property in the metamodel. %We notice that a metamodel change can be treated by more than one resolution, so how do we select one resolution per change? [or the following paragraph presents our solution to select one resolution per change.]
 }
 
-\subsection{Pattern Matching for Resolution Selection}
+\subsection{Pattern matching for resolution selection}
 \label{pattern_matching}
 
 
 
 
-As shown in Table \ref{table:ResolutionsCatalog}, alternative resolutions exist per metamodel change. Since we aim to fully automate the co-evolution, we need a mechanism to analyze the code error, the code usage, and its impacting metamodel change to decide which resolution to apply. 
+As shown in Table \ref{table:ResolutionsCatalog}, alternative resolutions exist per metamodel change. Since I aim to fully automate the co-evolution, I need a mechanism to analyze the code error, the code usage, and its impacting metamodel change to decide which resolution to apply. 
 This section presents the pattern matching process between metamodel changes and code usages for the retrieved code errors to automatically select resolutions for their co-evolution.
 
 Each Metamodel Element $ME$ has corresponding Generated Code Elements \{$GCE_0$, $GCE_1$, ..., $GCE_n$\} in the code API. 
@@ -250,7 +252,7 @@ For example, let us consider the case of a metaclass. EMF generates a correspond
 
 This classification is essential to match the different code errors with their corresponding \textbf{pattern} of the $GCE_i$ in Table~\ref{table:locationofMMelemen_ch1}. 
 %
-Moreover, each generated code element $GCE_i$ can be used in different \textbf{configurations} in the code that must also be considered in the pattern matching process. For example, using a $GCE_i$ as a parameter in a method declaration and in a method invocation, or to initialize a variable declaration, or in an expression call in a statement, etc., are considered as different configurations and can influence which resolution to apply as well. With these ingredients, we can match a resolution for each error. 
+Moreover, each generated code element $GCE_i$ can be used in different \textbf{configurations} in the code that must also be considered in the pattern matching process. For example, using a $GCE_i$ as a parameter in a method declaration and in a method invocation, or to initialize a variable declaration, or in an expression call in a statement, etc., are considered as different configurations and can influence which resolution to apply as well. With these ingredients, I can match a resolution for each error. 
 \input{classificationTable}
 
 
@@ -269,31 +271,130 @@ Moreover, each generated code element $GCE_i$ can be used in different \textbf{c
 %starts by parsing the error to find the pattern of the corresponding $GCE_i$, which will help to find the causing change. The next step is to define the configuration of the $GCE_i$ which means the type of the $GCE_i$ usage. 
 %If it is a variable declaration (line 8), the resolution $CR16$ is returned. If any other configuration is detected, the pattern matching process returns $CR17$ as an appropriate resolution. 
 Algorithm \ref{algo :ErrorPatternalgo} summarizes the pattern matching process. 
-Given a Java class, an error, and a list of metamodel changes, Algorithm~\ref{algo :ErrorPatternalgo} first retrieves the error AST node~{\small\boxed{line~2}}. After that, it identifies the configuration of the $GCE$ usages~{\small\boxed{Line~3}}. Then, for each metamodel change type ~{\small\boxed{lines~6,17,22,31}}, it identifies the pattern of the corresponding $GCE$ presented in Table~\ref{table:locationofMMelemen}~{\small\boxed{line~7,18,23,32}}. %the different cases of usages in the additional code~{\small\boxed{Lines~3, 2}}, \eg \emph{SimpleName}, \emph{QualifiedName}, \emph{SingleVariable}, \emph{MethodDeclaration}, etc, which are AST node types depending on its level and its position in the AST of the Java class. 
+Given a Java class, an error, and a list of metamodel changes, Algorithm~\ref{algo :ErrorPatternalgo} first retrieves the error AST node~{\small\boxed{Line~2}}. After that, it identifies the configuration of the $GCE$ usages~{\small\boxed{Line~3}}. Then, for each metamodel change type ~{\small\boxed{Lines~6,17,22,31}}, it identifies the pattern of the corresponding $GCE$ presented in Table~\ref{table:locationofMMelemen_ch1}~{\small\boxed{Lines~7,18,23,32}}.
+
+ %the different cases of usages in the additional code~{\small\boxed{Lines~3, 2}}, \eg \emph{SimpleName}, \emph{QualifiedName}, \emph{SingleVariable}, \emph{MethodDeclaration}, etc, which are AST node types depending on its level and its position in the AST of the Java class. 
 %Then, it matches it with the metamodel change causing its error~{\small\boxed{Lines ~5, 15, 18}}. This process is applied for the rest of the metamodel changes. 
 %When the algorithm finds the causing change, it starts to find the 
 Depending on the detected configuration, the appropriate pre-selected resolution is added to the output set~{\small\boxed{Line~10,13,19,26,35}}.
 Finally, the selected resolutions set is returned for further processing in the automatic co-evolution~{\small\boxed{Line~41}}. 
-Let us take the example of \texttt{"Change property type from S to T"} (last change type in Table \ref{table:ResolutionsCatalog}). It has two possible resolutions, CR16 and CR17. Assuming that we have a code error that must be co-evolved. Our pattern matching process first identifies the pattern of the corresponding $GCE_i$ from Table~\ref{table:locationofMMelemen} (Line 7), then the configuration of the $GCE_i$ usage (Line~8). 
+Let us take the example of \texttt{"Change property type from S to T"} (last change type in Table \ref{table:ResolutionsCatalog}). It has two possible resolutions, CR16 and CR17. Assuming that I have a code error that must be co-evolved. My pattern matching process first identifies the pattern of the corresponding $GCE_i$ from Table~\ref{table:locationofMMelemen_ch1} (Line 7), then the configuration of the $GCE_i$ usage (Line~8). 
+
 \definecolor{circlegreen}{HTML}{7ed321}
 
 Algorithm \ref{algo :ErrorPatternalgo} starts by parsing the error to find the pattern of the corresponding $GCE_i$, which will help to find the causing change. The next step is to define the configuration of the $GCE_i$ which means the type of the $GCE_i$ usage. 
-If it is a variable declaration (line 9), the resolution $CR16$ is returned. If any other configuration is detected, the pattern matching process returns $CR17$ as an appropriate resolution.
+If it is a variable declaration (Line~9), the resolution $CR16$ is returned. If any other configuration is detected, the pattern matching process returns $CR17$ as an appropriate resolution.
 
 Note that an error can be matched with more than one resolution because a metamodel element $ME$ can be impacted by more than one change, in other terms interdependent changes. 
-For example, \red{Algorithm~\ref{algo :ErrorPatternalgo} allows matching the error in~{\small\boxed{Line 17}} (rename property) and ~{\small\boxed{Line 31}} (move property) with two metamodel changes of the property \emph{totalExecutionTimeInSeconds} in Listing~\ref{lis:ap1_Modisco_Code_External_V1}.} The generated literal, which is our generated code element $GCE_i$, is used here in the configuration of a literal static field access 
-\emph{\footnotesize{BenchmarkPackage.DISCOVERY\_\_TOTAL\_EXECUTION\_TIME\_IN\_SECONDS}}. The returned resolutions are $CR5$ and $CR10$~{\small\boxed{Line 19,35}}, \red{to be executed in the order of detection of their causing metamodel changes.}%\red{Empirically, we observe only the case of interdependency between a rename and move/pull/push changes.}
-
-%Note that several patterns can be matched for a given error caused by multiple changes.
-%For example, in Listing~\ref{lis:Modisco_Code_External_V1}, Algorithm~\ref{algo :ErrorPatternalgo} allows to match the error in~{\small\boxed{line 6}} with two patterns caused by the two metamodel changes rename and move of the property \emph{totalExecutionTimeInSeconds}. The generated literal, which is our generated code element $GCE_i$, used here in a static field access, 
-%\emph{\footnotesize{BenchmarkPackage.DISCOVERY\_\_TOTAL\_EXECUTION\_TIME\_IN\_SECONDS}}. The matched patterns are \texttt{RenameProperty\_Literal} and \texttt{MoveProperty\_Literal}. %\texttt{RenameProperty\_ SimpleName\_Literal} and \texttt{MoveProperty\_SimpleName\_Literal}. 
-%In total, we define 33 patterns that we match with the code usages and metamodel changes. We attach their list as a supplementary material\footnote{\url{https://figshare.com/s/8986914e924300be77da}}.
-%Due to lack of space we attach their list as a supplementary material.
+For example, Algorithm~\ref{algo :ErrorPatternalgo} allows matching the error in~{\small\boxed{Line~17}} (rename property) and ~{\small\boxed{Line~31}}
+\begin{algorithm}[H]
+	% \algsetup{linenosize=\tiny}
+	%	\small
+	\footnotesize
+	\SetAlgoLined
+	\KwData{javaClass, error, changesList}
+	
+	resolution\_s $\leftarrow \phi$ 
+	
+	%\While{(!usage.hasPatterns())}
+	%{
+		errorNode $\leftarrow$ findErrorAstNode(javaClass, error)
+		
+		configuration $\leftarrow$ getConfiguration(javaClass,errornode)
+		
+		%change $\leftarrow$ changesList.next()
+		
+		\For {(change  $\in$ changesList)}
+		{
+			\Switch{change}{
+				\Case{ChangePropertyType}{
+					\uIf{(match(patternGCE,change)}
+					{
+						
+						\Switch{configuration}{
+							
+							\Case{VariableDeclaration}{
+								
+								resolution\_s.add("CR16")
+							}
+							
+							\Other{
+								
+								resolution\_s.add("CR17")
+							}
+							
+							
+							
+						}
+					}
+					
+					
+				}
+				
+				\Case{RenameProperty}{
+					\uIf{(match(patternGCE,change)}
+					{
+						%configuration $\leftarrow$ getConfiguration(javaClass,errornode)
+						
+						resolution\_s.add("CR5")
+						
+					}
+					
+				}
+				
+				
+				\Case{DeleteClass}{
+					\uIf{(match(patternGCE,change)}
+					{
+						
+						\Switch{configuration}{
+							
+							\Case{ImportDeclaration}{
+								
+								resolution\_s.add("CR2")
+							}
+							
+							...  \emph{\textcolor{circlegreen}{/*Other configurations*/}}
+							
+						}
+					}
+				}
+				
+				\Case{MoveProperty}{
+					\uIf{(match(patternGCE,change)}
+					{
+						
+						\Switch{configuration}{
+							
+							\Case{LiteralStaticField}{
+								
+								resolution\_s.add("CR10")
+							}
+							...  \emph{\textcolor{circlegreen}{/*Other configurations*/}}    
+						}
+					}
+					
+					
+				}
+				\Case{... \emph{\textcolor{circlegreen}{/*Other changes*/}} }{ ... } 
+				
+			} 
+			
+			
+		}
+		\textbf{return} resolution\_s
+		
+		
+		\caption{Pattern matching algorithm}
+		\label{algo :ErrorPatternalgo}
+	\end{algorithm}
+ (move property) with two metamodel changes of the property \emph{totalExecutionTimeInSeconds} in Listing~\ref{lis:ap1_Modisco_Code_External_V1}. The generated literal, which is my generated code element $GCE_i$, is used here in the configuration of a literal static field access 
+\emph{\footnotesize{BenchmarkPackage.DISCOVERY\_\_TOTAL\_EXECUTION\_TIME\_IN\_SECONDS}}. The returned resolutions are $CR5$ and $CR10$~{\small\boxed{Lines~19,35}}, \red{to be executed in the order of detection of their causing metamodel changes.}
 A similar mechanism is implemented for the rest of metamodel changes to select a resolution based on the pattern of $GCE_i$ and the configuration of its usage. % ~{\small\boxed{Lines 40-42}}.
-For the sake of readability, Algorithm \ref{algo :ErrorPatternalgo} does not show all possible combinations of $metamodel$ $changes \times patterns \times configurations$, but few examples to illustrate its essence. \red{We nonetheless give an extended version in the appendix.}
+For the sake of readability, Algorithm \ref{algo :ErrorPatternalgo} does not show all possible combinations of $metamodel$ $changes \times patterns \times configurations$, but few examples to illustrate its essence. I nonetheless give an extended version in the appendix.
 
 %
-Finally, in our implementation, for the case of a "Delete Class" and "Delete Property", we favor the least deletion when possible. In particular, depending on the configuration usage, we select the resolution that deletes the least possible among $CR1$, $CR2$, $CR3$, $CR4$. For example, for an error in a parameter of a method call, we select the resolution $CR4$ rather than $CR1$ or $CR2$. 
+Finally, in my implementation, for the case of a "Delete Class" and "Delete Property", I favor the least deletion when possible. In particular, depending on the configuration usage, I select the resolution that deletes the least possible among $CR1$, $CR2$, $CR3$, $CR4$. For example, for an error in a parameter of a method call, I select the resolution $CR4$ rather than $CR1$ or $CR2$. 
 
 
 In Listing \ref{lis:ap1_Modisco_Code_External_V1}, Algorithm \ref{algo :ErrorPatternalgo} matches the error in the import declaration (\textbf{Configuration}), with the deletion of the metaclass \textit{ProjectDiscovery} (\textbf{pattern}), which allows to select the resolution $CR2$.
@@ -500,122 +601,22 @@ xtit{\texttt{familyName}}. The detected error has a \textit{\texttt{SimpleName}}
 
 
 \end{comment}
-\begin{algorithm2e}[H]
-	% \algsetup{linenosize=\tiny}
-	%	\small
-	\footnotesize
-	\SetAlgoLined
-	\KwData{javaClass, error, changesList}
-	
-	resolution\_s $\leftarrow \phi$ 
-	
-	%\While{(!usage.hasPatterns())}
-	%{
-		errorNode $\leftarrow$ findErrorAstNode(javaClass, error)
-		
-		configuration $\leftarrow$ getConfiguration(javaClass,errornode)
-		
-		%change $\leftarrow$ changesList.next()
-		
-		\For {(change  $\in$ changesList)}
-		{
-			\Switch{change}{
-				\Case{ChangePropertyType}{
-					\uIf{(match(patternGCE,change)}
-					{
-						
-						\Switch{configuration}{
-							
-							\Case{VariableDeclaration}{
-								
-								resolution\_s.add("CR16")
-							}
-							
-							\Other{
-								
-								resolution\_s.add("CR17")
-							}
-							
-							
-							
-						}
-					}
-					
-					
-				}
-				
-				\Case{RenameProperty}{
-					\uIf{(match(patternGCE,change)}
-					{
-						%configuration $\leftarrow$ getConfiguration(javaClass,errornode)
-						
-						resolution\_s.add("CR5")
-						
-					}
-					
-				}
-				
-				
-				\Case{DeleteClass}{
-					\uIf{(match(patternGCE,change)}
-					{
-						
-						\Switch{configuration}{
-							
-							\Case{ImportDeclaration}{
-								
-								resolution\_s.add("CR2")
-							}
-							
-							...  \emph{\textcolor{circlegreen}{/*Other configurations*/}}
-							
-						}
-					}
-				}
-				
-				\Case{MoveProperty}{
-					\uIf{(match(patternGCE,change)}
-					{
-						
-						\Switch{configuration}{
-							
-							\Case{LiteralStaticField}{
-								
-								resolution\_s.add("CR10")
-							}
-							...  \emph{\textcolor{circlegreen}{/*Other configurations*/}}    
-						}
-					}
-					
-					
-				}
-				\Case{... \emph{\textcolor{circlegreen}{/*Other changes*/}} }{ ... } 
-				
-			} 
-			
-			
-		}
-		\textbf{return} resolution\_s
-		
-		
-		\caption{Pattern matching algorithm}
-		\label{algo :ErrorPatternalgo}
-	\end{algorithm2e}
+
 
 \subsection{Repair mechanism for the code co-evolution}
 
 \label{repairmechanism}
 
 
-After the pattern matching step, we can proceed to co-evolve the code. 
-Herein, we distinguish \textbf{direct errors} and \textbf{indirect errors}. The former are errors that do use a Generated Code Element $GCE$. They can be matched with one or many metamodel changes to select the appropriate one or many resolution(s). 
+After the pattern matching step, I can proceed to co-evolve the code. 
+Herein, I distinguish \textbf{direct errors} and \textbf{indirect errors}. The former are errors that do use a Generated Code Element $GCE$. They can be matched with one or many metamodel changes to select the appropriate one or many resolution(s). 
 The latter are errors that %are caused also by the metamodel evolution but they 
 do not use a generated code element. They are not matched, and hence, cannot be resolved using the pattern matching process. %They are typically errors that appear after co-evolving the direct code errors.
 
 
 
-Algorithm \ref{algo :overallalgo} presents the general process of the code co-evolution. It starts by parsing the project Java classes {\small\boxed{line~1}} to be able to access the AST of the code. Then it browses the parsed classes to retrieve the list of errors {\small\boxed{line~3}}. 
-The next step is to run the pattern matching Algorithm \ref{algo :ErrorPatternalgo} for each error to return the matched resolution(s) if any {\small\boxed{lines~4-15}}. 
+Algorithm \ref{algo :overallalgo} presents the general process of the code co-evolution. It starts by parsing the project Java classes {\small\boxed{Line~1}} to be able to access the AST of the code. Then it browses the parsed classes to retrieve the list of errors {\small\boxed{Line~3}}. 
+The next step is to run the pattern matching Algorithm \ref{algo :ErrorPatternalgo} for each error to return the matched resolution(s) if any {\small\boxed{Lines~4-15}}. 
 
 
 
@@ -628,30 +629,14 @@ The next step is to run the pattern matching Algorithm \ref{algo :ErrorPatternal
 %
 %build? the first defective \textbf{usage} that we can correct {\small\boxed{line 5}}. In algorithm \ref{algo :ErrorPatternalgo}, we try to classify each marker and to detect at least one pattern for this marker. To analyse the marker, we start by retrieving the correspondant AST node { \small\boxed{line 1}}. Then depending on the type of the \textbf{ AST node} ( its level in the AST)  { \small\boxed{lines 2, 9}} and the type of the \textbf{change}  { \small\boxed{line 4}}, we can access their properties to test if there is any relation between them. In case a relation is established, a corresponding pattern is assigned  { \small\boxed{line 6}}. The usage will contain the marker, the corresponding AST node, the change, and the found patterns. 
 %
-If an error is matched with at least one resolution {\small\boxed{line~7}}, it is a \textbf{direct error}. If an error is matched with several changes {\small\boxed{lines~8-10}}, it will be resolved iteratively for each resolution {\small\boxed{lines~9}}. 
+If an error is matched with at least one resolution {\small\boxed{Line~7}}, it is a \textbf{direct error}. If an error is matched with several changes {\small\boxed{Lines~8-10}}, it will be resolved iteratively for each resolution {\small\boxed{Line~9}}. 
 
-In the case of an \textbf{indirect error}, we cannot apply the pattern matching process, but we still attempt to repair them with the available quick fixes in the IDE. 
-%
-%For example, \emph{unimplemented method m() of the class C} which is considered as an indirect error.\red{ It can not be matched with a metamodel pattern, because the declaration of the class C is not a code usage of the method m() (Table \ref{table:locationofMMelemen}.}, we attempt to repair it with its quick fix \emph{add the unimplemented method}.%preselected quick fix
-%
-We analyze the error message to match it with one of the proposed Java quick fixes~{\small\boxed{lines~11}}. For example, \emph{the type MC must implement the inherited abstract method} is considered as an indirect error. 
-This error can occur when a method is added in a metaclass \texttt{MC}. Classes that implement the generated interface generated from \texttt{MC} must override the new method.
-%OLD PULL \red{This error occurs when an attribute is pulled from  a metaclass A to another metaclass B. Classes that implemented the generated interface from B must override the new methods.} 
-%\red{ It can not be matched with a metamodel pattern, because the declaration of the class C is not a code usage of the method m() (Table \ref{table:locationofMMelemen})}, w
-We attempt to repair it with its quick fix \emph{add the unimplemented method}~{\small\boxed{lines~12}}.
-
-After applying the resolutions or a quick fix, the Java class has to be refreshed. This is because the modifications of the AST will impact the list of errors and their locations in the Java class {\small\boxed{lines~13-14}}. When 
-refreshing the Java class, the list of errors typically decreases as they are co-evolved,  
-%updating the list of errors, they decrease as we co-evolve them, 
-yet, new ones may be introduced. Consequently, they will be handled in the next iterations similarly with our pattern matching and co-evolution algorithm or with the quick fixes.
-
-Finally, this process is repeated until all errors are handled. 
-However, we implemented a stopping criteria to handle the indirect errors with quick fixes. 
-It stops in two cases: 1) when only errors without any quick fix proposal remain, or 2) when the application of a quick fix causes an infinite loop \cite{cuadrado2018quick,khelladi2019detecting}, i.e., a cycle of applying a quick fix that causes a previously fixed error (A $\mapsto$ B $\mapsto$ A $\mapsto$ B $\mapsto$ ...). However, as we will see in the evaluation, these cases never happened in our executions. 
-\begin{algorithm2e}[H]
+In the case of an \textbf{indirect error}, I cannot apply the pattern matching process, but I still attempt to repair them with the available quick fixes in the IDE. 
+\begin{algorithm}[H]
 	% \algsetup{linenosize=\tiny}
 	\small
 	\SetAlgoLined
+	\RestyleAlgo{ruled} 
 	\KwData{EcoreModelingProject, changesList}
 	javaClasses $\leftarrow$ Parse(EcoreModelingProject)
 	
@@ -687,15 +672,33 @@ It stops in two cases: 1) when only errors without any quick fix proposal remain
 	}
 	\caption{Co-evolution of metamodel and code}
 	\label{algo :overallalgo}
-\end{algorithm2e}
+\end{algorithm}
+
+%
+%For example, \emph{unimplemented method m() of the class C} which is considered as an indirect error.\red{ It can not be matched with a metamodel pattern, because the declaration of the class C is not a code usage of the method m() (Table \ref{table:locationofMMelemen}.}, we attempt to repair it with its quick fix \emph{add the unimplemented method}.%preselected quick fix
+%
+I analyze the error message to match it with one of the proposed Java quick fixes~{\small\boxed{Line~11}}. For example, \emph{the type MC must implement the inherited abstract method} is considered as an indirect error. 
+This error can occur when a method is added in a metaclass \texttt{MC}. Classes that implement the generated interface generated from \texttt{MC} must override the new method.
+%OLD PULL \red{This error occurs when an attribute is pulled from  a metaclass A to another metaclass B. Classes that implemented the generated interface from B must override the new methods.} 
+%\red{ It can not be matched with a metamodel pattern, because the declaration of the class C is not a code usage of the method m() (Table \ref{table:locationofMMelemen})}, w
+I attempt to repair it with its quick fix \emph{add the unimplemented method}~{\small\boxed{Line~12}}.
+
+After applying the resolutions or a quick fix, the Java class has to be refreshed. This is because the modifications of the AST will impact the list of errors and their locations in the Java class {\small\boxed{Lines~13-14}}. When 
+refreshing the Java class, the list of errors typically decreases as they are co-evolved,  
+%updating the list of errors, they decrease as we co-evolve them, 
+yet, new ones may be introduced. Consequently, they will be handled in the next iterations similarly with my pattern matching and co-evolution algorithm or with the quick fixes.
+
+Finally, this process is repeated until all errors are handled. 
+However, I implemented a stopping criteria to handle the indirect errors with quick fixes. 
+It stops in two cases: 1) when only errors without any quick fix proposal remain, or 2) when the application of a quick fix causes an infinite loop \cite{cuadrado2018quick,khelladi2019detecting}, i.e., a cycle of applying a quick fix that causes a previously fixed error (A $\mapsto$ B $\mapsto$ A $\mapsto$ B $\mapsto$ ...). However, as I will see in the evaluation, these cases never happened in my executions. 
 
 %The stop condition is guaranteed because all the errors are due to metamodel changes and once an error is detected, it can be resolved using pattern matching or quick fixes.
 %\todo{say there is a risk of infinite loop between qucik fixes, and that we haev stoping cirteria for it.}  
 %Otherwise, only errors that are not matched with pattern usages and can't be resolved with quick fixes remain.
 %.all we find a defected usage that we don't know how to correct.
 
-Note that during the co-evolution process, we log the history of execution: the Java class, the error, its line, the change that provoked it, and the applied resolution(s)/quick fix in a generated report. Thus, we can generate a detailed report that allows the developer to check the modifications applied to the co-evolved code after the co-evolution is finished, i.e, their validation is not mendatory to concretly apply the resolutions.
-Table \ref{table:report} shows an example of a report for the corresponding part to our motivation example from Modisco Java Discoverer Benchmark applied co-evolution. %\red{maybe put it in 3.6?}
+Note that during the co-evolution process, I log the history of execution: the Java class, the error, its line, the change that provoked it, and the applied resolution(s)/quick fix in a generated report. Thus, I can generate a detailed report that allows the developer to check the modifications applied to the co-evolved code after the co-evolution is finished, i.e, their validation is not mendatory to concretly apply the resolutions.
+Table \ref{table:report} shows an example of a report for the corresponding part to my motivation example from Modisco Java Discoverer Benchmark applied co-evolution. %\red{maybe put it in 3.6?}
 
 %\red{//TODO add table of resolutions}
 
@@ -759,6 +762,7 @@ Table \ref{table:report} shows an example of a report for the corresponding part
 		\bottomrule
 	\end{tabular}
 }
+
 %\end{wraptable*} 
 \vspace{-1em}
 \end{table*}
@@ -850,20 +854,20 @@ Table \ref{table:report} shows an example of a report for the corresponding part
 
 %Note that our pre-selection of a resolution may lead to a doubt about the behavioral correctness of the coevolved code. This is why we opted for the use of unit tests before and after the coevolution to check the code behavioral correctness. \todo{maybe say it in the end of 3.6 repair section, also this is part of the eval and not teh appproch, so better say it in the eval process (i think we do already)}
 
-\subsection{Prototype Implementation}
+\subsection{Prototype implementation}
 %To be able to evaluate our approach, 
-We implemented our solution as an Eclipse Java plugin handling Ecore/EMF metamodels and their Java code. 
+I implemented my solution as an Eclipse Java plugin handling Ecore/EMF metamodels and their Java code. 
 
 %\red{The change detection uses EMFCompare library to compare two Ecore metamodels, the result is then formatted in our change detection interface}.
 The co-evolution process technically consists of the code AST manipulation using the JDT eclipse plugin\footnote{Eclipse Java development tools (JDT): \url{https://www.eclipse.org/jdt/core/}}.
 \begin{itemize}
-\item \textbf{Error retrieving}: there are many methods to manipulate the compilation errors of the code. We use the marker of IJavaModelMarker.JAVA\_MODEL\_PROBLEM\_MARKER. Then we filter markers whose severity value equals 2.
+\item \textbf{Error retrieving}: there are many methods to manipulate the compilation errors of the code. I use the marker of IJavaModelMarker.JAVA\_MODEL\_PROBLEM\_MARKER. Then I filter markers whose severity value equals 2.
 \item \textbf{Change detection layer}: it consists of a set of model classes that specifies the information of each type of atomic and complex changes. 
-\item \textbf{Pattern matching}: to match the error AST node with the causing change, we proceed by string formatting between the identifier of the AST node and the relevant information encapsulated in the change. We find the corresponding configuration by looking for the higher levels of the error AST node in the code AST using the package org.eclipse.jdt.core.dom.
+\item \textbf{Pattern matching}: to match the error AST node with the causing change, I proceed by string formatting between the identifier of the AST node and the relevant information encapsulated in the change. I find the corresponding configuration by looking for the higher levels of the error AST node in the code AST using the package org.eclipse.jdt.core.dom.
 \item \textbf{Resolutions} :
 The AST nodes of errors are manipulated with edit actions: modification, replacement, or deletion)  
 using the package \textit{ org.eclipse.jdt.core.dom.rewrite}, org.eclipse.text.edits.TextEdit, and \textit{org.eclipse.core.filebuffers}. 
-\item \textbf{Quick fixes} : we use \textit{org.eclipse.jdt.ui.text.java.IQuickAssistProcessor} and \textit{org.eclipse.jdt.ui.text.java.IJavaCompletionProposal}.
+\item \textbf{Quick fixes} : \textit{org.eclipse.jdt.ui.text.java.IQuickAssistProcessor} and \textit{org.eclipse.jdt.ui.text.java.IJavaCompletionProposal} are used.
 
 \end{itemize}
 %To facilitate the use of our tool, we added a command the xml file of the plugin. 
@@ -881,19 +885,19 @@ using the package \textit{ org.eclipse.jdt.core.dom.rewrite}, org.eclipse.text.e
 
 \section{Evaluation}\label{eval}
 
-This section evaluates our automatic co-evolution approach. 
-First, we present the evaluation process and the data set. Then, we set the research questions we address and discuss the obtained results.
+This section evaluates my automatic co-evolution approach. 
+First, I present the evaluation process and the data set. Then, I set the research questions I address and discuss the obtained results.
 
 
-\subsection{Evaluation Process}
+\subsection{Evaluation process}
 
-We evaluate our automated co-evolution of code with metamodel evolution by measuring: 1) its ability to co-evolve the errors, 2) its time performance, 3) its correctness by using recall and precision metrics, 4) its behavioral correctness by using test suites before/after the automatic co-evolution, 5) and by comparing it with both quick fixes and our prior work~\cite{Khelladi2020}. %programmatically applying quick fixes.}
+I evaluate my automated co-evolution of code with metamodel evolution by measuring: 1) its ability to co-evolve the errors, 2) its time performance, 3) its correctness by using recall and precision metrics, 4) its behavioral correctness by using test suites before/after the automatic co-evolution, 5) and by comparing it with both quick fixes and a prior work~\cite{Khelladi2020}. %programmatically applying quick fixes.}
 %% checking changes mentionned in threats to validity 
 %%Before starting the evaluation process, we confirm the changes of %%metamodel. As these changes from version \emph{1} to version~\emph{2} serve %%as input of our automatic code co-evolution
 
-First, as our approach co-evolves the erroneous code due to metamodel evolution, we need to \textbf{provoke the errors in the code}. To do so, we replace the original metamodel with the evolved metamodel. Then, we regenerate the code API with EMF. This will cause errors in the code that our approach must co-evolve~(1).  
-We then use the function $System.nanoTime()$ for time measurement~(2). 
-After that, we measure the correctness of our code co-evolution~(3) by comparing, for the same set of code errors that we automatically co-evolved, how they were manually co-evolved by developers. This allows us to measure the \emph{precision} and \emph{recall} reached by our co-evolution approach. They vary from~0 to~1, i.e., 0\% to 100\%. They are defined as follows:
+First, as my approach co-evolves the erroneous code due to metamodel evolution, I need to \textbf{provoke the errors in the code}. To do so, I replace the original metamodel with the evolved metamodel. Then, I regenerate the code API with EMF. This will cause errors in the code that my approach must co-evolve~(1).  
+I then use the function $System.nanoTime()$ for time measurement~(2). 
+After that, I measure the correctness of my code co-evolution~(3) by comparing, for the same set of code errors that I automatically co-evolved, how they were manually co-evolved by developers. This allows us to measure the \emph{precision} and \emph{recall} reached by my co-evolution approach. They vary from~0 to~1, i.e., 0\% to 100\%. They are defined as follows:
 %We evaluate correctness by measuring \emph{precision} and \emph{recall}. We compare our applied co-evolution with the manually applied co-evolved by developers against our proposed co-evolution. 
 %
 %This allows us to measure the correctness of our co-evolution approach. %, i.e., correctness  of our proposed co-evolution. 
@@ -919,14 +923,14 @@ After that, we measure the correctness of our code co-evolution~(3) by comparing
 	\noindent $ recall = \dfrac{Applied Resolutions \cap Expected Resolutions}{Expected Resolutions} $
 	\vspace{1em}
 	
-	The $Applied Resolutions$ are those by our approach (from Table \ref{table:ResolutionsCatalog}) and  the $Expected Resolutions$ are the actual manually performed resolutions by developers.  %The precision and recall  %The higher the precision value, the smaller is the set of wrong resolutions that have been proposed (i.e. false positives). The higher the recall value, the smaller is the set of the expected resolutions that have not been proposed (i.e. false negatives).
+	The $Applied Resolutions$ are those by my approach (from Table \ref{table:ResolutionsCatalog}) and  the $Expected Resolutions$ are the actual manually performed resolutions by developers.  %The precision and recall  %The higher the precision value, the smaller is the set of wrong resolutions that have been proposed (i.e. false positives). The higher the recall value, the smaller is the set of the expected resolutions that have not been proposed (i.e. false negatives).
 	
-	Moreover, to check if the co-evolution impacts the original code behavior~(4), we generate tests for the original and the automatically co-evolved versions. Hence, we observe the behavioral effect of our co-evolution through the tests. To do so, we rely on EvoSuite~\cite{fraser2011evosuite}, a popular tool for test cases generation, as it is widely used by researchers and developers. 
-	Gruber et al. \cite{gruber2023automatic} further showed the quality and robustness of the generated tests. It showed that while flakiness is at least as common in generated tests as in developer-written tests, EvoSuite is effective in alleviating this issue giving 71.7\% fewer flaky tests. Thus, EvoSuite is appropriate in our work to generate robust tests in the original code and in the co-evolved code to compare their results, i.e., check behavioral correctness.
+	Moreover, to check if the co-evolution impacts the original code behavior~(4), I generate tests for the original and the automatically co-evolved versions. Hence, I observe the behavioral effect of my co-evolution through the tests. To do so, I rely on EvoSuite~\cite{fraser2011evosuite}, a popular tool for test cases generation, as it is widely used by researchers and developers. 
+	Gruber et al. \cite{gruber2023automatic} further showed the quality and robustness of the generated tests. It showed that while flakiness is at least as common in generated tests as in developer-written tests, EvoSuite is effective in alleviating this issue giving 71.7\% fewer flaky tests. Thus, EvoSuite is appropriate in my work to generate robust tests in the original code and in the co-evolved code to compare their results, i.e., check behavioral correctness.
 	
-	Furthermore, we compare our approach with the application of quick fixes~(5). For each error, we apply the first quick fix in the list of corresponding proposals, then we compare the precision and recall of quick fixes with the precision and recall of our approach.
+	Furthermore, I compare my approach with the application of quick fixes~(5). For each error, I apply the first quick fix in the list of corresponding proposals, then I compare the precision and recall of quick fixes with the precision and recall of my approach.
 	%
-	Finally, we compare our approach with our prior work~\cite{Khelladi2020} in terms of precision and recall, and general rationale (5).
+	Finally, I compare my approach with the state-of-the-art work~\cite{Khelladi2020} in terms of precision and recall, and general rationale~(5).
 	%Note that we studied evolved and original versions to confirm the metamodel changes and code co-evolution from version \emph{1} to version~\emph{2}. 
 	
 	%Based on those changes we run an impact analysis to identify the impacted parts of the code that will be co-evolved. 
@@ -958,16 +962,16 @@ After that, we measure the correctness of our code co-evolution~(3) by comparing
 \end{comment}
 
 %\red{//TODO double check} 
-This section presents the used data set in our evaluation to be found in the attached supplementary material\footnote{\url{https://figshare.com/s/8986914e924300be77da}}.
+This section presents the used data set in this evaluation to be found in the attached supplementary material\footnote{\url{https://figshare.com/s/8986914e924300be77da}}.
 %
-We chose the EMF case study from the Eclipse platform, which is a popular tool that provides a flexible and extensible platform for creating custom modeling tools and applications. In~2022, Eclipse IDE was downloaded 1 million times per month.
+I chose the EMF case study from the Eclipse platform, which is a popular tool that provides a flexible and extensible platform for creating custom modeling tools and applications. In~2022, Eclipse IDE was downloaded 1 million times per month.
 
-First, we aimed at selecting meaningful evolutions that do not consist of only deleting metamodel elements, but rather include complex evolution changes. 
+First, I aimed at selecting meaningful evolutions that do not consist of only deleting metamodel elements, but rather include complex evolution changes. 
 \red{}This selection criterion resulted in projects that do not contain unit tests, and this is the main reason behind relying on generated tests to check the behavioral correctness of the co-evolution. %For example, we excluded The second reason is that EMF metamodels with existing unit tests do not evolve much and they are used by other projects that do not have unit tests either.
 %\red{}
-Moreover, to make sure that the errors are due only to the evolution of a single metamodel at a time, we selected projects that were dependent on one metamodel and not dependent (directly or transitively) on several metamodels that evolved simultaneously. This gives us more confidence in observing the resulting errors in the code due only to metamodel changes. Thus, mitigating the bias related to the ambiguous cases where errors interact and mask each other~\cite{bohme2013regression}. Handling the scenario code co-evolution due to multiple metamodels evolution is left for future work. 
+Moreover, to make sure that the errors are due only to the evolution of a single metamodel at a time, I selected projects that were dependent on one metamodel and not dependent (directly or transitively) on several metamodels that evolved simultaneously. This gives us more confidence in observing the resulting errors in the code due only to metamodel changes. Thus, mitigating the bias related to the ambiguous cases where errors interact and mask each other~\cite{bohme2013regression}. Handling the scenario code co-evolution due to multiple metamodels evolution is left for future work. 
 
-Therefore, we evaluated our approach on nine~9 Java projects from three case studies of three different language implementations in Eclipse, namely OCL~\cite{MDTOCL}, Modisco~\cite{MDTModisco}, and Papyrus~\cite{MDTPapyrus}. 
+Therefore, I evaluated my approach on nine~9 Java projects from three case studies of three different language implementations in Eclipse, namely OCL~\cite{MDTOCL}, Modisco~\cite{MDTModisco}, and Papyrus~\cite{MDTPapyrus}. 
 %
 OCL is a standard language defined by the Object Management Group (OMG) to specify First-order logic constraints. Modisco is an academic initiative to support the development of model-driven tools, reverse engineering, verification, and transformation of existing software systems. 
 Papyrus is an industrial project led by CEA\footnote{\url{http://www-list.cea.fr/en/}} to support model-based simulation, formal testing, safety analysis, etc.  
@@ -984,16 +988,16 @@ have evolved several times for more than 10 years of continuous development peri
 
 
 Table~\ref{ch1_CaseStudies_Evolution} gives details on the selected case studies, in particular about their metamodels and the changes applied during evolution. The total of applied metamodel changes was~330 atomic changes, including~19 complex changes in the three metamodels. 
-Note that these real-world metamodel evolution changes do not cover all the changes in Table~\ref{table:ResolutionsCatalog}. However, we did not force any other missing resolutions to be able to compute recall and precision relatively to the real manual co-evolved code, and to minimize the bias in results. 
-Nonetheless, as a sanity check, we did synthetically try all of them during their implementation before the evaluation. We simulated all metamodel changes with all patterns of generated code elements and configuration usages. 
+Note that these real-world metamodel evolution changes do not cover all the changes in Table~\ref{table:ResolutionsCatalog}. However, I did not force any other missing resolutions to be able to compute recall and precision relatively to the real manual co-evolved code, and to minimize the bias in results. 
+Nonetheless, as a sanity check, I did synthetically try all of them during their implementation before the evaluation. I simulated all metamodel changes with all patterns of generated code elements and configuration usages. 
 
 
-For those three case studies, we collect nine Java projects impacted by those three evolving metamodels and their regenerated code API. We collect the \textbf{original} and the \textbf{developers' evolved} Java code for those projects.
+For those three case studies, I collect nine Java projects impacted by those three evolving metamodels and their regenerated code API. I collect the \textbf{original} and the \textbf{developers' evolved} Java code for those projects.
 %As the code co-evolution has been performed manually by developers ground truth to which we compare our performed co-evolution. 
 %All evolutions in our case studies of the metamodels and code have been performed manually by developers between the different releases that we collected. Thus, we considered the manual code co-evolution as the reference (i.e., ground truth) to which we compare our performed co-evolution. %\red{Those projects were }
 %
 %\red{ We used unit tests to check the behavioral correctness of the co-evolution. We relied on generated tests because of two reasons. The first reason is that we had to select metamodels with meaningful changes, thereby excluding metamodels with only deletions or additions and with a low number of changes. Projects including this kind of metamdodels miss manual tests. }
-Table~\ref{ch1_CaseStudies_CoEvolution} gives details on the size of the projects and code of the original versions that we co-evolve.  In addition, it gives the number of direct and indirect errors after the metamodel evolution. Finally, Table~\ref{table:test_results}'s first line gives the total number of tests in the original and the evolved versions of the projects.
+Table~\ref{ch1_CaseStudies_CoEvolution} gives details on the size of the projects and code of the original versions that I co-evolve.  In addition, it gives the number of direct and indirect errors after the metamodel evolution. Finally, Table~\ref{table:test_results}'s first line gives the total number of tests in the original and the evolved versions of the projects.
 
 \begin{table*}[t]
 	\centering
@@ -1022,13 +1026,15 @@ Table~\ref{ch1_CaseStudies_CoEvolution} gives details on the size of the project
 			%& \begin{tabular}[c]{@{}l@{}}Configuration.ecore in project \\ papyrus.infra.queries.core.configuration\end{tabular}            & \begin{tabular}[c]{@{}l@{}}0.9.0 to\\ 1.1.0\end{tabular}         & %\begin{tabular}[c]{@{}l@{}}Original: 24 \\Evolved: 0\end{tabular}     &     		\begin{tabular}[c]{@{}l@{}}Deletes: 6 classes, 7 properties, 4 super types \\ Total = 17 \end{tabular}                                                      &    \begin{tabular}[c]{@{}l@{}} none \end{tabular}	\\ \bottomrule                                         
 		\end{tabular}
 	}
+		
 \end{table*}
 
 
 \begin{table*}[t]
-	\caption{Details of the projects and their caused direct and indirect errors by the metamodels evolution.}
-	\label{CaseStudies_CoEvolution}
+
 	\hspace{-1.5cm}
+	\caption{Details of the projects and their caused direct and indirect errors by the metamodels evolution.}
+	\label{ch1_CaseStudies_CoEvolution}
 	\resizebox{20cm}{!} {
 		\begin{tabular}{llcccccc}
 			\toprule
@@ -1047,32 +1053,33 @@ Table~\ref{ch1_CaseStudies_CoEvolution} gives details on the size of the project
 			\begin{tabular}[c]{@{}l@{}}2057 \\374 \\725  \end{tabular}  & \begin{tabular}[c]{@{}l@{}}8 \\7  \\7 \end{tabular} & \begin{tabular}[c]{@{}l@{}} 59\\23\\23 \end{tabular} & \begin{tabular}[c]{@{}l@{}}0\\6 \\6\end{tabular} \\ \bottomrule		
 		\end{tabular}
 	}
+		
 \end{table*}
 
 
 
-\subsection{Research Questions}
-This section sets the research questions (RQs) to assess our work. The research questions are as follows:
+\subsection{Research questions}
+This section sets the research questions (RQs) to assess my work. The research questions are as follows:
 
 
 
 %\begin{itemize}
 %\item[RQ1] 
 \blue{}
-\textbf{RQ1.}  \emph{Can our automatic co-evolution approach handle the code errors by resolving them after the metamodel evolution?} This aims to assess the ability and applicability of our automatic approach to co-evolve the code due to evolving metamodels.  %This assesses the overall applicability of our co-evolution approach.  
+\textbf{RQ1.}  \emph{Can this automatic co-evolution approach handle the code errors by resolving them after the metamodel evolution?} This aims to assess the ability and applicability of this automatic approach to co-evolve the code due to evolving metamodels.  %This assesses the overall applicability of our co-evolution approach.  
 
 
 %\item[RQ2] 
-\textbf{RQ2.} \emph{To what extent does our automatic approach correctly co-evolve the erroneous code?} This aims to assess the usefulness and measure the precision and recall of our approach when compared to the manually applied co-evolution for direct code errors. It further assesses the behavioral correctness of the co-evolution by observing the tests' execution before and after the co-evolution. %This assesses its usefulness. 
+\textbf{RQ2.} \emph{To what extent does this automatic approach correctly co-evolve the erroneous code?} This aims to assess the usefulness and measure the precision and recall of my approach when compared to the manually applied co-evolution for direct code errors. It further assesses the behavioral correctness of the co-evolution by observing the tests' execution before and after the co-evolution. %This assesses its usefulness. 
 %\DK{\textbf{RQ3.} \emph{To what extent is our automatic co-evolution behaviorally correct ?} This aims to assess ...}
 
 
-\textbf{RQ3.} \emph{How does our automatic approach for code co-evolution compare to the IDE quick fixes as a baseline?} 
+\textbf{RQ3.} \emph{How does this automatic approach for code co-evolution compare to the IDE quick fixes as a baseline?} 
 %\emph{How does our automatic approach for code co-evolution compare to two baseline tools : the semi-automatic metamodel and code coevolution approach \cite{khelladi2020onthepower} and IDE quick fixes ?} 
 %This aims to assess how our precison and recall compare with the precison and recall of Khelladi et al. approach \cite{Khelladi2020}. Then, 
-This aims to assess the ability of the IDE quick fixes to correctly co-evolve the code due to evolving metamodels. We measure and compare the precision and recall of our automatic co-evolution approach to the quick fixes.   
+This aims to assess the ability of the IDE quick fixes to correctly co-evolve the code due to evolving metamodels. I measure and compare the precision and recall of my automatic co-evolution approach to the quick fixes.   
 
-\textbf{RQ4.} \emph{How does our automatic approach for code co-evolution compare to the state-of-the-art semi-automatic approach as a baseline?} 
+\textbf{RQ4.} \emph{How does this automatic approach for code co-evolution compare to the state-of-the-art semi-automatic approach as a baseline?} 
 This aims to assess the ability of the fully automatic co-evolution compared to a semi-automatic co-evolution~\cite{Khelladi2020}. 
 %This aims to assess how our precison and recall compare with the precison and recall of Khelladi et al. approach \cite{Khelladi2020}.
 
@@ -1096,16 +1103,16 @@ This aims to assess the ability of the fully automatic co-evolution compared to 
 
 
 \subsection{Results}
-We now discuss the results w.r.t. our research questions.
+I now discuss the results w.r.t. my research questions.
 
-\subsubsection{RQ1. Can our automatic co-evolution approach handle the code errors by resolving them after the metamodel evolution?}
+\subsubsection{RQ1. Can this automatic co-evolution approach handle the code errors by resolving them after the metamodel evolution?}
 
-Following the evaluation protocol and after regenerating the code API from the metamodels, we observed 837 errors, among which 771 (92\%) direct and 66 (8\%) indirect errors. 
+Following the evaluation protocol and after regenerating the code API from the metamodels, I observed~837 errors, among which~771~(92\%) direct and~66~(8\%) indirect errors. 
 %
-Regarding the 771 direct errors, 
+Regarding the~771 direct errors, 
 %To co-evolve all code errors, 
-a total of 631 resolutions were applied.  
-This shows the applicability of our co-evolution approach which was able to handle 100\% of direct errors in the code caused by the metamodel evolution changes. Regarding indirect errors,~5 quick fixes all of \emph{add the unimplemented methods}  were applied to repair 100\% of the 66 errors.
+a total of~631 resolutions were applied.  
+This shows the applicability of my co-evolution approach which was able to handle~100\% of direct errors in the code caused by the metamodel evolution changes. Regarding indirect errors,~5 quick fixes all of \emph{add the unimplemented methods}  were applied to repair~100\% of the~66 errors.
 %One occurred in Modisco JavaBenchmark Project \emph{[P6]} and 2 in Pivot project \emph{[P1]}.
 Thus, after automating completely the co-evolution of the code, the developers are always able to consult the generated report and check the history of co-evolution.
 %reducing significantly the burden of manual intervention from developers required only in 2 out of 9 projects while covering all co-evolution cases.  
@@ -1125,15 +1132,15 @@ Thus, after automating completely the co-evolution of the code, the developers a
 }
 \end{comment}
 
-Moreover, we observed that the number of applied resolutions is less than the initial number of direct errors in the code. In fact, as code co-evolution advances, some resolutions repair multiple other errors as a side effect \cite{cuadrado2018quick,khelladi2019detecting}. 
-In particular, we observed the case of renaming the type of a declared variable, the resolution $[CR5]$ is applied. As a consequence, all the erroneous usages of this variable were automatically corrected. We also observed the main case of a delete resolution $[CR2]$ of an instruction that contained several errors in its body.
-For example, if an error occurs in the condition statement of an \texttt{IF} and a \texttt{For} instructions, the whole \texttt{IF}, or a \texttt{For} block is deleted. As a result, all errors in their bodies automatically disappear. However, even if we would have co-evolved the inner errors first, we would have ended up by deleting the \texttt{IF} and \texttt{For} instructions to co-evolve its parent error. Therefore, our automatic co-evolution would have reached the same code state. 
+Moreover, I observed that the number of applied resolutions is less than the initial number of direct errors in the code. In fact, as code co-evolution advances, some resolutions repair multiple other errors as a side effect \cite{cuadrado2018quick,khelladi2019detecting}. 
+In particular, I observed the case of renaming the type of a declared variable, the resolution $[CR5]$ is applied. As a consequence, all the erroneous usages of this variable were automatically corrected. I also observed the main case of a delete resolution $[CR2]$ of an instruction that contained several errors in its body.
+For example, if an error occurs in the condition statement of an \texttt{IF} and a \texttt{For} instructions, the whole \texttt{IF}, or a \texttt{For} block is deleted. As a result, all errors in their bodies automatically disappear. However, even if I would have co-evolved the inner errors first, I would have ended up by deleting the \texttt{IF} and \texttt{For} instructions to co-evolve its parent error. Therefore, my automatic co-evolution would have reached the same code state. 
 %However, note that the pattern matching favors the least deletion when possible. In particular, $[CR1]$, $[CR3]$, or $[CR4]$ over $[CR2]$. 
 
-Furthermore, Table \ref{AppliedResolutions} lists the applied resolutions for each co-evolved project. In total, the 631 applied resolutions represented 11 out of the 17 resolutions from our catalog in Table \ref{table:ResolutionsCatalog}. 
+Furthermore, Table \ref{AppliedResolutions} lists the applied resolutions for each co-evolved project. In total, the 631 applied resolutions represented 11 out of the 17 resolutions from the catalog in Table \ref{table:ResolutionsCatalog}. 
 In particular, $32 \times [CR1], 240 \times [CR2], 73 \times [CR4], 179 \times [CR5], 16 \times [CR7], 20 \times [CR10], 18 \times [CR11], 7 \times [CR13], 2 \times [CR14], 3 \times [CR16], 13 \times [CR17]$. 
 %
-Figure \ref{fig:frequency_resolutions} further illustrates the application frequency of each resolution. Some resolutions were never applied, such as $[CR3], [CR6], [CR15]$. This can be explained by two reasons. The first one is that the corresponding change did never occur in our case studies (Table \ref{table:ResolutionsCatalog}) like $[CR15]$. The second reason is that pattern matching favors the least deletion when possible. In particular, $[CR1]$ over $[CR3]$, or $[CR4]$ over $[CR2]$.
+Figure \ref{fig:frequency_resolutions} further illustrates the application frequency of each resolution. Some resolutions were never applied, such as $[CR3], [CR6], [CR15]$. This can be explained by two reasons. The first one is that the corresponding change did never occur in my case studies (Table \ref{table:ResolutionsCatalog}) like $[CR15]$. The second reason is that pattern matching favors the least deletion when possible. In particular, $[CR1]$ over $[CR3]$, or $[CR4]$ over $[CR2]$.
 
 
 Finally, the total co-evolution time per project ranged from a few seconds to almost 10 minutes, respectively, in Modisco  \emph{[P3]} and OCL Pivot \emph{[P1]}. On average, the co-evolution per error took less than half a second. The evaluation was run on a Fedora Linux 35 laptop with a Core i9 2.6 GHz and 16 GB RAM.
@@ -1142,7 +1149,7 @@ Finally, the total co-evolution time per project ranged from a few seconds to al
 \begin{tcolorbox}[boxsep=-2pt]
 \textbf{$\boldsymbol{RQ_1}$ insights:}
 
-We can automatically co-evolve all direct errors in the code after metamodel evolution. Indirect errors are repaired with quick fixes. This allows full automation of the co-evolution with possible manual intervention by checking the generated report.
+I can automatically co-evolve all direct errors in the code after metamodel evolution. Indirect errors are repaired with quick fixes. This allows full automation of the co-evolution with possible manual intervention by checking the generated report.
 %reduces significantly the burden of manual intervention from developers required only in 2 out of 9 projects. 
 
 \end{tcolorbox}
@@ -1150,7 +1157,7 @@ We can automatically co-evolve all direct errors in the code after metamodel evo
 
 \begin{table}[t]
 \centering
-\caption{Number of applied resolutions in our code co-evolution for each project and per evolved metamodel.}
+\caption{Number of applied resolutions in my code co-evolution for each project and per evolved metamodel.}
 \label{AppliedResolutions}
 \resizebox{11cm}{!} {
 	\begin{tabular}{llll}
@@ -1200,24 +1207,24 @@ We can automatically co-evolve all direct errors in the code after metamodel evo
 \end{figure}
 
 
-\subsubsection{RQ2. To what extent does our automatic approach correctly co-evolve the erroneous code?}
+\subsubsection{RQ2. To what extent does this automatic approach correctly co-evolve the erroneous code?}
 
 %Our co-evolution approach is fully automatic and not guided by the developers, but rather by the matched patterns and their corresponding resolutions. Thus, \red{we can loose in correctness} in comparison to the  developers' manual co-evolution.
-To assess and measure the precision and recall of our automatic co-evolution, we first compared it with the manual co-evolution of the code that developers went through. 
+To assess and measure the precision and recall of my automatic co-evolution, I first compared it with the manual co-evolution of the code that developers went through. 
 %To assess to what extent can our approach correctly co-evolve the code errors w.r.t. the manual co-evolution of the code that developers went through, we measured precision and recall.
 
 %Figure \ref{fig:correctness} 
-Table \ref{table:correctness} depicts the reached precision and recall of our automatic co-evolution approach for our nine case studies. We observe that the measured precision and recall varied, respectively from 48\% to 100\%, and from 51\% to 100\% reaching an average of, respectively 82\% precision and 81\% recall. 
+Table \ref{table:correctness} depicts the reached precision and recall of my automatic co-evolution approach for my nine case studies. I observe that the measured precision and recall varied, respectively from 48\% to 100\%, and from 51\% to 100\% reaching an average of, respectively 82\% precision and 81\% recall. 
 %
 %91,92+82,6+100+80,9+60,4+46,6+95,2+86,6+86,6 /9 = 81;20
 %91.92+82.6+100+80.9+60.4+46.6+95.2+86.6+86.6
 %
 %This means that our applied resolutions for the matched pattern usages for the code errors were correct w.r.t. the expected resolutions by the developers in \red{81\%}. 
-This shows the usefulness of the considered resolutions in Table \ref{table:ResolutionsCatalog} for the automatic co-evolution of the direct code errors in our case studies. %while meeting the developer's co-evolution needs. 
+This shows the usefulness of the considered resolutions in Table \ref{table:ResolutionsCatalog} for the automatic co-evolution of the direct code errors in my case studies. %while meeting the developer's co-evolution needs. 
 
 \begin{table}[t]
 	\centering
-\caption{Measured precision and recall of our projects.}
+\caption{Measured precision and recall of my projects.}
 \label{table:correctness}
 %
 %\small
@@ -1241,12 +1248,12 @@ This shows the usefulness of the considered resolutions in Table \ref{table:Reso
 %\end{figure}
 
 
-We further investigated the cause of lowering precision and recall, i.e., the cases where our automatic co-evolution did not match the expected resolutions. 
-The main observation is that several errors that could have been co-evolved by maintaining them were deleted by the developers in the manually evolved version of the code. Rather than to delete the erroneous code, our approach was able to successfully co-evolve and maintain it. 
+I further investigated the cause of lowering precision and recall, i.e., the cases where my automatic co-evolution did not match the expected resolutions. 
+The main observation is that several errors that could have been co-evolved by maintaining them were deleted by the developers in the manually evolved version of the code. Rather than to delete the erroneous code, my approach was able to successfully co-evolve and maintain it. 
 %
-For example, in the project \emph{P5}, we observed errors in the code due to moves of the properties \emph{maxUsedMemoryInBytes} and \emph{totalExecutionTimeInSeconds} and its rename to \emph{discoveryTimeInSeconds}. 
+For example, in the project \emph{P5}, I observed errors in the code due to moves of the properties \emph{maxUsedMemoryInBytes} and \emph{totalExecutionTimeInSeconds} and its rename to \emph{discoveryTimeInSeconds}. 
 %
-Our approach automatically co-evolved them and maintained the erroneous code, by renaming the setter and extending its path. Whereas, the developers' manual co-evolution consisted of deleting the impacted code. This may hint at a lack of automated co-evolution support that would have easily maintained the code in the new version rather than deleting it.  \red{Thus, our co-evolutions here are valid alternatives even if it did not match the correct manual co-evolution.}
+My approach automatically co-evolved them and maintained the erroneous code, by renaming the setter and extending its path. Whereas, the developers' manual co-evolution consisted of deleting the impacted code. This may hint at a lack of automated co-evolution support that would have easily maintained the code in the new version rather than deleting it.  \red{Thus, my co-evolutions here are valid alternatives even if it did not match the correct manual co-evolution.}
 
 \begin{comment}
 
@@ -1277,9 +1284,9 @@ Our approach automatically co-evolved them and maintained the erroneous code, by
 
 It is worth noting that the order of the resolutions’ application is following the order of the treated metamodel changes. It may affect the number of iterations of Algorithm~\ref{algo :overallalgo} but it will neither affect the value of recall and precision nor the final result of the co-evolved code.
 
-Finally, to check the behavioral effect of the co-evolution, we observed the tests' execution that we generated for the original and co-evolved code. %In total, respectively for the original and co-evolved versions. %, \red{xyz} and \red{xyz} test case were generated for the the nine projects, with \red{xyz} and \red{xyz} passing test, \red{xyz} and \red{xyz} failing tests, and \red{xyz} and \red{xyz} crashed tests due to an error. 
-Table \ref{table:test_results} depicts the test execution results. In \emph{[P1, P5, P6, P8, and P9]} similar tests were generated for the original and co-evolved versions. Whereas in \emph{[P2, P3, P7]} there were common tests as well as different generated tests, while we could also not generate tests for \emph{[P4]}. In most cases, we observe that the percentages of passing, failing, and erroneous tests were the same with no significant changes after the co-evolution. 
-Therefore, it suggests that our automatic co-evolution is behaviorally correct by not altering the code behavior of the original projects. 
+Finally, to check the behavioral effect of the co-evolution, I observed the tests' execution that I generated for the original and co-evolved code. %In total, respectively for the original and co-evolved versions. %, \red{xyz} and \red{xyz} test case were generated for the the nine projects, with \red{xyz} and \red{xyz} passing test, \red{xyz} and \red{xyz} failing tests, and \red{xyz} and \red{xyz} crashed tests due to an error. 
+Table \ref{table:test_results} depicts the test execution results. In \emph{[P1, P5, P6, P8, and P9]} similar tests were generated for the original and co-evolved versions. Whereas in \emph{[P2, P3, P7]} there were common tests as well as different generated tests, while I could also not generate tests for \emph{[P4]}. In most cases, I observe that the percentages of passing, failing, and erroneous tests were the same with no significant changes after the co-evolution. 
+Therefore, it suggests that my automatic co-evolution is behaviorally correct by not altering the code behavior of the original projects. 
 
 
 \begin{table*}[t]
@@ -1308,9 +1315,9 @@ Therefore, it suggests that our automatic co-evolution is behaviorally correct b
 \begin{tcolorbox}[boxsep=-2pt]
 \textbf{$\boldsymbol{RQ_2}$ insights:}
 
-Our automatic co-evolution reached an average of an 82\% precision and 81\% recall.
+My automatic co-evolution reached an average of an 82\% precision and 81\% recall.
 It was able to co-evolve and maintain erroneous code that developers unnecessarily deleted. 
-Generated tests for original and co-evolved code further showed that our co-evolution is not impacting the original code behavior w.r.t. the generated tests. 
+Generated tests for original and co-evolved code further showed that my co-evolution is not impacting the original code behavior w.r.t. the generated tests. 
 \end{tcolorbox}
 
 
@@ -1335,7 +1342,7 @@ We now discuses our approach and the obtained results.
 \end{comment}
 
 
-\subsubsection{RQ3. How does our automatic approach for code co-evolution compare to the IDE quick fixes as a baseline?}
+\subsubsection{RQ3. How does this automatic approach for code co-evolution compare to the IDE quick fixes as a baseline?}
 
 %\paragraph{Comparison with Quick Fixes}
 
@@ -1415,10 +1422,10 @@ We now discuses our approach and the obtained results.
 %\vspace{-0.5em}
 \end{table*}
 
-The first baseline we compare to is the quick fixes available in the IDE since they are widely used by developers to repair code errors%yu2012maintaining QF are used by developers usually to resolve compiling errors.
+The first baseline I compare to is the quick fixes available in the IDE since they are widely used by developers to repair code errors%yu2012maintaining QF are used by developers usually to resolve compiling errors.
 %
 ~\cite{10.1145/2384616.2384665}, and more importantly, they have not been compared to code co-evolution approaches before. 
-To compare with the quick fixes as a baseline, we implemented the automatic application of quick fixes as an option in our plugin. It is a variant of our Algorithm \ref{algo :overallalgo} that only applies the quick fixes on the errors. 
+To compare with the quick fixes as a baseline, I implemented the automatic application of quick fixes as an option in my plugin. It is a variant of my Algorithm \ref{algo :overallalgo} that only applies the quick fixes on the errors. 
 The algorithm browses the errors of each compilation unit and applies the first proposed quick fix, since by default Eclipse IDE\footnote{See \emph{org.eclipse.jdt.ui.text.java.CompletionProposalComparator}} order the quick fixes by \emph{relevance}. Note that all executions herein terminated normally without any infinite loop.
 %The selection of the first quick in the list of proposals is due to the strategy of proposals ordering of eclipse. \texttt{CompletionProposalComparator} of eclipse proposes two criteria: by relevance and alphabetic order. Eclipse default settings opt for ordering by relevance.
 
@@ -1428,11 +1435,11 @@ The algorithm browses the errors of each compilation unit and applies the first 
 
 
 
-In Table~\ref{ch1_AppliedQF}, we present the percentage of errors that quick fixes eliminated for each project, and the frequencies of each type of applied quick fixes. 
+In Table~\ref{ch1_AppliedQF}, I present the percentage of errors that quick fixes eliminated for each project, and the frequencies of each type of applied quick fixes. 
 %we give the number of quick fixes applied per type, 
 %\red{to help us to analyse the quick fixes' reaction to the different types of changes.}\todo{what ?} 
 
-While the quick fixes eliminated from 41\% to 100\% errors, we found that the precision and recall of automatic quick fixes are equal to 0, because no correction was applied as expected to the manual developers' resolutions. That is why we refer to the errors are eliminated by the quick fixes and not corrected or co-evolved. 
+While the quick fixes eliminated from 41\% to 100\% errors, I found that the precision and recall of automatic quick fixes are equal to 0, because no correction was applied as expected to the manual developers' resolutions. That is why I refer to the errors are eliminated by the quick fixes and not corrected or co-evolved. 
 For example, concerning errors caused by class or property deletion from the metamodel, renaming a class or an attribute, moving, pushing, or pulling attributes or methods from a class to another, the quick fixes proposed to create them back in their old containers. This is in contradiction of the applied metamodel changes.  
 %for some errors, the usage of the metamodel class in the code is super %interface, and when applying the first quick fix, it will create a class %and not an interface
 %duplicate case
@@ -1440,8 +1447,8 @@ For errors caused by changing a variable's type, the quick fixes always suggeste
 
 %Adding a declaration or an implementation of missing or renamed method causes a major problem of polymorphism on which metamodeling is based on. In the case of adding a method declaration in an interface, all classes that implement this interface will ask to "add unimplemented method", and by applying this quick fix, an empty methods will be added. These corrections do not meet the specifications of the metamodel changes. 
 
-Unlike our approach, quick fixes do not take in consideration the context of the impacted code and the information contained in its causing metamodel changes. For example, the quick fix \texttt{create the missing method \emph{m()}} is applied no matter the metamodel change (i.e., deletion, moving, pulling, or pushing changes) or the impacted code location (i.e., statement, variable declaration, parameter, etc.). %this invocation is located in a complex statement, in a variable declaration, or in any other position in the code AST. 
-Our approach takes into account the context of the impacted code and the causing change thanks to the use of pattern matching (see Section~\ref{pattern_matching}). 
+Unlike my approach, quick fixes do not take in consideration the context of the impacted code and the information contained in its causing metamodel changes. For example, the quick fix \texttt{create the missing method \emph{m()}} is applied no matter the metamodel change (i.e., deletion, moving, pulling, or pushing changes) or the impacted code location (i.e., statement, variable declaration, parameter, etc.). %this invocation is located in a complex statement, in a variable declaration, or in any other position in the code AST. 
+My approach takes into account the context of the impacted code and the causing change thanks to the use of pattern matching (see Section~\ref{pattern_matching}). 
 % either the pattern MoveProperty\_UpperBoundSingle or the pattern MoveProperty Upper\_BoundMultiple is detected then
 
 
@@ -1451,14 +1458,14 @@ For instance, after a move property change, the resolution $[CR7]$ or $[CR8]$ is
 
 \begin{tcolorbox}[boxsep=-2pt]
 \textbf{$\boldsymbol{RQ_3}$ insights:}
-The automatic application of quick fixes leads to a faulty evolved code. The same type of quick fixes is applied regardless of the context of the impacted code. With 0 precision and recall, we can conclude the inability of Eclipse quick fixes to co-evolve correctly the code with the evolution of the metamodel. 
+The automatic application of quick fixes leads to a faulty evolved code. The same type of quick fixes is applied regardless of the context of the impacted code. With 0 precision and recall, I can conclude the inability of Eclipse quick fixes to co-evolve correctly the code with the evolution of the metamodel. 
 \red{}
 
 \end{tcolorbox}
 
 
 
-\subsubsection{RQ4. How does our automatic approach for code co-evolution compare to the state-of-the-art semi-automatic approach as a baseline?}
+\subsubsection{RQ4. How does this automatic approach for code co-evolution compare to the state-of-the-art semi-automatic approach as a baseline?}
 %\paragraph{Comparison with State of the art co-evolution}
 
 %%%%%%%%%%%%%%%%%%%%Comparaison with prior work %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1466,7 +1473,7 @@ The automatic application of quick fixes leads to a faulty evolved code. The sam
 \begin{table*}[t]
 %\begin{wraptable*}{r}{5.5cm}
 \centering
-\caption{Comparison between our automatic co-evolution approach and the semi-automatic co-evolution approach. [Legend: Precision(P) -- Recall(R) ]}
+\caption{Comparison between my automatic co-evolution approach and the semi-automatic co-evolution approach. [Legend: Precision(P) -- Recall(R) ]}
 \label{table:comparison_AC_vs_SC}
 %
 \normalsize
@@ -1476,7 +1483,7 @@ The automatic application of quick fixes leads to a faulty evolved code. The sam
 			@{\hskip3pt}c@{\hskip3pt}|c@{\hskip3pt}|c@{\hskip3pt}|c@{\hskip3pt}|c@{\hskip3pt}|c@{\hskip3pt}|c@{\hskip3pt}|c@{\hskip3pt}|c@{\hskip3pt}|c@{\hskip3pt}|c@{\hskip3pt}}
 		\toprule 
 		Projects & P1 & P2 & P3& P4 & P5 & P6 & P7 & P8 & P9& Total \\ \midrule%{2-10}
-		\begin{tabular}[c]{@{}l@{}} Our automatic approach\end{tabular} & \begin{tabular}[c]{@{}l@{}} 90\%(P)\\ 66\%(R)\end{tabular} & \begin{tabular}[c]{@{}l@{}} 80\%(P)\\ 83\%(R)\end{tabular} &  \begin{tabular}[c]{@{}l@{}} 100\%(P) \\ 100\%(R) \end{tabular} & \begin{tabular}[c]{@{}l@{}}81\%(P) \\ 75\%(R)\end{tabular} & \begin{tabular}[c]{@{}l@{}} 58\%(P) \\ 58\%(R)\end{tabular} & \begin{tabular}[c]{@{}l@{}} 48\%(P) \\ 51\%(R)\end{tabular} & \begin{tabular}[c]{@{}l@{}} 98\%(P) \\ 94\%(R)\end{tabular} & \begin{tabular}[c]{@{}l@{}}  93\%(P) \\ 100\%(R)\end{tabular} & \begin{tabular}[c]{@{}l@{}} 93\%(P) \\ 100\%(R)\end{tabular}
+		\begin{tabular}[c]{@{}l@{}} My automatic approach\end{tabular} & \begin{tabular}[c]{@{}l@{}} 90\%(P)\\ 66\%(R)\end{tabular} & \begin{tabular}[c]{@{}l@{}} 80\%(P)\\ 83\%(R)\end{tabular} &  \begin{tabular}[c]{@{}l@{}} 100\%(P) \\ 100\%(R) \end{tabular} & \begin{tabular}[c]{@{}l@{}}81\%(P) \\ 75\%(R)\end{tabular} & \begin{tabular}[c]{@{}l@{}} 58\%(P) \\ 58\%(R)\end{tabular} & \begin{tabular}[c]{@{}l@{}} 48\%(P) \\ 51\%(R)\end{tabular} & \begin{tabular}[c]{@{}l@{}} 98\%(P) \\ 94\%(R)\end{tabular} & \begin{tabular}[c]{@{}l@{}}  93\%(P) \\ 100\%(R)\end{tabular} & \begin{tabular}[c]{@{}l@{}} 93\%(P) \\ 100\%(R)\end{tabular}
 		& \begin{tabular}[c]{@{}l@{}} 82\%(P) \\ 81\%(R)\end{tabular}
 		\\ \midrule
 		
@@ -1494,19 +1501,18 @@ The automatic application of quick fixes leads to a faulty evolved code. The sam
 
 
 
-We now compare our approach to the state of the art of metamodel and code co-evolution, namely our previous work \cite{Khelladi2020}. It runs an impact analysis to trace the impacts in the code, while we rely on the compilation errors after regenerating the code API from the evolved metamodel. 
-We also consider an additional change of Pull property and add a new resolution for it ($CR14$). 
-We further distinguish with our previous work by checking behavioral correctness with tests (before/after co-evolution) and by comparing to two baselines. 
-Yet, the main difference is it being semi-automatic requiring intervention to decide between alternative resolutions to co-evolve the code, while we fully automate this decision based on our pattern matching process. Thus, intuitively, it will likely perform better than a fully automatic co-evolution. RQ4 aims to measure this difference.  
+I now compare my approach to the state of the art of metamodel and code co-evolution, namely the state-of-the-art work of Khelladi et al.~\cite{Khelladi2020}. It runs an impact analysis to trace the impacts in the code, while I rely on the compilation errors after regenerating the code API from the evolved metamodel. 
+I also consider an additional change of Pull property and add a new resolution for it ($CR14$). 
+I further distinguish with the state-of-the-art work by checking behavioral correctness with tests (before/after co-evolution) and by comparing to two baselines. 
+Yet, the main difference is it being semi-automatic requiring intervention to decide between alternative resolutions to co-evolve the code, while I fully automate this decision based on my pattern matching process. Thus, intuitively, it will likely perform better than a fully automatic co-evolution. RQ4 aims to measure this difference.  
 
 %The semi-automatic approach of code co-evolution of Khelladi et al. \cite{Khelladi2020} starts by change detection and an impact analysis. This approach takes into account the types of changes listed in Table \ref{mmchanges}, except for the "Pull property" change type. While the impacted parts in code, in our approach, consist of compiling errors, Khelladi et al. \cite{Khelladi2020} proceed by a static analysis without compilation. Each evolved metamodel is traced through the AST of the generated code elements and their usages in the AST of the additional code. The impacted nodes are then coevolved using the catalog of resolutions \ref{table:ResolutionsCatalog} ( that does not include $CR14$). 
 %Our approach is 100\% automatic thanks to the pattern matching process \ref{pattern_matching}. In the case of an impact that supports more than one resolution, Khelladi et al. give the developer the choice to select one of the possible resolutions.
 %This semi-automatic approach is evaluated on the nine projects described in Table \ref{CaseStudies_CoEvolution}. Unlike our evaluation, Khelladi et al. used only precision and recall metrics in their evaluation process, without any other checking of the behavioral correctness of their semi-automatic co-evolution approach. 
-Table \ref{table:comparison_AC_vs_SC} shows precision and recall values of our approach and the semi-automatic co-evolution approach~\cite{Khelladi2020}. 
-We notice that the semi-automatic co-evolution approach~\cite{Khelladi2020} outperforms our automatic co-evolution approach by a small margin in terms of precision and recall. % ( 92\% over 82\%) and recall(91\% over 81\%). However, the margin between the values remains small. 
-On average, we had 82\% precision and 81\% recall in full automatic co-evolution compared to 92\% precision and 91\% recall in semi-automatic co-evolution. 
-This is due to the fact that our approach favors the least deletion when possible $[CR1]$ over $[CR3]$, or $[CR4]$ over $[CR2]$, while the semi-automatic approach favors integral deletions $[CR3]$ over $[CR1]$, or $[CR2]$ over $[CR4]$. %, and this integral deletion matches the developers' co-evolved version.
-Overall, we observe that the trade-off between full and semi-automatic co-evolution leads to only a reduction of -10\% in precision and recall while still maintaining them at a high level ($>$ 81\%). This small reduction in performance provides a bigger benefit of speeding up the co-evolution and removing the burden of manual intervention from developers on every code error. Indeed, rather than spending time in guiding the co-evolution at every error, developers can automatically perform it in couples of minutes, in particular, if thousands of errors must be co-evolved after metamodel evolution.
+Table \ref{table:comparison_AC_vs_SC} shows precision and recall values of my approach and the semi-automatic co-evolution approach~\cite{Khelladi2020}.~I notice that the semi-automatic co-evolution approach~\cite{Khelladi2020} outperforms my automatic co-evolution approach by a small margin in terms of precision and recall. % ( 92\% over 82\%) and recall(91\% over 81\%). However, the margin between the values remains small. 
+On average, I had~82\% precision and~81\% recall in full automatic co-evolution compared to~92\% precision and~91\% recall in semi-automatic co-evolution. 
+This is due to the fact that my approach favors the least deletion when possible $[CR1]$ over $[CR3]$, or $[CR4]$ over $[CR2]$, while the semi-automatic approach favors integral deletions $[CR3]$ over $[CR1]$, or $[CR2]$ over $[CR4]$. %, and this integral deletion matches the developers' co-evolved version.
+Overall, I observe that the trade-off between full and semi-automatic co-evolution leads to only a reduction of -10\% in precision and recall while still maintaining them at a high level ($>$ 81\%). This small reduction in performance provides a bigger benefit of speeding up the co-evolution and removing the burden of manual intervention from developers on every code error. Indeed, rather than spending time in guiding the co-evolution at every error, developers can automatically perform it in couples of minutes, in particular, if thousands of errors must be co-evolved after metamodel evolution.
 
 
 \begin{tcolorbox}[boxsep=-2pt]
@@ -1522,38 +1528,38 @@ Fully automating metamodel and code co-evolution performs less than a semi-autom
 \subsection{Discussion and limitations}
 This section discusses the approach and the observed results. 
 
-The high-level intuition behind our approach is that we apply a targeted co-evolution by propagating the impacting metamodel changes only to the code errors directly, rather than browsing all code elements statically to fetch the possible impacts.
-Our automatic co-evolution approach tries to mimic the developers' behavior with known resolutions when co-evolving the code errors in an “iterative way”. After the application of each resolution, the list of errors %compilation unit 
+The high-level intuition behind my approach is that I apply a targeted co-evolution by propagating the impacting metamodel changes only to the code errors directly, rather than browsing all code elements statically to fetch the possible impacts.
+My automatic co-evolution approach tries to mimic the developers' behavior with known resolutions when co-evolving the code errors in an “iterative way”. After the application of each resolution, the list of errors %compilation unit 
 is refreshed to get the list of the new compilation errors for the next iteration.
 % relation betsween the input and the output of the evaluation
 
 Moreover, Table \ref{AppliedResolutions} shows the distribution of applied resolutions. It is related to the distribution of the impacting metamodel changes (see Table~\ref{table:ResolutionsCatalog}) since for a given impacting change, a specific set of resolutions can be applied. 
-However, there is no relation between the distribution of the applied resolution and the recall and precision, which depends more on 'if' the automatic resolutions match "or not" the manual developer’s expected resolutions. Moreover, we did not randomly and synthetically choose metamodel changes and their types in the evaluation. Rather, we took the realistic developers' evolutions of the metamodels in our selected real-world software projects. Thus, we did not influence the applied resolutions, which correspond only to the metamodel changes. Of course, having a different distribution of metamodel changes would result in a different distribution of applied resolutions. 
+However, there is no relation between the distribution of the applied resolution and the recall and precision, which depends more on 'if' the automatic resolutions match "or not" the manual developer’s expected resolutions. Moreover, I did not randomly and synthetically choose metamodel changes and their types in the evaluation. Rather, I took the realistic developers' evolutions of the metamodels in my selected real-world software projects. Thus, I did not influence the applied resolutions, which correspond only to the metamodel changes. Of course, having a different distribution of metamodel changes would result in a different distribution of applied resolutions. 
 
-Finally, we handled the evolution of one metamodel at once to co-evolve its impacts. Handling multiple metamodels is an interesting case, but is out-of-scope in this thesis. Nonetheless, the first favorable scenario we can currently handle is to treat the multiple metamodels in sequence when they are independent of each other. The main limitation is in a second scenario where there are dependencies between the multiple metamodels. For example, a change "set type to T" in a metamodel A referencing a change "add T" in a metamodel B. Herein, the solution would be to find the order of metamodels in which to handle the co-evolution in sequence. This is left as future work. 
+Finally, I handled the evolution of one metamodel at once to co-evolve its impacts. Handling multiple metamodels is an interesting case, but is out-of-scope in this thesis. Nonetheless, the first favorable scenario I can currently handle is to treat the multiple metamodels in sequence when they are independent of each other. The main limitation is in a second scenario where there are dependencies between the multiple metamodels. For example, a change "set type to T" in a metamodel A referencing a change "add T" in a metamodel B. Herein, the solution would be to find the order of metamodels in which to handle the co-evolution in sequence. This is left as future work. 
 
-\section{Threats to Validity}\label{ch1_threat}
+\section{Threats to validity}\label{ch1_threat}
 \noindent This section discusses threats to validity \cite{wohlin2012experimentation}.
 
-\subsection{Internal Validity.} To provoke the code errors, we had to replace the original metamodel evolution and to regenerate the code API. To reduce any bias in the source of errors, we decided to evolve one metamodel at a time. This increases the confidence in the source of the errors, and hence, their co-evolution. Dealing with conflicting errors that can mask each other due to the simultaneous evolution of several metamodels is left for future work.  
-Moreover, to measure the correctness, we analyzed the developers' manual co-evolution.
-To reduce the risk of misidentifying an expected resolution, for each impacted part of the code, we investigated the entire co-evolved class. If we did not find it, we further searched in other classes in case the original impacted part of the code was moved into another class. Thus, our objective was to reduce the risk of missing any correspondence between an error in the original code and its evolved version. Moreover, as our co-evolution relies on the quality of detected metamodel changes, we analyzed each detected change and checked whether it occurred between the original and evolved metamodels. This alleviates the risk of relying on an incorrect metamodel change that would degrade the pattern matching. 
-Note that the order of changes taken as input does not influence our co-evolution, but the order of errors we treat may affect the distribution of the applied resolutions. However, we took the order in which the errors were detected. 
-Finally, besides the manual checking of the co-evolved code, we used EvoSuite as a test suites generation tool that has shown its efficiency in
-test generation as a state-of-the-art tool~\cite{DANGLOT2019110398,https://doi.org/10.1002/stvr.1601}. The main reason is that our projects did not have manually written tests. However, automatic test
+\subsection{Internal validity} To provoke the code errors, I had to replace the original metamodel evolution and to regenerate the code API. To reduce any bias in the source of errors, I decided to evolve one metamodel at a time. This increases the confidence in the source of the errors, and hence, their co-evolution. Dealing with conflicting errors that can mask each other due to the simultaneous evolution of several metamodels is left for future work.  
+Moreover, to measure the correctness, I analyzed the developers' manual co-evolution.
+To reduce the risk of misidentifying an expected resolution, for each impacted part of the code, I investigated the entire co-evolved class. If I did not find it, I further searched in other classes in case the original impacted part of the code was moved into another class. Thus, my objective was to reduce the risk of missing any correspondence between an error in the original code and its evolved version. Moreover, as my co-evolution relies on the quality of detected metamodel changes, I analyzed each detected change and checked whether it occurred between the original and evolved metamodels. This alleviates the risk of relying on an incorrect metamodel change that would degrade the pattern matching. 
+Note that the order of changes taken as input does not influence my co-evolution, but the order of errors I treat may affect the distribution of the applied resolutions. However, I took the order in which the errors were detected. 
+Finally, besides the manual checking of the co-evolved code, I used EvoSuite as a test suites generation tool that has shown its efficiency in
+test generation as a state-of-the-art tool~\cite{DANGLOT2019110398,https://doi.org/10.1002/stvr.1601}. The main reason is that my projects did not have manually written tests. However, automatic test
 generation can even be more advantageous herein. Indeed, it generates tests for all
-public methods, whereas developers tend to manually write few tests for only some targeted methods. Thus, if relying only on manually written tests, there is a high risk of not assessing the behavioral correctness of many cases of code co-evolutions that are not covered by test cases. Despite the fact that generated tests can be better for our approach and its results allow us to measure the behavioral correctness of the co-evolution, %it is still not sufficient as it cannot replace the manual written tests. Further studies are needed here}.
+public methods, whereas developers tend to manually write few tests for only some targeted methods. Thus, if relying only on manually written tests, there is a high risk of not assessing the behavioral correctness of many cases of code co-evolutions that are not covered by test cases. Despite the fact that generated tests can be better for my approach and its results allow us to measure the behavioral correctness of the co-evolution, %it is still not sufficient as it cannot replace the manual written tests. Further studies are needed here}.
 it still can be combined with manual written tests.
 
 
-\subsection{External Validity.} We implemented and evaluated our approach for EMF and Ecore metamodels and Java code. %As EMF metamodels rely on MOF \cite{MOF241} and object-oriented elements that can 
+\subsection{External validity} I implemented and evaluated my approach for EMF and Ecore metamodels and Java code. %As EMF metamodels rely on MOF \cite{MOF241} and object-oriented elements that can 
 %Other object-oriented languages use different syntax but conceptually use the same constructions as in Java, such as C\# or C++.
-Although co-evolution could theoretically be applicable for other languages, such as C\# or C++, we cannot generalize our results. Further experimentation on other languages is necessary. However, the only requirement to apply our approach to other languages is to parse the ASTs of the erroneous code and to adapt our resolutions to the new ASTs' structure.  
+Although co-evolution could theoretically be applicable for other languages, such as C\# or C++, I cannot generalize my results. Further experimentation on other languages is necessary. However, the only requirement to apply my approach to other languages is to parse the ASTs of the erroneous code and to adapt my resolutions to the new ASTs' structure.  
 
-Furthermore, the evaluation was carried out on Eclipse projects in three languages. Thus, we cannot generalize our findings to other software languages and their implementations. However, our approach could be used to co-evolve Java code added on top of a generated code from a domain model, \eg from a UML class diagram or an entity model. %, such as JHipster that generates a complete and modern Web app or microservice architecture based on a domain model and a set of architectural choices. 
+Furthermore, the evaluation was carried out on Eclipse projects in three languages. Thus, I cannot generalize my findings to other software languages and their implementations. However, my approach could be used to co-evolve Java code added on top of a generated code from a domain model, \eg from a UML class diagram or an entity model. %, such as JHipster that generates a complete and modern Web app or microservice architecture based on a domain model and a set of architectural choices. 
 Nonetheless, more evaluations are still necessary. %\footnote{https://www.jhipster.tech/}
 
-\subsection{Conclusion Validity.} Our evaluation showed promising results with an automatic code co-evolution that is fast and useful, with an average of~82\% precision and~81\% recall varying from~48\% to~100\%. The results also showed the usefulness of our approach and the resolutions proposed in our catalog in Table \ref{table:ResolutionsCatalog}. However, even though we evaluated it on nine projects with complex metamodel evolution, we plan to further evaluate on more case studies to have more insights and statistical evidence.  %further evaluation is needed on more case studies.
+\subsection{Conclusion validity} My evaluation showed promising results with an automatic code co-evolution that is fast and useful, with an average of~82\% precision and~81\% recall varying from~48\% to~100\%. The results also showed the usefulness of my approach and the resolutions proposed in the catalog in Table \ref{table:ResolutionsCatalog}. However, even though I evaluated it on nine projects with complex metamodel evolution, I plan to further evaluate on more case studies to have more insights and statistical evidence.  %further evaluation is needed on more case studies.
 
 
 
@@ -1561,20 +1567,29 @@ Nonetheless, more evaluations are still necessary. %\footnote{https://www.jhipst
 \section{Conclusion}\label{ch1_conclusion}
 
 
-In this chapter, we presented an approach to automatically co-evolve code when metamodels evolve. It relies on a pattern matching algorithm to match the different pattern usages of the metamodel generated code elements in the additional erroneous code. Once a direct error in the code is matched with a pattern usage, we can co-evolve it with its corresponding resolution. 
-For indirect errors that cannot be matched, we apply the available quick fix to repair them. 
+In this chapter, I presented an approach to automatically co-evolve code when metamodels evolve. It relies on a pattern matching algorithm to match the different pattern usages of the metamodel generated code elements in the additional erroneous code. Once a direct error in the code is matched with a pattern usage, I can co-evolve it with its corresponding resolution. 
+For indirect errors that cannot be matched, I apply the available quick fix to repair them. 
 %
-Our code co-evolution was evaluated on nine projects and three metamodels from three Eclipse EMF implementations. After re-generating the code API from the evolved version of the metamodel, hence, causing~837 errors in the additional code.
-For the~771 direct errors, our automatic co-evolution approach was able to match~631 pattern usages and to apply~631 resolutions. It showed to be efficient and useful in co-evolving all direct errors in the code with an average of~82\% precision and~81\% recall varying from~48\% to~100\%. All 66 indirect errors were resolved by calling~5 quick fixes. Moreover, we checked the behavioral correctness of our approach by using test suites before and after code co-evolution. We observed that the percentage of passing, failing, and erroneous tests remained stable with insignificant variations in some projects. Thus, suggesting the behavioral correctness of the co-evolution. Finally, we found that the quick fixes are not able to correctly co-evolve the code. This is because they cannot exploit the context of the impacted code and relate it to the changes of the metamodel. 
-\red{We also found that fully automating metamodel and code co-evolution performs less than a semi-automatic co-evolution, but still gives a high precision and recall of ($>$ 81\%) while removing the burden of manual intervention from developers on every code error to co-evolve.}
+My code co-evolution was evaluated on nine projects and three metamodels from three Eclipse EMF implementations. After re-generating the code API from the evolved version of the metamodel, hence, causing~837 errors in the additional code.
+For the~771 direct errors, my automatic co-evolution approach was able to match~631 pattern usages and to apply~631 resolutions. It showed to be efficient and useful in co-evolving all direct errors in the code with an average of~82\% precision and~81\% recall varying from~48\% to~100\%. All~66 indirect errors were resolved by calling~5 quick fixes. Moreover, I checked the behavioral correctness of my approach by using test suites before and after code co-evolution. I observed that the percentage of passing, failing, and erroneous tests remained stable with insignificant variations in some projects. Thus, suggesting the behavioral correctness of the co-evolution. Finally, I found that the quick fixes are not able to correctly co-evolve the code. This is because they cannot exploit the context of the impacted code and relate it to the changes of the metamodel. 
+I also found that fully automating metamodel and code co-evolution performs less than a semi-automatic co-evolution, but still gives a high precision and recall of ($>$ 81\%) while removing the burden of manual intervention from developers on every code error to co-evolve.
 
-
-In summary, our work presents the following contributions :
+In summary, my work presents the following contributions :
 1/ A fully automatic code co-evolution approach due to Ecore metamodel evolution based on pattern matching. 
-2/ A prototype implementation of an Eclipse plugin to show the efficiency of our approach. % available publicly\footnote{\url{https://figshare.com/s/8986914e924300be77da}}.
+2/ A prototype implementation of an Eclipse plugin to show the efficiency of my approach. % available publicly\footnote{\url{https://figshare.com/s/8986914e924300be77da}}.
 3/ An evaluation based on four actions: 1) Measuring the co-evolution correctness. 2) Verifying the behavioral correctness using unit tests running before and after automatic code co-evolution. 3) Comparison with the state-of-the art semi-automatic co-evolution approach~\cite{Khelladi2020}. 4) Comparison with Quick Fixes popular tool.
 
-
+\begin{myexamplec}
+	\small
+	\textbf{Paper}: 
+	Zohra Kaouter Kebaili, Djamel Eddine Khelladi, Mathieu Acher, Olivier Barais. Automated co-evolution of metamodels and code. IEEE Transactions on Software Engineering, 2025. %⟨hal-04973171⟩
+    \url{https://hal.science/hal-04973171}
+	
+	\textbf{Implementation}: 
+	\url{https://github.com/mcevo2/co-evolution}
+	
+	\textbf{Data set}: \url{https://figshare.com/s/8986914e924300be77da}
+\end{myexamplec}
 %As future work, we first plan to explore ordering the errors in the code before co-evolving them. In fact, we co-evolve the errors in the same order they are retrieved by the JDT. Thus, we will investigate whether it could reach better correctness with faster co-evolution or not. 
 %
 %Finally, we plan to extend our resolutions with a replace resolution, based on distance metrics to find element replacements to co-evolve the code. \red{After that, we can rely on our approach to extend it with a search-based heuristics, such as genetic algorithms to explore different paths of co-evolution, in contrast to a single path that we compute in this paper. In particular, to explore the different alternative resolutions of $CR1-CR4$.}  

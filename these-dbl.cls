@@ -52,15 +52,17 @@
 \RequirePackage{wallpaper}
 \RequirePackage[inner=30mm,outer=20mm,top=30mm,bottom=20mm]{geometry}
 \usepackage{enumitem}
-\usepackage{algpseudocode}
-\usepackage{algorithm}
-
+%\usepackage{algpseudocode}
+%\usepackage{algorithmic}
+\usepackage[vlined,linesnumbered,ruled]{algorithm2e}
+%\usepackage{algorithm2e}[ruled]
+%\usepackage[linesnumbered, ruled, vlined]
 \makeatother
-\algnewcommand\algorithmicswitch{\textbf{switch}}
-\algnewcommand\algorithmiccase{\textbf{case}}\algdef{SE}[SWITCH]{Switch}{EndSwitch}[1]{\algorithmicswitch\ #1\ \algorithmicdo}{\algorithmicend\ \algorithmicswitch}%
-\algdef{SE}[CASE]{Case}{EndCase}[1]{\algorithmiccase\ #1}{\algorithmicend\ \algorithmiccase}%
-\algtext*{EndSwitch}%
-\algtext*{EndCase}%
+%\algnewcommand\algorithmicswitch{\textbf{switch}}
+%\algnewcommand\algorithmiccase{\textbf{case}}\algdef{SE}[SWITCH]{Switch}{EndSwitch}[1]{\algorithmicswitch\ #1\ \algorithmicdo}{\algorithmicend\ \algorithmicswitch}%
+%\algdef{SE}[CASE]{Case}{EndCase}[1]{\algorithmiccase\ #1}{\algorithmicend\ \algorithmiccase}%
+%\algtext*{EndSwitch}%
+%\algtext*{EndCase}%
 %Ou bien : \RequirePackage[top=4 cm, bottom=4 cm, left=3 cm, right=3 cm]{geometry} % On peut modifier ces valeurs pour augmenter ou r\'{e}duire les marges. Attention aux en-têtes de chapitres. 
 \RequirePackage{epigraph} % \cleartoevenpage
 
@@ -71,7 +73,7 @@
 
 \RequirePackage{eso-pic} % For \AddToShipoutPicture used for cover backgrounds
 \RequirePackage{framed} % utilise pour coloriser les encarts
-
+\usepackage{float}
 \usepackage{listings}
 \usepackage{graphicx,color,soul}
 \usepackage{xcolor}
@@ -111,6 +113,12 @@
 	numbersep=1pt,
 	numberstyle=\footnotesize\color{darkgray},
 	stepnumber=1}%TODO basicstyle=\footnotesize
+\newcommand{\lstETL}[1]{\lstinline[language=ETL,breaklines=true,basicstyle=\listingsfontinline,mathescape,literate={\-}{}{0\discretionary{-}{}{}}]§#1§}
+
+\lstset{
+	escapeinside={(*}{*)}
+}
+
 
 
 \onehalfspacing %Interligne 1,5
@@ -671,4 +679,54 @@
 \sloppy
 %\usepackage{slopp}
 %\usepackage{sloppypar} not found
+\definecolor{greycolor}{RGB}{224,224,224}
+\definecolor{darkgreycolor}{RGB}{192,192,192}
 \usepackage{microtype}
+\tcbuselibrary{skins}
+\usetikzlibrary{shadings}
+\newcounter{example}
+\colorlet{colexam}{red!75!black}
+\tcbset{
+	base/.style={
+		empty,
+		frame engine=path,
+		colframe=yellow!10,
+		sharp corners,
+		title={ Replication: \thetcbcounter},
+		attach boxed title to top left={yshift*=-\tcboxedtitleheight},
+		boxed title style={size=minimal, top=4pt, left=4pt},
+		coltitle=colexam,fonttitle=\large\bfseries\sffamily,
+	}
+}
+\newtcolorbox[use counter=example]{myexamplea}{%
+	base,
+	boxed title style={overlay={
+			\draw[colexam,line width=3pt,] (frame.north west)--(frame.north east);
+	}},
+	colback=colexam,
+	overlay unbroken={
+		\draw[colexam] ([yshift=-1.5pt]title.north east)--([xshift=-0.5pt, yshift=-1.5pt]title.north-|frame.east);
+	},
+}
+\newtcolorbox[use counter=example]{myexampleb}{%
+	base,
+	drop fuzzy shadow,
+	borderline west={3pt}{-3pt}{colexam},
+}
+\newtcolorbox[use counter=example]{myexamplec}{%
+	base,
+	drop fuzzy shadow,
+	coltitle=black,
+	borderline west={3pt}{-3pt}{greycolor!50},
+	attach boxed title to top left={xshift=-3mm, yshift*=-\tcboxedtitleheight/2},
+	boxed title style={right=3pt, bottom=3pt, overlay={
+			\draw[draw=darkgreycolor!70, fill=greycolor!70, line join=round]
+			(frame.south west) -- (frame.north west) -- (frame.north east) --
+			(frame.south east) -- ++(-2pt, 0) -- ++(-2pt, -4pt) --
+			++(-2pt, 4pt) -- cycle;
+	}},
+	overlay unbroken={
+		\scoped \shade[left color=greycolor!10!black, right color=greycolor]
+		([yshift=-0.2pt]title.south west) -- ([xshift=-1.5pt, yshift=-0.2pt]title.south-|frame.west) -- ++(0, -6pt) -- cycle;
+	},
+}

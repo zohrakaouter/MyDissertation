@@ -18,7 +18,7 @@
 \addbibresource{./biblio/biblio.bib}
 %\usepackage[table]{xcolor}
 %\bibliography{./biblio/biblio.bib}
-\usepackage[ruled,vlined,linesnumbered,algo2e]{algorithm2e} 
+%\usepackage[ruled,vlined,linesnumbered,algo2e]{algorithm2e} 
 %\usepackage{xcolor}
 \usepackage{amsmath,amssymb,amsfonts}
 
@@ -60,13 +60,15 @@
 % This command will generate the front cover
 \frontmatter
 \clearemptydoublepage
+\input{./résumé.tex}
 \renewcommand{\contentsname}{Table of Contents}
 \tableofcontents %sommaire %table of content
 %\shorttableofcontents{Sommaire}{0}
 \listoffigures
 \listoftables
 \clearemptydoublepage
-\input{./résumé.tex}
+%\input{./résumé.tex}
+
 \input{./Introduction/introduction}
 
 

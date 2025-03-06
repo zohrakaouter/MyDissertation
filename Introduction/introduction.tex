@@ -11,7 +11,7 @@
 %Context: Model-driven engineering, software evolution, metamodel evolution
 %ToDo Add cost, benifits of using MDE
 Software systems are increasingly growing in complexity, which leads to a substantial burden in terms of maintenance, often resulting in a high cost that may surpass the cost of software development itself \cite{https://doi.org/10.1049/sfw2.12075}.
-Since Object Management Group (OMG) has introduced Model Driven Engineering in 2001 \cite{brambilla2017model}, MDE has been prominent in developing and maintaining large-scale and embedded systems while increasing the developers' productivity. By adopting MDE, industry can reduce time (development time and time-to-market), costs (development, integration, and reconfiguration), and improve sustainability and international competitiveness~\ref{10.1145/1985793.1985858,liebel2014assessing,10.1145/1985793.1985882}. %\cite{10.1145/1985793.1985858,10.1007/s10270-019-00757-6}. MDE raises the abstraction level to the "metamodel" artifact in order to separate the implementation from the business logic.
+Since Object Management Group (OMG) has introduced Model Driven Engineering in 2001 \cite{brambilla2017model}, MDE has been prominent in developing and maintaining large-scale and embedded systems while increasing the developers' productivity. By adopting MDE, industry can reduce time (development time and time-to-market), costs (development, integration, and reconfiguration), and improve sustainability and international competitiveness~\cite{10.1145/1985793.1985858,liebel2014assessing,10.1145/1985793.1985882}. %\cite{10.1145/1985793.1985858,10.1007/s10270-019-00757-6}. MDE raises the abstraction level to the "metamodel" artifact in order to separate the implementation from the business logic.
  In MDE, metamodel is a central artifact for building software languages \cite{cabot2012object}. It specifies the domain concepts, their properties, and the relationship between them.
 A metamodel is the cornerstone to generate model instances, constraints, transformations, and code when building the necessary language tooling, e.g. editor, checker, compiler, data access layers, etc. 
 In particular, metamodels are used as inputs for complex code generators that leverage the abstract concepts defined in metamodels. The generated code API is used for creating, loading and manipulating the model instances, adapters, serialization facilities, and an editor, all from the metamodel elements.
@@ -24,7 +24,7 @@ For instance, UML\footnote{\url{https://www.eclipse.org/modeling/mdt/downloads/?
 %In this specific context, we identified the following challenges to be our probelem scope:
 \subsection*{C1: Resolve the impact of the metamodel evolution on the code automatically}
 \label{C1}
-One of the foremost challenges to deal with in MDE is the impact of the evolution of metamodels on its dependent artifacts. We focus on the impact of metamodels' evolution on the code. 
+One of the foremost challenges to deal with in MDE is the impact of the evolution of metamodels on its dependent artifacts. I focus on the impact of metamodels' evolution on the code. 
 Indeed, when a metamodel evolves and the code API is regenerated again, the additional code implemented by developers can be impacted.
 	As a consequence, this additional code must be co-evolved accordingly.% by executing a resolution for each impacted part of the code.
 
@@ -36,7 +36,7 @@ The co-evolution challenge has been extensively addressed in \emph{MDE}.
 %TODO CO-Evolution metamodel-other artifacts
 % - the challenge of metamodels and code co-evolution.
 In particular, some approaches~\cite{riedl2014towards,kanakis2019empirical,pham2017bidirectional,jongeling2020towards,jongeling2022Structural,zaheri2021towards} focused on consistency checking between models and code, but not its co-evolution.
-Other works~\cite{yu2012maintaining,Khelladi2020} proposed to co-evolve the code. However, the former handles only the generated code API, it does not handle additional code and aims to maintain bidirectional traceability between the model and the code API. The latter supports a semi-automatic co-evolution requiring developers' intervention. Moreover, it does not use any validation process to check the correctness of the co-evolution and with no comparison to a baseline. In this thesis, we tackle the challenge of resolving the impact of the metamodel evolution on the code automatically followed by checking the correctness of the co-evolution.
+Other works~\cite{yu2012maintaining,Khelladi2020} proposed to co-evolve the code. However, the former handles only the generated code API, it does not handle additional code and aims to maintain bidirectional traceability between the model and the code API. The latter supports a semi-automatic co-evolution requiring developers' intervention. Moreover, it does not use any validation process to check the correctness of the co-evolution and with no comparison to a baseline. In this thesis, I tackle the challenge of resolving the impact of the metamodel evolution on the code automatically followed by checking the correctness of the co-evolution.
 
  
 
@@ -45,7 +45,7 @@ Other works~\cite{yu2012maintaining,Khelladi2020} proposed to co-evolve the code
 In literature, when the problem of metamodel and code co-evolution is addressed, the challenge of checking that the co-evolution impacted or not the behavioral correctness of the code is not handled. In any Model-Driven Engineered system, the elements of the metamodel are used in the code. Consequently, the evolution of the metamodel will be propagated in the code that is co-evolved and its behavior may be altered. Hence, the importance of checking the correctness of the co-evolution. In a larger scope, only few works were dedicated to check the correctness of a code evolution in general. %wether it is refactoring or co-evolution
 %our approach can be categorized along the incremental test selection approaches, such as 
  Ge et al. \cite{10.1145/2568225.2568280} propose to verify the correctness of refactoring.
-Out of the scope of testing code evolution, we find the incremental test selection approaches Infinitest\footnote{\url{https://infinitest.github.io/doc/eclipse}}, EKSTAZI~\cite{7203050}, and Moose~\cite{ducasse2000moose}. All of them aim to analyze code changes incrementally to select impacted tests in the evolved version of the code only.
+Out of the scope of testing code evolution, I find the incremental test selection approaches Infinitest\footnote{\url{https://infinitest.github.io/doc/eclipse}}, EKSTAZI~\cite{7203050}, and Moose~\cite{ducasse2000moose}. All of them aim to analyze code changes incrementally to select impacted tests in the evolved version of the code only.
 %focus more on our contribution or not?
 
 %Purpose of the study: 
@@ -53,7 +53,7 @@ Out of the scope of testing code evolution, we find the incremental test selecti
 %Summary of contributions
 \subsection*{C3: How to draw benefit from LLMs for the metamodel and code co-evolution}
 \label{C3}
-In the MDE ecosystem, we can consider that metamodel and code co-evolution is one of many other MDE tasks, like model generation and code generation. Since their appearance, Large Language Models (LLMs) have been applied in different domains of scientific research, such as Software Engineering and Model-Driven Engineering (MDE), however, to the best of our knowledge, the challenge of exploring LLMs in the task of metamodel and code co-evolution has not yet been addressed. In Software Engineering side, Fu et al. \cite{fu2023chatgpt} evaluated ChatGPT ability to detect, classify, and repair vulnerable code. Kabir et al. \cite{kabir2023empirical} evaluated the ability of ChatGPT to generate code and to maintain it by improving it, based on a new feature description to add in the code. Zhang et al. \cite{zhang2023multilingual} proposed Codeditor, an LLM based tool for code co-evolution between different programming languages. It learns code evolutions as edit sequences and then uses LLMs for multilingual translation.
+In the MDE ecosystem, I can consider that metamodel and code co-evolution is one of many other MDE tasks, like model generation and code generation. Since their appearance, Large Language Models (LLMs) have been applied in different domains of scientific research, such as Software Engineering and Model-Driven Engineering (MDE), however, to the best of my knowledge, the challenge of exploring LLMs in the task of metamodel and code co-evolution has not yet been addressed. In Software Engineering side, Fu et al. \cite{fu2023chatgpt} evaluated ChatGPT ability to detect, classify, and repair vulnerable code. Kabir et al. \cite{kabir2023empirical} evaluated the ability of ChatGPT to generate code and to maintain it by improving it, based on a new feature description to add in the code. Zhang et al. \cite{zhang2023multilingual} proposed Codeditor, an LLM based tool for code co-evolution between different programming languages. It learns code evolutions as edit sequences and then uses LLMs for multilingual translation.
 Moreover, other studies focused on evaluating LLMs in MDE activities. 
 Chen et al. \cite{10344012} and Camara et al. \cite{camara2023assessment} used ChatGPT to generate models.
 Chaaben et al. \cite{chaaben2023towards} showed how using few-shot learning with GTP3 model can be effective in model completion and in other modeling activities. 
@@ -61,20 +61,20 @@ Chaaben et al. \cite{chaaben2023towards} showed how using few-shot learning with
 %TODO WHY it is a good idea to use llm in co-evolution
 \section{Contributions}
 %\addcontentsline{toc}{section}{Contributions}
-To tackle these three challenges, we propose three contributions:
+To tackle these three challenges, I propose three contributions:
 \begin{itemize}[label=\ding{212}]
 
-	\item First, we propose a fully automatic code co-evolution approach due to metamodel evolution based on pattern matching. Our approach handles both atomic and complex changes of the metamodel. This approach is evaluated, on nine Eclipse projects from OCL, Modisco, and Papyrus, based on four actions: 1) Measuring the co-evolution correctness using automatically generated unit tests. 2) Verifying the behavioral correctness using unit tests running before and after automatic code co-evolution. 3) Comparing with the state-of-the art semi-automatic co-evolution approach~\cite{Khelladi2020}. 4) Comparing with Quick Fixes popular tool. Results show that our approach reached an average of 82\% of precision and 81\% of recall, varying from 48\% to 100\%, and from 51\% to 100\% for precision and recall respectively. The prototype implementation of this approach is available online as an Eclipse plugin (link).
+	\item First, I propose a fully automatic code co-evolution approach due to metamodel evolution based on pattern matching. My approach handles both atomic and complex changes of the metamodel. This approach is evaluated, on nine Eclipse projects from OCL, Modisco, and Papyrus, based on four actions: 1) Measuring the co-evolution correctness using automatically generated unit tests. 2) Verifying the behavioral correctness using unit tests running before and after automatic code co-evolution. 3) Comparing with the state-of-the art semi-automatic co-evolution approach~\cite{Khelladi2020}. 4) Comparing with Quick Fixes popular tool. Results show that my approach reached an average of 82\% of precision and 81\% of recall, varying from 48\% to 100\%, and from 51\% to 100\% for precision and recall respectively. The prototype implementation of this approach is available online as an Eclipse plugin\footnote{\url{https://github.com/mcevo2/co-evolution}}.
 	
 	
-	\item Second, we propose an approach that assists developers to check the behavioral correctness of the co-evolution. This approach leverages unit tests before and after the co-evolution and gives visual report about passing, failing, and erroneous tests before and after the co-evolution. This visual report allows to have more insights about the co-evolution ans its impact on the code. We then evaluated our approach on 18 Eclipse projects from
-	OCL, Modisco, Papyrus, and EMF using both automatically generated and manually written tests. When we studied the usefulness of our approach quantitatively, we found 88\% of reduction in the number of tests and 84\% in execution time. The other part of the evaluation consisted of an user study experiment to gain evidence on the difficulty of the manual task of tracing impacted tests after metamodel
-	evolution and co-evolution. The prototype implementation of this approach is available online as an Eclipse plugin (link).
+	\item Second, I propose an approach that assists developers to check the behavioral correctness of the co-evolution. This approach leverages unit tests before and after the co-evolution and gives visual report about passing, failing, and erroneous tests before and after the co-evolution. This visual report allows to have more insights about the co-evolution ans its impact on the code. I then evaluated my approach on 18 Eclipse projects from
+	OCL, Modisco, Papyrus, and EMF using both automatically generated and manually written tests. When I studied the usefulness of my approach quantitatively, I found 88\% of reduction in the number of tests and 84\% in execution time. The other part of the evaluation consisted of an user study experiment to gain evidence on the difficulty of the manual task of tracing impacted tests after metamodel
+	evolution and co-evolution. The prototype implementation of this approach is available online as an Eclipse plugin\footnote{\url{https://github.com/mcevo2/testing-co-evolution}}.
 	
-	\item Third, we investigate the ability of LLMs in giving correct co-evolutions in the context of metamodel and code co-evolution. We evaluated our study approach with ChatGPT version 3.5 on seven Eclipse projects
-		from OCL and Modisco evolved metamodels. the evaluation included temperature variation, prompt structure variation, and comparison with IDE Quick Fixes as baseline. Results show that ChatGPT can co-evolve correctly 88.7\% of the errors, varying from 75\% to 100\% of correctness rate. When varying the prompts, we observed increased
-		correctness in two variants and decreased correctness in another variant. We also observed that varying the temperature
-		hyperparameter yields better results with lower temperatures. Finally, we found that the generated prompts co-evolutions completely outperform the quick fixes.  The prototype implementation of this approach is available online as an Eclipse plugin (link).
+	\item Third, I investigate the ability of LLMs in giving correct co-evolutions in the context of metamodel and code co-evolution. I evaluated my study approach with ChatGPT version 3.5 on seven Eclipse projects
+		from OCL and Modisco evolved metamodels. the evaluation included temperature variation, prompt structure variation, and comparison with IDE Quick Fixes as baseline. Results show that ChatGPT can co-evolve correctly 88.7\% of the errors, varying from 75\% to 100\% of correctness rate. When varying the prompts, I observed increased
+		correctness in two variants and decreased correctness in another variant. I also observed that varying the temperature
+		hyperparameter yields better results with lower temperatures. Finally, I found that the generated prompts co-evolutions completely outperform the quick fixes.  The prototype implementation of this approach is available online as an Eclipse plugin\footnote{\url{https://github.com/mcevo2/co-evolution-with-llm}}.
 
 
 \end{itemize}
@@ -86,26 +86,30 @@ To tackle these three challenges, we propose three contributions:
 This manuscript is organised as follows:
 \begin{itemize}[label=\textbullet,font=\small]
 
-\item Chapter 2 provides a short background about our MDE context and main concepts that will be employed throughout the thesis.
+\item Chapter 2 provides a short background about my MDE context and main concepts that will be employed throughout the thesis.
 \item Chapter 3 focuses on a review of relevant studies carried out within Metamodel change detection, co-evolution in MDE ecosystem, API-client evolution, language evolution, and evolution in low-code platforms. This chapter ends with a discussion about limitations and research gap.
-\item Chapter 4 is devoted to our first contribution about the automatic code co-evolution approach du to metamodel evolution. It presents the algorithm of pattern matching process that selects the appropriate resolution for each error. It presents also its evaluation and results.
-\item Chapter 5 presents our second contribution about leveraging unit tests to check metamodel and code co-evolution behavioral correctness with its evaluation including the user experience that we conducted and results.
-\item Chapter 6 details the empirical study that we conducted as last contribution about exploring LLMs in metamodel and code co-evolution context, with its evaluation and results.
-\item Chapter 7 summarises the contributions of this work and discusses its limitations and  potential avenues for future work, thereby concluding this thesis.
+\item Chapter 4 is devoted to my first contribution about the automatic code co-evolution approach du to metamodel evolution. It presents the algorithm of pattern matching process that selects the appropriate resolution for each error. It presents also its evaluation and results.
+\item Chapter 5 presents my second contribution about leveraging unit tests to check metamodel and code co-evolution behavioral correctness with its evaluation including the user experience that I conducted and results.
+\item Chapter 6 details the empirical study that I conducted as last contribution about exploring LLMs in metamodel and code co-evolution context, with its evaluation and results.
+\item Chapter 7 summarizes the contributions of this work and discusses its limitations and  potential avenues for future work, thereby concluding this thesis.
 
 \end{itemize}
 
 \section{List of publications}
 
 \begin{enumerate}
-	\item KEBAILI, Zohra Kaouter, KHELLADI, Djamel Eddine, ACHER, Mathieu, et al. Towards leveraging tests to identify impacts of metamodel and code co-evolution. In : International Conference on Advanced Information Systems Engineering. Cham : Springer International Publishing, 2023. p. 129-137.
+	\item Zohra Kaouter Kebaili, Djamel Eddine Khelladi, Mathieu Acher, Olivier Barais. Automated co-evolution of metamodels and code. IEEE Transactions on Software Engineering, 2025. %⟨hal-04973171⟩
+	\url{https://hal.science/hal-04973171}
+
 	
-	\item	KEBAILI, Zohra Kaouter, KHELLADI, Djamel Eddine, ACHER, Mathieu, et al. An Empirical Study on Leveraging LLMs for Metamodels and Code Co-evolution. In : European Conference on Modelling Foundations and Applications (ECMFA 2024). Journal of Object Technology, 2024. p. 1-14.
+	\item	Zohra Kaouter Kebaili, Djamel Eddine Khelladi, Mathieu Acher, Olivier Barais. Automated Testing of Metamodels and Code Co-evolution. Software and Systems Modeling, 2024, pp.1-32. ⟨10.1007/s10270-024-01245-2⟩. %⟨hal-04932177⟩
+	\url{https://hal.science/hal-04932177}
 	
-	\item	KEBAILI, Zohra Kaouter, KHELLADI, Djamel Eddine, ACHER, Mathieu, et al. Automated testing of metamodels and code co-evolution. Software and Systems Modeling, 2024, p. 1-19.
+\item	 Zohra Kaouter Kebaili, Djamel Eddine Khelladi, Mathieu Acher, Olivier Barais. An Empirical Study on Leveraging LLMs for Metamodels and Code Co-evolution. The Journal of Object Technology, 2024, (ECMFA 2024), 23 (3), pp.1-14. ⟨10.5381/jot.2024.23.3.a6⟩. %⟨hal-04667772⟩
+	\url{https://hal.science/hal-04667772v1}
 	
-	\item	KEBAILI, Zohra Kaouter, KHELLADI, Djamel Eddine, ACHER, Mathieu, et al. Automated co-evolution of metamodels and code. IEEE Transactions on Software Engineering, 2025.
-	
+	\item Zohra Kaouter Kebaili, Djamel Eddine Khelladi, Mathieu Acher, Olivier Barais. Towards Leveraging Tests to Identify Impacts of Metamodel and Code Co-evolution. CAiSE 2023 - 35th International Conference on Advanced Information Systems Engineering, Jun 2023, Zaragoza, Spain. pp.129-137, ⟨10.1007/978-3-031-34674-3\_16⟩. %⟨hal-04126496⟩
+	\url{https://hal.science/hal-04126496v1}
 \end{enumerate}
 
 
